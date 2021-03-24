@@ -20,3 +20,4 @@ Additional calibration estimators for GNSS/INS navigation
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=albertoirurueta_irurueta-navigation-inertial-extra&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=albertoirurueta_irurueta-navigation-inertial-extra)
 
 [Maven Site Report](http://albertoirurueta.github.io/irurueta-navigation-inertial-extra)
+
