@@ -50,6 +50,7 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -1637,6 +1638,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeCommonAxisSmallNoiseWithRotationAndPositionChange()
             throws InvalidSourceAndDestinationFrameTypeException, WrongSizeException,
@@ -1776,6 +1778,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeRobustCalibrator() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,

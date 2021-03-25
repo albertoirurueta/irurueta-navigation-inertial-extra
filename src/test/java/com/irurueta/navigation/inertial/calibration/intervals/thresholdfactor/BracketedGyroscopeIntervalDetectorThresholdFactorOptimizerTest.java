@@ -55,6 +55,7 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -2329,6 +2330,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange()
             throws WrongSizeException,
@@ -2515,6 +2517,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeRobustCalibrator() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException,

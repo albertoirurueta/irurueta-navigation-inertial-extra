@@ -48,6 +48,7 @@ import com.irurueta.navigation.inertial.navigators.ECEFInertialNavigator;
 import com.irurueta.navigation.inertial.navigators.InertialNavigatorException;
 import com.irurueta.statistics.UniformRandomizer;
 import com.irurueta.units.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12352,6 +12353,7 @@ public class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testAddBodyKinematicsAndResetApproximateCalibrationAndEstimatedKalmanConfig()
             throws AlgebraException,

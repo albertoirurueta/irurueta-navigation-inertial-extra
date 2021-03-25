@@ -60,6 +60,7 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -1841,7 +1842,7 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration results
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -2798,6 +2799,7 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException,
@@ -3028,6 +3030,7 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeRobustCalibrators() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException,

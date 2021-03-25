@@ -60,6 +60,7 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -2750,6 +2751,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange()
             throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
@@ -3034,6 +3036,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeRobustCalibrators() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException,
