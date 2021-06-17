@@ -100,6 +100,8 @@ public class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest imp
 
     private static final double SMALL_ROOT_PSD = 1e-15;
 
+    private static final int NUM_MEASUREMENTS = 10;
+
     private final List<TimedBodyKinematics> mTimedBodyKinematics = new ArrayList<>();
 
     private final GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource mDataSource =
@@ -1394,10 +1396,9 @@ public class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest imp
                     .convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_COMON_Z_AXIS;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma,
                     SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements);
+                    NUM_MEASUREMENTS);
 
             final GyroscopeMeasurementsGenerator generator =
                     new GyroscopeMeasurementsGenerator(mGeneratorListener);
@@ -1762,10 +1763,9 @@ public class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest imp
             final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
                     .convertNEDtoECEFAndReturnNew(nedFrame);
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_COMON_Z_AXIS;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma,
                     SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements);
+                    NUM_MEASUREMENTS);
 
             final GyroscopeMeasurementsGenerator generator =
                     new GyroscopeMeasurementsGenerator(mGeneratorListener);
@@ -1949,10 +1949,9 @@ public class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest imp
                     .convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_COMON_Z_AXIS;
             generateBodyKinematics(nedFrame, ecefFrame, true, ma,
                     SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements);
+                    NUM_MEASUREMENTS);
 
             final GyroscopeMeasurementsGenerator generator =
                     new GyroscopeMeasurementsGenerator(mGeneratorListener);

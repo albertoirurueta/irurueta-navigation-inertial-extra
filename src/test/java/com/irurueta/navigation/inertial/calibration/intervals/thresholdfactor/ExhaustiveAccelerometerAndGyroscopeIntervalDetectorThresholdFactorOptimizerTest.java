@@ -105,6 +105,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
 
     private static final double SMALL_ROOT_PSD = 1e-15;
 
+    private static final int NUM_MEASUREMENTS = 10;
+
     private final List<TimedBodyKinematics> mTimedBodyKinematics = new ArrayList<>();
 
     private final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource mDataSource =
@@ -2127,10 +2129,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                     .convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_COMON_Z_AXIS;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma,
                     SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements);
+                    NUM_MEASUREMENTS);
 
             final AccelerometerAndGyroscopeMeasurementsGenerator generator =
                     new AccelerometerAndGyroscopeMeasurementsGenerator(mGeneratorListener);
@@ -2589,7 +2590,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                     .convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = 3 * EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = 3 * KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_COMON_Z_AXIS;
+            final int numMeasurements = 3 * NUM_MEASUREMENTS;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma,
                     SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
                     numMeasurements);

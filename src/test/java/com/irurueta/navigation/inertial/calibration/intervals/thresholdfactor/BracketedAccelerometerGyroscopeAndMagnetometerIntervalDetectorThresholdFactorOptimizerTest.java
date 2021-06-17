@@ -120,6 +120,8 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
     private static final double LARGE_ABSOLUTE_ERROR_MAGNETOMETER = 5e-5;
     private static final double VERY_LARGE_ABSOLUTE_ERROR_MAGNETOMETER = 1e-2;
 
+    private static final int NUM_MEASUREMENTS = 10;
+
     private static final Calendar START_CALENDAR = Calendar.getInstance();
     private static final Calendar END_CALENDAR = Calendar.getInstance();
 
@@ -3559,7 +3561,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                     .convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = 3 * EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = 3 * KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_COMON_Z_AXIS;
+            final int numMeasurements = 3 * NUM_MEASUREMENTS;
             final Matrix hardIron = Matrix.newFromArray(generateHardIron(randomizer));
             final Matrix mm = generateSoftIronCommonAxis();
             assertNotNull(mm);
