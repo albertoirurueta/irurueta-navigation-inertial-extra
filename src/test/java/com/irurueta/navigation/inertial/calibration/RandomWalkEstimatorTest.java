@@ -17188,8 +17188,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedBias2()
-            throws WrongSizeException, LockedException {
+    public void testGetSetAngularSpeedBias2() throws LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values

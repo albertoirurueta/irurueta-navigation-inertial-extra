@@ -72,7 +72,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     private final BodyKinematicsFixer mFixer = new BodyKinematicsFixer();
 
     /**
-     * Estimates bias for fixed body kinematics measurements to determine furhter
+     * Estimates bias for fixed body kinematics measurements to determine further
      * bias variations while the IMU body remains static.
      */
     private final BodyKinematicsBiasEstimator mBiasEstimator = new BodyKinematicsBiasEstimator();
@@ -3356,7 +3356,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Sets current body orientation as a transformation from body to ECEF coordinates.
      * Notice that ECEF orientation refers to ECEF Earth axes, which means that
-     * orientation is not relative to the ground or horizont at current body position.
+     * orientation is not relative to the ground or horizon at current body position.
      * Typically it is more convenient to use
      * {@link #setNedC(CoordinateTransformation)} to specify orientation relative to
      * the ground or horizon at current body position.
@@ -4223,7 +4223,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * expressed in (rad^2 * s^-3).
      * This can be used by {@link INSLooselyCoupledKalmanConfig}.
      *
-     * @return gyroscope gias random walk PSD.
+     * @return gyroscope bias random walk PSD.
      */
     @Override
     public double getGyroBiasPSD() {

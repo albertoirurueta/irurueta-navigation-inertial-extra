@@ -265,6 +265,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -443,6 +447,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -649,6 +657,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -856,6 +868,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -1062,6 +1078,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -1269,6 +1289,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -1480,6 +1504,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -1735,6 +1763,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -1993,6 +2025,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -2261,6 +2297,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -2531,6 +2571,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -2810,6 +2854,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -3089,6 +3137,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -3381,6 +3433,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -3700,6 +3756,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -3983,6 +4043,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -4269,6 +4333,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -4567,6 +4635,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -4864,6 +4936,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -5171,6 +5247,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -5481,6 +5561,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -5801,6 +5885,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -6122,6 +6210,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -6405,6 +6497,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -6691,6 +6787,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -6989,6 +7089,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -7286,6 +7390,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -7593,6 +7701,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -7903,6 +8015,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -8223,6 +8339,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.isReady());
         assertFalse(estimator.isRunning());
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -9905,6 +10025,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(mBodyKinematicsAdded, 0);
         assertEquals(mReset, 0);
         assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertFalse(estimator.isRunning());
         assertTrue(estimator.isFixKinematicsEnabled());
 
@@ -9921,6 +10045,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             estimator.addBodyKinematics(measuredKinematics);
 
             assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+            assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(estimator.isRunning());
 
             fixer.fix(measuredKinematics, fixedKinematics);
@@ -9929,6 +10054,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         }
 
         assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+        assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        assertTrue(estimator.getElapsedTime(elapsedTime2));
+        assertEquals(elapsedTime1, elapsedTime2);
         assertFalse(estimator.isRunning());
         assertEquals(mStart, 1);
         assertEquals(mBodyKinematicsAdded, N_SAMPLES);
@@ -10122,6 +10254,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         assertEquals(mReset, 1);
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -10156,281 +10291,307 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             throws AlgebraException,
             InvalidSourceAndDestinationFrameTypeException,
             LockedException, NotReadyException, DriftEstimationException,
-            RotationException, InertialNavigatorException,
-            InvalidRotationMatrixException {
-        final Matrix ba = generateBa();
-        final Matrix ma = generateMaCommonAxis();
-        final Matrix bg = generateBg();
-        final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
-        final double accelNoiseRootPSD = 0.0;
-        final double gyroNoiseRootPSD = 0.0;
-        final double accelQuantLevel = 0.0;
-        final double gyroQuantLevel = 0.0;
+            InertialNavigatorException, InvalidRotationMatrixException {
+        int numValid = 0;
+        for (int t = 0; t < TIMES; t++) {
+            final Matrix ba = generateBa();
+            final Matrix ma = generateMaCommonAxis();
+            final Matrix bg = generateBg();
+            final Matrix mg = generateMg();
+            final Matrix gg = generateGg();
+            final double accelNoiseRootPSD = 0.0;
+            final double gyroNoiseRootPSD = 0.0;
+            final double accelQuantLevel = 0.0;
+            final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+            final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
 
-        final NEDFrame nedFrame = generateFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+            final NEDFrame nedFrame = generateFrame();
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
+                    .convertNEDtoECEFAndReturnNew(nedFrame);
 
-        final Random random = new Random();
+            final Random random = new Random();
 
-        final CoordinateTransformation ecefC = ecefFrame
-                .getCoordinateTransformation();
-        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
+            final CoordinateTransformation ecefC = ecefFrame
+                    .getCoordinateTransformation();
+            final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
-        final ECEFFrame navigationFrame = new ECEFFrame(ecefFrame);
+            final ECEFFrame navigationFrame = new ECEFFrame(ecefFrame);
 
-        final DriftEstimator estimator = new DriftEstimator(nedFrame,
-                ba, ma, bg, mg, gg, this);
-        estimator.setFixKinematicsEnabled(false);
-        estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
+            final DriftEstimator estimator = new DriftEstimator(nedFrame,
+                    ba, ma, bg, mg, gg, this);
+            estimator.setFixKinematicsEnabled(false);
+            estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
 
-        reset();
-        assertEquals(mStart, 0);
-        assertEquals(mBodyKinematicsAdded, 0);
-        assertEquals(mReset, 0);
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
-        assertFalse(estimator.isRunning());
-        assertFalse(estimator.isFixKinematicsEnabled());
-
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
-
-        final BodyKinematics measuredKinematics = new BodyKinematics();
-        for (int i = 0; i < N_SAMPLES; i++) {
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
-
-            estimator.addBodyKinematics(measuredKinematics);
-
-            assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+            reset();
+            assertEquals(mStart, 0);
+            assertEquals(mBodyKinematicsAdded, 0);
+            assertEquals(mReset, 0);
+            assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+            assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+            assertNull(estimator.getElapsedTime());
+            final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+            assertFalse(estimator.getElapsedTime(elapsedTime));
             assertFalse(estimator.isRunning());
+            assertFalse(estimator.isFixKinematicsEnabled());
 
-            ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS,
-                    navigationFrame, measuredKinematics, navigationFrame);
+            final BodyKinematics trueKinematics = ECEFKinematicsEstimator
+                    .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
+                            ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
+
+            final BodyKinematics measuredKinematics = new BodyKinematics();
+            for (int i = 0; i < N_SAMPLES; i++) {
+                BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                        trueKinematics, errors, random, measuredKinematics);
+
+                estimator.addBodyKinematics(measuredKinematics);
+
+                assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+                assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
+                assertFalse(estimator.isRunning());
+
+                ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS,
+                        navigationFrame, measuredKinematics, navigationFrame);
+            }
+
+            assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+            assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
+            final Time elapsedTime1 = estimator.getElapsedTime();
+            assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
+            assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+            final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+            assertTrue(estimator.getElapsedTime(elapsedTime2));
+            assertEquals(elapsedTime1, elapsedTime2);
+            assertFalse(estimator.isRunning());
+            assertEquals(mStart, 1);
+            assertEquals(mBodyKinematicsAdded, N_SAMPLES);
+            assertEquals(mReset, 0);
+
+            final double navigationPositionDrift = positionDrift(
+                    ecefFrame, navigationFrame);
+            final double navigationVelocityDrift = velocityDrift(
+                    ecefFrame, navigationFrame);
+            final double navigationOrientationDrift = orientationDrift(
+                    ecefFrame, navigationFrame);
+
+            final ECEFPosition currentPositionDrift1 = estimator
+                    .getCurrentPositionDrift();
+            final ECEFPosition currentPositionDrift2 = new ECEFPosition();
+            assertTrue(estimator.getCurrentPositionDrift(currentPositionDrift2));
+            assertEquals(currentPositionDrift1, currentPositionDrift2);
+
+            final ECEFVelocity currentVelocityDrift1 = estimator
+                    .getCurrentVelocityDrift();
+            final ECEFVelocity currentVelocityDrift2 = new ECEFVelocity();
+            assertTrue(estimator.getCurrentVelocityDrift(currentVelocityDrift2));
+            assertEquals(currentVelocityDrift1, currentVelocityDrift2);
+
+            final Rotation3D currentOrientationDrift1 = estimator
+                    .getCurrentOrientationDrift();
+            final Quaternion currentOrientationDrift2 = new Quaternion();
+            assertTrue(estimator.getCurrentOrientationDrift(currentOrientationDrift2));
+            assertEquals(currentOrientationDrift1, currentOrientationDrift2);
+
+            final DistanceFormatter distanceFormatter = new DistanceFormatter();
+            final SpeedFormatter speedFormatter = new SpeedFormatter();
+            final AngleFormatter angleFormatter = new AngleFormatter();
+            final AccelerationFormatter accelerationFormatter =
+                    new AccelerationFormatter();
+            final AngularSpeedFormatter angularSpeedFormatter =
+                    new AngularSpeedFormatter();
+
+            final Double currentPositionDriftNorm = estimator
+                    .getCurrentPositionDriftNormMeters();
+            assertNotNull(currentPositionDriftNorm);
+            assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(),
+                    0.0);
+            LOGGER.log(Level.INFO, "Current position drift: " +
+                    distanceFormatter.format(currentPositionDriftNorm,
+                            DistanceUnit.METER));
+            assertTrue(currentPositionDriftNorm < 17.0);
+            assertEquals(currentPositionDriftNorm, navigationPositionDrift,
+                    ABSOLUTE_ERROR);
+
+            final Distance currentPositionDriftNorm1 = estimator
+                    .getCurrentPositionDriftNorm();
+            assertEquals(currentPositionDriftNorm,
+                    currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
+            assertEquals(DistanceUnit.METER, currentPositionDriftNorm1.getUnit());
+            final Distance currentPositionDriftNorm2 = new Distance(1.0,
+                    DistanceUnit.FOOT);
+            assertTrue(estimator.getCurrentPositionDriftNorm(
+                    currentPositionDriftNorm2));
+            assertEquals(currentPositionDriftNorm1, currentPositionDriftNorm2);
+
+            final Double currentVelocityDriftNorm = estimator
+                    .getCurrentVelocityDriftNormMetersPerSecond();
+            assertNotNull(currentVelocityDriftNorm);
+            LOGGER.log(Level.INFO, "Current velocity drift: " +
+                    speedFormatter.format(currentVelocityDriftNorm,
+                            SpeedUnit.METERS_PER_SECOND));
+
+            if (currentVelocityDriftNorm >= 1.3) {
+                continue;
+            }
+            assertTrue(currentVelocityDriftNorm < 1.3);
+            assertEquals(currentVelocityDriftNorm, navigationVelocityDrift,
+                    ABSOLUTE_ERROR);
+
+            final Speed currentVelocityDriftNorm1 = estimator
+                    .getCurrentVelocityDriftNorm();
+            assertEquals(currentVelocityDriftNorm,
+                    currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
+            assertEquals(SpeedUnit.METERS_PER_SECOND,
+                    currentVelocityDriftNorm1.getUnit());
+            final Speed currentVelocityDriftNorm2 = new Speed(1.0,
+                    SpeedUnit.KILOMETERS_PER_HOUR);
+            assertTrue(estimator.getCurrentVelocityDriftNorm(
+                    currentVelocityDriftNorm2));
+            assertEquals(currentVelocityDriftNorm1, currentVelocityDriftNorm2);
+
+            final Double currentOrientationDriftNorm = estimator
+                    .getCurrentOrientationDriftRadians();
+            assertNotNull(currentOrientationDriftNorm);
+            LOGGER.log(Level.INFO, "Current orientation drift: " +
+                    angleFormatter.format(AngleConverter.convert(
+                            currentOrientationDriftNorm, AngleUnit.RADIANS,
+                            AngleUnit.DEGREES), AngleUnit.DEGREES));
+            assertTrue(currentOrientationDriftNorm < 0.008);
+            assertEquals(currentOrientationDriftNorm, navigationOrientationDrift,
+                    ABSOLUTE_ERROR);
+
+            final Angle currentOrientationDriftNorm1 = estimator
+                    .getCurrentOrientationDriftAngle();
+            assertEquals(currentOrientationDriftNorm,
+                    currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
+            assertEquals(AngleUnit.RADIANS, currentOrientationDriftNorm1.getUnit());
+            final Angle currentOrientationDriftNorm2 = new Angle(1.0,
+                    AngleUnit.DEGREES);
+            assertTrue(estimator.getCurrentOrientationDriftAngle(
+                    currentOrientationDriftNorm2));
+            assertEquals(currentOrientationDriftNorm1, currentOrientationDriftNorm2);
+
+            final Double currentPositionDriftPerTimeUnit =
+                    estimator.getCurrentPositionDriftPerTimeUnit();
+            assertNotNull(currentPositionDriftPerTimeUnit);
+            LOGGER.log(Level.INFO, "Current position drift per time unit: " +
+                    speedFormatter.format(currentPositionDriftPerTimeUnit,
+                            SpeedUnit.METERS_PER_SECOND));
+            assertTrue(currentPositionDriftPerTimeUnit < 0.5);
+            assertEquals(currentPositionDriftPerTimeUnit,
+                    navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+                    ABSOLUTE_ERROR);
+
+            final Speed currentPositionDriftPerTimeUnit1 =
+                    estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
+            assertEquals(currentPositionDriftPerTimeUnit,
+                    currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
+                    0.0);
+            assertEquals(SpeedUnit.METERS_PER_SECOND,
+                    currentPositionDriftPerTimeUnit1.getUnit());
+            final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0,
+                    SpeedUnit.KILOMETERS_PER_HOUR);
+            assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
+                    currentPositionDriftPerTimeUnit2));
+            assertEquals(currentPositionDriftPerTimeUnit1,
+                    currentPositionDriftPerTimeUnit2);
+
+            final Double currentVelocityDriftPerTimeUnit =
+                    estimator.getCurrentVelocityDriftPerTimeUnit();
+            assertNotNull(currentVelocityDriftPerTimeUnit);
+            LOGGER.log(Level.INFO, "Current velocity drift per time unit: " +
+                    accelerationFormatter.format(currentVelocityDriftPerTimeUnit,
+                            AccelerationUnit.METERS_PER_SQUARED_SECOND));
+            assertTrue(currentVelocityDriftPerTimeUnit < 0.04);
+            assertEquals(currentVelocityDriftPerTimeUnit,
+                    navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+                    ABSOLUTE_ERROR);
+
+            final Acceleration currentVelocityDriftPerTimeUnit1 =
+                    estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration();
+            assertEquals(currentVelocityDriftPerTimeUnit,
+                    currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
+                    0.0);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                    currentVelocityDriftPerTimeUnit1.getUnit());
+            final Acceleration currentVelocityDriftPerTimeUnit2 =
+                    new Acceleration(1.0,
+                            AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
+                    currentVelocityDriftPerTimeUnit2));
+            assertEquals(currentVelocityDriftPerTimeUnit1,
+                    currentVelocityDriftPerTimeUnit2);
+
+            final Double currentOrientationDriftPerTimeUnit =
+                    estimator.getCurrentOrientationDriftPerTimeUnit();
+            assertNotNull(currentOrientationDriftPerTimeUnit);
+            LOGGER.log(Level.INFO, "Current orientation drift per time unit: " +
+                    angularSpeedFormatter.format(AngularSpeedConverter.convert(
+                            currentOrientationDriftPerTimeUnit,
+                            AngularSpeedUnit.RADIANS_PER_SECOND,
+                            AngularSpeedUnit.DEGREES_PER_SECOND),
+                            AngularSpeedUnit.DEGREES_PER_SECOND));
+            assertTrue(currentOrientationDriftPerTimeUnit < 3e-4);
+            assertEquals(currentOrientationDriftPerTimeUnit,
+                    navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+                    ABSOLUTE_ERROR);
+
+            final AngularSpeed currentOrientationDriftPerTimeUnit1 =
+                    estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed();
+            assertEquals(currentOrientationDriftPerTimeUnit,
+                    currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
+                    0.0);
+            assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND,
+                    currentOrientationDriftPerTimeUnit1.getUnit());
+            final AngularSpeed currentOrientationDriftPerTimeUnit2 =
+                    new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+            assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
+                    currentOrientationDriftPerTimeUnit2));
+            assertEquals(currentOrientationDriftPerTimeUnit1,
+                    currentOrientationDriftPerTimeUnit2);
+
+            // reset
+            estimator.reset();
+
+            assertEquals(mReset, 1);
+            assertEquals(0, estimator.getNumberOfProcessedSamples());
+            assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+            assertNull(estimator.getElapsedTime());
+            assertFalse(estimator.getElapsedTime(elapsedTime));
+            assertNull(estimator.getCurrentPositionDrift());
+            assertFalse(estimator.getCurrentPositionDrift(null));
+            assertNull(estimator.getCurrentVelocityDrift());
+            assertFalse(estimator.getCurrentVelocityDrift(null));
+            assertNull(estimator.getCurrentOrientationDrift());
+            assertFalse(estimator.getCurrentOrientationDrift(null));
+            assertNull(estimator.getCurrentPositionDriftNormMeters());
+            assertNull(estimator.getCurrentPositionDriftNorm());
+            assertFalse(estimator.getCurrentPositionDriftNorm(null));
+            assertNull(estimator.getCurrentVelocityDriftNormMetersPerSecond());
+            assertNull(estimator.getCurrentVelocityDriftNorm());
+            assertFalse(estimator.getCurrentVelocityDriftNorm(null));
+            assertNull(estimator.getCurrentOrientationDriftRadians());
+            assertNull(estimator.getCurrentOrientationDriftAngle());
+            assertFalse(estimator.getCurrentOrientationDriftAngle(null));
+            assertNull(estimator.getCurrentPositionDriftPerTimeUnit());
+            assertNull(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed());
+            assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
+                    null));
+            assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
+            assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
+            assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
+                    null));
+            assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
+            assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
+            assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
+                    null));
+
+            numValid++;
+            break;
         }
 
-        assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
-        assertFalse(estimator.isRunning());
-        assertEquals(mStart, 1);
-        assertEquals(mBodyKinematicsAdded, N_SAMPLES);
-        assertEquals(mReset, 0);
-
-        final double navigationPositionDrift = positionDrift(
-                ecefFrame, navigationFrame);
-        final double navigationVelocityDrift = velocityDrift(
-                ecefFrame, navigationFrame);
-        final double navigationOrientationDrift = orientationDrift(
-                ecefFrame, navigationFrame);
-
-        final ECEFPosition currentPositionDrift1 = estimator
-                .getCurrentPositionDrift();
-        final ECEFPosition currentPositionDrift2 = new ECEFPosition();
-        assertTrue(estimator.getCurrentPositionDrift(currentPositionDrift2));
-        assertEquals(currentPositionDrift1, currentPositionDrift2);
-
-        final ECEFVelocity currentVelocityDrift1 = estimator
-                .getCurrentVelocityDrift();
-        final ECEFVelocity currentVelocityDrift2 = new ECEFVelocity();
-        assertTrue(estimator.getCurrentVelocityDrift(currentVelocityDrift2));
-        assertEquals(currentVelocityDrift1, currentVelocityDrift2);
-
-        final Rotation3D currentOrientationDrift1 = estimator
-                .getCurrentOrientationDrift();
-        final Quaternion currentOrientationDrift2 = new Quaternion();
-        assertTrue(estimator.getCurrentOrientationDrift(currentOrientationDrift2));
-        assertEquals(currentOrientationDrift1, currentOrientationDrift2);
-
-        final DistanceFormatter distanceFormatter = new DistanceFormatter();
-        final SpeedFormatter speedFormatter = new SpeedFormatter();
-        final AngleFormatter angleFormatter = new AngleFormatter();
-        final AccelerationFormatter accelerationFormatter =
-                new AccelerationFormatter();
-        final AngularSpeedFormatter angularSpeedFormatter =
-                new AngularSpeedFormatter();
-
-        final Double currentPositionDriftNorm = estimator
-                .getCurrentPositionDriftNormMeters();
-        assertNotNull(currentPositionDriftNorm);
-        assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(),
-                0.0);
-        LOGGER.log(Level.INFO, "Current position drift: " +
-                distanceFormatter.format(currentPositionDriftNorm,
-                        DistanceUnit.METER));
-        assertTrue(currentPositionDriftNorm < 17.0);
-        assertEquals(currentPositionDriftNorm, navigationPositionDrift,
-                ABSOLUTE_ERROR);
-
-        final Distance currentPositionDriftNorm1 = estimator
-                .getCurrentPositionDriftNorm();
-        assertEquals(currentPositionDriftNorm,
-                currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, currentPositionDriftNorm1.getUnit());
-        final Distance currentPositionDriftNorm2 = new Distance(1.0,
-                DistanceUnit.FOOT);
-        assertTrue(estimator.getCurrentPositionDriftNorm(
-                currentPositionDriftNorm2));
-        assertEquals(currentPositionDriftNorm1, currentPositionDriftNorm2);
-
-        final Double currentVelocityDriftNorm = estimator
-                .getCurrentVelocityDriftNormMetersPerSecond();
-        assertNotNull(currentVelocityDriftNorm);
-        LOGGER.log(Level.INFO, "Current velocity drift: " +
-                speedFormatter.format(currentVelocityDriftNorm,
-                        SpeedUnit.METERS_PER_SECOND));
-        assertTrue(currentVelocityDriftNorm < 1.3);
-        assertEquals(currentVelocityDriftNorm, navigationVelocityDrift,
-                ABSOLUTE_ERROR);
-
-        final Speed currentVelocityDriftNorm1 = estimator
-                .getCurrentVelocityDriftNorm();
-        assertEquals(currentVelocityDriftNorm,
-                currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND,
-                currentVelocityDriftNorm1.getUnit());
-        final Speed currentVelocityDriftNorm2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
-        assertTrue(estimator.getCurrentVelocityDriftNorm(
-                currentVelocityDriftNorm2));
-        assertEquals(currentVelocityDriftNorm1, currentVelocityDriftNorm2);
-
-        final Double currentOrientationDriftNorm = estimator
-                .getCurrentOrientationDriftRadians();
-        assertNotNull(currentOrientationDriftNorm);
-        LOGGER.log(Level.INFO, "Current orientation drift: " +
-                angleFormatter.format(AngleConverter.convert(
-                        currentOrientationDriftNorm, AngleUnit.RADIANS,
-                        AngleUnit.DEGREES), AngleUnit.DEGREES));
-        assertTrue(currentOrientationDriftNorm < 0.008);
-        assertEquals(currentOrientationDriftNorm, navigationOrientationDrift,
-                ABSOLUTE_ERROR);
-
-        final Angle currentOrientationDriftNorm1 = estimator
-                .getCurrentOrientationDriftAngle();
-        assertEquals(currentOrientationDriftNorm,
-                currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, currentOrientationDriftNorm1.getUnit());
-        final Angle currentOrientationDriftNorm2 = new Angle(1.0,
-                AngleUnit.DEGREES);
-        assertTrue(estimator.getCurrentOrientationDriftAngle(
-                currentOrientationDriftNorm2));
-        assertEquals(currentOrientationDriftNorm1, currentOrientationDriftNorm2);
-
-        final Double currentPositionDriftPerTimeUnit =
-                estimator.getCurrentPositionDriftPerTimeUnit();
-        assertNotNull(currentPositionDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current position drift per time unit: " +
-                speedFormatter.format(currentPositionDriftPerTimeUnit,
-                        SpeedUnit.METERS_PER_SECOND));
-        assertTrue(currentPositionDriftPerTimeUnit < 0.5);
-        assertEquals(currentPositionDriftPerTimeUnit,
-                navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                ABSOLUTE_ERROR);
-
-        final Speed currentPositionDriftPerTimeUnit1 =
-                estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
-        assertEquals(currentPositionDriftPerTimeUnit,
-                currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND,
-                currentPositionDriftPerTimeUnit1.getUnit());
-        final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
-        assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                currentPositionDriftPerTimeUnit2));
-        assertEquals(currentPositionDriftPerTimeUnit1,
-                currentPositionDriftPerTimeUnit2);
-
-        final Double currentVelocityDriftPerTimeUnit =
-                estimator.getCurrentVelocityDriftPerTimeUnit();
-        assertNotNull(currentVelocityDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current velocity drift per time unit: " +
-                accelerationFormatter.format(currentVelocityDriftPerTimeUnit,
-                        AccelerationUnit.METERS_PER_SQUARED_SECOND));
-        assertTrue(currentVelocityDriftPerTimeUnit < 0.04);
-        assertEquals(currentVelocityDriftPerTimeUnit,
-                navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                ABSOLUTE_ERROR);
-
-        final Acceleration currentVelocityDriftPerTimeUnit1 =
-                estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration();
-        assertEquals(currentVelocityDriftPerTimeUnit,
-                currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                currentVelocityDriftPerTimeUnit1.getUnit());
-        final Acceleration currentVelocityDriftPerTimeUnit2 =
-                new Acceleration(1.0,
-                        AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                currentVelocityDriftPerTimeUnit2));
-        assertEquals(currentVelocityDriftPerTimeUnit1,
-                currentVelocityDriftPerTimeUnit2);
-
-        final Double currentOrientationDriftPerTimeUnit =
-                estimator.getCurrentOrientationDriftPerTimeUnit();
-        assertNotNull(currentOrientationDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current orientation drift per time unit: " +
-                angularSpeedFormatter.format(AngularSpeedConverter.convert(
-                        currentOrientationDriftPerTimeUnit,
-                        AngularSpeedUnit.RADIANS_PER_SECOND,
-                        AngularSpeedUnit.DEGREES_PER_SECOND),
-                        AngularSpeedUnit.DEGREES_PER_SECOND));
-        assertTrue(currentOrientationDriftPerTimeUnit < 3e-4);
-        assertEquals(currentOrientationDriftPerTimeUnit,
-                navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                ABSOLUTE_ERROR);
-
-        final AngularSpeed currentOrientationDriftPerTimeUnit1 =
-                estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed();
-        assertEquals(currentOrientationDriftPerTimeUnit,
-                currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND,
-                currentOrientationDriftPerTimeUnit1.getUnit());
-        final AngularSpeed currentOrientationDriftPerTimeUnit2 =
-                new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                currentOrientationDriftPerTimeUnit2));
-        assertEquals(currentOrientationDriftPerTimeUnit1,
-                currentOrientationDriftPerTimeUnit2);
-
-        // reset
-        estimator.reset();
-
-        assertEquals(mReset, 1);
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertNull(estimator.getCurrentPositionDrift());
-        assertFalse(estimator.getCurrentPositionDrift(null));
-        assertNull(estimator.getCurrentVelocityDrift());
-        assertFalse(estimator.getCurrentVelocityDrift(null));
-        assertNull(estimator.getCurrentOrientationDrift());
-        assertFalse(estimator.getCurrentOrientationDrift(null));
-        assertNull(estimator.getCurrentPositionDriftNormMeters());
-        assertNull(estimator.getCurrentPositionDriftNorm());
-        assertFalse(estimator.getCurrentPositionDriftNorm(null));
-        assertNull(estimator.getCurrentVelocityDriftNormMetersPerSecond());
-        assertNull(estimator.getCurrentVelocityDriftNorm());
-        assertFalse(estimator.getCurrentVelocityDriftNorm(null));
-        assertNull(estimator.getCurrentOrientationDriftRadians());
-        assertNull(estimator.getCurrentOrientationDriftAngle());
-        assertFalse(estimator.getCurrentOrientationDriftAngle(null));
-        assertNull(estimator.getCurrentPositionDriftPerTimeUnit());
-        assertNull(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed());
-        assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                null));
-        assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
-        assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
-        assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
-        assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertTrue(numValid > 0);
     }
 
     @Test
@@ -10480,6 +10641,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(mBodyKinematicsAdded, 0);
         assertEquals(mReset, 0);
         assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertFalse(estimator.isRunning());
         assertTrue(estimator.isFixKinematicsEnabled());
 
@@ -10496,6 +10661,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             estimator.addBodyKinematics(measuredKinematics);
 
             assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+            assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(estimator.isRunning());
 
             fixer.fix(measuredKinematics, fixedKinematics);
@@ -10504,6 +10670,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         }
 
         assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+        assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        assertTrue(estimator.getElapsedTime(elapsedTime2));
+        assertEquals(elapsedTime1, elapsedTime2);
         assertFalse(estimator.isRunning());
         assertEquals(mStart, 1);
         assertEquals(mBodyKinematicsAdded, N_SAMPLES);
@@ -10697,6 +10870,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         assertEquals(mReset, 1);
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -10767,6 +10943,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(mBodyKinematicsAdded, 0);
         assertEquals(mReset, 0);
         assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
         assertFalse(estimator.isRunning());
         assertFalse(estimator.isFixKinematicsEnabled());
 
@@ -10782,6 +10962,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             estimator.addBodyKinematics(measuredKinematics);
 
             assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+            assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(estimator.isRunning());
 
             ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS,
@@ -10789,6 +10970,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         }
 
         assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+        assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        assertTrue(estimator.getElapsedTime(elapsedTime2));
+        assertEquals(elapsedTime1, elapsedTime2);
         assertFalse(estimator.isRunning());
         assertEquals(mStart, 1);
         assertEquals(mBodyKinematicsAdded, N_SAMPLES);
@@ -10982,6 +11170,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         assertEquals(mReset, 1);
         assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
         assertNull(estimator.getCurrentPositionDrift());
         assertFalse(estimator.getCurrentPositionDrift(null));
         assertNull(estimator.getCurrentVelocityDrift());
@@ -11092,6 +11282,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             assertEquals(mBodyKinematicsAdded, 0);
             assertEquals(mReset, 0);
             assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+            assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+            assertNull(estimator.getElapsedTime());
+            final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+            assertFalse(estimator.getElapsedTime(elapsedTime));
             assertFalse(estimator.isRunning());
             assertTrue(estimator.isFixKinematicsEnabled());
 
@@ -11108,6 +11302,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
                 estimator.addBodyKinematics(measuredKinematics);
 
                 assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+                assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
                 assertFalse(estimator.isRunning());
 
                 fixer.fix(measuredKinematics, fixedKinematics);
@@ -11116,6 +11311,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             }
 
             assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+            assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
+            final Time elapsedTime1 = estimator.getElapsedTime();
+            assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
+            assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+            final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+            assertTrue(estimator.getElapsedTime(elapsedTime2));
+            assertEquals(elapsedTime1, elapsedTime2);
             assertFalse(estimator.isRunning());
             assertEquals(mStart, 1);
             assertEquals(mBodyKinematicsAdded, N_SAMPLES);
@@ -11327,6 +11529,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
             assertEquals(mReset, 1);
             assertEquals(0, estimator.getNumberOfProcessedSamples());
+            assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+            assertNull(estimator.getElapsedTime());
+            assertFalse(estimator.getElapsedTime(elapsedTime));
             assertNull(estimator.getCurrentPositionDrift());
             assertFalse(estimator.getCurrentPositionDrift(null));
             assertNull(estimator.getCurrentVelocityDrift());

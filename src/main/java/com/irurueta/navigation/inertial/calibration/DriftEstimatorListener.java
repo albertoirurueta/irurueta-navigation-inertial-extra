@@ -34,7 +34,7 @@ public interface DriftEstimatorListener {
      * measured accelerometer and gyroscope measures.
      *
      * @param estimator estimator that raised the event.
-     * @param measuredKinematics measured kinematics being aded.
+     * @param measuredKinematics measured kinematics being added.
      * @param fixedKinematics fixed kinematics taking into account calibration data.
      */
     void onBodyKinematicsAdded(final DriftEstimator estimator,

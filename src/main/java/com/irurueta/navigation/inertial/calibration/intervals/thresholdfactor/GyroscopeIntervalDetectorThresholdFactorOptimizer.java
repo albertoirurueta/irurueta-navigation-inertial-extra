@@ -171,7 +171,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      *          [0     sy   myz]
      *          [0     0    sz ]
      * </pre>
-     * Values of this matrix are unitless.
+     * Values of this matrix are unit-less.
      */
     private Matrix mEstimatedMg;
 
@@ -287,7 +287,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      * Sets mapper to convert {@link BodyKinematicsSequence} sequences of {@link StandardDeviationTimedBodyKinematics}
      * into quality scores.
      *
-     * @param qualityScoreMapper mapper to convert seqiemces into quality scores.
+     * @param qualityScoreMapper mapper to convert sequences into quality scores.
      * @throws LockedException if optimizer is already running.
      */
     public void setQualityScoreMapper(
@@ -608,7 +608,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      * Gets overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      *
-     * @return overall asolute threshold to determine whether there has been
+     * @return overall absolute threshold to determine whether there has been
      * excessive motion.
      */
     public Acceleration getBaseNoiseLevelAbsoluteThresholdAsMeasurement() {
@@ -854,7 +854,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      *          [0     sy   myz]
      *          [0     0    sz ]
      * </pre>
-     * Values of this matrix are unitless.
+     * Values of this matrix are unit-less.
      *
      * @return estimated gyroscope scale factors and cross coupling errors.
      */

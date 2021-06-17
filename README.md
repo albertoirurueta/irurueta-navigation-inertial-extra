@@ -1,7 +1,7 @@
 # irurueta-navigation-inertial-extra
 Additional calibration estimators for GNSS/INS navigation
 
-[![Build Status](https://travis-ci.org/albertoirurueta/irurueta-navigation-inertial-extra.svg?branch=master)](https://travis-ci.org/albertoirurueta/irurueta-navigation-inertial-extra)
+[![Build Status](https://travis-ci.com/albertoirurueta/irurueta-navigation-inertial-extra.svg?branch=master)](https://travis-ci.com/albertoirurueta/irurueta-navigation-inertial-extra)
 
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=albertoirurueta_irurueta-navigation-inertial-extra&metric=bugs)](https://sonarcloud.io/dashboard?id=albertoirurueta_irurueta-navigation-inertial-extra)

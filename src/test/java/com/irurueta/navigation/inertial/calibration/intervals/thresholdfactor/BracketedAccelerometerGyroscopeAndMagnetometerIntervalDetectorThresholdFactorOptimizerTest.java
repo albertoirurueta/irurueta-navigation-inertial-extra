@@ -2077,7 +2077,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -2129,8 +2129,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
     @Test
     public void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException, IOException {
+            NotReadyException, InvalidRotationMatrixException, IOException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2361,7 +2360,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -2640,7 +2639,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -2919,7 +2918,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -3198,7 +3197,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -3479,7 +3478,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -3762,7 +3761,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 

@@ -1180,12 +1180,10 @@ public class KalmanDriftEstimator extends DriftEstimator {
     /**
      * Computes current orientation drift.
      *
-     * @throws AlgebraException               if there are numerical instabilities.
      * @throws InvalidRotationMatrixException if rotation cannot be accurately
      *                                        estimated.
      */
-    private void computeCurrentOrientationDrift() throws AlgebraException,
-            InvalidRotationMatrixException {
+    private void computeCurrentOrientationDrift() throws InvalidRotationMatrixException {
         mCurrentC = mState.getBodyToEcefCoordinateTransformationMatrix();
 
         mQ.fromMatrix(mCurrentC);

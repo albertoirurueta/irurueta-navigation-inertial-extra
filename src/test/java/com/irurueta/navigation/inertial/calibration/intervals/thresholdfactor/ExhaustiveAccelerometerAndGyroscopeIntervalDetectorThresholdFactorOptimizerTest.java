@@ -1373,7 +1373,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -1603,7 +1603,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -1833,7 +1833,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -2063,7 +2063,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -2293,7 +2293,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -2524,7 +2524,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
@@ -2759,7 +2759,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 continue;
             }
 
-            // check calibration resultç
+            // check calibration result
             final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
             final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
