@@ -2128,6 +2128,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
         assertTrue(numValid > 0);
     }
 
+    @Ignore
     @Test
     public void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException,

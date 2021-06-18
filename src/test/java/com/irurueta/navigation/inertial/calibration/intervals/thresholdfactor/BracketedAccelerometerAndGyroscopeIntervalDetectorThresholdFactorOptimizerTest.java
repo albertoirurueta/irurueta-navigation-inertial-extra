@@ -1650,6 +1650,7 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
         }
     }
 
+    @Ignore
     @Test
     public void testOptimizeMaCommonAxisWithNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException,
