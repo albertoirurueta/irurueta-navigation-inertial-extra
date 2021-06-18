@@ -87,7 +87,7 @@ public abstract class IntervalDetectorThresholdFactorOptimizer<T,
     /**
      * Constructor.
      */
-    public IntervalDetectorThresholdFactorOptimizer() {
+    protected IntervalDetectorThresholdFactorOptimizer() {
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class IntervalDetectorThresholdFactorOptimizer<T,
      *
      * @param dataSource instance in charge of retrieving data for this optimizer.
      */
-    public IntervalDetectorThresholdFactorOptimizer(final S dataSource) {
+    protected IntervalDetectorThresholdFactorOptimizer(final S dataSource) {
         mDataSource = dataSource;
     }
 
@@ -222,12 +222,12 @@ public abstract class IntervalDetectorThresholdFactorOptimizer<T,
      * calibration parameters.
      *
      * @return optimized threshold factor.
-     * @throws NotReadyException                           if this optimizer is not
-     *                                                     ready to start optimization.
-     * @throws LockedException                             if optimizer is already
-     *                                                     running.
+     * @throws NotReadyException                                 if this optimizer is not
+     *                                                           ready to start optimization.
+     * @throws LockedException                                   if optimizer is already
+     *                                                           running.
      * @throws IntervalDetectorThresholdFactorOptimizerException if optimization fails for
-     *                                                     some reason.
+     *                                                           some reason.
      */
     public abstract double optimize()
             throws NotReadyException, LockedException,
@@ -237,11 +237,9 @@ public abstract class IntervalDetectorThresholdFactorOptimizer<T,
      * Checks current progress and notifies if progress has changed significantly.
      */
     protected void checkAndNotifyProgress() {
-        if (mListener != null) {
-            if (mProgress - mPreviousProgress > mProgressDelta) {
-                mPreviousProgress = mProgress;
-                mListener.onOptimizeProgressChange(this, Math.min(mProgress, 1.0f));
-            }
+        if (mListener != null && (mProgress - mPreviousProgress > mProgressDelta)) {
+            mPreviousProgress = mProgress;
+            mListener.onOptimizeProgressChange(this, Math.min(mProgress, 1.0f));
         }
     }
 

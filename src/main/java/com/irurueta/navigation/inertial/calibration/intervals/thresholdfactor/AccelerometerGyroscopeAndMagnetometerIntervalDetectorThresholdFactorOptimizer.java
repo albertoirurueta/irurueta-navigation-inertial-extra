@@ -350,7 +350,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
     /**
      * Constructor.
      */
-    public AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer() {
+    protected AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer() {
         initialize();
     }
 
@@ -359,7 +359,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *
      * @param dataSource instance in charge of retrieving data for this optimizer.
      */
-    public AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
         super(dataSource);
         initialize();
@@ -382,7 +382,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *                                  if magnetometer calibrator does not use
      *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
      */
-    public AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerNonLinearCalibrator accelerometerCalibrator,
             final GyroscopeNonLinearCalibrator gyroscopeCalibrator,
             final MagnetometerNonLinearCalibrator magnetometerCalibrator) {
@@ -414,7 +414,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *                                  if magnetometer calibrator does not use
      *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
      */
-    public AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
             final AccelerometerNonLinearCalibrator accelerometerCalibrator,
             final GyroscopeNonLinearCalibrator gyroscopeCalibrator,

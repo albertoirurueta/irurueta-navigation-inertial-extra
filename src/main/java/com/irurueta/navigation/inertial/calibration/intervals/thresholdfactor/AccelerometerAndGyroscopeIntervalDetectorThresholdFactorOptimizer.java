@@ -269,7 +269,7 @@ public abstract class AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
     /**
      * Constructor.
      */
-    public AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer() {
+    protected AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer() {
         initialize();
     }
 
@@ -278,7 +278,7 @@ public abstract class AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
      *
      * @param dataSource instance in charge of retrieving data for this optimizer.
      */
-    public AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
         super(dataSource);
         initialize();
@@ -297,7 +297,7 @@ public abstract class AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
      *                                  {@link BodyKinematicsSequence} sequences of
      *                                  {@link StandardDeviationTimedBodyKinematics}.
      */
-    public AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerNonLinearCalibrator accelerometerCalibrator,
             final GyroscopeNonLinearCalibrator gyroscopeCalibrator) {
         try {
@@ -324,7 +324,7 @@ public abstract class AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
      *                                  {@link BodyKinematicsSequence} sequences of
      *                                  {@link StandardDeviationTimedBodyKinematics}.
      */
-    public AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
             final AccelerometerNonLinearCalibrator accelerometerCalibrator,
             final GyroscopeNonLinearCalibrator gyroscopeCalibrator) {

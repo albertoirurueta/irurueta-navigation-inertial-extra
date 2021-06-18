@@ -170,7 +170,7 @@ public abstract class AccelerometerIntervalDetectorThresholdFactorOptimizer exte
     /**
      * Constructor.
      */
-    public AccelerometerIntervalDetectorThresholdFactorOptimizer() {
+    protected AccelerometerIntervalDetectorThresholdFactorOptimizer() {
         initialize();
     }
 
@@ -179,7 +179,7 @@ public abstract class AccelerometerIntervalDetectorThresholdFactorOptimizer exte
      *
      * @param dataSource instance in charge of retrieving data for this optimizer.
      */
-    public AccelerometerIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
         super(dataSource);
         initialize();
@@ -193,7 +193,7 @@ public abstract class AccelerometerIntervalDetectorThresholdFactorOptimizer exte
      * @throws IllegalArgumentException if accelerometer calibrator does not use
      *                                  {@link StandardDeviationBodyKinematics} measurements.
      */
-    public AccelerometerIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerNonLinearCalibrator calibrator) {
         try {
             setCalibrator(calibrator);
@@ -212,7 +212,7 @@ public abstract class AccelerometerIntervalDetectorThresholdFactorOptimizer exte
      * @throws IllegalArgumentException if accelerometer calibrator does not use
      *                                  {@link StandardDeviationBodyKinematics} measurements.
      */
-    public AccelerometerIntervalDetectorThresholdFactorOptimizer(
+    protected AccelerometerIntervalDetectorThresholdFactorOptimizer(
             final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
             final AccelerometerNonLinearCalibrator calibrator) {
         super(dataSource);

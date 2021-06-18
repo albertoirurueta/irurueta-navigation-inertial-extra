@@ -185,7 +185,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
     /**
      * Constructor.
      */
-    public GyroscopeIntervalDetectorThresholdFactorOptimizer() {
+    protected GyroscopeIntervalDetectorThresholdFactorOptimizer() {
         initialize();
     }
 
@@ -194,7 +194,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      *
      * @param dataSource instance in charge of retrieving data for this optimizer.
      */
-    public GyroscopeIntervalDetectorThresholdFactorOptimizer(
+    protected GyroscopeIntervalDetectorThresholdFactorOptimizer(
             final GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
         super(dataSource);
         initialize();
@@ -209,7 +209,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      *                                  {@link BodyKinematicsSequence} sequences of
      *                                  {@link StandardDeviationTimedBodyKinematics}.
      */
-    public GyroscopeIntervalDetectorThresholdFactorOptimizer(
+    protected GyroscopeIntervalDetectorThresholdFactorOptimizer(
             final GyroscopeNonLinearCalibrator calibrator) {
         try {
             setCalibrator(calibrator);
@@ -229,7 +229,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      *                                  {@link BodyKinematicsSequence} sequences of
      *                                  {@link StandardDeviationTimedBodyKinematics}.
      */
-    public GyroscopeIntervalDetectorThresholdFactorOptimizer(
+    protected GyroscopeIntervalDetectorThresholdFactorOptimizer(
             final GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
             final GyroscopeNonLinearCalibrator calibrator) {
         super(dataSource);

@@ -15,7 +15,6 @@
  */
 package com.irurueta.navigation.inertial.calibration;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
@@ -28,7 +27,6 @@ import java.util.logging.Logger;
 /**
  * Contains build data of this library.
  */
-@SuppressWarnings("WeakerAccess")
 public class BuildInfo {
 
     /**

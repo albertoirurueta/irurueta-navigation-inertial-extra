@@ -15,7 +15,6 @@
  */
 package com.irurueta.navigation.inertial.calibration;
 
-import com.irurueta.navigation.BuildInfo;
 import org.junit.Test;
 
 import java.util.Date;

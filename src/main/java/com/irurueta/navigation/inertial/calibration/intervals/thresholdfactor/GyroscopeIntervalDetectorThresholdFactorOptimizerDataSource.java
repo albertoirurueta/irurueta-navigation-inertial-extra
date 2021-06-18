@@ -1,7 +1,3 @@
-package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
-
-import com.irurueta.navigation.inertial.calibration.TimedBodyKinematics;
-
 /*
  * Copyright (C) 2021 Alberto Irurueta Carro (alberto@irurueta.com)
  *
@@ -17,6 +13,9 @@ import com.irurueta.navigation.inertial.calibration.TimedBodyKinematics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
+
+import com.irurueta.navigation.inertial.calibration.TimedBodyKinematics;
 
 /**
  * Retrieves data for a {@link GyroscopeIntervalDetectorThresholdFactorOptimizer}.

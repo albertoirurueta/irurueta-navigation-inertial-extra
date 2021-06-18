@@ -209,6 +209,7 @@ public class DriftEstimator {
         try {
             setReferenceNedFrame(referenceFrame);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -246,6 +247,7 @@ public class DriftEstimator {
             setAngularSpeedBias(bg);
             setAngularSpeedCrossCouplingErrors(mg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -293,6 +295,7 @@ public class DriftEstimator {
         try {
             setAngularSpeedGDependantCrossBias(gg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -344,6 +347,7 @@ public class DriftEstimator {
             setAngularSpeedBias(bg);
             setAngularSpeedCrossCouplingErrors(mg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -395,6 +399,7 @@ public class DriftEstimator {
         try {
             setAngularSpeedGDependantCrossBias(gg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 

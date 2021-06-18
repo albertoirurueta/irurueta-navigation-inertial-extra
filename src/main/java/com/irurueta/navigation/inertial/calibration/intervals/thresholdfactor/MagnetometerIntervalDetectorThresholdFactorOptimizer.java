@@ -166,7 +166,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
     /**
      * Constructor.
      */
-    public MagnetometerIntervalDetectorThresholdFactorOptimizer() {
+    protected MagnetometerIntervalDetectorThresholdFactorOptimizer() {
         initialize();
     }
 
@@ -175,7 +175,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      *
      * @param dataSource instance in charge of retrieving data for this optimizer.
      */
-    public MagnetometerIntervalDetectorThresholdFactorOptimizer(
+    protected MagnetometerIntervalDetectorThresholdFactorOptimizer(
             final MagnetometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
         super(dataSource);
         initialize();
@@ -189,7 +189,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws IllegalArgumentException if magnetometer calibrator does not use
      *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
      */
-    public MagnetometerIntervalDetectorThresholdFactorOptimizer(
+    protected MagnetometerIntervalDetectorThresholdFactorOptimizer(
             final MagnetometerNonLinearCalibrator calibrator) {
         try {
             setCalibrator(calibrator);
@@ -208,7 +208,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws IllegalArgumentException if magnetometer calibrator does not use
      *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
      */
-    public MagnetometerIntervalDetectorThresholdFactorOptimizer(
+    protected MagnetometerIntervalDetectorThresholdFactorOptimizer(
             final MagnetometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
             final MagnetometerNonLinearCalibrator calibrator) {
         super(dataSource);

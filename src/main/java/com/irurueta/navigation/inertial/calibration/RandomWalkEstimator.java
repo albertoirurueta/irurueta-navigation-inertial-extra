@@ -201,6 +201,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             setAngularSpeedBias(bg);
             setAngularSpeedCrossCouplingErrors(mg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -249,6 +250,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setAngularSpeedGDependantCrossBias(gg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -301,6 +303,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             setAngularSpeedBias(bg);
             setAngularSpeedCrossCouplingErrors(mg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -354,6 +357,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setAngularSpeedGDependantCrossBias(gg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -401,6 +405,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setNedPositionAndNedOrientation(nedPosition, nedC);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -456,6 +461,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             setAngularSpeedBias(bg);
             setAngularSpeedCrossCouplingErrors(mg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -525,6 +531,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             setAngularSpeedCrossCouplingErrors(mg);
             setAngularSpeedGDependantCrossBias(gg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -595,6 +602,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             setAngularSpeedBias(bg);
             setAngularSpeedCrossCouplingErrors(mg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -664,6 +672,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setAngularSpeedGDependantCrossBias(gg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -719,6 +728,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setEcefPositionAndNedOrientation(ecefPosition, nedC);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -774,6 +784,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             setAngularSpeedBias(bg);
             setAngularSpeedCrossCouplingErrors(mg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -843,6 +854,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             setAngularSpeedCrossCouplingErrors(mg);
             setAngularSpeedGDependantCrossBias(gg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -911,6 +923,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             setAngularSpeedBias(bg);
             setAngularSpeedCrossCouplingErrors(mg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -976,6 +989,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setAngularSpeedGDependantCrossBias(gg);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -1044,6 +1058,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setTimeInterval(timeInterval);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -1115,6 +1130,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setTimeInterval(timeInterval);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -1188,6 +1204,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setTimeInterval(timeInterval);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -1263,6 +1280,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setTimeInterval(timeInterval);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -1336,6 +1354,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setTimeInterval(timeInterval);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -1407,6 +1426,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setTimeInterval(timeInterval);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -1478,6 +1498,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setTimeInterval(timeInterval);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -1549,6 +1570,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         try {
             setTimeInterval(timeInterval);
         } catch (final LockedException ignore) {
+            // never happens
         }
     }
 
@@ -3998,7 +4020,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * Sets number of samples to be used on each drift period.
      *
      * @param driftPeriodSamples number of samples to be used on each drift period.
-     * @throws LockedException if estimator is currently running.
+     * @throws LockedException          if estimator is currently running.
      * @throws IllegalArgumentException if provided value is negative or zero.
      */
     public void setDriftPeriodSamples(int driftPeriodSamples)
@@ -4088,10 +4110,8 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
 
             final int numberOfSamples = getNumberOfProcessedSamples();
 
-            if (numberOfSamples == 0) {
-                if (mListener != null) {
-                    mListener.onStart(this);
-                }
+            if (numberOfSamples == 0 && mListener != null) {
+                mListener.onStart(this);
             }
 
             if (mFixKinematics) {
@@ -4129,8 +4149,8 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             if (numberOfSamples % mDriftPeriodSamples == 0) {
                 // for each drift period, update mean and variance values
                 // of drift and reset drift estimator
-                final double n = mNumberOfProcessedDriftPeriods + 1;
-                final double tmp = (double) mNumberOfProcessedDriftPeriods / n;
+                final double n = mNumberOfProcessedDriftPeriods + 1.0;
+                final double tmp = mNumberOfProcessedDriftPeriods / n;
 
                 final double positionDrift = mDriftEstimator
                         .getCurrentPositionDriftNormMeters();
