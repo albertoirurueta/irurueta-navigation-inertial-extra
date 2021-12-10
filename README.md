@@ -34,3 +34,14 @@ Latest release:
     <scope>compile</scope>
 </dependency>
 ```
+
+Latest snapshot:
+```
+<dependency>
+    <groupId>com.irurueta</groupId>
+    <artifactId>irurueta-navigation-inertial-extra</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+    <scope>compile</scope>
+</dependency>
+```
+
