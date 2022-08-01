@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>com.irurueta:irurueta-navigation-inertial-extra - Checkstyle report</title>
+    <link>https://github.com/albertoirurueta/irurueta-navigation-inertial-extra</link>
+    <description>com.irurueta:irurueta-navigation-inertial-extra - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2021 - 2022</copyright>
+    <item>
+      <title>File: 50,
+             Errors: 158,
+             Warnings: 0,
+             Infos: 0
+      </title>
+            <link>https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.IntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/IntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.RandomWalkEstimationException.java">com/irurueta/navigation/inertial/calibration/RandomWalkEstimationException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.BracketedMagnetometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/BracketedMagnetometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.DriftEstimatorListener.java">com/irurueta/navigation/inertial/calibration/DriftEstimatorListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/AccelerometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  21
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.KalmanDriftEstimator.java">com/irurueta/navigation/inertial/calibration/KalmanDriftEstimator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.AccelerometerBiasRandomWalkSource.java">com/irurueta/navigation/inertial/calibration/AccelerometerBiasRandomWalkSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.MagnetometerIntervalDetectorThresholdFactorOptimizerDataSource.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/MagnetometerIntervalDetectorThresholdFactorOptimizerDataSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerAndGyroscopeMseRule.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/AccelerometerAndGyroscopeMseRule.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.DefaultGyroscopeQualityScoreMapper.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/DefaultGyroscopeQualityScoreMapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.IntervalDetectorThresholdFactorOptimizerDataSource.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/IntervalDetectorThresholdFactorOptimizerDataSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.DefaultMagnetometerQualityScoreMapper.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/DefaultMagnetometerQualityScoreMapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.VelocityUncertaintySource.java">com/irurueta/navigation/inertial/calibration/VelocityUncertaintySource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  29
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.QualityScoreMapper.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/QualityScoreMapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.INSLooselyCoupledKalmanInitializerConfigCreator.java">com/irurueta/navigation/inertial/calibration/INSLooselyCoupledKalmanInitializerConfigCreator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizerDataSource.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizerDataSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.IntervalDetectorThresholdFactorOptimizerException.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/IntervalDetectorThresholdFactorOptimizerException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.PositionNoiseStandardDeviationSource.java">com/irurueta/navigation/inertial/calibration/PositionNoiseStandardDeviationSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.build-info.properties">com/irurueta/navigation/inertial/calibration/build-info.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.IntervalDetectorThresholdFactorOptimizerListener.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/IntervalDetectorThresholdFactorOptimizerListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.PositionUncertaintySource.java">com/irurueta/navigation/inertial/calibration/PositionUncertaintySource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.DefaultAccelerometerQualityScoreMapper.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/DefaultAccelerometerQualityScoreMapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.GyroscopeBiasRandomWalkSource.java">com/irurueta/navigation/inertial/calibration/GyroscopeBiasRandomWalkSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.MagnetometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/MagnetometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  21
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.BuildInfo.java">com/irurueta/navigation/inertial/calibration/BuildInfo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.DefaultAccelerometerAndGyroscopeMseRule.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/DefaultAccelerometerAndGyroscopeMseRule.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.DefaultAccelerometerGyroscopeAndMagnetometerMseRule.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/DefaultAccelerometerGyroscopeAndMagnetometerMseRule.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.DriftEstimationException.java">com/irurueta/navigation/inertial/calibration/DriftEstimationException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.INSLooselyCoupledKalmanConfigCreator.java">com/irurueta/navigation/inertial/calibration/INSLooselyCoupledKalmanConfigCreator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.AttitudeUncertaintySource.java">com/irurueta/navigation/inertial/calibration/AttitudeUncertaintySource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.DriftEstimator.java">com/irurueta/navigation/inertial/calibration/DriftEstimator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.RandomWalkEstimatorListener.java">com/irurueta/navigation/inertial/calibration/RandomWalkEstimatorListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.GyroscopeIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/GyroscopeIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  22
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerGyroscopeAndMagnetometerMseRule.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/AccelerometerGyroscopeAndMagnetometerMseRule.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.RandomWalkEstimator.java">com/irurueta/navigation/inertial/calibration/RandomWalkEstimator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  19
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.VelocityNoiseStandardDeviationSource.java">com/irurueta/navigation/inertial/calibration/VelocityNoiseStandardDeviationSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  26
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/checkstyle.html#com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.java">com/irurueta/navigation/inertial/calibration/intervals/thresholdfactor/ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+

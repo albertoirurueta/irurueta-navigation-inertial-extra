@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.irurueta.navigation.inertial.calibration"},{"l":"com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor"}]
