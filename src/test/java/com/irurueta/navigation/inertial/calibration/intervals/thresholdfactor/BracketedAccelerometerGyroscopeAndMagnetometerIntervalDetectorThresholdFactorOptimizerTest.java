@@ -2514,7 +2514,12 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
             assertEquals(0, mEnd);
             assertEquals(0.0f, mProgress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            double thresholdFactor;
+            try {
+                thresholdFactor = optimizer.optimize();
+            } catch (final IntervalDetectorThresholdFactorOptimizerException e) {
+                continue;
+            }
 
             // check optimization results
             assertEquals(1, mStart);
