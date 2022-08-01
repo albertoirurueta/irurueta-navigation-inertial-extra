@@ -41,6 +41,7 @@ import com.irurueta.navigation.inertial.calibration.accelerometer.KnownGravityNo
 import com.irurueta.navigation.inertial.calibration.generators.AccelerometerAndGyroscopeMeasurementsGenerator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.EasyGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.QuaternionIntegrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.QuaternionStepIntegratorType;
 import com.irurueta.navigation.inertial.calibration.intervals.TriadStaticIntervalDetector;
 import com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource;
 import com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer;
@@ -11973,8 +11974,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             final double gyroNoiseRootPSD,
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator,
             final EasyGyroscopeCalibrator gyroscopeCalibrator)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            InvalidRotationMatrixException, WrongSizeException, LockedException {
+        throws InvalidSourceAndDestinationFrameTypeException,
+        InvalidRotationMatrixException, WrongSizeException, LockedException, RotationException {
 
         mTimedBodyKinematics.clear();
 
@@ -12039,8 +12040,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             final boolean changePosition, final Matrix ma, final double accelNoiseRootPSD,
             final double gyroNoiseRootPSD, final int numSequences,
             final int numMeasurements) throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -12210,8 +12211,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             final Random random,
             final int startSample,
             final boolean changePosition)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            InvalidRotationMatrixException {
+        throws InvalidSourceAndDestinationFrameTypeException,
+        InvalidRotationMatrixException, RotationException {
 
         final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
         final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
@@ -12337,7 +12338,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         final Quaternion afterQ = new Quaternion();
         QuaternionIntegrator.integrateGyroSequence(
-                trueSequence, beforeQ, afterQ);
+                trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA, afterQ);
 
         final CoordinateTransformation newNedC =
                 new CoordinateTransformation(

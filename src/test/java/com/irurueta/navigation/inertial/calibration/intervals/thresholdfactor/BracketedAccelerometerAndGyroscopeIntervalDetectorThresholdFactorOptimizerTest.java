@@ -19,6 +19,7 @@ import com.irurueta.algebra.Matrix;
 import com.irurueta.algebra.WrongSizeException;
 import com.irurueta.geometry.InvalidRotationMatrixException;
 import com.irurueta.geometry.Quaternion;
+import com.irurueta.geometry.RotationException;
 import com.irurueta.navigation.LockedException;
 import com.irurueta.navigation.NavigationException;
 import com.irurueta.navigation.NotReadyException;
@@ -50,6 +51,7 @@ import com.irurueta.navigation.inertial.calibration.gyroscope.EasyGyroscopeCalib
 import com.irurueta.navigation.inertial.calibration.gyroscope.KnownFrameGyroscopeNonLinearLeastSquaresCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.PROMedSRobustEasyGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.QuaternionIntegrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.QuaternionStepIntegratorType;
 import com.irurueta.navigation.inertial.calibration.intervals.TriadStaticIntervalDetector;
 import com.irurueta.navigation.inertial.calibration.noise.WindowedTriadNoiseEstimator;
 import com.irurueta.navigation.inertial.estimators.ECEFGravityEstimator;
@@ -1653,9 +1655,9 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
     @Ignore
     @Test
     public void testOptimizeMaCommonAxisWithNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1884,9 +1886,9 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
 
     @Test
     public void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2114,9 +2116,9 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
 
     @Test
     public void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2344,9 +2346,9 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
 
     @Test
     public void testOptimizeGeneralGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2574,9 +2576,9 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
 
     @Test
     public void testOptimizeMaCommonAxisGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2804,9 +2806,9 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
     @Ignore
     @Test
     public void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -3035,9 +3037,9 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
     @Ignore
     @Test
     public void testOptimizeRobustCalibrators() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -3399,8 +3401,8 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
             final boolean changePosition, final Matrix ma, final double accelNoiseRootPSD,
             final double gyroNoiseRootPSD, final int numSequences,
             final int numMeasurements) throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException,
-            InvalidRotationMatrixException {
+        InvalidSourceAndDestinationFrameTypeException,
+        InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -3570,8 +3572,8 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
             final Random random,
             final int startSample,
             final boolean changePosition)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            InvalidRotationMatrixException {
+        throws InvalidSourceAndDestinationFrameTypeException,
+        InvalidRotationMatrixException, RotationException {
 
         final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
         final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
@@ -3697,7 +3699,7 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
 
         final Quaternion afterQ = new Quaternion();
         QuaternionIntegrator.integrateGyroSequence(
-                trueSequence, beforeQ, afterQ);
+                trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA, afterQ);
 
         final CoordinateTransformation newNedC =
                 new CoordinateTransformation(

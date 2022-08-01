@@ -19,6 +19,7 @@ import com.irurueta.algebra.Matrix;
 import com.irurueta.algebra.WrongSizeException;
 import com.irurueta.geometry.InvalidRotationMatrixException;
 import com.irurueta.geometry.Quaternion;
+import com.irurueta.geometry.RotationException;
 import com.irurueta.navigation.LockedException;
 import com.irurueta.navigation.NavigationException;
 import com.irurueta.navigation.NotReadyException;
@@ -29,6 +30,7 @@ import com.irurueta.navigation.frames.InvalidSourceAndDestinationFrameTypeExcept
 import com.irurueta.navigation.frames.NEDFrame;
 import com.irurueta.navigation.frames.converters.ECEFtoNEDFrameConverter;
 import com.irurueta.navigation.frames.converters.NEDtoECEFFrameConverter;
+import com.irurueta.navigation.inertial.calibration.gyroscope.QuaternionStepIntegratorType;
 import com.irurueta.navigation.inertial.wmm.WMMEarthMagneticFluxDensityEstimator;
 import com.irurueta.navigation.inertial.BodyKinematics;
 import com.irurueta.navigation.inertial.BodyMagneticFluxDensity;
@@ -1338,9 +1340,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     @Test
     public void testOptimizeMaCommonAxisWithNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException, IOException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1619,8 +1621,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
     @Ignore
     @Test
     public void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, InvalidRotationMatrixException, IOException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1910,8 +1912,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     @Test
     public void testOptimizeCommonAxisNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, InvalidRotationMatrixException, IOException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2193,9 +2195,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     @Test
     public void testOptimizeGeneralGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException, IOException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2472,8 +2474,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     @Test
     public void testOptimizeCommonAxisGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, InvalidRotationMatrixException, IOException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2756,9 +2758,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
     @Ignore
     @Test
     public void testOptimizeCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange()
-            throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
-            LockedException, NotReadyException,
-            InvalidRotationMatrixException, IOException {
+        throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+        LockedException, NotReadyException,
+        InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -3041,9 +3043,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
     @Ignore
     @Test
     public void testOptimizeRobustCalibrators() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-            InvalidRotationMatrixException, IOException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+        InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -3459,8 +3461,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final Date timestamp,
             final NEDPosition nedPosition,
             final double magnetometerNoiseStd) throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException,
-            InvalidRotationMatrixException, IOException {
+        InvalidSourceAndDestinationFrameTypeException,
+        InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -3748,8 +3750,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final NEDPosition nedPosition,
             final CoordinateTransformation cnb,
             final GaussianRandomizer noiseRandomizer)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            InvalidRotationMatrixException {
+        throws InvalidSourceAndDestinationFrameTypeException,
+        InvalidRotationMatrixException, RotationException {
 
         final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
         final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
@@ -3880,7 +3882,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         final Quaternion afterQ = new Quaternion();
         QuaternionIntegrator.integrateGyroSequence(
-                trueSequence, beforeQ, afterQ);
+                trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA, afterQ);
 
         final CoordinateTransformation newNedC =
                 new CoordinateTransformation(

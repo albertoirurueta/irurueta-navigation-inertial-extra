@@ -20,6 +20,7 @@ import com.irurueta.algebra.Matrix;
 import com.irurueta.algebra.WrongSizeException;
 import com.irurueta.geometry.InvalidRotationMatrixException;
 import com.irurueta.geometry.Quaternion;
+import com.irurueta.geometry.RotationException;
 import com.irurueta.navigation.LockedException;
 import com.irurueta.navigation.NotReadyException;
 import com.irurueta.navigation.frames.CoordinateTransformation;
@@ -39,6 +40,7 @@ import com.irurueta.navigation.inertial.calibration.generators.AccelerometerAndG
 import com.irurueta.navigation.inertial.calibration.generators.AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.EasyGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.QuaternionIntegrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.QuaternionStepIntegratorType;
 import com.irurueta.navigation.inertial.calibration.intervals.TriadStaticIntervalDetector;
 import com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer;
 import com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer;
@@ -302,9 +304,9 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @Test
     public void testCreate() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            InvalidRotationMatrixException, NotReadyException,
-            RandomWalkEstimationException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException,
+        InvalidRotationMatrixException, NotReadyException,
+        RandomWalkEstimationException, RotationException {
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
         final Matrix ma = generateMaCommonAxis();
@@ -661,7 +663,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
             final Random random,
             final int startSample,
             final boolean changePosition)
-            throws InvalidSourceAndDestinationFrameTypeException, LockedException, InvalidRotationMatrixException {
+        throws InvalidSourceAndDestinationFrameTypeException, LockedException, InvalidRotationMatrixException, RotationException {
 
         final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
         final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
@@ -776,7 +778,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
         final Quaternion afterQ = new Quaternion();
         QuaternionIntegrator.integrateGyroSequence(
-                trueSequence, beforeQ, afterQ);
+                trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA, afterQ);
 
         final CoordinateTransformation newNedC =
                 new CoordinateTransformation(
