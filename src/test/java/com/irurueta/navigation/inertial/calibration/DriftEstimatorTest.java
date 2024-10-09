@@ -137,13 +137,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getReferenceNedVelocity(null));
         assertNull(estimator.getReferenceNedCoordinateTransformation());
         assertFalse(estimator.getReferenceNedCoordinateTransformation(null));
-        assertEquals(new Matrix(3, 1),
-                estimator.getAccelerationBias());
+        assertEquals(new Matrix(3, 1), estimator.getAccelerationBias());
         final Matrix ba1 = new Matrix(3, 1);
         estimator.getAccelerationBias(ba1);
         assertEquals(new Matrix(3, 1), ba1);
-        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(), 0.0);
         final double[] ba2 = new double[3];
         estimator.getAccelerationBiasArray(ba2);
         assertArrayEquals(new double[3], ba2, 0.0);
@@ -161,26 +159,22 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAccelerationCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAccelerationCrossCouplingErrors());
         final Matrix ma = new Matrix(3, 3);
         estimator.getAccelerationCrossCouplingErrors(ma);
         assertEquals(new Matrix(3, 3), ma);
@@ -193,13 +187,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAccelerationMyz(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzx(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzy(), 0.0);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAngularSpeedBias());
+        assertEquals(new Matrix(3, 1), estimator.getAngularSpeedBias());
         final Matrix bg1 = new Matrix(3, 1);
         estimator.getAngularSpeedBias(bg1);
         assertEquals(new Matrix(3, 1), bg1);
-        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(), 0.0);
         final double[] bg2 = new double[3];
         estimator.getAngularSpeedBiasArray(bg2);
         assertArrayEquals(new double[3], bg2, 0.0);
@@ -217,25 +209,21 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedCrossCouplingErrors());
         final Matrix mg = new Matrix(3, 3);
         estimator.getAngularSpeedCrossCouplingErrors(mg);
         assertEquals(new Matrix(3, 3), mg);
@@ -248,17 +236,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -290,12 +275,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
     }
 
     @Test
@@ -319,13 +302,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getReferenceNedVelocity(null));
         assertNull(estimator.getReferenceNedCoordinateTransformation());
         assertFalse(estimator.getReferenceNedCoordinateTransformation(null));
-        assertEquals(new Matrix(3, 1),
-                estimator.getAccelerationBias());
+        assertEquals(new Matrix(3, 1), estimator.getAccelerationBias());
         final Matrix ba1 = new Matrix(3, 1);
         estimator.getAccelerationBias(ba1);
         assertEquals(new Matrix(3, 1), ba1);
-        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(), 0.0);
         final double[] ba2 = new double[3];
         estimator.getAccelerationBiasArray(ba2);
         assertArrayEquals(new double[3], ba2, 0.0);
@@ -343,26 +324,22 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAccelerationCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAccelerationCrossCouplingErrors());
         final Matrix ma = new Matrix(3, 3);
         estimator.getAccelerationCrossCouplingErrors(ma);
         assertEquals(new Matrix(3, 3), ma);
@@ -375,13 +352,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAccelerationMyz(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzx(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzy(), 0.0);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAngularSpeedBias());
+        assertEquals(new Matrix(3, 1), estimator.getAngularSpeedBias());
         final Matrix bg1 = new Matrix(3, 1);
         estimator.getAngularSpeedBias(bg1);
         assertEquals(new Matrix(3, 1), bg1);
-        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(), 0.0);
         final double[] bg2 = new double[3];
         estimator.getAngularSpeedBiasArray(bg2);
         assertArrayEquals(new double[3], bg2, 0.0);
@@ -399,25 +374,21 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedCrossCouplingErrors());
         final Matrix mg = new Matrix(3, 3);
         estimator.getAngularSpeedCrossCouplingErrors(mg);
         assertEquals(new Matrix(3, 3), mg);
@@ -430,17 +401,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -472,19 +440,16 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
     }
 
     @Test
     public void testConstructor3() throws WrongSizeException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final DriftEstimator estimator = new DriftEstimator(ecefFrame);
 
@@ -508,8 +473,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -523,19 +488,15 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAccelerationBias());
+        assertEquals(new Matrix(3, 1), estimator.getAccelerationBias());
         final Matrix ba1 = new Matrix(3, 1);
         estimator.getAccelerationBias(ba1);
         assertEquals(new Matrix(3, 1), ba1);
-        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(), 0.0);
         final double[] ba2 = new double[3];
         estimator.getAccelerationBiasArray(ba2);
         assertArrayEquals(new double[3], ba2, 0.0);
@@ -553,26 +514,22 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAccelerationCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAccelerationCrossCouplingErrors());
         final Matrix ma = new Matrix(3, 3);
         estimator.getAccelerationCrossCouplingErrors(ma);
         assertEquals(new Matrix(3, 3), ma);
@@ -585,13 +542,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAccelerationMyz(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzx(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzy(), 0.0);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAngularSpeedBias());
+        assertEquals(new Matrix(3, 1), estimator.getAngularSpeedBias());
         final Matrix bg1 = new Matrix(3, 1);
         estimator.getAngularSpeedBias(bg1);
         assertEquals(new Matrix(3, 1), bg1);
-        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(), 0.0);
         final double[] bg2 = new double[3];
         estimator.getAngularSpeedBiasArray(bg2);
         assertArrayEquals(new double[3], bg2, 0.0);
@@ -609,25 +564,21 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedCrossCouplingErrors());
         final Matrix mg = new Matrix(3, 3);
         estimator.getAngularSpeedCrossCouplingErrors(mg);
         assertEquals(new Matrix(3, 3), mg);
@@ -640,17 +591,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -682,22 +630,18 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
     }
 
     @Test
     public void testConstructor4() throws WrongSizeException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-        final DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                this);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -713,14 +657,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceEcefPosition(ecefPosition2));
         assertEquals(ecefPosition1, ecefPosition2);
         final ECEFVelocity ecefVelocity1 = estimator.getReferenceEcefVelocity();
-        assertEquals(ecefFrame.getECEFVelocity(), ecefVelocity1);
+        assertEquals(ecefVelocity1, ecefFrame.getECEFVelocity());
         final ECEFVelocity ecefVelocity2 = new ECEFVelocity();
         assertTrue(estimator.getReferenceEcefVelocity(ecefVelocity2));
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -734,19 +678,15 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAccelerationBias());
+        assertEquals(new Matrix(3, 1), estimator.getAccelerationBias());
         final Matrix ba1 = new Matrix(3, 1);
         estimator.getAccelerationBias(ba1);
         assertEquals(new Matrix(3, 1), ba1);
-        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(), 0.0);
         final double[] ba2 = new double[3];
         estimator.getAccelerationBiasArray(ba2);
         assertArrayEquals(new double[3], ba2, 0.0);
@@ -764,26 +704,22 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAccelerationCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAccelerationCrossCouplingErrors());
         final Matrix ma = new Matrix(3, 3);
         estimator.getAccelerationCrossCouplingErrors(ma);
         assertEquals(new Matrix(3, 3), ma);
@@ -796,13 +732,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAccelerationMyz(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzx(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzy(), 0.0);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAngularSpeedBias());
+        assertEquals(new Matrix(3, 1), estimator.getAngularSpeedBias());
         final Matrix bg1 = new Matrix(3, 1);
         estimator.getAngularSpeedBias(bg1);
         assertEquals(new Matrix(3, 1), bg1);
-        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(), 0.0);
         final double[] bg2 = new double[3];
         estimator.getAngularSpeedBiasArray(bg2);
         assertArrayEquals(new double[3], bg2, 0.0);
@@ -820,25 +754,21 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedCrossCouplingErrors());
         final Matrix mg = new Matrix(3, 3);
         estimator.getAngularSpeedCrossCouplingErrors(mg);
         assertEquals(new Matrix(3, 3), mg);
@@ -851,17 +781,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -893,19 +820,16 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
     }
 
     @Test
     public void testConstructor5() throws WrongSizeException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final DriftEstimator estimator = new DriftEstimator(nedFrame);
 
@@ -923,14 +847,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceEcefPosition(ecefPosition2));
         assertEquals(ecefPosition1, ecefPosition2);
         final ECEFVelocity ecefVelocity1 = estimator.getReferenceEcefVelocity();
-        assertEquals(ecefFrame.getECEFVelocity(), ecefVelocity1);
+        assertEquals(ecefVelocity1, ecefFrame.getECEFVelocity());
         final ECEFVelocity ecefVelocity2 = new ECEFVelocity();
         assertTrue(estimator.getReferenceEcefVelocity(ecefVelocity2));
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
-        assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertEquals(ecefC1, ecefFrame.getCoordinateTransformation());
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -944,19 +868,15 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAccelerationBias());
+        assertEquals(new Matrix(3, 1), estimator.getAccelerationBias());
         final Matrix ba1 = new Matrix(3, 1);
         estimator.getAccelerationBias(ba1);
         assertEquals(new Matrix(3, 1), ba1);
-        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(), 0.0);
         final double[] ba2 = new double[3];
         estimator.getAccelerationBiasArray(ba2);
         assertArrayEquals(new double[3], ba2, 0.0);
@@ -974,26 +894,22 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAccelerationCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAccelerationCrossCouplingErrors());
         final Matrix ma = new Matrix(3, 3);
         estimator.getAccelerationCrossCouplingErrors(ma);
         assertEquals(new Matrix(3, 3), ma);
@@ -1006,13 +922,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAccelerationMyz(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzx(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzy(), 0.0);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAngularSpeedBias());
+        assertEquals(new Matrix(3, 1), estimator.getAngularSpeedBias());
         final Matrix bg1 = new Matrix(3, 1);
         estimator.getAngularSpeedBias(bg1);
         assertEquals(new Matrix(3, 1), bg1);
-        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(), 0.0);
         final double[] bg2 = new double[3];
         estimator.getAngularSpeedBiasArray(bg2);
         assertArrayEquals(new double[3], bg2, 0.0);
@@ -1030,25 +944,21 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedCrossCouplingErrors());
         final Matrix mg = new Matrix(3, 3);
         estimator.getAngularSpeedCrossCouplingErrors(mg);
         assertEquals(new Matrix(3, 3), mg);
@@ -1061,17 +971,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -1103,22 +1010,18 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
     }
 
     @Test
     public void testConstructor6() throws WrongSizeException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-        final DriftEstimator estimator = new DriftEstimator(nedFrame,
-                this);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -1140,8 +1043,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -1155,19 +1058,15 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAccelerationBias());
+        assertEquals(new Matrix(3, 1), estimator.getAccelerationBias());
         final Matrix ba1 = new Matrix(3, 1);
         estimator.getAccelerationBias(ba1);
         assertEquals(new Matrix(3, 1), ba1);
-        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAccelerationBiasArray(), 0.0);
         final double[] ba2 = new double[3];
         estimator.getAccelerationBiasArray(ba2);
         assertArrayEquals(new double[3], ba2, 0.0);
@@ -1185,26 +1084,22 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAccelerationCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAccelerationCrossCouplingErrors());
         final Matrix ma = new Matrix(3, 3);
         estimator.getAccelerationCrossCouplingErrors(ma);
         assertEquals(new Matrix(3, 3), ma);
@@ -1217,13 +1112,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAccelerationMyz(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzx(), 0.0);
         assertEquals(0.0, estimator.getAccelerationMzy(), 0.0);
-        assertEquals(new Matrix(3, 1),
-                estimator.getAngularSpeedBias());
+        assertEquals(new Matrix(3, 1), estimator.getAngularSpeedBias());
         final Matrix bg1 = new Matrix(3, 1);
         estimator.getAngularSpeedBias(bg1);
         assertEquals(new Matrix(3, 1), bg1);
-        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(),
-                0.0);
+        assertArrayEquals(new double[3], estimator.getAngularSpeedBiasArray(), 0.0);
         final double[] bg2 = new double[3];
         estimator.getAngularSpeedBiasArray(bg2);
         assertArrayEquals(new double[3], bg2, 0.0);
@@ -1241,25 +1134,21 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedCrossCouplingErrors());
         final Matrix mg = new Matrix(3, 3);
         estimator.getAngularSpeedCrossCouplingErrors(mg);
         assertEquals(new Matrix(3, 3), mg);
@@ -1272,17 +1161,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(0.0, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(0.0, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -1314,12 +1200,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
     }
 
     @Test
@@ -1357,14 +1241,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(
-                baTriad, ma, bgTriad, mg);
+        final DriftEstimator estimator = new DriftEstimator(baTriad, ma, bgTriad, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -1403,22 +1285,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -1456,22 +1335,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -1487,17 +1363,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -1529,56 +1402,25 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(baTriad, wrong, bgTriad, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(baTriad, wrong, bgTriad, mg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(baTriad, ma, bgTriad, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(baTriad,
-                    new Matrix(1, 3), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad,
-                    new Matrix(3, 1), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, new Matrix(1, 3),
+                bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, new Matrix(3, 1),
+                bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -1616,14 +1458,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(
-                baTriad, ma, bgTriad, mg, this);
+        final DriftEstimator estimator = new DriftEstimator(baTriad, ma, bgTriad, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -1662,22 +1502,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -1703,7 +1540,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertArrayEquals(bg.getBuffer(), bg3, 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -1715,22 +1552,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -1746,17 +1580,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -1788,58 +1619,25 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(baTriad, wrong, bgTriad, mg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad, wrong,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(baTriad, wrong, bgTriad, mg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(baTriad, ma, bgTriad, wrong, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(baTriad,
-                    new Matrix(1, 3), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad,
-                    new Matrix(3, 1), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, new Matrix(1, 3),
+                bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, new Matrix(3, 1),
+                bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad,
+                new Matrix(3, 1), this));
     }
 
     @Test
@@ -1878,14 +1676,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(
-                baTriad, ma, bgTriad, mg, gg);
+        DriftEstimator estimator = new DriftEstimator(baTriad, ma, bgTriad, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -1924,22 +1720,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -1962,10 +1755,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -1977,22 +1770,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -2014,11 +1804,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -2050,68 +1838,29 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(baTriad, wrong, bgTriad, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(baTriad, wrong, bgTriad, mg, gg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(baTriad, ma, bgTriad, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad,
-                    new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad,
-                    new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad, mg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad, mg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, new Matrix(1, 3),
+                bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, new Matrix(3, 1),
+                bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad, mg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad, mg,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -2150,14 +1899,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(
-                baTriad, ma, bgTriad, mg, gg, this);
+        final DriftEstimator estimator = new DriftEstimator(baTriad, ma, bgTriad, mg, gg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -2196,22 +1943,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -2234,10 +1978,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -2249,22 +1993,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -2286,11 +2027,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -2322,72 +2061,29 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(baTriad, wrong, bgTriad, mg, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad, wrong, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(baTriad, wrong, bgTriad, mg, gg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(baTriad, ma, bgTriad, wrong, gg, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad,
-                    new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad,
-                    new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad, mg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(baTriad, ma, bgTriad, mg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, new Matrix(1, 3),
+                bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, new Matrix(3, 1),
+                bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad, mg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(baTriad, ma, bgTriad, mg,
+                new Matrix(3, 1), this));
     }
 
     @Test
@@ -2425,11 +2121,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
         DriftEstimator estimator = new DriftEstimator(ba, ma, bg, mg);
 
@@ -2470,22 +2165,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -2508,10 +2200,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -2523,22 +2215,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -2554,17 +2243,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -2596,80 +2282,33 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ba, wrong, bg, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ba, wrong, bg, mg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ba, ma, bg, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(new Matrix(1, 1),
-                    ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(new Matrix(3, 3),
-                    ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, new Matrix(1, 3),
-                    bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, new Matrix(3, 1),
-                    bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, new Matrix(1, 1),
-                    mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, new Matrix(3, 3),
-                    mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(new Matrix(1, 1),
+                ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(new Matrix(3, 3),
+                ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, new Matrix(1, 3),
+                bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, new Matrix(3, 1),
+                bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, new Matrix(1, 1),
+                mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, new Matrix(3, 3),
+                mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -2707,14 +2346,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ba, ma, bg, mg,
-                this);
+        DriftEstimator estimator = new DriftEstimator(ba, ma, bg, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -2738,7 +2375,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -2753,22 +2390,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -2791,10 +2425,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -2806,22 +2440,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -2837,17 +2468,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -2879,80 +2507,33 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ba, wrong, bg, mg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg, wrong, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ba, wrong, bg, mg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ba, ma, bg, wrong, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(new Matrix(1, 1),
-                    ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(new Matrix(3, 3),
-                    ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, new Matrix(1, 3),
-                    bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, new Matrix(3, 1),
-                    bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, new Matrix(1, 1),
-                    mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, new Matrix(3, 3),
-                    mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(new Matrix(1, 1),
+                ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(new Matrix(3, 3),
+                ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, new Matrix(1, 3),
+                bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, new Matrix(3, 1),
+                bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, new Matrix(1, 1),
+                mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, new Matrix(3, 3),
+                mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg,
+                new Matrix(3, 1), this));
     }
 
     @Test
@@ -2991,13 +2572,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ba, ma, bg, mg, gg);
+        final DriftEstimator estimator = new DriftEstimator(ba, ma, bg, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -3021,7 +2601,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -3036,22 +2616,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -3074,10 +2651,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -3089,22 +2666,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -3126,11 +2700,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -3162,92 +2734,37 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ba, wrong, bg, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ba, wrong, bg, mg, gg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ba, ma, bg, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(new Matrix(1, 1),
-                    ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(new Matrix(3, 3),
-                    ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, new Matrix(1, 3),
-                    bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, new Matrix(3, 1),
-                    bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, new Matrix(1, 1),
-                    mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, new Matrix(3, 3),
-                    mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg,
-                    new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg,
-                    new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg, mg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg, mg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(new Matrix(1, 1),
+                ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(new Matrix(3, 3),
+                ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, new Matrix(1, 3),
+                bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, new Matrix(3, 1),
+                bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, new Matrix(1, 1),
+                mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, new Matrix(3, 3),
+                mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg, mg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg, mg,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -3286,14 +2803,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ba, ma, bg, mg, gg,
-                this);
+        final DriftEstimator estimator = new DriftEstimator(ba, ma, bg, mg, gg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -3317,7 +2832,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -3332,22 +2847,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -3370,10 +2882,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -3385,22 +2897,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -3422,11 +2931,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -3458,99 +2965,43 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ba, wrong, bg, mg, gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg, wrong, gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ba, wrong, bg, mg, gg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ba, ma, bg, wrong, gg, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(new Matrix(1, 1),
-                    ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(new Matrix(3, 3),
-                    ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, new Matrix(1, 3),
-                    bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, new Matrix(3, 1),
-                    bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, new Matrix(1, 1),
-                    mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, new Matrix(3, 3),
-                    mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg,
-                    new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg,
-                    new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg, mg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ba, ma, bg, mg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(new Matrix(1, 1),
+                ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(new Matrix(3, 3),
+                ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, new Matrix(1, 3),
+                bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, new Matrix(3, 1),
+                bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, new Matrix(1, 1),
+                mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, new Matrix(3, 3),
+                mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg, mg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ba, ma, bg, mg,
+                new Matrix(3, 1), this));
     }
 
     @Test
     public void testConstructor15() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -3585,14 +3036,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                baTriad, ma, bgTriad, mg);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -3614,8 +3063,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -3629,10 +3078,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -3640,7 +3087,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -3655,22 +3102,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -3693,10 +3137,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -3708,22 +3152,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -3739,17 +3180,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -3781,63 +3219,31 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, wrong, bgTriad, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, baTriad, wrong, bgTriad, mg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad,
-                    new Matrix(1, 3), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad,
-                    new Matrix(3, 1), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad,
+                new Matrix(1, 3), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad,
+                new Matrix(3, 1), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, ()  -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                new Matrix(3, 1)));
     }
 
     @Test
     public void testConstructor16() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -3872,14 +3278,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                baTriad, ma, bgTriad, mg, this);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -3901,8 +3304,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -3916,10 +3319,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -3927,7 +3329,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -3942,22 +3344,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -3980,10 +3379,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -3995,22 +3394,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -4026,17 +3422,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -4068,65 +3461,33 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, wrong, bgTriad, mg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, wrong,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, baTriad, wrong, bgTriad, mg,
+                this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, wrong,
+                this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad,
+                new Matrix(1, 3), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad,
+                new Matrix(3, 1), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                new Matrix(3, 1), this));
     }
 
     @Test
     public void testConstructor17() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -4162,14 +3523,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                baTriad, ma, bgTriad, mg, gg);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -4191,8 +3550,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -4206,10 +3565,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -4217,7 +3574,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -4232,22 +3589,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -4270,10 +3624,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -4285,22 +3639,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -4322,11 +3673,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -4358,77 +3707,35 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, wrong, bgTriad, mg,
-                    gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, wrong,
-                    gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, baTriad, wrong, bgTriad, mg, gg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    mg, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    mg, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                mg, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                mg, new Matrix(3, 1)));
     }
 
     @Test
     public void testConstructor18() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -4464,14 +3771,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                baTriad, ma, bgTriad, mg, gg, this);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, mg, gg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -4493,8 +3798,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -4508,10 +3813,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -4519,7 +3822,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -4534,22 +3837,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -4572,7 +3872,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg.getBuffer(), bg4, 0.0);
@@ -4587,22 +3887,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -4624,11 +3921,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -4660,77 +3955,37 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, wrong, bgTriad, mg,
-                    gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, wrong,
-                    gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, baTriad, wrong, bgTriad, mg,
+                gg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad, wrong,
+                gg, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    mg, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
-                    mg, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                mg, new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, baTriad, ma, bgTriad,
+                mg, new Matrix(3, 1), this));
     }
 
     @Test
     public void testConstructor19() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -4765,14 +4020,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                ba, ma, bg, mg);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, ba, ma, bg, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -4794,8 +4047,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -4809,10 +4062,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -4820,7 +4071,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -4835,22 +4086,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -4873,10 +4121,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -4888,22 +4136,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -4919,17 +4164,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -4961,87 +4203,39 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, wrong, bg, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, ba, wrong, bg, mg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(ecefFrame,
-                    new Matrix(1, 1), ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame,
-                    new Matrix(3, 3), ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba,
-                    new Matrix(1, 3), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba,
-                    new Matrix(3, 1), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma,
-                    new Matrix(1, 1), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma,
-                    new Matrix(3, 3), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, new Matrix(1, 1),
+                ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, new Matrix(3, 3),
+                ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba,
+                new Matrix(1, 3), bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba,
+                new Matrix(3, 1), bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma,
+                new Matrix(1, 1), mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma,
+                new Matrix(3, 3), mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg,
+                new Matrix(3, 1)));
     }
 
     @Test
     public void testConstructor20() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -5076,14 +4270,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                ba, ma, bg, mg, this);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, ba, ma, bg, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -5105,8 +4297,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -5120,10 +4312,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -5131,7 +4321,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -5146,22 +4336,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -5184,10 +4371,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -5199,22 +4386,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -5230,17 +4414,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -5272,89 +4453,39 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, wrong, bg, mg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg, wrong,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, ba, wrong, bg, mg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg, wrong, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(ecefFrame,
-                    new Matrix(1, 1), ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame,
-                    new Matrix(3, 3), ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba,
-                    new Matrix(1, 3), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba,
-                    new Matrix(3, 1), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma,
-                    new Matrix(1, 1), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma,
-                    new Matrix(3, 3), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, new Matrix(1, 1),
+                ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, new Matrix(3, 3),
+                ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba,
+                new Matrix(1, 3), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba,
+                new Matrix(3, 1), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma,
+                new Matrix(1, 1), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma,
+                new Matrix(3, 3), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg,
+                new Matrix(3, 1), this));
     }
 
     @Test
     public void testConstructor21() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -5390,14 +4521,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                ba, ma, bg, mg, gg);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, ba, ma, bg, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -5408,19 +4537,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedFrame(nedFrame2));
         assertEquals(nedFrame1, nedFrame2);
         final ECEFPosition ecefPosition1 = estimator.getReferenceEcefPosition();
-        assertEquals(ecefFrame.getECEFPosition(), ecefPosition1);
+        assertEquals(ecefPosition1, ecefFrame.getECEFPosition());
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         assertTrue(estimator.getReferenceEcefPosition(ecefPosition2));
         assertEquals(ecefPosition1, ecefPosition2);
         final ECEFVelocity ecefVelocity1 = estimator.getReferenceEcefVelocity();
-        assertEquals(ecefFrame.getECEFVelocity(), ecefVelocity1);
+        assertEquals(ecefVelocity1, ecefFrame.getECEFVelocity());
         final ECEFVelocity ecefVelocity2 = new ECEFVelocity();
         assertTrue(estimator.getReferenceEcefVelocity(ecefVelocity2));
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
-        assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertEquals(ecefC1, ecefFrame.getCoordinateTransformation());
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -5434,10 +4563,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -5445,7 +4572,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -5460,22 +4587,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -5498,10 +4622,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -5513,22 +4637,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -5550,11 +4671,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -5590,95 +4709,40 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
                 null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, wrong, bg, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, ba, wrong, bg, mg, gg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(ecefFrame,
-                    new Matrix(1, 1), ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame,
-                    new Matrix(3, 3), ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba,
-                    new Matrix(1, 3), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba,
-                    new Matrix(3, 1), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma,
-                    new Matrix(1, 1), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma,
-                    new Matrix(3, 3), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg,
-                    new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg,
-                    new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg, mg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg, mg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, new Matrix(1, 1),
+                ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, new Matrix(3, 3),
+                ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba,
+                new Matrix(1, 3), bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba,
+                new Matrix(3, 1), bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma,
+                new Matrix(1, 1), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma,
+                new Matrix(3, 3), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg, mg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg, mg,
+                new Matrix(3, 1)));
     }
 
     @Test
     public void testConstructor22() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -5714,14 +4778,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(ecefFrame,
-                ba, ma, bg, mg, gg, this);
+        final DriftEstimator estimator = new DriftEstimator(ecefFrame, ba, ma, bg, mg, gg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -5743,8 +4805,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -5758,10 +4820,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -5769,7 +4829,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -5784,22 +4844,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -5822,10 +4879,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -5837,22 +4894,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -5874,11 +4928,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -5910,101 +4962,43 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, wrong, bg, mg, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg, wrong, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, ba, wrong, bg, mg, gg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg, wrong, gg, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(ecefFrame,
-                    new Matrix(1, 1), ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame,
-                    new Matrix(3, 3), ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba,
-                    new Matrix(1, 3), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba,
-                    new Matrix(3, 1), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma,
-                    new Matrix(1, 1), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma,
-                    new Matrix(3, 3), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg,
-                    new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg,
-                    new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg, mg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(ecefFrame, ba, ma, bg, mg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, new Matrix(1, 1),
+                ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, new Matrix(3, 3),
+                ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba,
+                new Matrix(1, 3), bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba,
+                new Matrix(3, 1), bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma,
+                new Matrix(1, 1), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma,
+                new Matrix(3, 3), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg, mg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(ecefFrame, ba, ma, bg, mg,
+                new Matrix(3, 1), this));
     }
 
     @Test
     public void testConstructor23() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -6039,14 +5033,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(nedFrame,
-                baTriad, ma, bgTriad, mg);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -6068,8 +5060,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -6083,10 +5075,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -6094,7 +5084,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -6109,22 +5099,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -6147,10 +5134,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -6162,22 +5149,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -6193,17 +5177,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -6235,63 +5216,31 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, wrong, bgTriad, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, baTriad, wrong, bgTriad, mg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad,
-                    new Matrix(1, 3), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad,
-                    new Matrix(3, 1), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad,
+                new Matrix(1, 3), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad,
+                new Matrix(3, 1), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                new Matrix(3, 1)));
     }
 
     @Test
     public void testConstructor24() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -6326,14 +5275,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(nedFrame,
-                baTriad, ma, bgTriad, mg, this);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -6355,8 +5302,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -6370,10 +5317,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -6396,22 +5341,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -6434,10 +5376,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -6449,22 +5391,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -6480,17 +5419,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -6522,65 +5458,33 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, wrong, bgTriad, mg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad, wrong,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, baTriad, wrong, bgTriad, mg,
+                this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad, wrong,
+                this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad,
+                new Matrix(1, 3), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad,
+                new Matrix(3, 1), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                new Matrix(3, 1), this));
     }
 
     @Test
     public void testConstructor25() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -6616,14 +5520,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(nedFrame,
-                baTriad, ma, bgTriad, mg, gg);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -6645,8 +5547,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -6660,10 +5562,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -6671,7 +5571,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -6686,22 +5586,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -6724,10 +5621,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -6739,22 +5636,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -6776,11 +5670,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -6812,77 +5704,35 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, wrong, bgTriad, mg,
-                    gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad, wrong,
-                    gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, baTriad, wrong, bgTriad, mg, gg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    mg, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    mg, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                mg, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                mg, new Matrix(3, 1)));
     }
 
     @Test
     public void testConstructor26() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -6918,14 +5768,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(nedFrame,
-                baTriad, ma, bgTriad, mg, gg, this);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad, mg, gg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -6947,8 +5795,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -6962,10 +5810,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -6973,7 +5819,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -6988,22 +5834,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -7026,10 +5869,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -7041,22 +5884,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -7078,11 +5918,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -7114,77 +5952,37 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, wrong, bgTriad, mg,
-                    gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad, wrong,
-                    gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, baTriad, wrong, bgTriad, mg,
+                gg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad, wrong,
+                gg, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    mg, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
-                    mg, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                mg, new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, baTriad, ma, bgTriad,
+                mg, new Matrix(3, 1), this));
     }
 
     @Test
     public void testConstructor27() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -7219,14 +6017,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(nedFrame,
-                ba, ma, bg, mg);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -7248,8 +6044,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -7263,10 +6059,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -7274,7 +6068,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -7289,22 +6083,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -7327,10 +6118,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -7342,22 +6133,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -7373,17 +6161,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -7415,87 +6200,39 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, wrong, bg, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, ba, wrong, bg, mg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(nedFrame,
-                    new Matrix(1, 1), ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame,
-                    new Matrix(3, 3), ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba,
-                    new Matrix(1, 3), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba,
-                    new Matrix(3, 1), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma,
-                    new Matrix(1, 1), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma,
-                    new Matrix(3, 3), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, new Matrix(1, 1),
+                ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, new Matrix(3, 3),
+                ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba,
+                new Matrix(1, 3), bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba,
+                new Matrix(3, 1), bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma,
+                new Matrix(1, 1), mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma,
+                new Matrix(3, 3), mg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg,
+                new Matrix(3, 1)));
     }
 
     @Test
     public void testConstructor28() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -7530,14 +6267,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(nedFrame,
-                ba, ma, bg, mg, this);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -7548,19 +6283,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedFrame(nedFrame2));
         assertEquals(nedFrame1, nedFrame2);
         final ECEFPosition ecefPosition1 = estimator.getReferenceEcefPosition();
-        assertEquals(ecefFrame.getECEFPosition(), ecefPosition1);
+        assertEquals(ecefPosition1, ecefFrame.getECEFPosition());
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         assertTrue(estimator.getReferenceEcefPosition(ecefPosition2));
         assertEquals(ecefPosition1, ecefPosition2);
         final ECEFVelocity ecefVelocity1 = estimator.getReferenceEcefVelocity();
-        assertEquals(ecefFrame.getECEFVelocity(), ecefVelocity1);
+        assertEquals(ecefVelocity1, ecefFrame.getECEFVelocity());
         final ECEFVelocity ecefVelocity2 = new ECEFVelocity();
         assertTrue(estimator.getReferenceEcefVelocity(ecefVelocity2));
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
-        assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertEquals(ecefC1, ecefFrame.getCoordinateTransformation());
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -7574,10 +6309,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -7585,7 +6318,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -7600,22 +6333,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -7638,7 +6368,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg.getBuffer(), bg4, 0.0);
@@ -7653,22 +6383,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -7684,17 +6411,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gmyz, estimator.getAngularSpeedMyz(), 0.0);
         assertEquals(gmzx, estimator.getAngularSpeedMzx(), 0.0);
         assertEquals(gmzy, estimator.getAngularSpeedMzy(), 0.0);
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
         final Matrix gg = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg);
         assertEquals(new Matrix(3, 3), gg);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -7726,89 +6450,39 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, wrong, bg, mg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg, wrong,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, ba, wrong, bg, mg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg, wrong, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(nedFrame,
-                    new Matrix(1, 1), ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame,
-                    new Matrix(3, 3), ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba,
-                    new Matrix(1, 3), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba,
-                    new Matrix(3, 1), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma,
-                    new Matrix(1, 1), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma,
-                    new Matrix(3, 3), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, new Matrix(1, 1),
+                ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, new Matrix(3, 3),
+                ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba,
+                new Matrix(1, 3), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba,
+                new Matrix(3, 1), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma,
+                new Matrix(1, 1), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma,
+                new Matrix(3, 3), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg,
+                new Matrix(3, 1), this));
     }
 
     @Test
     public void testConstructor29() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -7844,14 +6518,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(nedFrame,
-                ba, ma, bg, mg, gg);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -7873,8 +6545,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -7888,10 +6560,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -7899,7 +6569,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -7914,22 +6584,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -7952,10 +6619,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -7967,22 +6634,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -8004,11 +6668,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -8040,99 +6702,43 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, wrong, bg, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, ba, wrong, bg, mg, gg));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(nedFrame,
-                    new Matrix(1, 1), ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame,
-                    new Matrix(3, 3), ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba,
-                    new Matrix(1, 3), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba,
-                    new Matrix(3, 1), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma,
-                    new Matrix(1, 1), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma,
-                    new Matrix(3, 3), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg,
-                    new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg,
-                    new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, new Matrix(1, 1),
+                ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, new Matrix(3, 3),
+                ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba,
+                new Matrix(1, 3), bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba,
+                new Matrix(3, 1), bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma,
+                new Matrix(1, 1), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma,
+                new Matrix(3, 3), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg, mg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg, mg,
+                new Matrix(3, 1)));
     }
 
     @Test
     public void testConstructor30() throws AlgebraException {
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Matrix ba = generateBa();
         final Matrix ma = generateMaGeneral();
@@ -8168,14 +6774,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double gmzx = mg.getElementAt(2, 0);
         final double gmzy = mg.getElementAt(2, 1);
 
-        final AccelerationTriad baTriad = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad baTriad = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
 
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
 
-        DriftEstimator estimator = new DriftEstimator(nedFrame,
-                ba, ma, bg, mg, gg, this);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg, gg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -8196,9 +6800,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceEcefVelocity(ecefVelocity2));
         assertEquals(ecefVelocity1, ecefVelocity2);
         final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
-        assertEquals(ecefFrame.getCoordinateTransformation(), ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertEquals(ecefC1, ecefFrame.getCoordinateTransformation());
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceEcefCoordinateTransformation(ecefC2));
         assertEquals(ecefC1, ecefC2);
         final NEDPosition nedPosition1 = estimator.getReferenceNedPosition();
@@ -8212,10 +6816,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getReferenceNedVelocity(nedVelocity2));
         assertEquals(nedVelocity1, nedVelocity2);
         final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
-        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(nedC1.equals(nedFrame.getCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ba, estimator.getAccelerationBias());
@@ -8223,7 +6825,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAccelerationBias(ba1);
         assertEquals(ba, ba1);
         final double[] ba2 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba2, 0.0);
+        assertArrayEquals(ba2, ba.getBuffer(), 0.0);
         final double[] ba3 = new double[3];
         estimator.getAccelerationBiasArray(ba3);
         assertArrayEquals(ba2, ba3, 0.0);
@@ -8238,22 +6840,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final Acceleration baX1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(bax, baX1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baX1.getUnit());
-        final Acceleration baX2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baX2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(baX2);
         assertEquals(baX1, baX2);
         final Acceleration baY1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(bay, baY1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baY1.getUnit());
-        final Acceleration baY2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baY2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(baY2);
         assertEquals(baY1, baY2);
         final Acceleration baZ1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baz, baZ1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baZ1.getUnit());
-        final Acceleration baZ2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baZ2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baZ2);
         assertEquals(baZ1, baZ2);
         final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
@@ -8276,10 +6875,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedBias(bg2);
         assertEquals(bg, bg2);
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg.getBuffer(), bg4, 0.0);
+        assertArrayEquals(bg4, bg.getBuffer(), 0.0);
         final AngularSpeedTriad bgTriad1 = estimator.getAngularSpeedBiasAsTriad();
         assertEquals(bgTriad, bgTriad1);
         final AngularSpeedTriad bgTriad2 = new AngularSpeedTriad();
@@ -8291,22 +6890,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeed bgX1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgx, bgX1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgX1.getUnit());
-        final AngularSpeed bgX2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgX2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgX2);
         assertEquals(bgX1, bgX2);
         final AngularSpeed bgY1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgy, bgY1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgY1.getUnit());
-        final AngularSpeed bgY2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgY2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgY2);
         assertEquals(bgY1, bgY2);
         final AngularSpeed bgZ1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgz, bgZ1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgZ1.getUnit());
-        final AngularSpeed bgZ2 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgZ2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgZ2);
         final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
         assertEquals(mg, mg1);
@@ -8328,11 +6924,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg, gg2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         estimator.getTimeIntervalAsTime(timeInterval2);
@@ -8364,94 +6958,37 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
         // Force AlgebraException
-        final Matrix wrong = Matrix.identity(3, 3)
-                .multiplyByScalarAndReturnNew(-1.0);
-
-        estimator = null;
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, wrong, bg, mg, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg, wrong, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        assertNull(estimator);
+        final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, ba, wrong, bg, mg, gg, this));
+        assertThrows(AlgebraException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg, wrong, gg, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new DriftEstimator(nedFrame,
-                    new Matrix(1, 1), ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame,
-                    new Matrix(3, 3), ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba,
-                    new Matrix(1, 3), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba,
-                    new Matrix(3, 1), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma,
-                    new Matrix(1, 1), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma,
-                    new Matrix(3, 3), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg,
-                    new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg,
-                    new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, new Matrix(1, 1),
+                ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, new Matrix(3, 3),
+                ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba,
+                new Matrix(1, 3), bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba,
+                new Matrix(3, 1), bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma,
+                new Matrix(1, 1), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma,
+                new Matrix(3, 3), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg, mg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new DriftEstimator(nedFrame, ba, ma, bg, mg,
+                new Matrix(3, 1), this));
     }
 
     @Test
@@ -8477,15 +7014,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // set new value
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         estimator.setReferenceFrame(ecefFrame);
 
         // check
         assertSame(ecefFrame, estimator.getReferenceFrame());
-        assertTrue(nedFrame.equals(estimator.getReferenceNedFrame(),
-                FRAME_ABSOLUTE_ERROR));
+        assertTrue(nedFrame.equals(estimator.getReferenceNedFrame(), FRAME_ABSOLUTE_ERROR));
     }
 
     @Test
@@ -8497,8 +7032,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // set new value
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         estimator.setReferenceNedFrame(nedFrame);
 
@@ -8540,8 +7074,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // set new value
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
         final NEDPosition nedPosition = nedFrame.getPosition();
 
@@ -8567,8 +7100,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set a random position to avoid singularity at Earth's center
         final NEDFrame nedFrame = new NEDFrame();
         nedFrame.setVelocityCoordinates(1.0, 2.0, 3.0);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
         estimator.setReferenceEcefPosition(ecefPosition);
@@ -8590,8 +7122,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetReferenceEcefCoordinateTransformation()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testGetSetReferenceEcefCoordinateTransformation() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
@@ -8601,39 +7132,32 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // set new value
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
-        final CoordinateTransformation ecefC = ecefFrame
-                .getCoordinateTransformation();
-        final CoordinateTransformation nedC = nedFrame
-                .getCoordinateTransformation();
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+        final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
+        final CoordinateTransformation nedC = nedFrame.getCoordinateTransformation();
 
         estimator.setReferenceEcefCoordinateTransformation(ecefC);
 
         // check
-        final CoordinateTransformation ecefC1 = estimator
-                .getReferenceEcefCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefC, ecefC1);
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getReferenceEcefCoordinateTransformation(ecefC2);
         assertEquals(ecefC, ecefC2);
-        assertTrue(nedC.equals(estimator.getReferenceNedCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
+        assertTrue(nedC.equals(estimator.getReferenceNedCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
 
         // set again
         estimator.setReferenceEcefCoordinateTransformation(ecefC);
 
         // check
-        final CoordinateTransformation ecefC3 = estimator
-                .getReferenceEcefCoordinateTransformation();
+        final CoordinateTransformation ecefC3 = estimator.getReferenceEcefCoordinateTransformation();
         assertEquals(ecefC, ecefC3);
-        final CoordinateTransformation ecefC4 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC4 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getReferenceEcefCoordinateTransformation(ecefC4);
         assertEquals(ecefC, ecefC4);
-        assertTrue(nedC.equals(estimator.getReferenceNedCoordinateTransformation(),
-                FRAME_ABSOLUTE_ERROR));
+        assertTrue(nedC.equals(estimator.getReferenceNedCoordinateTransformation(), FRAME_ABSOLUTE_ERROR));
     }
 
     @Test
@@ -8646,8 +7170,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // set new value
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final NEDPosition nedPosition = nedFrame.getPosition();
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
@@ -8684,8 +7207,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set new value
         final NEDFrame nedFrame = new NEDFrame();
         nedFrame.setVelocityCoordinates(1.0, 2.0, 3.0);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final NEDVelocity nedVelocity = nedFrame.getVelocity();
         final ECEFVelocity ecefVelocity = ecefFrame.getECEFVelocity();
 
@@ -8712,8 +7234,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetReferenceNedCoordinateTransformation()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testGetSetReferenceNedCoordinateTransformation() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
@@ -8724,21 +7245,16 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set new value
         // set new value
         final NEDFrame nedFrame = new NEDFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
-        final CoordinateTransformation ecefC = ecefFrame
-                .getCoordinateTransformation();
-        final CoordinateTransformation nedC = nedFrame
-                .getCoordinateTransformation();
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+        final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
+        final CoordinateTransformation nedC = nedFrame.getCoordinateTransformation();
 
         estimator.setReferenceNedCoordinateTransformation(nedC);
 
         // check
-        final CoordinateTransformation nedC1 = estimator
-                .getReferenceNedCoordinateTransformation();
+        final CoordinateTransformation nedC1 = estimator.getReferenceNedCoordinateTransformation();
         assertTrue(nedC.equals(nedC1, FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC2));
         assertEquals(nedC1, nedC2);
         assertEquals(ecefC, estimator.getReferenceEcefCoordinateTransformation());
@@ -8747,19 +7263,16 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         estimator.setReferenceNedCoordinateTransformation(nedC);
 
         // check
-        final CoordinateTransformation nedC3 = estimator
-                .getReferenceNedCoordinateTransformation();
+        final CoordinateTransformation nedC3 = estimator.getReferenceNedCoordinateTransformation();
         assertTrue(nedC.equals(nedC3, FRAME_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC4 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC4 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         assertTrue(estimator.getReferenceNedCoordinateTransformation(nedC4));
         assertEquals(nedC3, nedC4);
         assertEquals(ecefC, estimator.getReferenceEcefCoordinateTransformation());
     }
 
     @Test
-    public void testGetSetAccelerationBias() throws WrongSizeException,
-            LockedException {
+    public void testGetSetAccelerationBias() throws WrongSizeException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -8777,16 +7290,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(ba, ba2);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAccelerationBias(new Matrix(1, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias(new Matrix(3, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationBias(
+                new Matrix(1, 1)));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationBias(
+                new Matrix(3, 3)));
     }
 
     @Test
@@ -8812,11 +7319,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertArrayEquals(ba, ba4, 0.0);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAccelerationBias(new double[1]);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationBias(new double[1]));
     }
 
     @Test
@@ -8835,8 +7338,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double bax = ba.getElementAtIndex(0);
         final double bay = ba.getElementAtIndex(1);
         final double baz = ba.getElementAtIndex(2);
-        final AccelerationTriad triad2 = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bax, bay, baz);
+        final AccelerationTriad triad2 = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND,
+                bax, bay, baz);
         estimator.setAccelerationBias(triad2);
 
         // check
@@ -8919,8 +7422,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationBiasXAsAcceleration()
-            throws LockedException {
+    public void testGetSetAccelerationBiasXAsAcceleration() throws LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -8931,23 +7433,20 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set new value
         final Matrix ba = generateBa();
         final double bax = ba.getElementAtIndex(0);
-        final Acceleration bax2 = new Acceleration(bax,
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(bax, AccelerationUnit.METERS_PER_SQUARED_SECOND);
 
         estimator.setAccelerationBiasX(bax2);
 
         // check
         final Acceleration bax3 = estimator.getAccelerationBiasXAsAcceleration();
-        final Acceleration bax4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax4);
         assertEquals(bax2, bax3);
         assertEquals(bax2, bax4);
     }
 
     @Test
-    public void testGetSetAccelerationBiasYAsAcceleration()
-            throws LockedException {
+    public void testGetSetAccelerationBiasYAsAcceleration() throws LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -8958,23 +7457,20 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set new value
         final Matrix ba = generateBa();
         final double bay = ba.getElementAtIndex(1);
-        final Acceleration bay2 = new Acceleration(bay,
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration bay2 = new Acceleration(bay, AccelerationUnit.METERS_PER_SQUARED_SECOND);
 
         estimator.setAccelerationBiasY(bay2);
 
         // check
         final Acceleration bay3 = estimator.getAccelerationBiasYAsAcceleration();
-        final Acceleration bay4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bay4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay4);
         assertEquals(bay2, bay3);
         assertEquals(bay2, bay4);
     }
 
     @Test
-    public void testGetSetAccelerationBiasZAsAcceleration()
-            throws LockedException {
+    public void testGetSetAccelerationBiasZAsAcceleration() throws LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -8985,15 +7481,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set new value
         final Matrix ba = generateBa();
         final double baz = ba.getElementAtIndex(2);
-        final Acceleration baz2 = new Acceleration(baz,
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(baz, AccelerationUnit.METERS_PER_SQUARED_SECOND);
 
         estimator.setAccelerationBiasZ(baz2);
 
         // check
         final Acceleration baz3 = estimator.getAccelerationBiasZAsAcceleration();
-        final Acceleration baz4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz4);
         assertEquals(baz2, baz3);
         assertEquals(baz2, baz4);
@@ -9014,12 +7508,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double bay = ba.getElementAtIndex(1);
         final double baz = ba.getElementAtIndex(2);
 
-        final Acceleration bax1 = new Acceleration(bax,
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
-        final Acceleration bay1 = new Acceleration(bay,
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
-        final Acceleration baz1 = new Acceleration(baz,
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration bax1 = new Acceleration(bax, AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration bay1 = new Acceleration(bay, AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration baz1 = new Acceleration(baz, AccelerationUnit.METERS_PER_SQUARED_SECOND);
 
         estimator.setAccelerationBias(bax1, bay1, baz1);
 
@@ -9030,13 +7521,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testGetSetAccelerationCrossCouplingErrors() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
-        assertEquals(new Matrix(3, 3),
-                estimator.getAccelerationCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAccelerationCrossCouplingErrors());
 
         // set new value
         final Matrix ma = generateMaGeneral();
@@ -9051,30 +7540,17 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // Force AlgebraException
         final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
-        try {
-            estimator.setAccelerationCrossCouplingErrors(wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> estimator.setAccelerationCrossCouplingErrors(wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAccelerationCrossCouplingErrors(
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAccelerationCrossCouplingErrors(
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationCrossCouplingErrors(
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationCrossCouplingErrors(
+                new Matrix(3, 1)));
     }
 
     @Test
-    public void testGetSetAccelerationSx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationSx() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9090,8 +7566,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationSy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationSy() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9107,8 +7582,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationSz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationSz() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9124,8 +7598,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMxy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMxy() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9141,8 +7614,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMxz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMxz() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9158,8 +7630,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMyx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMyx() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9175,8 +7646,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMyz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMyz() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9192,8 +7662,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMzx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMzx() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9209,8 +7678,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMzy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMzy() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9226,8 +7694,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testSetAccelerationScalingFactors() throws AlgebraException,
-            LockedException {
+    public void testSetAccelerationScalingFactors() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default values
@@ -9268,8 +7735,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double myz = ma.getElementAt(1, 2);
         final double mzx = ma.getElementAt(2, 0);
         final double mzy = ma.getElementAt(2, 1);
-        estimator.setAccelerationCrossCouplingErrors(
-                mxy, mxz, myx, myz, mzx, mzy);
+        estimator.setAccelerationCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
 
         // check
         assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
@@ -9306,8 +7772,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double myz = ma.getElementAt(1, 2);
         final double mzx = ma.getElementAt(2, 0);
         final double mzy = ma.getElementAt(2, 1);
-        estimator.setAccelerationScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        estimator.setAccelerationScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
 
         // check
         assertEquals(sx, estimator.getAccelerationSx(), 0.0);
@@ -9322,8 +7787,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedBias() throws WrongSizeException,
-            LockedException {
+    public void testGetSetAngularSpeedBias() throws WrongSizeException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9341,16 +7805,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(bg, bg2);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAngularSpeedBias(new Matrix(1, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias(new Matrix(3, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedBias(
+                new Matrix(1, 1)));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedBias(
+                new Matrix(3, 3)));
     }
 
     @Test
@@ -9376,11 +7834,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertArrayEquals(bg, bg4, 0.0);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAngularSpeedBias(new double[1]);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedBias(new double[1]));
     }
 
     @Test
@@ -9399,8 +7853,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double bgx = bg.getElementAtIndex(0);
         final double bgy = bg.getElementAtIndex(1);
         final double bgz = bg.getElementAtIndex(2);
-        final AngularSpeedTriad triad2 = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad triad2 = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
         estimator.setAngularSpeedBias(triad2);
 
         // check
@@ -9483,8 +7936,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedBiasXAsAngularSpeed()
-            throws LockedException {
+    public void testGetSetAngularSpeedBiasXAsAngularSpeed() throws LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default values
@@ -9495,23 +7947,20 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set new value
         final Matrix bg = generateBg();
         final double bgx = bg.getElementAtIndex(0);
-        final AngularSpeed bgx2 = new AngularSpeed(bgx,
-                AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(bgx, AngularSpeedUnit.RADIANS_PER_SECOND);
 
         estimator.setAngularSpeedBiasX(bgx2);
 
         // check
         final AngularSpeed bgx3 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        final AngularSpeed bgx4 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx4 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx4);
         assertEquals(bgx2, bgx3);
         assertEquals(bgx2, bgx4);
     }
 
     @Test
-    public void testGetSetAngularSpeedBiasYAsAngularSpeed()
-            throws LockedException {
+    public void testGetSetAngularSpeedBiasYAsAngularSpeed() throws LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9522,23 +7971,20 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set new value
         final Matrix bg = generateBg();
         final double bgy = bg.getElementAtIndex(1);
-        final AngularSpeed bgy2 = new AngularSpeed(bgy,
-                AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(bgy, AngularSpeedUnit.RADIANS_PER_SECOND);
 
         estimator.setAngularSpeedBiasY(bgy2);
 
         // check
         final AngularSpeed bgy3 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        final AngularSpeed bgy4 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy4 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy4);
         assertEquals(bgy2, bgy3);
         assertEquals(bgy2, bgy4);
     }
 
     @Test
-    public void testGetSetAngularSpeedBiasZAsAngularSpeed()
-            throws LockedException {
+    public void testGetSetAngularSpeedBiasZAsAngularSpeed() throws LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9549,15 +7995,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         // set new value
         final Matrix bg = generateBg();
         final double bgz = bg.getElementAtIndex(2);
-        final AngularSpeed bgz2 = new AngularSpeed(bgz,
-                AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(bgz, AngularSpeedUnit.RADIANS_PER_SECOND);
 
         estimator.setAngularSpeedBiasZ(bgz2);
 
         // check
         final AngularSpeed bgz3 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        final AngularSpeed bgz4 = new AngularSpeed(1.0,
-                AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz4 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz4);
         assertEquals(bgz2, bgz3);
         assertEquals(bgz2, bgz4);
@@ -9578,12 +8022,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double bgy = bg.getElementAtIndex(1);
         final double bgz = bg.getElementAtIndex(2);
 
-        final AngularSpeed bgx1 = new AngularSpeed(bgx,
-                AngularSpeedUnit.RADIANS_PER_SECOND);
-        final AngularSpeed bgy1 = new AngularSpeed(bgy,
-                AngularSpeedUnit.RADIANS_PER_SECOND);
-        final AngularSpeed bgz1 = new AngularSpeed(bgz,
-                AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgx1 = new AngularSpeed(bgx, AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgy1 = new AngularSpeed(bgy, AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgz1 = new AngularSpeed(bgz, AngularSpeedUnit.RADIANS_PER_SECOND);
 
         estimator.setAngularSpeedBias(bgx1, bgy1, bgz1);
 
@@ -9594,13 +8035,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testGetSetAngularSpeedCrossCouplingErrors() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedCrossCouplingErrors());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedCrossCouplingErrors());
 
         // set new value
         final Matrix mg = generateMg();
@@ -9615,30 +8054,17 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // Force AlgebraException
         final Matrix wrong = Matrix.identity(3, 3).multiplyByScalarAndReturnNew(-1.0);
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(
+                new Matrix(3, 1)));
     }
 
     @Test
-    public void testGetSetAngularSpeedSx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedSx() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9654,8 +8080,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedSy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedSy() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9671,8 +8096,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedSz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedSz() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9688,8 +8112,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMxy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMxy() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9705,8 +8128,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMxz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMxz() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9722,8 +8144,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMyx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMyx() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9739,8 +8160,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMyz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMyz() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9756,8 +8176,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMzx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMzx() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9773,8 +8192,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMzy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMzy() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
@@ -9790,8 +8208,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testSetAngularSpeedScalingFactors() throws AlgebraException,
-            LockedException {
+    public void testSetAngularSpeedScalingFactors() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default values
@@ -9813,8 +8230,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testSetAngularSpeedCrossCouplingErrors() throws AlgebraException,
-            LockedException {
+    public void testSetAngularSpeedCrossCouplingErrors() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default values
@@ -9833,8 +8249,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double myz = mg.getElementAt(1, 2);
         final double mzx = mg.getElementAt(2, 0);
         final double mzy = mg.getElementAt(2, 1);
-        estimator.setAngularSpeedCrossCouplingErrors(
-                mxy, mxz, myx, myz, mzx, mzy);
+        estimator.setAngularSpeedCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
 
         // check
         assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
@@ -9846,8 +8261,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testSetAngularSpeedScalingFactorAndCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testSetAngularSpeedScalingFactorAndCrossCouplingErrors() throws AlgebraException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default values
@@ -9872,8 +8286,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double myz = mg.getElementAt(1, 2);
         final double mzx = mg.getElementAt(2, 0);
         final double mzy = mg.getElementAt(2, 1);
-        estimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        estimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
 
         // check
         assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
@@ -9888,13 +8301,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedGDependentCrossBias()
-            throws WrongSizeException, LockedException {
+    public void testGetSetAngularSpeedGDependentCrossBias() throws WrongSizeException, LockedException {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
-        assertEquals(new Matrix(3, 3),
-                estimator.getAngularSpeedGDependantCrossBias());
+        assertEquals(new Matrix(3, 3), estimator.getAngularSpeedGDependantCrossBias());
 
         // set new value
         final Matrix gg = generateGg();
@@ -9908,18 +8319,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(gg, gg2);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAngularSpeedGDependantCrossBias(
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedGDependantCrossBias(
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedGDependantCrossBias(
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedGDependantCrossBias(
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -9940,8 +8343,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final DriftEstimator estimator = new DriftEstimator();
 
         // check default value
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         // set new value
         estimator.setTimeInterval(1.0);
@@ -9950,11 +8352,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertEquals(1.0, estimator.getTimeInterval(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setTimeInterval(-1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setTimeInterval(-1.0));
     }
 
     @Test
@@ -9963,8 +8361,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // check default value
         final Time timeInterval1 = estimator.getTimeIntervalAsTime();
-        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
+        assertEquals(DriftEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
 
         // set new value
@@ -9980,12 +8377,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testAddBodyKinematicsAndResetExactCalibrationNoNoiseAndKinematicsFixed()
-            throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException,
-            LockedException, NotReadyException, DriftEstimationException,
-            RotationException, InertialNavigatorException,
-            InvalidRotationMatrixException {
+    public void testAddBodyKinematicsAndResetExactCalibrationNoNoiseAndKinematicsFixed() throws AlgebraException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException, DriftEstimationException,
+            RotationException, InertialNavigatorException, InvalidRotationMatrixException {
         final Matrix ba = generateBa();
         final Matrix ma = generateMaCommonAxis();
         final Matrix bg = generateBg();
@@ -9996,17 +8390,15 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         final NEDFrame nedFrame = generateFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Random random = new Random();
 
-        final CoordinateTransformation ecefC = ecefFrame
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final ECEFFrame navigationFrame = new ECEFFrame(ecefFrame);
@@ -10017,15 +8409,14 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         fixer.setAngularSpeedCrossCouplingErrors(mg);
         fixer.setAngularSpeedGDependantCrossBias(gg);
 
-        final DriftEstimator estimator = new DriftEstimator(nedFrame,
-                ba, ma, bg, mg, gg, this);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg, gg, this);
         estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
 
         reset();
-        assertEquals(mStart, 0);
-        assertEquals(mBodyKinematicsAdded, 0);
-        assertEquals(mReset, 0);
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(0, mStart);
+        assertEquals(0, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
         assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
         assertNull(estimator.getElapsedTime());
         final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
@@ -10033,28 +8424,27 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.isRunning());
         assertTrue(estimator.isFixKinematicsEnabled());
 
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                ecefPosition);
         final BodyKinematics fixedKinematics = new BodyKinematics();
 
         final BodyKinematics measuredKinematics = new BodyKinematics();
         for (int i = 0; i < N_SAMPLES; i++) {
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
 
             estimator.addBodyKinematics(measuredKinematics);
 
-            assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+            assertEquals(i + 1, estimator.getNumberOfProcessedSamples());
             assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(estimator.isRunning());
 
             fixer.fix(measuredKinematics, fixedKinematics);
-            ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS,
-                    navigationFrame, fixedKinematics, navigationFrame);
+            ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, fixedKinematics,
+                    navigationFrame);
         }
 
-        assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+        assertEquals(N_SAMPLES, estimator.getNumberOfProcessedSamples());
         assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
         final Time elapsedTime1 = estimator.getElapsedTime();
         assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
@@ -10063,31 +8453,25 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getElapsedTime(elapsedTime2));
         assertEquals(elapsedTime1, elapsedTime2);
         assertFalse(estimator.isRunning());
-        assertEquals(mStart, 1);
-        assertEquals(mBodyKinematicsAdded, N_SAMPLES);
-        assertEquals(mReset, 0);
+        assertEquals(1, mStart);
+        assertEquals(N_SAMPLES, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
 
-        final double navigationPositionDrift = positionDrift(
-                ecefFrame, navigationFrame);
-        final double navigationVelocityDrift = velocityDrift(
-                ecefFrame, navigationFrame);
-        final double navigationOrientationDrift = orientationDrift(
-                ecefFrame, navigationFrame);
+        final double navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
+        final double navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
+        final double navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
-        final ECEFPosition currentPositionDrift1 = estimator
-                .getCurrentPositionDrift();
+        final ECEFPosition currentPositionDrift1 = estimator.getCurrentPositionDrift();
         final ECEFPosition currentPositionDrift2 = new ECEFPosition();
         assertTrue(estimator.getCurrentPositionDrift(currentPositionDrift2));
         assertEquals(currentPositionDrift1, currentPositionDrift2);
 
-        final ECEFVelocity currentVelocityDrift1 = estimator
-                .getCurrentVelocityDrift();
+        final ECEFVelocity currentVelocityDrift1 = estimator.getCurrentVelocityDrift();
         final ECEFVelocity currentVelocityDrift2 = new ECEFVelocity();
         assertTrue(estimator.getCurrentVelocityDrift(currentVelocityDrift2));
         assertEquals(currentVelocityDrift1, currentVelocityDrift2);
 
-        final Rotation3D currentOrientationDrift1 = estimator
-                .getCurrentOrientationDrift();
+        final Rotation3D currentOrientationDrift1 = estimator.getCurrentOrientationDrift();
         final Quaternion currentOrientationDrift2 = new Quaternion();
         assertTrue(estimator.getCurrentOrientationDrift(currentOrientationDrift2));
         assertEquals(currentOrientationDrift1, currentOrientationDrift2);
@@ -10095,165 +8479,111 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final DistanceFormatter distanceFormatter = new DistanceFormatter();
         final SpeedFormatter speedFormatter = new SpeedFormatter();
         final AngleFormatter angleFormatter = new AngleFormatter();
-        final AccelerationFormatter accelerationFormatter =
-                new AccelerationFormatter();
-        final AngularSpeedFormatter angularSpeedFormatter =
-                new AngularSpeedFormatter();
+        final AccelerationFormatter accelerationFormatter = new AccelerationFormatter();
+        final AngularSpeedFormatter angularSpeedFormatter = new AngularSpeedFormatter();
 
-        final Double currentPositionDriftNorm = estimator
-                .getCurrentPositionDriftNormMeters();
+        final Double currentPositionDriftNorm = estimator.getCurrentPositionDriftNormMeters();
         assertNotNull(currentPositionDriftNorm);
-        assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(),
-                0.0);
-        LOGGER.log(Level.INFO, "Current position drift: " +
-                distanceFormatter.format(currentPositionDriftNorm,
-                        DistanceUnit.METER));
+        assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current position drift: %s", distanceFormatter.format(
+                currentPositionDriftNorm, DistanceUnit.METER)));
         assertTrue(currentPositionDriftNorm < 8.0);
-        assertEquals(currentPositionDriftNorm, navigationPositionDrift,
-                ABSOLUTE_ERROR);
+        assertEquals(currentPositionDriftNorm, navigationPositionDrift, ABSOLUTE_ERROR);
 
-        final Distance currentPositionDriftNorm1 = estimator
-                .getCurrentPositionDriftNorm();
-        assertEquals(currentPositionDriftNorm,
-                currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
+        final Distance currentPositionDriftNorm1 = estimator.getCurrentPositionDriftNorm();
+        assertEquals(currentPositionDriftNorm, currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, currentPositionDriftNorm1.getUnit());
-        final Distance currentPositionDriftNorm2 = new Distance(1.0,
-                DistanceUnit.FOOT);
-        assertTrue(estimator.getCurrentPositionDriftNorm(
-                currentPositionDriftNorm2));
+        final Distance currentPositionDriftNorm2 = new Distance(1.0, DistanceUnit.FOOT);
+        assertTrue(estimator.getCurrentPositionDriftNorm(currentPositionDriftNorm2));
         assertEquals(currentPositionDriftNorm1, currentPositionDriftNorm2);
 
-        final Double currentVelocityDriftNorm = estimator
-                .getCurrentVelocityDriftNormMetersPerSecond();
+        final Double currentVelocityDriftNorm = estimator.getCurrentVelocityDriftNormMetersPerSecond();
         assertNotNull(currentVelocityDriftNorm);
-        assertEquals(currentVelocityDriftNorm, currentVelocityDrift1.getNorm(),
-                0.0);
-        LOGGER.log(Level.INFO, "Current velocity drift: " +
-                speedFormatter.format(currentVelocityDriftNorm,
-                        SpeedUnit.METERS_PER_SECOND));
+        assertEquals(currentVelocityDriftNorm, currentVelocityDrift1.getNorm(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current velocity drift: %s", speedFormatter.format(
+                currentVelocityDriftNorm, SpeedUnit.METERS_PER_SECOND)));
         assertTrue(currentVelocityDriftNorm < 0.7);
-        assertEquals(currentVelocityDriftNorm, navigationVelocityDrift,
-                ABSOLUTE_ERROR);
+        assertEquals(currentVelocityDriftNorm, navigationVelocityDrift, ABSOLUTE_ERROR);
 
-        final Speed currentVelocityDriftNorm1 = estimator
-                .getCurrentVelocityDriftNorm();
-        assertEquals(currentVelocityDriftNorm,
-                currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND,
-                currentVelocityDriftNorm1.getUnit());
-        final Speed currentVelocityDriftNorm2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
-        assertTrue(estimator.getCurrentVelocityDriftNorm(
-                currentVelocityDriftNorm2));
+        final Speed currentVelocityDriftNorm1 = estimator.getCurrentVelocityDriftNorm();
+        assertEquals(currentVelocityDriftNorm, currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, currentVelocityDriftNorm1.getUnit());
+        final Speed currentVelocityDriftNorm2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        assertTrue(estimator.getCurrentVelocityDriftNorm(currentVelocityDriftNorm2));
         assertEquals(currentVelocityDriftNorm1, currentVelocityDriftNorm2);
 
-        final Double currentOrientationDriftNorm = estimator
-                .getCurrentOrientationDriftRadians();
+        final Double currentOrientationDriftNorm = estimator.getCurrentOrientationDriftRadians();
         assertNotNull(currentOrientationDriftNorm);
-        assertEquals(currentOrientationDriftNorm,
-                currentOrientationDrift1.getRotationAngle(), 0.0);
-        LOGGER.log(Level.INFO, "Current orientation drift: " +
-                angleFormatter.format(AngleConverter.convert(
-                        currentOrientationDriftNorm, AngleUnit.RADIANS,
-                        AngleUnit.DEGREES), AngleUnit.DEGREES));
+        assertEquals(currentOrientationDriftNorm, currentOrientationDrift1.getRotationAngle(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current orientation drift: %s", angleFormatter.format(
+                AngleConverter.convert(currentOrientationDriftNorm, AngleUnit.RADIANS, AngleUnit.DEGREES),
+                AngleUnit.DEGREES)));
         assertTrue(currentOrientationDriftNorm < 0.006);
-        assertEquals(currentOrientationDriftNorm, navigationOrientationDrift,
-                ABSOLUTE_ERROR);
+        assertEquals(currentOrientationDriftNorm, navigationOrientationDrift, ABSOLUTE_ERROR);
 
-        final Angle currentOrientationDriftNorm1 = estimator
-                .getCurrentOrientationDriftAngle();
-        assertEquals(currentOrientationDriftNorm,
-                currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
+        final Angle currentOrientationDriftNorm1 = estimator.getCurrentOrientationDriftAngle();
+        assertEquals(currentOrientationDriftNorm, currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
         assertEquals(AngleUnit.RADIANS, currentOrientationDriftNorm1.getUnit());
-        final Angle currentOrientationDriftNorm2 = new Angle(1.0,
-                AngleUnit.DEGREES);
-        assertTrue(estimator.getCurrentOrientationDriftAngle(
-                currentOrientationDriftNorm2));
+        final Angle currentOrientationDriftNorm2 = new Angle(1.0, AngleUnit.DEGREES);
+        assertTrue(estimator.getCurrentOrientationDriftAngle(currentOrientationDriftNorm2));
         assertEquals(currentOrientationDriftNorm1, currentOrientationDriftNorm2);
 
-        final Double currentPositionDriftPerTimeUnit =
-                estimator.getCurrentPositionDriftPerTimeUnit();
+        final Double currentPositionDriftPerTimeUnit = estimator.getCurrentPositionDriftPerTimeUnit();
         assertNotNull(currentPositionDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current position drift per time unit: " +
-                speedFormatter.format(currentPositionDriftPerTimeUnit,
-                        SpeedUnit.METERS_PER_SECOND));
+        LOGGER.log(Level.INFO, String.format("Current position drift per time unit: %s", speedFormatter.format(
+                currentPositionDriftPerTimeUnit, SpeedUnit.METERS_PER_SECOND)));
         assertTrue(currentPositionDriftPerTimeUnit < 0.3);
-        assertEquals(currentPositionDriftPerTimeUnit,
-                navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+        assertEquals(currentPositionDriftPerTimeUnit, navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
                 ABSOLUTE_ERROR);
 
-        final Speed currentPositionDriftPerTimeUnit1 =
-                estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
-        assertEquals(currentPositionDriftPerTimeUnit,
-                currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND,
-                currentPositionDriftPerTimeUnit1.getUnit());
-        final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
-        assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                currentPositionDriftPerTimeUnit2));
-        assertEquals(currentPositionDriftPerTimeUnit1,
-                currentPositionDriftPerTimeUnit2);
+        final Speed currentPositionDriftPerTimeUnit1 = estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
+        assertEquals(currentPositionDriftPerTimeUnit, currentPositionDriftPerTimeUnit1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, currentPositionDriftPerTimeUnit1.getUnit());
+        final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(currentPositionDriftPerTimeUnit2));
+        assertEquals(currentPositionDriftPerTimeUnit1, currentPositionDriftPerTimeUnit2);
 
-        final Double currentVelocityDriftPerTimeUnit =
-                estimator.getCurrentVelocityDriftPerTimeUnit();
+        final Double currentVelocityDriftPerTimeUnit = estimator.getCurrentVelocityDriftPerTimeUnit();
         assertNotNull(currentVelocityDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current velocity drift per time unit: " +
-                accelerationFormatter.format(currentVelocityDriftPerTimeUnit,
-                        AccelerationUnit.METERS_PER_SQUARED_SECOND));
+        LOGGER.log(Level.INFO, String.format("Current velocity drift per time unit: %s", accelerationFormatter.format(
+                currentVelocityDriftPerTimeUnit, AccelerationUnit.METERS_PER_SQUARED_SECOND)));
         assertTrue(currentVelocityDriftPerTimeUnit < 0.03);
-        assertEquals(currentVelocityDriftPerTimeUnit,
-                navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+        assertEquals(currentVelocityDriftPerTimeUnit, navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
                 ABSOLUTE_ERROR);
 
         final Acceleration currentVelocityDriftPerTimeUnit1 =
                 estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration();
-        assertEquals(currentVelocityDriftPerTimeUnit,
-                currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                currentVelocityDriftPerTimeUnit1.getUnit());
-        final Acceleration currentVelocityDriftPerTimeUnit2 =
-                new Acceleration(1.0,
-                        AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                currentVelocityDriftPerTimeUnit2));
-        assertEquals(currentVelocityDriftPerTimeUnit1,
-                currentVelocityDriftPerTimeUnit2);
+        assertEquals(currentVelocityDriftPerTimeUnit, currentVelocityDriftPerTimeUnit1.getValue().doubleValue(), 0.0);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, currentVelocityDriftPerTimeUnit1.getUnit());
+        final Acceleration currentVelocityDriftPerTimeUnit2 = new Acceleration(1.0,
+                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(currentVelocityDriftPerTimeUnit2));
+        assertEquals(currentVelocityDriftPerTimeUnit1, currentVelocityDriftPerTimeUnit2);
 
-        final Double currentOrientationDriftPerTimeUnit =
-                estimator.getCurrentOrientationDriftPerTimeUnit();
+        final Double currentOrientationDriftPerTimeUnit = estimator.getCurrentOrientationDriftPerTimeUnit();
         assertNotNull(currentOrientationDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current orientation drift per time unit: " +
-                angularSpeedFormatter.format(AngularSpeedConverter.convert(
-                        currentOrientationDriftPerTimeUnit,
-                        AngularSpeedUnit.RADIANS_PER_SECOND,
-                        AngularSpeedUnit.DEGREES_PER_SECOND),
-                        AngularSpeedUnit.DEGREES_PER_SECOND));
+        LOGGER.log(Level.INFO, String.format("Current orientation drift per time unit: %s",
+                angularSpeedFormatter.format(AngularSpeedConverter.convert(currentOrientationDriftPerTimeUnit,
+                        AngularSpeedUnit.RADIANS_PER_SECOND, AngularSpeedUnit.DEGREES_PER_SECOND),
+                        AngularSpeedUnit.DEGREES_PER_SECOND)));
         assertTrue(currentOrientationDriftPerTimeUnit < 2e-4);
         assertEquals(currentOrientationDriftPerTimeUnit,
-                navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                ABSOLUTE_ERROR);
+                navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS), ABSOLUTE_ERROR);
 
         final AngularSpeed currentOrientationDriftPerTimeUnit1 =
                 estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed();
-        assertEquals(currentOrientationDriftPerTimeUnit,
-                currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
+        assertEquals(currentOrientationDriftPerTimeUnit, currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
                 0.0);
-        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND,
-                currentOrientationDriftPerTimeUnit1.getUnit());
-        final AngularSpeed currentOrientationDriftPerTimeUnit2 =
-                new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                currentOrientationDriftPerTimeUnit2));
-        assertEquals(currentOrientationDriftPerTimeUnit1,
-                currentOrientationDriftPerTimeUnit2);
+        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, currentOrientationDriftPerTimeUnit1.getUnit());
+        final AngularSpeed currentOrientationDriftPerTimeUnit2 = new AngularSpeed(1.0,
+                AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(currentOrientationDriftPerTimeUnit2));
+        assertEquals(currentOrientationDriftPerTimeUnit1, currentOrientationDriftPerTimeUnit2);
 
         // reset
         estimator.reset();
 
-        assertEquals(mReset, 1);
+        assertEquals(1, mReset);
         assertEquals(0, estimator.getNumberOfProcessedSamples());
         assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
         assertNull(estimator.getElapsedTime());
@@ -10275,23 +8605,18 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentOrientationDriftAngle(null));
         assertNull(estimator.getCurrentPositionDriftPerTimeUnit());
         assertNull(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed());
-        assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                null));
+        assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
     }
 
     @Test
-    public void testAddBodyKinematicsAndResetExactCalibrationNoNoiseAndKinematicsNotFixed()
-            throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException,
-            LockedException, NotReadyException, DriftEstimationException,
+    public void testAddBodyKinematicsAndResetExactCalibrationNoNoiseAndKinematicsNotFixed() throws AlgebraException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException, DriftEstimationException,
             InertialNavigatorException, InvalidRotationMatrixException {
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
@@ -10305,31 +8630,28 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             final double accelQuantLevel = 0.0;
             final double gyroQuantLevel = 0.0;
 
-            final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                    gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+            final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD,
+                    accelQuantLevel, gyroQuantLevel);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final Random random = new Random();
 
-            final CoordinateTransformation ecefC = ecefFrame
-                    .getCoordinateTransformation();
+            final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
             final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
             final ECEFFrame navigationFrame = new ECEFFrame(ecefFrame);
 
-            final DriftEstimator estimator = new DriftEstimator(nedFrame,
-                    ba, ma, bg, mg, gg, this);
+            final DriftEstimator estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg, gg, this);
             estimator.setFixKinematicsEnabled(false);
             estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
 
             reset();
-            assertEquals(mStart, 0);
-            assertEquals(mBodyKinematicsAdded, 0);
-            assertEquals(mReset, 0);
-            assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+            assertEquals(0, mStart);
+            assertEquals(0, mBodyKinematicsAdded);
+            assertEquals(0, mReset);
+            assertEquals(0, estimator.getNumberOfProcessedSamples());
             assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
             assertNull(estimator.getElapsedTime());
             final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
@@ -10337,59 +8659,53 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             assertFalse(estimator.isRunning());
             assertFalse(estimator.isFixKinematicsEnabled());
 
-            final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                    .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                            ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
+            final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                    TIME_INTERVAL_SECONDS, ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    ecefPosition);
 
             final BodyKinematics measuredKinematics = new BodyKinematics();
             for (int i = 0; i < N_SAMPLES; i++) {
-                BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                        trueKinematics, errors, random, measuredKinematics);
+                BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random,
+                        measuredKinematics);
 
                 estimator.addBodyKinematics(measuredKinematics);
 
-                assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+                assertEquals(i + 1, estimator.getNumberOfProcessedSamples());
                 assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
                 assertFalse(estimator.isRunning());
 
-                ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS,
-                        navigationFrame, measuredKinematics, navigationFrame);
+                ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, measuredKinematics,
+                        navigationFrame);
             }
 
-            assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+            assertEquals(N_SAMPLES, estimator.getNumberOfProcessedSamples());
             assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
             final Time elapsedTime1 = estimator.getElapsedTime();
-            assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
+            assertEquals(elapsedTime1.getValue().doubleValue(), estimator.getElapsedTimeSeconds(), 0.0);
             assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
             final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
             assertTrue(estimator.getElapsedTime(elapsedTime2));
             assertEquals(elapsedTime1, elapsedTime2);
             assertFalse(estimator.isRunning());
-            assertEquals(mStart, 1);
-            assertEquals(mBodyKinematicsAdded, N_SAMPLES);
-            assertEquals(mReset, 0);
+            assertEquals(1, mStart);
+            assertEquals(N_SAMPLES, mBodyKinematicsAdded);
+            assertEquals(0, mReset);
 
-            final double navigationPositionDrift = positionDrift(
-                    ecefFrame, navigationFrame);
-            final double navigationVelocityDrift = velocityDrift(
-                    ecefFrame, navigationFrame);
-            final double navigationOrientationDrift = orientationDrift(
-                    ecefFrame, navigationFrame);
+            final double navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
+            final double navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
+            final double navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
-            final ECEFPosition currentPositionDrift1 = estimator
-                    .getCurrentPositionDrift();
+            final ECEFPosition currentPositionDrift1 = estimator.getCurrentPositionDrift();
             final ECEFPosition currentPositionDrift2 = new ECEFPosition();
             assertTrue(estimator.getCurrentPositionDrift(currentPositionDrift2));
             assertEquals(currentPositionDrift1, currentPositionDrift2);
 
-            final ECEFVelocity currentVelocityDrift1 = estimator
-                    .getCurrentVelocityDrift();
+            final ECEFVelocity currentVelocityDrift1 = estimator.getCurrentVelocityDrift();
             final ECEFVelocity currentVelocityDrift2 = new ECEFVelocity();
             assertTrue(estimator.getCurrentVelocityDrift(currentVelocityDrift2));
             assertEquals(currentVelocityDrift1, currentVelocityDrift2);
 
-            final Rotation3D currentOrientationDrift1 = estimator
-                    .getCurrentOrientationDrift();
+            final Rotation3D currentOrientationDrift1 = estimator.getCurrentOrientationDrift();
             final Quaternion currentOrientationDrift2 = new Quaternion();
             assertTrue(estimator.getCurrentOrientationDrift(currentOrientationDrift2));
             assertEquals(currentOrientationDrift1, currentOrientationDrift2);
@@ -10397,165 +8713,117 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             final DistanceFormatter distanceFormatter = new DistanceFormatter();
             final SpeedFormatter speedFormatter = new SpeedFormatter();
             final AngleFormatter angleFormatter = new AngleFormatter();
-            final AccelerationFormatter accelerationFormatter =
-                    new AccelerationFormatter();
-            final AngularSpeedFormatter angularSpeedFormatter =
-                    new AngularSpeedFormatter();
+            final AccelerationFormatter accelerationFormatter = new AccelerationFormatter();
+            final AngularSpeedFormatter angularSpeedFormatter = new AngularSpeedFormatter();
 
-            final Double currentPositionDriftNorm = estimator
-                    .getCurrentPositionDriftNormMeters();
+            final Double currentPositionDriftNorm = estimator.getCurrentPositionDriftNormMeters();
             assertNotNull(currentPositionDriftNorm);
-            assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(),
-                    0.0);
-            LOGGER.log(Level.INFO, "Current position drift: " +
-                    distanceFormatter.format(currentPositionDriftNorm,
-                            DistanceUnit.METER));
+            assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(), 0.0);
+            LOGGER.log(Level.INFO, String.format("Current position drift: %s", distanceFormatter.format(
+                    currentPositionDriftNorm, DistanceUnit.METER)));
             assertTrue(currentPositionDriftNorm < 17.0);
-            assertEquals(currentPositionDriftNorm, navigationPositionDrift,
-                    ABSOLUTE_ERROR);
+            assertEquals(currentPositionDriftNorm, navigationPositionDrift, ABSOLUTE_ERROR);
 
-            final Distance currentPositionDriftNorm1 = estimator
-                    .getCurrentPositionDriftNorm();
-            assertEquals(currentPositionDriftNorm,
-                    currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
+            final Distance currentPositionDriftNorm1 = estimator.getCurrentPositionDriftNorm();
+            assertEquals(currentPositionDriftNorm, currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
             assertEquals(DistanceUnit.METER, currentPositionDriftNorm1.getUnit());
-            final Distance currentPositionDriftNorm2 = new Distance(1.0,
-                    DistanceUnit.FOOT);
-            assertTrue(estimator.getCurrentPositionDriftNorm(
-                    currentPositionDriftNorm2));
+            final Distance currentPositionDriftNorm2 = new Distance(1.0, DistanceUnit.FOOT);
+            assertTrue(estimator.getCurrentPositionDriftNorm(currentPositionDriftNorm2));
             assertEquals(currentPositionDriftNorm1, currentPositionDriftNorm2);
 
-            final Double currentVelocityDriftNorm = estimator
-                    .getCurrentVelocityDriftNormMetersPerSecond();
+            final Double currentVelocityDriftNorm = estimator.getCurrentVelocityDriftNormMetersPerSecond();
             assertNotNull(currentVelocityDriftNorm);
-            LOGGER.log(Level.INFO, "Current velocity drift: " +
-                    speedFormatter.format(currentVelocityDriftNorm,
-                            SpeedUnit.METERS_PER_SECOND));
+            LOGGER.log(Level.INFO, String.format("Current velocity drift: %s", speedFormatter.format(
+                    currentVelocityDriftNorm, SpeedUnit.METERS_PER_SECOND)));
 
             if (currentVelocityDriftNorm >= 1.3) {
                 continue;
             }
             assertTrue(currentVelocityDriftNorm < 1.3);
-            assertEquals(currentVelocityDriftNorm, navigationVelocityDrift,
-                    ABSOLUTE_ERROR);
+            assertEquals(currentVelocityDriftNorm, navigationVelocityDrift, ABSOLUTE_ERROR);
 
-            final Speed currentVelocityDriftNorm1 = estimator
-                    .getCurrentVelocityDriftNorm();
-            assertEquals(currentVelocityDriftNorm,
-                    currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
-            assertEquals(SpeedUnit.METERS_PER_SECOND,
-                    currentVelocityDriftNorm1.getUnit());
-            final Speed currentVelocityDriftNorm2 = new Speed(1.0,
-                    SpeedUnit.KILOMETERS_PER_HOUR);
-            assertTrue(estimator.getCurrentVelocityDriftNorm(
-                    currentVelocityDriftNorm2));
+            final Speed currentVelocityDriftNorm1 = estimator.getCurrentVelocityDriftNorm();
+            assertEquals(currentVelocityDriftNorm, currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
+            assertEquals(SpeedUnit.METERS_PER_SECOND, currentVelocityDriftNorm1.getUnit());
+            final Speed currentVelocityDriftNorm2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+            assertTrue(estimator.getCurrentVelocityDriftNorm(currentVelocityDriftNorm2));
             assertEquals(currentVelocityDriftNorm1, currentVelocityDriftNorm2);
 
-            final Double currentOrientationDriftNorm = estimator
-                    .getCurrentOrientationDriftRadians();
+            final Double currentOrientationDriftNorm = estimator.getCurrentOrientationDriftRadians();
             assertNotNull(currentOrientationDriftNorm);
-            LOGGER.log(Level.INFO, "Current orientation drift: " +
-                    angleFormatter.format(AngleConverter.convert(
-                            currentOrientationDriftNorm, AngleUnit.RADIANS,
-                            AngleUnit.DEGREES), AngleUnit.DEGREES));
+            LOGGER.log(Level.INFO, String.format("Current orientation drift: %s", angleFormatter.format(
+                    AngleConverter.convert(currentOrientationDriftNorm, AngleUnit.RADIANS, AngleUnit.DEGREES),
+                    AngleUnit.DEGREES)));
             assertTrue(currentOrientationDriftNorm < 0.008);
-            assertEquals(currentOrientationDriftNorm, navigationOrientationDrift,
-                    ABSOLUTE_ERROR);
+            assertEquals(currentOrientationDriftNorm, navigationOrientationDrift, ABSOLUTE_ERROR);
 
-            final Angle currentOrientationDriftNorm1 = estimator
-                    .getCurrentOrientationDriftAngle();
-            assertEquals(currentOrientationDriftNorm,
-                    currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
+            final Angle currentOrientationDriftNorm1 = estimator.getCurrentOrientationDriftAngle();
+            assertEquals(currentOrientationDriftNorm, currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
             assertEquals(AngleUnit.RADIANS, currentOrientationDriftNorm1.getUnit());
-            final Angle currentOrientationDriftNorm2 = new Angle(1.0,
-                    AngleUnit.DEGREES);
-            assertTrue(estimator.getCurrentOrientationDriftAngle(
-                    currentOrientationDriftNorm2));
+            final Angle currentOrientationDriftNorm2 = new Angle(1.0, AngleUnit.DEGREES);
+            assertTrue(estimator.getCurrentOrientationDriftAngle(currentOrientationDriftNorm2));
             assertEquals(currentOrientationDriftNorm1, currentOrientationDriftNorm2);
 
-            final Double currentPositionDriftPerTimeUnit =
-                    estimator.getCurrentPositionDriftPerTimeUnit();
+            final Double currentPositionDriftPerTimeUnit = estimator.getCurrentPositionDriftPerTimeUnit();
             assertNotNull(currentPositionDriftPerTimeUnit);
-            LOGGER.log(Level.INFO, "Current position drift per time unit: " +
-                    speedFormatter.format(currentPositionDriftPerTimeUnit,
-                            SpeedUnit.METERS_PER_SECOND));
+            LOGGER.log(Level.INFO, String.format("Current position drift per time unit: %s", speedFormatter.format(
+                    currentPositionDriftPerTimeUnit, SpeedUnit.METERS_PER_SECOND)));
             assertTrue(currentPositionDriftPerTimeUnit < 0.5);
-            assertEquals(currentPositionDriftPerTimeUnit,
-                    navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+            assertEquals(currentPositionDriftPerTimeUnit, navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
                     ABSOLUTE_ERROR);
 
-            final Speed currentPositionDriftPerTimeUnit1 =
-                    estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
-            assertEquals(currentPositionDriftPerTimeUnit,
-                    currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
+            final Speed currentPositionDriftPerTimeUnit1 = estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
+            assertEquals(currentPositionDriftPerTimeUnit, currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
                     0.0);
-            assertEquals(SpeedUnit.METERS_PER_SECOND,
-                    currentPositionDriftPerTimeUnit1.getUnit());
-            final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0,
-                    SpeedUnit.KILOMETERS_PER_HOUR);
-            assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                    currentPositionDriftPerTimeUnit2));
-            assertEquals(currentPositionDriftPerTimeUnit1,
-                    currentPositionDriftPerTimeUnit2);
+            assertEquals(SpeedUnit.METERS_PER_SECOND, currentPositionDriftPerTimeUnit1.getUnit());
+            final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+            assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(currentPositionDriftPerTimeUnit2));
+            assertEquals(currentPositionDriftPerTimeUnit1, currentPositionDriftPerTimeUnit2);
 
-            final Double currentVelocityDriftPerTimeUnit =
-                    estimator.getCurrentVelocityDriftPerTimeUnit();
+            final Double currentVelocityDriftPerTimeUnit = estimator.getCurrentVelocityDriftPerTimeUnit();
             assertNotNull(currentVelocityDriftPerTimeUnit);
-            LOGGER.log(Level.INFO, "Current velocity drift per time unit: " +
+            LOGGER.log(Level.INFO, String.format("Current velocity drift per time unit: %s",
                     accelerationFormatter.format(currentVelocityDriftPerTimeUnit,
-                            AccelerationUnit.METERS_PER_SQUARED_SECOND));
+                            AccelerationUnit.METERS_PER_SQUARED_SECOND)));
             assertTrue(currentVelocityDriftPerTimeUnit < 0.04);
-            assertEquals(currentVelocityDriftPerTimeUnit,
-                    navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+            assertEquals(currentVelocityDriftPerTimeUnit, navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
                     ABSOLUTE_ERROR);
 
             final Acceleration currentVelocityDriftPerTimeUnit1 =
                     estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration();
-            assertEquals(currentVelocityDriftPerTimeUnit,
-                    currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
+            assertEquals(currentVelocityDriftPerTimeUnit, currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
                     0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    currentVelocityDriftPerTimeUnit1.getUnit());
-            final Acceleration currentVelocityDriftPerTimeUnit2 =
-                    new Acceleration(1.0,
-                            AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                    currentVelocityDriftPerTimeUnit2));
-            assertEquals(currentVelocityDriftPerTimeUnit1,
-                    currentVelocityDriftPerTimeUnit2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, currentVelocityDriftPerTimeUnit1.getUnit());
+            final Acceleration currentVelocityDriftPerTimeUnit2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(currentVelocityDriftPerTimeUnit2));
+            assertEquals(currentVelocityDriftPerTimeUnit1, currentVelocityDriftPerTimeUnit2);
 
-            final Double currentOrientationDriftPerTimeUnit =
-                    estimator.getCurrentOrientationDriftPerTimeUnit();
+            final Double currentOrientationDriftPerTimeUnit = estimator.getCurrentOrientationDriftPerTimeUnit();
             assertNotNull(currentOrientationDriftPerTimeUnit);
-            LOGGER.log(Level.INFO, "Current orientation drift per time unit: " +
-                    angularSpeedFormatter.format(AngularSpeedConverter.convert(
-                            currentOrientationDriftPerTimeUnit,
-                            AngularSpeedUnit.RADIANS_PER_SECOND,
-                            AngularSpeedUnit.DEGREES_PER_SECOND),
-                            AngularSpeedUnit.DEGREES_PER_SECOND));
+            LOGGER.log(Level.INFO, String.format("Current orientation drift per time unit: %s",
+                    angularSpeedFormatter.format(AngularSpeedConverter.convert(currentOrientationDriftPerTimeUnit,
+                                    AngularSpeedUnit.RADIANS_PER_SECOND, AngularSpeedUnit.DEGREES_PER_SECOND),
+                            AngularSpeedUnit.DEGREES_PER_SECOND)));
             assertTrue(currentOrientationDriftPerTimeUnit < 3e-4);
             assertEquals(currentOrientationDriftPerTimeUnit,
-                    navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                    ABSOLUTE_ERROR);
+                    navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS), ABSOLUTE_ERROR);
 
             final AngularSpeed currentOrientationDriftPerTimeUnit1 =
                     estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed();
             assertEquals(currentOrientationDriftPerTimeUnit,
-                    currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
-                    0.0);
-            assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND,
-                    currentOrientationDriftPerTimeUnit1.getUnit());
-            final AngularSpeed currentOrientationDriftPerTimeUnit2 =
-                    new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+                    currentOrientationDriftPerTimeUnit1.getValue().doubleValue(), 0.0);
+            assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, currentOrientationDriftPerTimeUnit1.getUnit());
+            final AngularSpeed currentOrientationDriftPerTimeUnit2 = new AngularSpeed(1.0,
+                    AngularSpeedUnit.DEGREES_PER_SECOND);
             assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
                     currentOrientationDriftPerTimeUnit2));
-            assertEquals(currentOrientationDriftPerTimeUnit1,
-                    currentOrientationDriftPerTimeUnit2);
+            assertEquals(currentOrientationDriftPerTimeUnit1, currentOrientationDriftPerTimeUnit2);
 
             // reset
             estimator.reset();
 
-            assertEquals(mReset, 1);
+            assertEquals(1, mReset);
             assertEquals(0, estimator.getNumberOfProcessedSamples());
             assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
             assertNull(estimator.getElapsedTime());
@@ -10577,16 +8845,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             assertFalse(estimator.getCurrentOrientationDriftAngle(null));
             assertNull(estimator.getCurrentPositionDriftPerTimeUnit());
             assertNull(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed());
-            assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                    null));
+            assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
             assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
             assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-            assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                    null));
+            assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
             assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
             assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-            assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                    null));
+            assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
             numValid++;
             break;
@@ -10596,318 +8861,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Test
-    public void testAddBodyKinematicsAndResetExactCalibrationWithNoiseAndKinematicsFixed()
-            throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException,
-            LockedException, NotReadyException, DriftEstimationException,
-            RotationException, InertialNavigatorException,
-            InvalidRotationMatrixException {
-        final Matrix ba = generateBa();
-        final Matrix ma = generateMaCommonAxis();
-        final Matrix bg = generateBg();
-        final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
-        final double accelNoiseRootPSD = getAccelNoiseRootPSD();
-        final double gyroNoiseRootPSD = getGyroNoiseRootPSD();
-        final double accelQuantLevel = 0.0;
-        final double gyroQuantLevel = 0.0;
-
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
-
-        final NEDFrame nedFrame = generateFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
-
-        final Random random = new Random();
-
-        final CoordinateTransformation ecefC = ecefFrame
-                .getCoordinateTransformation();
-        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
-
-        final ECEFFrame navigationFrame = new ECEFFrame(ecefFrame);
-        final BodyKinematicsFixer fixer = new BodyKinematicsFixer();
-        fixer.setAccelerationBias(ba);
-        fixer.setAccelerationCrossCouplingErrors(ma);
-        fixer.setAngularSpeedBias(bg);
-        fixer.setAngularSpeedCrossCouplingErrors(mg);
-        fixer.setAngularSpeedGDependantCrossBias(gg);
-
-        final DriftEstimator estimator = new DriftEstimator(nedFrame,
-                ba, ma, bg, mg, gg, this);
-        estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
-
-        reset();
-        assertEquals(mStart, 0);
-        assertEquals(mBodyKinematicsAdded, 0);
-        assertEquals(mReset, 0);
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        assertNull(estimator.getElapsedTime());
-        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
-        assertFalse(estimator.getElapsedTime(elapsedTime));
-        assertFalse(estimator.isRunning());
-        assertTrue(estimator.isFixKinematicsEnabled());
-
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
-        final BodyKinematics fixedKinematics = new BodyKinematics();
-
-        final BodyKinematics measuredKinematics = new BodyKinematics();
-        for (int i = 0; i < N_SAMPLES; i++) {
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
-
-            estimator.addBodyKinematics(measuredKinematics);
-
-            assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
-            assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
-            assertFalse(estimator.isRunning());
-
-            fixer.fix(measuredKinematics, fixedKinematics);
-            ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS,
-                    navigationFrame, fixedKinematics, navigationFrame);
-        }
-
-        assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
-        assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
-        final Time elapsedTime1 = estimator.getElapsedTime();
-        assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
-        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
-        assertTrue(estimator.getElapsedTime(elapsedTime2));
-        assertEquals(elapsedTime1, elapsedTime2);
-        assertFalse(estimator.isRunning());
-        assertEquals(mStart, 1);
-        assertEquals(mBodyKinematicsAdded, N_SAMPLES);
-        assertEquals(mReset, 0);
-
-        final double navigationPositionDrift = positionDrift(
-                ecefFrame, navigationFrame);
-        final double navigationVelocityDrift = velocityDrift(
-                ecefFrame, navigationFrame);
-        final double navigationOrientationDrift = orientationDrift(
-                ecefFrame, navigationFrame);
-
-        final ECEFPosition currentPositionDrift1 = estimator
-                .getCurrentPositionDrift();
-        final ECEFPosition currentPositionDrift2 = new ECEFPosition();
-        assertTrue(estimator.getCurrentPositionDrift(currentPositionDrift2));
-        assertEquals(currentPositionDrift1, currentPositionDrift2);
-
-        final ECEFVelocity currentVelocityDrift1 = estimator
-                .getCurrentVelocityDrift();
-        final ECEFVelocity currentVelocityDrift2 = new ECEFVelocity();
-        assertTrue(estimator.getCurrentVelocityDrift(currentVelocityDrift2));
-        assertEquals(currentVelocityDrift1, currentVelocityDrift2);
-
-        final Rotation3D currentOrientationDrift1 = estimator
-                .getCurrentOrientationDrift();
-        final Quaternion currentOrientationDrift2 = new Quaternion();
-        assertTrue(estimator.getCurrentOrientationDrift(currentOrientationDrift2));
-        assertEquals(currentOrientationDrift1, currentOrientationDrift2);
-
-        final DistanceFormatter distanceFormatter = new DistanceFormatter();
-        final SpeedFormatter speedFormatter = new SpeedFormatter();
-        final AngleFormatter angleFormatter = new AngleFormatter();
-        final AccelerationFormatter accelerationFormatter =
-                new AccelerationFormatter();
-        final AngularSpeedFormatter angularSpeedFormatter =
-                new AngularSpeedFormatter();
-
-        final Double currentPositionDriftNorm = estimator
-                .getCurrentPositionDriftNormMeters();
-        assertNotNull(currentPositionDriftNorm);
-        assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(),
-                0.0);
-        LOGGER.log(Level.INFO, "Current position drift: " +
-                distanceFormatter.format(currentPositionDriftNorm,
-                        DistanceUnit.METER));
-        assertTrue(currentPositionDriftNorm < 8.0);
-        assertEquals(currentPositionDriftNorm, navigationPositionDrift,
-                ABSOLUTE_ERROR);
-
-        final Distance currentPositionDriftNorm1 = estimator
-                .getCurrentPositionDriftNorm();
-        assertEquals(currentPositionDriftNorm,
-                currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, currentPositionDriftNorm1.getUnit());
-        final Distance currentPositionDriftNorm2 = new Distance(1.0,
-                DistanceUnit.FOOT);
-        assertTrue(estimator.getCurrentPositionDriftNorm(
-                currentPositionDriftNorm2));
-        assertEquals(currentPositionDriftNorm1, currentPositionDriftNorm2);
-
-        final Double currentVelocityDriftNorm = estimator
-                .getCurrentVelocityDriftNormMetersPerSecond();
-        assertNotNull(currentVelocityDriftNorm);
-        assertEquals(currentVelocityDriftNorm, currentVelocityDrift1.getNorm(),
-                0.0);
-        LOGGER.log(Level.INFO, "Current velocity drift: " +
-                speedFormatter.format(currentVelocityDriftNorm,
-                        SpeedUnit.METERS_PER_SECOND));
-        assertTrue(currentVelocityDriftNorm < 0.7);
-        assertEquals(currentVelocityDriftNorm, navigationVelocityDrift,
-                ABSOLUTE_ERROR);
-
-        final Speed currentVelocityDriftNorm1 = estimator
-                .getCurrentVelocityDriftNorm();
-        assertEquals(currentVelocityDriftNorm,
-                currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND,
-                currentVelocityDriftNorm1.getUnit());
-        final Speed currentVelocityDriftNorm2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
-        assertTrue(estimator.getCurrentVelocityDriftNorm(
-                currentVelocityDriftNorm2));
-        assertEquals(currentVelocityDriftNorm1, currentVelocityDriftNorm2);
-
-        final Double currentOrientationDriftNorm = estimator
-                .getCurrentOrientationDriftRadians();
-        assertNotNull(currentOrientationDriftNorm);
-        assertEquals(currentOrientationDriftNorm,
-                currentOrientationDrift1.getRotationAngle(), 0.0);
-        LOGGER.log(Level.INFO, "Current orientation drift: " +
-                angleFormatter.format(AngleConverter.convert(
-                        currentOrientationDriftNorm, AngleUnit.RADIANS,
-                        AngleUnit.DEGREES), AngleUnit.DEGREES));
-        assertTrue(currentOrientationDriftNorm < 0.006);
-        assertEquals(currentOrientationDriftNorm, navigationOrientationDrift,
-                ABSOLUTE_ERROR);
-
-        final Angle currentOrientationDriftNorm1 = estimator
-                .getCurrentOrientationDriftAngle();
-        assertEquals(currentOrientationDriftNorm,
-                currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, currentOrientationDriftNorm1.getUnit());
-        final Angle currentOrientationDriftNorm2 = new Angle(1.0,
-                AngleUnit.DEGREES);
-        assertTrue(estimator.getCurrentOrientationDriftAngle(
-                currentOrientationDriftNorm2));
-        assertEquals(currentOrientationDriftNorm1, currentOrientationDriftNorm2);
-
-        final Double currentPositionDriftPerTimeUnit =
-                estimator.getCurrentPositionDriftPerTimeUnit();
-        assertNotNull(currentPositionDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current position drift per time unit: " +
-                speedFormatter.format(currentPositionDriftPerTimeUnit,
-                        SpeedUnit.METERS_PER_SECOND));
-        assertTrue(currentPositionDriftPerTimeUnit < 0.3);
-        assertEquals(currentPositionDriftPerTimeUnit,
-                navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                ABSOLUTE_ERROR);
-
-        final Speed currentPositionDriftPerTimeUnit1 =
-                estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
-        assertEquals(currentPositionDriftPerTimeUnit,
-                currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND,
-                currentPositionDriftPerTimeUnit1.getUnit());
-        final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
-        assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                currentPositionDriftPerTimeUnit2));
-        assertEquals(currentPositionDriftPerTimeUnit1,
-                currentPositionDriftPerTimeUnit2);
-
-        final Double currentVelocityDriftPerTimeUnit =
-                estimator.getCurrentVelocityDriftPerTimeUnit();
-        assertNotNull(currentVelocityDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current velocity drift per time unit: " +
-                accelerationFormatter.format(currentVelocityDriftPerTimeUnit,
-                        AccelerationUnit.METERS_PER_SQUARED_SECOND));
-        assertTrue(currentVelocityDriftPerTimeUnit < 0.03);
-        assertEquals(currentVelocityDriftPerTimeUnit,
-                navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                ABSOLUTE_ERROR);
-
-        final Acceleration currentVelocityDriftPerTimeUnit1 =
-                estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration();
-        assertEquals(currentVelocityDriftPerTimeUnit,
-                currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                currentVelocityDriftPerTimeUnit1.getUnit());
-        final Acceleration currentVelocityDriftPerTimeUnit2 =
-                new Acceleration(1.0,
-                        AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                currentVelocityDriftPerTimeUnit2));
-        assertEquals(currentVelocityDriftPerTimeUnit1,
-                currentVelocityDriftPerTimeUnit2);
-
-        final Double currentOrientationDriftPerTimeUnit =
-                estimator.getCurrentOrientationDriftPerTimeUnit();
-        assertNotNull(currentOrientationDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current orientation drift per time unit: " +
-                angularSpeedFormatter.format(AngularSpeedConverter.convert(
-                        currentOrientationDriftPerTimeUnit,
-                        AngularSpeedUnit.RADIANS_PER_SECOND,
-                        AngularSpeedUnit.DEGREES_PER_SECOND),
-                        AngularSpeedUnit.DEGREES_PER_SECOND));
-        assertTrue(currentOrientationDriftPerTimeUnit < 2e-4);
-        assertEquals(currentOrientationDriftPerTimeUnit,
-                navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                ABSOLUTE_ERROR);
-
-        final AngularSpeed currentOrientationDriftPerTimeUnit1 =
-                estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed();
-        assertEquals(currentOrientationDriftPerTimeUnit,
-                currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND,
-                currentOrientationDriftPerTimeUnit1.getUnit());
-        final AngularSpeed currentOrientationDriftPerTimeUnit2 =
-                new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                currentOrientationDriftPerTimeUnit2));
-        assertEquals(currentOrientationDriftPerTimeUnit1,
-                currentOrientationDriftPerTimeUnit2);
-
-        // reset
-        estimator.reset();
-
-        assertEquals(mReset, 1);
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        assertNull(estimator.getElapsedTime());
-        assertFalse(estimator.getElapsedTime(elapsedTime));
-        assertNull(estimator.getCurrentPositionDrift());
-        assertFalse(estimator.getCurrentPositionDrift(null));
-        assertNull(estimator.getCurrentVelocityDrift());
-        assertFalse(estimator.getCurrentVelocityDrift(null));
-        assertNull(estimator.getCurrentOrientationDrift());
-        assertFalse(estimator.getCurrentOrientationDrift(null));
-        assertNull(estimator.getCurrentPositionDriftNormMeters());
-        assertNull(estimator.getCurrentPositionDriftNorm());
-        assertFalse(estimator.getCurrentPositionDriftNorm(null));
-        assertNull(estimator.getCurrentVelocityDriftNormMetersPerSecond());
-        assertNull(estimator.getCurrentVelocityDriftNorm());
-        assertFalse(estimator.getCurrentVelocityDriftNorm(null));
-        assertNull(estimator.getCurrentOrientationDriftRadians());
-        assertNull(estimator.getCurrentOrientationDriftAngle());
-        assertFalse(estimator.getCurrentOrientationDriftAngle(null));
-        assertNull(estimator.getCurrentPositionDriftPerTimeUnit());
-        assertNull(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed());
-        assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                null));
-        assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
-        assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
-        assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
-        assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
-    }
-
-    @Test
-    public void testAddBodyKinematicsAndResetExactCalibrationWithNoiseAndKinematicsNotFixed()
-            throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException,
-            LockedException, NotReadyException, DriftEstimationException,
+    public void testAddBodyKinematicsAndResetExactCalibrationWithNoiseAndKinematicsFixed() throws AlgebraException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException, DriftEstimationException,
             RotationException, InertialNavigatorException, InvalidRotationMatrixException {
         final Matrix ba = generateBa();
         final Matrix ma = generateMaCommonAxis();
@@ -10919,58 +8874,61 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         final NEDFrame nedFrame = generateFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final Random random = new Random();
 
-        final CoordinateTransformation ecefC = ecefFrame
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final ECEFFrame navigationFrame = new ECEFFrame(ecefFrame);
+        final BodyKinematicsFixer fixer = new BodyKinematicsFixer();
+        fixer.setAccelerationBias(ba);
+        fixer.setAccelerationCrossCouplingErrors(ma);
+        fixer.setAngularSpeedBias(bg);
+        fixer.setAngularSpeedCrossCouplingErrors(mg);
+        fixer.setAngularSpeedGDependantCrossBias(gg);
 
-        final DriftEstimator estimator = new DriftEstimator(nedFrame,
-                ba, ma, bg, mg, gg, this);
-        estimator.setFixKinematicsEnabled(false);
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg, gg, this);
         estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
 
         reset();
-        assertEquals(mStart, 0);
-        assertEquals(mBodyKinematicsAdded, 0);
-        assertEquals(mReset, 0);
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(0, mStart);
+        assertEquals(0, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
         assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
         assertNull(estimator.getElapsedTime());
         final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
         assertFalse(estimator.getElapsedTime(elapsedTime));
         assertFalse(estimator.isRunning());
-        assertFalse(estimator.isFixKinematicsEnabled());
+        assertTrue(estimator.isFixKinematicsEnabled());
 
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                ecefPosition);
+        final BodyKinematics fixedKinematics = new BodyKinematics();
 
         final BodyKinematics measuredKinematics = new BodyKinematics();
         for (int i = 0; i < N_SAMPLES; i++) {
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
 
             estimator.addBodyKinematics(measuredKinematics);
 
-            assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+            assertEquals(i + 1, estimator.getNumberOfProcessedSamples());
             assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(estimator.isRunning());
 
-            ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS,
-                    navigationFrame, measuredKinematics, navigationFrame);
+            fixer.fix(measuredKinematics, fixedKinematics);
+            ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, fixedKinematics,
+                    navigationFrame);
         }
 
-        assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+        assertEquals(N_SAMPLES, estimator.getNumberOfProcessedSamples());
         assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
         final Time elapsedTime1 = estimator.getElapsedTime();
         assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
@@ -10979,31 +8937,25 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertTrue(estimator.getElapsedTime(elapsedTime2));
         assertEquals(elapsedTime1, elapsedTime2);
         assertFalse(estimator.isRunning());
-        assertEquals(mStart, 1);
-        assertEquals(mBodyKinematicsAdded, N_SAMPLES);
-        assertEquals(mReset, 0);
+        assertEquals(1, mStart);
+        assertEquals(N_SAMPLES, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
 
-        final double navigationPositionDrift = positionDrift(
-                ecefFrame, navigationFrame);
-        final double navigationVelocityDrift = velocityDrift(
-                ecefFrame, navigationFrame);
-        final double navigationOrientationDrift = orientationDrift(
-                ecefFrame, navigationFrame);
+        final double navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
+        final double navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
+        final double navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
-        final ECEFPosition currentPositionDrift1 = estimator
-                .getCurrentPositionDrift();
+        final ECEFPosition currentPositionDrift1 = estimator.getCurrentPositionDrift();
         final ECEFPosition currentPositionDrift2 = new ECEFPosition();
         assertTrue(estimator.getCurrentPositionDrift(currentPositionDrift2));
         assertEquals(currentPositionDrift1, currentPositionDrift2);
 
-        final ECEFVelocity currentVelocityDrift1 = estimator
-                .getCurrentVelocityDrift();
+        final ECEFVelocity currentVelocityDrift1 = estimator.getCurrentVelocityDrift();
         final ECEFVelocity currentVelocityDrift2 = new ECEFVelocity();
         assertTrue(estimator.getCurrentVelocityDrift(currentVelocityDrift2));
         assertEquals(currentVelocityDrift1, currentVelocityDrift2);
 
-        final Rotation3D currentOrientationDrift1 = estimator
-                .getCurrentOrientationDrift();
+        final Rotation3D currentOrientationDrift1 = estimator.getCurrentOrientationDrift();
         final Quaternion currentOrientationDrift2 = new Quaternion();
         assertTrue(estimator.getCurrentOrientationDrift(currentOrientationDrift2));
         assertEquals(currentOrientationDrift1, currentOrientationDrift2);
@@ -11011,165 +8963,343 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final DistanceFormatter distanceFormatter = new DistanceFormatter();
         final SpeedFormatter speedFormatter = new SpeedFormatter();
         final AngleFormatter angleFormatter = new AngleFormatter();
-        final AccelerationFormatter accelerationFormatter =
-                new AccelerationFormatter();
-        final AngularSpeedFormatter angularSpeedFormatter =
-                new AngularSpeedFormatter();
+        final AccelerationFormatter accelerationFormatter = new AccelerationFormatter();
+        final AngularSpeedFormatter angularSpeedFormatter = new AngularSpeedFormatter();
 
-        final Double currentPositionDriftNorm = estimator
-                .getCurrentPositionDriftNormMeters();
+        final Double currentPositionDriftNorm = estimator.getCurrentPositionDriftNormMeters();
         assertNotNull(currentPositionDriftNorm);
-        assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(),
-                0.0);
-        LOGGER.log(Level.INFO, "Current position drift: " +
-                distanceFormatter.format(currentPositionDriftNorm,
-                        DistanceUnit.METER));
-        assertTrue(currentPositionDriftNorm < 19.0);
-        assertEquals(currentPositionDriftNorm, navigationPositionDrift,
-                ABSOLUTE_ERROR);
+        assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current position drift: %s",
+                distanceFormatter.format(currentPositionDriftNorm, DistanceUnit.METER)));
+        assertTrue(currentPositionDriftNorm < 8.0);
+        assertEquals(currentPositionDriftNorm, navigationPositionDrift, ABSOLUTE_ERROR);
 
-        final Distance currentPositionDriftNorm1 = estimator
-                .getCurrentPositionDriftNorm();
-        assertEquals(currentPositionDriftNorm,
-                currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
+        final Distance currentPositionDriftNorm1 = estimator.getCurrentPositionDriftNorm();
+        assertEquals(currentPositionDriftNorm, currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, currentPositionDriftNorm1.getUnit());
-        final Distance currentPositionDriftNorm2 = new Distance(1.0,
-                DistanceUnit.FOOT);
-        assertTrue(estimator.getCurrentPositionDriftNorm(
-                currentPositionDriftNorm2));
+        final Distance currentPositionDriftNorm2 = new Distance(1.0, DistanceUnit.FOOT);
+        assertTrue(estimator.getCurrentPositionDriftNorm(currentPositionDriftNorm2));
         assertEquals(currentPositionDriftNorm1, currentPositionDriftNorm2);
 
-        final Double currentVelocityDriftNorm = estimator
-                .getCurrentVelocityDriftNormMetersPerSecond();
+        final Double currentVelocityDriftNorm = estimator.getCurrentVelocityDriftNormMetersPerSecond();
         assertNotNull(currentVelocityDriftNorm);
-        assertEquals(currentVelocityDriftNorm, currentVelocityDrift1.getNorm(),
-                0.0);
-        LOGGER.log(Level.INFO, "Current velocity drift: " +
-                speedFormatter.format(currentVelocityDriftNorm,
-                        SpeedUnit.METERS_PER_SECOND));
-        assertTrue(currentVelocityDriftNorm < 1.4);
-        assertEquals(currentVelocityDriftNorm, navigationVelocityDrift,
-                ABSOLUTE_ERROR);
+        assertEquals(currentVelocityDriftNorm, currentVelocityDrift1.getNorm(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current velocity drift: %s", speedFormatter.format(
+                currentVelocityDriftNorm, SpeedUnit.METERS_PER_SECOND)));
+        assertTrue(currentVelocityDriftNorm < 0.7);
+        assertEquals(currentVelocityDriftNorm, navigationVelocityDrift, ABSOLUTE_ERROR);
 
-        final Speed currentVelocityDriftNorm1 = estimator
-                .getCurrentVelocityDriftNorm();
-        assertEquals(currentVelocityDriftNorm,
-                currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND,
-                currentVelocityDriftNorm1.getUnit());
-        final Speed currentVelocityDriftNorm2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
-        assertTrue(estimator.getCurrentVelocityDriftNorm(
-                currentVelocityDriftNorm2));
+        final Speed currentVelocityDriftNorm1 = estimator.getCurrentVelocityDriftNorm();
+        assertEquals(currentVelocityDriftNorm, currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, currentVelocityDriftNorm1.getUnit());
+        final Speed currentVelocityDriftNorm2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        assertTrue(estimator.getCurrentVelocityDriftNorm(currentVelocityDriftNorm2));
         assertEquals(currentVelocityDriftNorm1, currentVelocityDriftNorm2);
 
-        final Double currentOrientationDriftNorm = estimator
-                .getCurrentOrientationDriftRadians();
+        final Double currentOrientationDriftNorm = estimator.getCurrentOrientationDriftRadians();
         assertNotNull(currentOrientationDriftNorm);
-        assertEquals(currentOrientationDriftNorm,
-                currentOrientationDrift1.getRotationAngle(), 0.0);
-        LOGGER.log(Level.INFO, "Current orientation drift: " +
-                angleFormatter.format(AngleConverter.convert(
-                        currentOrientationDriftNorm, AngleUnit.RADIANS,
-                        AngleUnit.DEGREES), AngleUnit.DEGREES));
-        assertTrue(currentOrientationDriftNorm < 0.007);
-        assertEquals(currentOrientationDriftNorm, navigationOrientationDrift,
-                ABSOLUTE_ERROR);
+        assertEquals(currentOrientationDriftNorm, currentOrientationDrift1.getRotationAngle(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current orientation drift: %s", angleFormatter.format(
+                AngleConverter.convert(currentOrientationDriftNorm, AngleUnit.RADIANS, AngleUnit.DEGREES),
+                AngleUnit.DEGREES)));
+        assertTrue(currentOrientationDriftNorm < 0.006);
+        assertEquals(currentOrientationDriftNorm, navigationOrientationDrift, ABSOLUTE_ERROR);
 
-        final Angle currentOrientationDriftNorm1 = estimator
-                .getCurrentOrientationDriftAngle();
-        assertEquals(currentOrientationDriftNorm,
-                currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
+        final Angle currentOrientationDriftNorm1 = estimator.getCurrentOrientationDriftAngle();
+        assertEquals(currentOrientationDriftNorm, currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
         assertEquals(AngleUnit.RADIANS, currentOrientationDriftNorm1.getUnit());
-        final Angle currentOrientationDriftNorm2 = new Angle(1.0,
-                AngleUnit.DEGREES);
-        assertTrue(estimator.getCurrentOrientationDriftAngle(
-                currentOrientationDriftNorm2));
+        final Angle currentOrientationDriftNorm2 = new Angle(1.0, AngleUnit.DEGREES);
+        assertTrue(estimator.getCurrentOrientationDriftAngle(currentOrientationDriftNorm2));
         assertEquals(currentOrientationDriftNorm1, currentOrientationDriftNorm2);
 
-        final Double currentPositionDriftPerTimeUnit =
-                estimator.getCurrentPositionDriftPerTimeUnit();
+        final Double currentPositionDriftPerTimeUnit = estimator.getCurrentPositionDriftPerTimeUnit();
         assertNotNull(currentPositionDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current position drift per time unit: " +
-                speedFormatter.format(currentPositionDriftPerTimeUnit,
-                        SpeedUnit.METERS_PER_SECOND));
-        assertTrue(currentPositionDriftPerTimeUnit < 0.6);
-        assertEquals(currentPositionDriftPerTimeUnit,
-                navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+        LOGGER.log(Level.INFO, String.format("Current position drift per time unit: %s", speedFormatter.format(
+                currentPositionDriftPerTimeUnit, SpeedUnit.METERS_PER_SECOND)));
+        assertTrue(currentPositionDriftPerTimeUnit < 0.3);
+        assertEquals(currentPositionDriftPerTimeUnit, navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
                 ABSOLUTE_ERROR);
 
-        final Speed currentPositionDriftPerTimeUnit1 =
-                estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
-        assertEquals(currentPositionDriftPerTimeUnit,
-                currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND,
-                currentPositionDriftPerTimeUnit1.getUnit());
-        final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
-        assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                currentPositionDriftPerTimeUnit2));
-        assertEquals(currentPositionDriftPerTimeUnit1,
-                currentPositionDriftPerTimeUnit2);
+        final Speed currentPositionDriftPerTimeUnit1 = estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
+        assertEquals(currentPositionDriftPerTimeUnit, currentPositionDriftPerTimeUnit1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, currentPositionDriftPerTimeUnit1.getUnit());
+        final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(currentPositionDriftPerTimeUnit2));
+        assertEquals(currentPositionDriftPerTimeUnit1, currentPositionDriftPerTimeUnit2);
 
-        final Double currentVelocityDriftPerTimeUnit =
-                estimator.getCurrentVelocityDriftPerTimeUnit();
+        final Double currentVelocityDriftPerTimeUnit = estimator.getCurrentVelocityDriftPerTimeUnit();
         assertNotNull(currentVelocityDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current velocity drift per time unit: " +
+        LOGGER.log(Level.INFO, String.format("Current velocity drift per time unit: %s",
                 accelerationFormatter.format(currentVelocityDriftPerTimeUnit,
-                        AccelerationUnit.METERS_PER_SQUARED_SECOND));
-        assertTrue(currentVelocityDriftPerTimeUnit < 0.05);
-        assertEquals(currentVelocityDriftPerTimeUnit,
-                navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+                        AccelerationUnit.METERS_PER_SQUARED_SECOND)));
+        assertTrue(currentVelocityDriftPerTimeUnit < 0.03);
+        assertEquals(currentVelocityDriftPerTimeUnit, navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
                 ABSOLUTE_ERROR);
 
         final Acceleration currentVelocityDriftPerTimeUnit1 =
                 estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration();
-        assertEquals(currentVelocityDriftPerTimeUnit,
-                currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
-                0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                currentVelocityDriftPerTimeUnit1.getUnit());
-        final Acceleration currentVelocityDriftPerTimeUnit2 =
-                new Acceleration(1.0,
-                        AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                currentVelocityDriftPerTimeUnit2));
-        assertEquals(currentVelocityDriftPerTimeUnit1,
-                currentVelocityDriftPerTimeUnit2);
+        assertEquals(currentVelocityDriftPerTimeUnit, currentVelocityDriftPerTimeUnit1.getValue().doubleValue(), 0.0);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, currentVelocityDriftPerTimeUnit1.getUnit());
+        final Acceleration currentVelocityDriftPerTimeUnit2 = new Acceleration(1.0,
+                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(currentVelocityDriftPerTimeUnit2));
+        assertEquals(currentVelocityDriftPerTimeUnit1, currentVelocityDriftPerTimeUnit2);
 
-        final Double currentOrientationDriftPerTimeUnit =
-                estimator.getCurrentOrientationDriftPerTimeUnit();
+        final Double currentOrientationDriftPerTimeUnit = estimator.getCurrentOrientationDriftPerTimeUnit();
         assertNotNull(currentOrientationDriftPerTimeUnit);
-        LOGGER.log(Level.INFO, "Current orientation drift per time unit: " +
-                angularSpeedFormatter.format(AngularSpeedConverter.convert(
-                        currentOrientationDriftPerTimeUnit,
-                        AngularSpeedUnit.RADIANS_PER_SECOND,
-                        AngularSpeedUnit.DEGREES_PER_SECOND),
-                        AngularSpeedUnit.DEGREES_PER_SECOND));
-        assertTrue(currentOrientationDriftPerTimeUnit < 3e-4);
+        LOGGER.log(Level.INFO, String.format("Current orientation drift per time unit: %s",
+                angularSpeedFormatter.format(AngularSpeedConverter.convert(currentOrientationDriftPerTimeUnit,
+                                AngularSpeedUnit.RADIANS_PER_SECOND, AngularSpeedUnit.DEGREES_PER_SECOND),
+                        AngularSpeedUnit.DEGREES_PER_SECOND)));
+        assertTrue(currentOrientationDriftPerTimeUnit < 2e-4);
         assertEquals(currentOrientationDriftPerTimeUnit,
-                navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                ABSOLUTE_ERROR);
+                navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS), ABSOLUTE_ERROR);
 
         final AngularSpeed currentOrientationDriftPerTimeUnit1 =
                 estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed();
-        assertEquals(currentOrientationDriftPerTimeUnit,
-                currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
+        assertEquals(currentOrientationDriftPerTimeUnit, currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
                 0.0);
-        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND,
-                currentOrientationDriftPerTimeUnit1.getUnit());
-        final AngularSpeed currentOrientationDriftPerTimeUnit2 =
-                new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                currentOrientationDriftPerTimeUnit2));
-        assertEquals(currentOrientationDriftPerTimeUnit1,
-                currentOrientationDriftPerTimeUnit2);
+        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, currentOrientationDriftPerTimeUnit1.getUnit());
+        final AngularSpeed currentOrientationDriftPerTimeUnit2 = new AngularSpeed(1.0,
+                AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(currentOrientationDriftPerTimeUnit2));
+        assertEquals(currentOrientationDriftPerTimeUnit1, currentOrientationDriftPerTimeUnit2);
 
         // reset
         estimator.reset();
 
-        assertEquals(mReset, 1);
+        assertEquals(1, mReset);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        assertFalse(estimator.getElapsedTime(elapsedTime));
+        assertNull(estimator.getCurrentPositionDrift());
+        assertFalse(estimator.getCurrentPositionDrift(null));
+        assertNull(estimator.getCurrentVelocityDrift());
+        assertFalse(estimator.getCurrentVelocityDrift(null));
+        assertNull(estimator.getCurrentOrientationDrift());
+        assertFalse(estimator.getCurrentOrientationDrift(null));
+        assertNull(estimator.getCurrentPositionDriftNormMeters());
+        assertNull(estimator.getCurrentPositionDriftNorm());
+        assertFalse(estimator.getCurrentPositionDriftNorm(null));
+        assertNull(estimator.getCurrentVelocityDriftNormMetersPerSecond());
+        assertNull(estimator.getCurrentVelocityDriftNorm());
+        assertFalse(estimator.getCurrentVelocityDriftNorm(null));
+        assertNull(estimator.getCurrentOrientationDriftRadians());
+        assertNull(estimator.getCurrentOrientationDriftAngle());
+        assertFalse(estimator.getCurrentOrientationDriftAngle(null));
+        assertNull(estimator.getCurrentPositionDriftPerTimeUnit());
+        assertNull(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed());
+        assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
+        assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
+        assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
+        assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
+        assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
+    }
+
+    @Test
+    public void testAddBodyKinematicsAndResetExactCalibrationWithNoiseAndKinematicsNotFixed() throws AlgebraException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException, DriftEstimationException,
+            RotationException, InertialNavigatorException, InvalidRotationMatrixException {
+        final Matrix ba = generateBa();
+        final Matrix ma = generateMaCommonAxis();
+        final Matrix bg = generateBg();
+        final Matrix mg = generateMg();
+        final Matrix gg = generateGg();
+        final double accelNoiseRootPSD = getAccelNoiseRootPSD();
+        final double gyroNoiseRootPSD = getGyroNoiseRootPSD();
+        final double accelQuantLevel = 0.0;
+        final double gyroQuantLevel = 0.0;
+
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
+
+        final NEDFrame nedFrame = generateFrame();
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+
+        final Random random = new Random();
+
+        final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
+        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
+
+        final ECEFFrame navigationFrame = new ECEFFrame(ecefFrame);
+
+        final DriftEstimator estimator = new DriftEstimator(nedFrame, ba, ma, bg, mg, gg, this);
+        estimator.setFixKinematicsEnabled(false);
+        estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
+
+        reset();
+        assertEquals(0, mStart);
+        assertEquals(0, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        assertNull(estimator.getElapsedTime());
+        final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
+        assertFalse(estimator.getElapsedTime(elapsedTime));
+        assertFalse(estimator.isRunning());
+        assertFalse(estimator.isFixKinematicsEnabled());
+
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                ecefPosition);
+
+        final BodyKinematics measuredKinematics = new BodyKinematics();
+        for (int i = 0; i < N_SAMPLES; i++) {
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
+
+            estimator.addBodyKinematics(measuredKinematics);
+
+            assertEquals(i + 1, estimator.getNumberOfProcessedSamples());
+            assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
+            assertFalse(estimator.isRunning());
+
+            ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, measuredKinematics,
+                    navigationFrame);
+        }
+
+        assertEquals(N_SAMPLES, estimator.getNumberOfProcessedSamples());
+        assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(elapsedTime1.getValue().doubleValue(), estimator.getElapsedTimeSeconds(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        assertTrue(estimator.getElapsedTime(elapsedTime2));
+        assertEquals(elapsedTime1, elapsedTime2);
+        assertFalse(estimator.isRunning());
+        assertEquals(1, mStart);
+        assertEquals(N_SAMPLES, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
+
+        final double navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
+        final double navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
+        final double navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
+
+        final ECEFPosition currentPositionDrift1 = estimator.getCurrentPositionDrift();
+        final ECEFPosition currentPositionDrift2 = new ECEFPosition();
+        assertTrue(estimator.getCurrentPositionDrift(currentPositionDrift2));
+        assertEquals(currentPositionDrift1, currentPositionDrift2);
+
+        final ECEFVelocity currentVelocityDrift1 = estimator.getCurrentVelocityDrift();
+        final ECEFVelocity currentVelocityDrift2 = new ECEFVelocity();
+        assertTrue(estimator.getCurrentVelocityDrift(currentVelocityDrift2));
+        assertEquals(currentVelocityDrift1, currentVelocityDrift2);
+
+        final Rotation3D currentOrientationDrift1 = estimator.getCurrentOrientationDrift();
+        final Quaternion currentOrientationDrift2 = new Quaternion();
+        assertTrue(estimator.getCurrentOrientationDrift(currentOrientationDrift2));
+        assertEquals(currentOrientationDrift1, currentOrientationDrift2);
+
+        final DistanceFormatter distanceFormatter = new DistanceFormatter();
+        final SpeedFormatter speedFormatter = new SpeedFormatter();
+        final AngleFormatter angleFormatter = new AngleFormatter();
+        final AccelerationFormatter accelerationFormatter = new AccelerationFormatter();
+        final AngularSpeedFormatter angularSpeedFormatter = new AngularSpeedFormatter();
+
+        final Double currentPositionDriftNorm = estimator.getCurrentPositionDriftNormMeters();
+        assertNotNull(currentPositionDriftNorm);
+        assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current position drift: %s", distanceFormatter.format(
+                currentPositionDriftNorm, DistanceUnit.METER)));
+        assertTrue(currentPositionDriftNorm < 19.0);
+        assertEquals(currentPositionDriftNorm, navigationPositionDrift, ABSOLUTE_ERROR);
+
+        final Distance currentPositionDriftNorm1 = estimator.getCurrentPositionDriftNorm();
+        assertEquals(currentPositionDriftNorm, currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, currentPositionDriftNorm1.getUnit());
+        final Distance currentPositionDriftNorm2 = new Distance(1.0, DistanceUnit.FOOT);
+        assertTrue(estimator.getCurrentPositionDriftNorm(currentPositionDriftNorm2));
+        assertEquals(currentPositionDriftNorm1, currentPositionDriftNorm2);
+
+        final Double currentVelocityDriftNorm = estimator.getCurrentVelocityDriftNormMetersPerSecond();
+        assertNotNull(currentVelocityDriftNorm);
+        assertEquals(currentVelocityDriftNorm, currentVelocityDrift1.getNorm(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current velocity drift: %s", speedFormatter.format(
+                currentVelocityDriftNorm, SpeedUnit.METERS_PER_SECOND)));
+        assertTrue(currentVelocityDriftNorm < 1.4);
+        assertEquals(currentVelocityDriftNorm, navigationVelocityDrift, ABSOLUTE_ERROR);
+
+        final Speed currentVelocityDriftNorm1 = estimator.getCurrentVelocityDriftNorm();
+        assertEquals(currentVelocityDriftNorm, currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, currentVelocityDriftNorm1.getUnit());
+        final Speed currentVelocityDriftNorm2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        assertTrue(estimator.getCurrentVelocityDriftNorm(currentVelocityDriftNorm2));
+        assertEquals(currentVelocityDriftNorm1, currentVelocityDriftNorm2);
+
+        final Double currentOrientationDriftNorm = estimator.getCurrentOrientationDriftRadians();
+        assertNotNull(currentOrientationDriftNorm);
+        assertEquals(currentOrientationDriftNorm, currentOrientationDrift1.getRotationAngle(), 0.0);
+        LOGGER.log(Level.INFO, String.format("Current orientation drift: %s", angleFormatter.format(
+                AngleConverter.convert(currentOrientationDriftNorm, AngleUnit.RADIANS, AngleUnit.DEGREES),
+                AngleUnit.DEGREES)));
+        assertTrue(currentOrientationDriftNorm < 0.007);
+        assertEquals(currentOrientationDriftNorm, navigationOrientationDrift, ABSOLUTE_ERROR);
+
+        final Angle currentOrientationDriftNorm1 = estimator.getCurrentOrientationDriftAngle();
+        assertEquals(currentOrientationDriftNorm, currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, currentOrientationDriftNorm1.getUnit());
+        final Angle currentOrientationDriftNorm2 = new Angle(1.0, AngleUnit.DEGREES);
+        assertTrue(estimator.getCurrentOrientationDriftAngle(currentOrientationDriftNorm2));
+        assertEquals(currentOrientationDriftNorm1, currentOrientationDriftNorm2);
+
+        final Double currentPositionDriftPerTimeUnit = estimator.getCurrentPositionDriftPerTimeUnit();
+        assertNotNull(currentPositionDriftPerTimeUnit);
+        LOGGER.log(Level.INFO, String.format("Current position drift per time unit: %s", speedFormatter.format(
+                currentPositionDriftPerTimeUnit, SpeedUnit.METERS_PER_SECOND)));
+        assertTrue(currentPositionDriftPerTimeUnit < 0.6);
+        assertEquals(currentPositionDriftPerTimeUnit, navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+                ABSOLUTE_ERROR);
+
+        final Speed currentPositionDriftPerTimeUnit1 = estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
+        assertEquals(currentPositionDriftPerTimeUnit, currentPositionDriftPerTimeUnit1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, currentPositionDriftPerTimeUnit1.getUnit());
+        final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(currentPositionDriftPerTimeUnit2));
+        assertEquals(currentPositionDriftPerTimeUnit1, currentPositionDriftPerTimeUnit2);
+
+        final Double currentVelocityDriftPerTimeUnit = estimator.getCurrentVelocityDriftPerTimeUnit();
+        assertNotNull(currentVelocityDriftPerTimeUnit);
+        LOGGER.log(Level.INFO, String.format("Current velocity drift per time unit: %s", accelerationFormatter.format(
+                currentVelocityDriftPerTimeUnit, AccelerationUnit.METERS_PER_SQUARED_SECOND)));
+        assertTrue(currentVelocityDriftPerTimeUnit < 0.05);
+        assertEquals(currentVelocityDriftPerTimeUnit, navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+                ABSOLUTE_ERROR);
+
+        final Acceleration currentVelocityDriftPerTimeUnit1 =
+                estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration();
+        assertEquals(currentVelocityDriftPerTimeUnit, currentVelocityDriftPerTimeUnit1.getValue().doubleValue(), 0.0);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, currentVelocityDriftPerTimeUnit1.getUnit());
+        final Acceleration currentVelocityDriftPerTimeUnit2 = new Acceleration(1.0,
+                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(currentVelocityDriftPerTimeUnit2));
+        assertEquals(currentVelocityDriftPerTimeUnit1, currentVelocityDriftPerTimeUnit2);
+
+        final Double currentOrientationDriftPerTimeUnit = estimator.getCurrentOrientationDriftPerTimeUnit();
+        assertNotNull(currentOrientationDriftPerTimeUnit);
+        LOGGER.log(Level.INFO, String.format("Current orientation drift per time unit: %s",
+                angularSpeedFormatter.format(AngularSpeedConverter.convert(currentOrientationDriftPerTimeUnit,
+                                AngularSpeedUnit.RADIANS_PER_SECOND, AngularSpeedUnit.DEGREES_PER_SECOND),
+                        AngularSpeedUnit.DEGREES_PER_SECOND)));
+        assertTrue(currentOrientationDriftPerTimeUnit < 3e-4);
+        assertEquals(currentOrientationDriftPerTimeUnit,
+                navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS), ABSOLUTE_ERROR);
+
+        final AngularSpeed currentOrientationDriftPerTimeUnit1 =
+                estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed();
+        assertEquals(currentOrientationDriftPerTimeUnit, currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
+                0.0);
+        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, currentOrientationDriftPerTimeUnit1.getUnit());
+        final AngularSpeed currentOrientationDriftPerTimeUnit2 = new AngularSpeed(1.0,
+                AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(currentOrientationDriftPerTimeUnit2));
+        assertEquals(currentOrientationDriftPerTimeUnit1, currentOrientationDriftPerTimeUnit2);
+
+        // reset
+        estimator.reset();
+
+        assertEquals(1, mReset);
         assertEquals(0, estimator.getNumberOfProcessedSamples());
         assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
         assertNull(estimator.getElapsedTime());
@@ -11190,25 +9320,19 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         assertFalse(estimator.getCurrentOrientationDriftAngle(null));
         assertNull(estimator.getCurrentPositionDriftPerTimeUnit());
         assertNull(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed());
-        assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                null));
+        assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
         assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                null));
+        assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
         assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                null));
+        assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
     }
 
     @Test
-    public void testAddBodyKinematicsAndResetApproximateCalibration()
-            throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException,
-            LockedException, NotReadyException, DriftEstimationException,
-            RotationException, InertialNavigatorException,
-            InvalidRotationMatrixException,
+    public void testAddBodyKinematicsAndResetApproximateCalibration() throws AlgebraException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException, DriftEstimationException,
+            RotationException, InertialNavigatorException, InvalidRotationMatrixException,
             IntervalDetectorThresholdFactorOptimizerException {
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
@@ -11224,26 +9348,22 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
                     new KnownGravityNormAccelerometerCalibrator();
-            final EasyGyroscopeCalibrator gyroscopeCalibrator =
-                    new EasyGyroscopeCalibrator();
+            final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
 
             // initialize a threshold optimizer to attempt calibration by generating
             // timed body kinematics with noise, and attempting to find the best
             // threshold to find optimal calibration
             final BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    buildOptimizer(ba, ma, accelNoiseRootPSD, gyroNoiseRootPSD,
-                            accelerometerCalibrator, gyroscopeCalibrator);
+                    buildOptimizer(ba, ma, accelNoiseRootPSD, gyroNoiseRootPSD, accelerometerCalibrator,
+                            gyroscopeCalibrator);
             final double thresholdFactor = optimizer.optimize();
 
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
 
-            final Matrix estimatedBa = Matrix.newFromArray(
-                    optimizer.getEstimatedAccelerometerBiases());
+            final Matrix estimatedBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
             final Matrix estimatedMa = optimizer.getEstimatedAccelerometerMa();
 
-            final Matrix estimatedBg = Matrix.newFromArray(
-                    optimizer.getEstimatedGyroscopeBiases());
+            final Matrix estimatedBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
             final Matrix estimatedMg = optimizer.getEstimatedGyroscopeMg();
             final Matrix estimatedGg = optimizer.getEstimatedGyroscopeGg();
 
@@ -11251,17 +9371,15 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             mTimedBodyKinematics.clear();
 
             // use real calibration values to generate measurements with errors
-            final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                    gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+            final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD,
+                    accelQuantLevel, gyroQuantLevel);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final Random random = new Random();
 
-            final CoordinateTransformation ecefC = ecefFrame
-                    .getCoordinateTransformation();
+            final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
             final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
             final ECEFFrame navigationFrame = new ECEFFrame(ecefFrame);
@@ -11273,16 +9391,15 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             fixer.setAngularSpeedCrossCouplingErrors(estimatedMg);
             fixer.setAngularSpeedGDependantCrossBias(estimatedGg);
 
-            final DriftEstimator estimator = new DriftEstimator(nedFrame,
-                    estimatedBa, estimatedMa, estimatedBg, estimatedMg, estimatedGg,
-                    this);
+            final DriftEstimator estimator = new DriftEstimator(nedFrame, estimatedBa, estimatedMa, estimatedBg,
+                    estimatedMg, estimatedGg, this);
             estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
 
             reset();
-            assertEquals(mStart, 0);
-            assertEquals(mBodyKinematicsAdded, 0);
-            assertEquals(mReset, 0);
-            assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+            assertEquals(0, mStart);
+            assertEquals(0, mBodyKinematicsAdded);
+            assertEquals(0, mReset);
+            assertEquals(0, estimator.getNumberOfProcessedSamples());
             assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
             assertNull(estimator.getElapsedTime());
             final Time elapsedTime = new Time(1.0, TimeUnit.DAY);
@@ -11290,61 +9407,55 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             assertFalse(estimator.isRunning());
             assertTrue(estimator.isFixKinematicsEnabled());
 
-            final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                    .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                            ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
+            final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                    TIME_INTERVAL_SECONDS, ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    ecefPosition);
             final BodyKinematics fixedKinematics = new BodyKinematics();
 
             final BodyKinematics measuredKinematics = new BodyKinematics();
             for (int i = 0; i < N_SAMPLES; i++) {
-                BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                        trueKinematics, errors, random, measuredKinematics);
+                BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random,
+                        measuredKinematics);
 
                 estimator.addBodyKinematics(measuredKinematics);
 
-                assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+                assertEquals(i + 1, estimator.getNumberOfProcessedSamples());
                 assertEquals(estimator.getTimeInterval() * (i + 1), estimator.getElapsedTimeSeconds(), 0.0);
                 assertFalse(estimator.isRunning());
 
                 fixer.fix(measuredKinematics, fixedKinematics);
-                ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS,
-                        navigationFrame, fixedKinematics, navigationFrame);
+                ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, fixedKinematics,
+                        navigationFrame);
             }
 
-            assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+            assertEquals(N_SAMPLES, estimator.getNumberOfProcessedSamples());
             assertEquals(estimator.getTimeInterval() * N_SAMPLES, estimator.getElapsedTimeSeconds(), 0.0);
             final Time elapsedTime1 = estimator.getElapsedTime();
-            assertEquals(estimator.getElapsedTimeSeconds(), elapsedTime1.getValue().doubleValue(), 0.0);
+            assertEquals(elapsedTime1.getValue().doubleValue(), estimator.getElapsedTimeSeconds(), 0.0);
             assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
             final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
             assertTrue(estimator.getElapsedTime(elapsedTime2));
             assertEquals(elapsedTime1, elapsedTime2);
             assertFalse(estimator.isRunning());
-            assertEquals(mStart, 1);
-            assertEquals(mBodyKinematicsAdded, N_SAMPLES);
-            assertEquals(mReset, 0);
+            assertEquals(1, mStart);
+            assertEquals(N_SAMPLES, mBodyKinematicsAdded);
+            assertEquals(0, mReset);
 
-            final double navigationPositionDrift = positionDrift(
-                    ecefFrame, navigationFrame);
-            final double navigationVelocityDrift = velocityDrift(
-                    ecefFrame, navigationFrame);
-            final double navigationOrientationDrift = orientationDrift(
-                    ecefFrame, navigationFrame);
+            final double navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
+            final double navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
+            final double navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
-            final ECEFPosition currentPositionDrift1 = estimator
-                    .getCurrentPositionDrift();
+            final ECEFPosition currentPositionDrift1 = estimator.getCurrentPositionDrift();
             final ECEFPosition currentPositionDrift2 = new ECEFPosition();
             assertTrue(estimator.getCurrentPositionDrift(currentPositionDrift2));
             assertEquals(currentPositionDrift1, currentPositionDrift2);
 
-            final ECEFVelocity currentVelocityDrift1 = estimator
-                    .getCurrentVelocityDrift();
+            final ECEFVelocity currentVelocityDrift1 = estimator.getCurrentVelocityDrift();
             final ECEFVelocity currentVelocityDrift2 = new ECEFVelocity();
             assertTrue(estimator.getCurrentVelocityDrift(currentVelocityDrift2));
             assertEquals(currentVelocityDrift1, currentVelocityDrift2);
 
-            final Rotation3D currentOrientationDrift1 = estimator
-                    .getCurrentOrientationDrift();
+            final Rotation3D currentOrientationDrift1 = estimator.getCurrentOrientationDrift();
             final Quaternion currentOrientationDrift2 = new Quaternion();
             assertTrue(estimator.getCurrentOrientationDrift(currentOrientationDrift2));
             assertEquals(currentOrientationDrift1, currentOrientationDrift2);
@@ -11352,183 +9463,133 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             final DistanceFormatter distanceFormatter = new DistanceFormatter();
             final SpeedFormatter speedFormatter = new SpeedFormatter();
             final AngleFormatter angleFormatter = new AngleFormatter();
-            final AccelerationFormatter accelerationFormatter =
-                    new AccelerationFormatter();
-            final AngularSpeedFormatter angularSpeedFormatter =
-                    new AngularSpeedFormatter();
+            final AccelerationFormatter accelerationFormatter = new AccelerationFormatter();
+            final AngularSpeedFormatter angularSpeedFormatter = new AngularSpeedFormatter();
 
-            final Double currentPositionDriftNorm = estimator
-                    .getCurrentPositionDriftNormMeters();
+            final Double currentPositionDriftNorm = estimator.getCurrentPositionDriftNormMeters();
             assertNotNull(currentPositionDriftNorm);
-            assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(),
-                    0.0);
-            LOGGER.log(Level.INFO, "Current position drift: " +
-                    distanceFormatter.format(currentPositionDriftNorm,
-                            DistanceUnit.METER));
+            assertEquals(currentPositionDriftNorm, currentPositionDrift1.getNorm(), 0.0);
+            LOGGER.log(Level.INFO, String.format("Current position drift: %s", distanceFormatter.format(
+                    currentPositionDriftNorm, DistanceUnit.METER)));
             if (currentPositionDriftNorm >= 92.0) {
                 continue;
             }
             assertTrue(currentPositionDriftNorm < 92.0);
-            assertEquals(currentPositionDriftNorm, navigationPositionDrift,
-                    ABSOLUTE_ERROR);
+            assertEquals(currentPositionDriftNorm, navigationPositionDrift, ABSOLUTE_ERROR);
 
-            final Distance currentPositionDriftNorm1 = estimator
-                    .getCurrentPositionDriftNorm();
-            assertEquals(currentPositionDriftNorm,
-                    currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
+            final Distance currentPositionDriftNorm1 = estimator.getCurrentPositionDriftNorm();
+            assertEquals(currentPositionDriftNorm, currentPositionDriftNorm1.getValue().doubleValue(), 0.0);
             assertEquals(DistanceUnit.METER, currentPositionDriftNorm1.getUnit());
-            final Distance currentPositionDriftNorm2 = new Distance(1.0,
-                    DistanceUnit.FOOT);
-            assertTrue(estimator.getCurrentPositionDriftNorm(
-                    currentPositionDriftNorm2));
+            final Distance currentPositionDriftNorm2 = new Distance(1.0, DistanceUnit.FOOT);
+            assertTrue(estimator.getCurrentPositionDriftNorm(currentPositionDriftNorm2));
             assertEquals(currentPositionDriftNorm1, currentPositionDriftNorm2);
 
-            final Double currentVelocityDriftNorm = estimator
-                    .getCurrentVelocityDriftNormMetersPerSecond();
+            final Double currentVelocityDriftNorm = estimator.getCurrentVelocityDriftNormMetersPerSecond();
             assertNotNull(currentVelocityDriftNorm);
-            assertEquals(currentVelocityDriftNorm, currentVelocityDrift1.getNorm(),
-                    0.0);
-            LOGGER.log(Level.INFO, "Current velocity drift: " +
-                    speedFormatter.format(currentVelocityDriftNorm,
-                            SpeedUnit.METERS_PER_SECOND));
+            assertEquals(currentVelocityDriftNorm, currentVelocityDrift1.getNorm(), 0.0);
+            LOGGER.log(Level.INFO, String.format("Current velocity drift: %s", speedFormatter.format(
+                    currentVelocityDriftNorm, SpeedUnit.METERS_PER_SECOND)));
             if (currentVelocityDriftNorm >= 6.0) {
                 continue;
             }
             assertTrue(currentVelocityDriftNorm < 6.0);
-            assertEquals(currentVelocityDriftNorm, navigationVelocityDrift,
-                    ABSOLUTE_ERROR);
+            assertEquals(currentVelocityDriftNorm, navigationVelocityDrift, ABSOLUTE_ERROR);
 
-            final Speed currentVelocityDriftNorm1 = estimator
-                    .getCurrentVelocityDriftNorm();
-            assertEquals(currentVelocityDriftNorm,
-                    currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
-            assertEquals(SpeedUnit.METERS_PER_SECOND,
-                    currentVelocityDriftNorm1.getUnit());
-            final Speed currentVelocityDriftNorm2 = new Speed(1.0,
-                    SpeedUnit.KILOMETERS_PER_HOUR);
-            assertTrue(estimator.getCurrentVelocityDriftNorm(
-                    currentVelocityDriftNorm2));
+            final Speed currentVelocityDriftNorm1 = estimator.getCurrentVelocityDriftNorm();
+            assertEquals(currentVelocityDriftNorm, currentVelocityDriftNorm1.getValue().doubleValue(), 0.0);
+            assertEquals(SpeedUnit.METERS_PER_SECOND, currentVelocityDriftNorm1.getUnit());
+            final Speed currentVelocityDriftNorm2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+            assertTrue(estimator.getCurrentVelocityDriftNorm(currentVelocityDriftNorm2));
             assertEquals(currentVelocityDriftNorm1, currentVelocityDriftNorm2);
 
-            final Double currentOrientationDriftNorm = estimator
-                    .getCurrentOrientationDriftRadians();
+            final Double currentOrientationDriftNorm = estimator.getCurrentOrientationDriftRadians();
             assertNotNull(currentOrientationDriftNorm);
-            assertEquals(currentOrientationDriftNorm,
-                    currentOrientationDrift1.getRotationAngle(), 0.0);
-            LOGGER.log(Level.INFO, "Current orientation drift: " +
-                    angleFormatter.format(AngleConverter.convert(
-                            currentOrientationDriftNorm, AngleUnit.RADIANS,
-                            AngleUnit.DEGREES), AngleUnit.DEGREES));
+            assertEquals(currentOrientationDriftNorm, currentOrientationDrift1.getRotationAngle(), 0.0);
+            LOGGER.log(Level.INFO, String.format("Current orientation drift: %s", angleFormatter.format(
+                    AngleConverter.convert(currentOrientationDriftNorm, AngleUnit.RADIANS, AngleUnit.DEGREES),
+                    AngleUnit.DEGREES)));
             if (currentOrientationDriftNorm >= 0.06) {
                 continue;
             }
             assertTrue(currentOrientationDriftNorm < 0.06);
-            assertEquals(currentOrientationDriftNorm, navigationOrientationDrift,
-                    ABSOLUTE_ERROR);
+            assertEquals(currentOrientationDriftNorm, navigationOrientationDrift, ABSOLUTE_ERROR);
 
-            final Angle currentOrientationDriftNorm1 = estimator
-                    .getCurrentOrientationDriftAngle();
-            assertEquals(currentOrientationDriftNorm,
-                    currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
+            final Angle currentOrientationDriftNorm1 = estimator.getCurrentOrientationDriftAngle();
+            assertEquals(currentOrientationDriftNorm, currentOrientationDriftNorm1.getValue().doubleValue(), 0.0);
             assertEquals(AngleUnit.RADIANS, currentOrientationDriftNorm1.getUnit());
-            final Angle currentOrientationDriftNorm2 = new Angle(1.0,
-                    AngleUnit.DEGREES);
-            assertTrue(estimator.getCurrentOrientationDriftAngle(
-                    currentOrientationDriftNorm2));
+            final Angle currentOrientationDriftNorm2 = new Angle(1.0, AngleUnit.DEGREES);
+            assertTrue(estimator.getCurrentOrientationDriftAngle(currentOrientationDriftNorm2));
             assertEquals(currentOrientationDriftNorm1, currentOrientationDriftNorm2);
 
-            final Double currentPositionDriftPerTimeUnit =
-                    estimator.getCurrentPositionDriftPerTimeUnit();
+            final Double currentPositionDriftPerTimeUnit = estimator.getCurrentPositionDriftPerTimeUnit();
             assertNotNull(currentPositionDriftPerTimeUnit);
-            LOGGER.log(Level.INFO, "Current position drift per time unit: " +
-                    speedFormatter.format(currentPositionDriftPerTimeUnit,
-                            SpeedUnit.METERS_PER_SECOND));
+            LOGGER.log(Level.INFO, String.format("Current position drift per time unit: %s", speedFormatter.format(
+                    currentPositionDriftPerTimeUnit, SpeedUnit.METERS_PER_SECOND)));
             if (currentPositionDriftPerTimeUnit >= 1.75) {
                 continue;
             }
             assertTrue(currentPositionDriftPerTimeUnit < 1.75);
-            assertEquals(currentPositionDriftPerTimeUnit,
-                    navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+            assertEquals(currentPositionDriftPerTimeUnit, navigationPositionDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
                     ABSOLUTE_ERROR);
 
-            final Speed currentPositionDriftPerTimeUnit1 =
-                    estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
-            assertEquals(currentPositionDriftPerTimeUnit,
-                    currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
+            final Speed currentPositionDriftPerTimeUnit1 = estimator.getCurrentPositionDriftPerTimeUnitAsSpeed();
+            assertEquals(currentPositionDriftPerTimeUnit, currentPositionDriftPerTimeUnit1.getValue().doubleValue(),
                     0.0);
-            assertEquals(SpeedUnit.METERS_PER_SECOND,
-                    currentPositionDriftPerTimeUnit1.getUnit());
-            final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0,
-                    SpeedUnit.KILOMETERS_PER_HOUR);
-            assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                    currentPositionDriftPerTimeUnit2));
-            assertEquals(currentPositionDriftPerTimeUnit1,
-                    currentPositionDriftPerTimeUnit2);
+            assertEquals(SpeedUnit.METERS_PER_SECOND, currentPositionDriftPerTimeUnit1.getUnit());
+            final Speed currentPositionDriftPerTimeUnit2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+            assertTrue(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(currentPositionDriftPerTimeUnit2));
+            assertEquals(currentPositionDriftPerTimeUnit1, currentPositionDriftPerTimeUnit2);
 
-            final Double currentVelocityDriftPerTimeUnit =
-                    estimator.getCurrentVelocityDriftPerTimeUnit();
+            final Double currentVelocityDriftPerTimeUnit = estimator.getCurrentVelocityDriftPerTimeUnit();
             assertNotNull(currentVelocityDriftPerTimeUnit);
-            LOGGER.log(Level.INFO, "Current velocity drift per time unit: " +
+            LOGGER.log(Level.INFO, String.format("Current velocity drift per time unit: %s",
                     accelerationFormatter.format(currentVelocityDriftPerTimeUnit,
-                            AccelerationUnit.METERS_PER_SQUARED_SECOND));
+                            AccelerationUnit.METERS_PER_SQUARED_SECOND)));
             if (currentVelocityDriftPerTimeUnit >= 0.14) {
                 continue;
             }
             assertTrue(currentVelocityDriftPerTimeUnit < 0.14);
-            assertEquals(currentVelocityDriftPerTimeUnit,
-                    navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
+            assertEquals(currentVelocityDriftPerTimeUnit, navigationVelocityDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
                     ABSOLUTE_ERROR);
 
             final Acceleration currentVelocityDriftPerTimeUnit1 =
                     estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration();
-            assertEquals(currentVelocityDriftPerTimeUnit,
-                    currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
+            assertEquals(currentVelocityDriftPerTimeUnit, currentVelocityDriftPerTimeUnit1.getValue().doubleValue(),
                     0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    currentVelocityDriftPerTimeUnit1.getUnit());
-            final Acceleration currentVelocityDriftPerTimeUnit2 =
-                    new Acceleration(1.0,
-                            AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                    currentVelocityDriftPerTimeUnit2));
-            assertEquals(currentVelocityDriftPerTimeUnit1,
-                    currentVelocityDriftPerTimeUnit2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, currentVelocityDriftPerTimeUnit1.getUnit());
+            final Acceleration currentVelocityDriftPerTimeUnit2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertTrue(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(currentVelocityDriftPerTimeUnit2));
+            assertEquals(currentVelocityDriftPerTimeUnit1, currentVelocityDriftPerTimeUnit2);
 
-            final Double currentOrientationDriftPerTimeUnit =
-                    estimator.getCurrentOrientationDriftPerTimeUnit();
+            final Double currentOrientationDriftPerTimeUnit = estimator.getCurrentOrientationDriftPerTimeUnit();
             assertNotNull(currentOrientationDriftPerTimeUnit);
-            LOGGER.log(Level.INFO, "Current orientation drift per time unit: " +
-                    angularSpeedFormatter.format(AngularSpeedConverter.convert(
-                            currentOrientationDriftPerTimeUnit,
-                            AngularSpeedUnit.RADIANS_PER_SECOND,
-                            AngularSpeedUnit.DEGREES_PER_SECOND),
-                            AngularSpeedUnit.DEGREES_PER_SECOND));
+            LOGGER.log(Level.INFO, String.format("Current orientation drift per time unit: %s",
+                    angularSpeedFormatter.format(AngularSpeedConverter.convert(currentOrientationDriftPerTimeUnit,
+                                    AngularSpeedUnit.RADIANS_PER_SECOND, AngularSpeedUnit.DEGREES_PER_SECOND),
+                            AngularSpeedUnit.DEGREES_PER_SECOND)));
             if (currentOrientationDriftPerTimeUnit >= 1.7e-3) {
                 continue;
             }
             assertTrue(currentOrientationDriftPerTimeUnit < 1.7e-3);
             assertEquals(currentOrientationDriftPerTimeUnit,
-                    navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS),
-                    ABSOLUTE_ERROR);
+                    navigationOrientationDrift / (N_SAMPLES * TIME_INTERVAL_SECONDS), ABSOLUTE_ERROR);
 
             final AngularSpeed currentOrientationDriftPerTimeUnit1 =
                     estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed();
             assertEquals(currentOrientationDriftPerTimeUnit,
-                    currentOrientationDriftPerTimeUnit1.getValue().doubleValue(),
-                    0.0);
-            assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND,
-                    currentOrientationDriftPerTimeUnit1.getUnit());
-            final AngularSpeed currentOrientationDriftPerTimeUnit2 =
-                    new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+                    currentOrientationDriftPerTimeUnit1.getValue().doubleValue(), 0.0);
+            assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, currentOrientationDriftPerTimeUnit1.getUnit());
+            final AngularSpeed currentOrientationDriftPerTimeUnit2 = new AngularSpeed(1.0,
+                    AngularSpeedUnit.DEGREES_PER_SECOND);
             assertTrue(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
                     currentOrientationDriftPerTimeUnit2));
-            assertEquals(currentOrientationDriftPerTimeUnit1,
-                    currentOrientationDriftPerTimeUnit2);
+            assertEquals(currentOrientationDriftPerTimeUnit1, currentOrientationDriftPerTimeUnit2);
 
             // reset
             estimator.reset();
 
-            assertEquals(mReset, 1);
+            assertEquals(1, mReset);
             assertEquals(0, estimator.getNumberOfProcessedSamples());
             assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
             assertNull(estimator.getElapsedTime());
@@ -11550,16 +9611,13 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             assertFalse(estimator.getCurrentOrientationDriftAngle(null));
             assertNull(estimator.getCurrentPositionDriftPerTimeUnit());
             assertNull(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed());
-            assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(
-                    null));
+            assertFalse(estimator.getCurrentPositionDriftPerTimeUnitAsSpeed(null));
             assertNull(estimator.getCurrentVelocityDriftPerTimeUnit());
             assertNull(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration());
-            assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-                    null));
+            assertFalse(estimator.getCurrentVelocityDriftPerTimeUnitAsAcceleration(null));
             assertNull(estimator.getCurrentOrientationDriftPerTimeUnit());
             assertNull(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed());
-            assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-                    null));
+            assertFalse(estimator.getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(null));
 
             numValid++;
             break;
@@ -11575,9 +9633,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
     }
 
     @Override
-    public void onBodyKinematicsAdded(final DriftEstimator estimator,
-                                      final BodyKinematics measuredKinematics,
-                                      final BodyKinematics fixedKinematics) {
+    public void onBodyKinematicsAdded(
+            final DriftEstimator estimator, final BodyKinematics measuredKinematics,
+            final BodyKinematics fixedKinematics) {
         if (mBodyKinematicsAdded == 0) {
             checkLocked(estimator);
         }
@@ -11596,399 +9654,91 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         mReset = 0;
     }
 
-    private void checkLocked(final DriftEstimator estimator) {
+    private static void checkLocked(final DriftEstimator estimator) {
         assertTrue(estimator.isRunning());
-        try {
-            estimator.setListener(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setReferenceFrame(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setReferenceNedFrame(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setReferenceEcefPosition(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setReferenceEcefVelocity(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setReferenceEcefCoordinateTransformation(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setReferenceNedPosition(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setReferenceNedVelocity(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setReferenceNedCoordinateTransformation(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationBias((Matrix) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias((double[]) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias((AccelerationTriad) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasX(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasY(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasZ(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasX(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasY(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasZ(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias(null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationCrossCouplingErrors(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationSx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationSy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationSz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMxy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMxz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMyx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMyz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMzx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMzy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationScalingFactors(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationCrossCouplingErrors(
-                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationScalingFactorsAndCrossCouplingErrors(
-                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedBias((Matrix) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias((double[]) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias((AngularSpeedTriad) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasX(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasY(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasZ(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasX(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasY(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasZ(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias(null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedSx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedSy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedSz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMxy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMxz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMyx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMyz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMzx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMzy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedScalingFactors(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(
-                    0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
-                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedGDependantCrossBias(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setFixKinematicsEnabled(false);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setTimeInterval(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setTimeInterval(new Time(1.0, TimeUnit.SECOND));
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
+        assertThrows(LockedException.class, () -> estimator.setListener(null));
+        assertThrows(LockedException.class, () -> estimator.setReferenceFrame(null));
+        assertThrows(LockedException.class, () -> estimator.setReferenceNedFrame(null));
+        assertThrows(LockedException.class, () -> estimator.setReferenceEcefPosition(null));
+        assertThrows(LockedException.class, () -> estimator.setReferenceEcefVelocity(null));
+        assertThrows(LockedException.class, () -> estimator.setReferenceEcefCoordinateTransformation(null));
+        assertThrows(LockedException.class, () -> estimator.setReferenceNedPosition(null));
+        assertThrows(LockedException.class, () -> estimator.setReferenceNedVelocity(null));
+        assertThrows(LockedException.class, () -> estimator.setReferenceNedCoordinateTransformation(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias((Matrix) null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias((double[]) null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias((AccelerationTriad) null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasX(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasY(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasZ(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasX(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasY(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasZ(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias(null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationCrossCouplingErrors(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationSx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationSy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationSz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMxy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMxz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMyx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMyz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMzx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMzy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationScalingFactors(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationCrossCouplingErrors(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationScalingFactorsAndCrossCouplingErrors(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias((Matrix) null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias((double[]) null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias((AngularSpeedTriad) null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasX(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasY(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasZ(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasX(null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasY(null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasZ(null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias(null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedSx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedSy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedSz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMxy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMxz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMyx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMyz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMzx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMzy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedScalingFactors(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedGDependantCrossBias(null));
+        assertThrows(LockedException.class, () -> estimator.setFixKinematicsEnabled(false));
+        assertThrows(LockedException.class, () -> estimator.setTimeInterval(0.0));
+        assertThrows(LockedException.class, () -> estimator.setTimeInterval(new Time(1.0, TimeUnit.SECOND)));
     }
 
     private BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer buildOptimizer(
-            final Matrix ba, final Matrix ma,
-            final double accelNoiseRootPSD,
-            final double gyroNoiseRootPSD,
+            final Matrix ba, final Matrix ma, final double accelNoiseRootPSD, final double gyroNoiseRootPSD,
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator,
-            final EasyGyroscopeCalibrator gyroscopeCalibrator)
-        throws InvalidSourceAndDestinationFrameTypeException,
-        InvalidRotationMatrixException, WrongSizeException, LockedException, RotationException {
+            final EasyGyroscopeCalibrator gyroscopeCalibrator) throws InvalidSourceAndDestinationFrameTypeException,
+            InvalidRotationMatrixException, WrongSizeException, LockedException, RotationException {
 
         mTimedBodyKinematics.clear();
 
         // generate measurements
         final NEDFrame nedFrame = generateFrame();
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
         final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
-        generateBodyKinematics(nedFrame, ecefFrame, false, ma,
-                accelNoiseRootPSD, gyroNoiseRootPSD, numSequences,
-                numMeasurements);
+        generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD, gyroNoiseRootPSD,
+                numSequences, numMeasurements);
 
         // we only use the generator at this point to get an estimated average of
         // initial gyroscope bias (but we could skip this as well and probably get
@@ -12008,8 +9758,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final AngularSpeedTriad initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
         final Matrix initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
 
-        final ECEFGravity gravity = ECEFGravityEstimator
-                .estimateGravityAndReturnNew(ecefFrame);
+        final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
         // configure calibrators and data source
         final Matrix initialBa = new Matrix(3, 1);
@@ -12036,12 +9785,10 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
     @SuppressWarnings("SameParameterValue")
     private void generateBodyKinematics(
-            final NEDFrame nedFrame, final ECEFFrame ecefFrame,
-            final boolean changePosition, final Matrix ma, final double accelNoiseRootPSD,
-            final double gyroNoiseRootPSD, final int numSequences,
-            final int numMeasurements) throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException,
-        InvalidRotationMatrixException, RotationException {
+            final NEDFrame nedFrame, final ECEFFrame ecefFrame, final boolean changePosition, final Matrix ma,
+            final double accelNoiseRootPSD, final double gyroNoiseRootPSD, final int numSequences,
+            final int numMeasurements) throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -12051,23 +9798,20 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
 
         // compute ground-truth kinematics that should be generated at provided
         // position, velocity and orientation
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefFrame, ecefFrame);
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefFrame, ecefFrame);
 
         // generate initial static samples
-        final int initialStaticSamples = TriadStaticIntervalDetector
-                .DEFAULT_INITIAL_STATIC_SAMPLES;
-        generateStaticSamples(initialStaticSamples, trueKinematics, errors, random,
-                0);
+        final int initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+        generateStaticSamples(initialStaticSamples, trueKinematics, errors, random, 0);
 
         final int n = Math.max(numSequences + 1, numMeasurements);
 
@@ -12077,55 +9821,48 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         int start = initialStaticSamples;
         for (int i = 0; i < n; i++) {
             // generate static samples
-            generateStaticSamples(staticPeriodLength, trueKinematics, errors, random,
-                    start);
+            generateStaticSamples(staticPeriodLength, trueKinematics, errors, random, start);
             start += staticPeriodLength;
 
             // generate dynamic samples
-            generateDynamicSamples(dynamicPeriodLength, trueKinematics,
-                    randomizer, ecefFrame, nedFrame, errors, random, start,
-                    changePosition);
+            generateDynamicSamples(dynamicPeriodLength, trueKinematics, randomizer, ecefFrame, nedFrame, errors, random,
+                    start, changePosition);
             start += dynamicPeriodLength;
         }
     }
 
-    private NEDFrame generateFrame() throws InvalidSourceAndDestinationFrameTypeException {
+    private static NEDFrame generateFrame() throws InvalidSourceAndDestinationFrameTypeException {
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final NEDPosition nedPosition = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+                FrameType.LOCAL_NAVIGATION_FRAME);
 
         return new NEDFrame(nedPosition, nedC);
     }
 
-    private Matrix generateBa() {
+    private static Matrix generateBa() {
         return Matrix.newFromArray(new double[]{
                 900 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 -1300 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 800 * MICRO_G_TO_METERS_PER_SECOND_SQUARED});
     }
 
-    private Matrix generateBg() {
+    private static Matrix generateBg() {
         return Matrix.newFromArray(new double[]{
                 -9 * DEG_TO_RAD / 3600.0,
                 13 * DEG_TO_RAD / 3600.0,
                 -8 * DEG_TO_RAD / 3600.0});
     }
 
-    private Matrix generateMaCommonAxis() throws WrongSizeException {
+    private static Matrix generateMaCommonAxis() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -12136,7 +9873,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         return result;
     }
 
-    private Matrix generateMaGeneral() throws WrongSizeException {
+    private static Matrix generateMaGeneral() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -12147,7 +9884,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         return result;
     }
 
-    private Matrix generateMg() throws WrongSizeException {
+    private static Matrix generateMg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 400e-6, -300e-6, 250e-6,
@@ -12158,7 +9895,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         return result;
     }
 
-    private Matrix generateGg() throws WrongSizeException {
+    private static Matrix generateGg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         final double tmp = DEG_TO_RAD / (3600 * 9.80665);
         result.fromArray(new double[]{
@@ -12170,31 +9907,26 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         return result;
     }
 
-    private double getAccelNoiseRootPSD() {
+    private static double getAccelNoiseRootPSD() {
         return 100.0 * MICRO_G_TO_METERS_PER_SECOND_SQUARED;
     }
 
-    private double getGyroNoiseRootPSD() {
+    private static double getGyroNoiseRootPSD() {
         return 0.01 * DEG_TO_RAD / 60.0;
     }
 
     private void generateStaticSamples(
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final IMUErrors errors,
-            final Random random,
+            final int numSamples, final BodyKinematics trueKinematics, final IMUErrors errors, final Random random,
             final int startSample) {
 
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
 
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator
-                    .generate(TIME_INTERVAL_SECONDS, trueKinematics, errors,
-                            random);
+            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                    trueKinematics, errors, random);
 
             final TimedBodyKinematics timedMeasuredKinematics = new TimedBodyKinematics();
             timedMeasuredKinematics.setKinematics(measuredKinematics);
-            timedMeasuredKinematics.setTimestampSeconds(
-                    j * TIME_INTERVAL_SECONDS);
+            timedMeasuredKinematics.setTimestampSeconds(j * TIME_INTERVAL_SECONDS);
 
             mTimedBodyKinematics.add(timedMeasuredKinematics);
         }
@@ -12202,35 +9934,24 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
     @SuppressWarnings("SameParameterValue")
     private void generateDynamicSamples(
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final UniformRandomizer randomizer,
-            final ECEFFrame ecefFrame,
-            final NEDFrame nedFrame,
-            final IMUErrors errors,
-            final Random random,
-            final int startSample,
-            final boolean changePosition)
-        throws InvalidSourceAndDestinationFrameTypeException,
-        InvalidRotationMatrixException, RotationException {
+            final int numSamples, final BodyKinematics trueKinematics, final UniformRandomizer randomizer,
+            final ECEFFrame ecefFrame, final NEDFrame nedFrame, final IMUErrors errors, final Random random,
+            final int startSample, final boolean changePosition) throws InvalidSourceAndDestinationFrameTypeException,
+            InvalidRotationMatrixException, RotationException {
 
         final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
         final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
         final double angularRateStandardDeviation = getGyroNoiseRootPSD() / sqrtTimeInterval;
 
-        final double deltaX = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaY = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaZ = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
 
         final double deltaRoll = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
         final double deltaPitch = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
-        final double deltaYaw = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final double deltaYaw = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
 
         final double ecefX = ecefFrame.getX();
         final double ecefY = ecefFrame.getY();
@@ -12257,22 +9978,18 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         double oldPitch = pitch - deltaPitch;
         double oldYaw = yaw - deltaYaw;
 
-        final BodyKinematics measuredBeforeGravityKinematics = BodyKinematicsGenerator
-                .generate(TIME_INTERVAL_SECONDS,
-                        trueKinematics, errors, random);
+        final BodyKinematics measuredBeforeGravityKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                trueKinematics, errors, random);
         final double beforeMeanFx = measuredBeforeGravityKinematics.getFx();
         final double beforeMeanFy = measuredBeforeGravityKinematics.getFy();
         final double beforeMeanFz = measuredBeforeGravityKinematics.getFz();
 
-        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence =
-                new BodyKinematicsSequence<>();
-        sequence.setBeforeMeanSpecificForceCoordinates(
-                beforeMeanFx, beforeMeanFy, beforeMeanFz);
+        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence = new BodyKinematicsSequence<>();
+        sequence.setBeforeMeanSpecificForceCoordinates(beforeMeanFx, beforeMeanFy, beforeMeanFz);
 
         final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> trueSequence =
                 new BodyKinematicsSequence<>();
-        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList =
-                new ArrayList<>();
+        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList = new ArrayList<>();
 
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
             final double progress = (double) i / (double) numSamples;
@@ -12280,11 +9997,8 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             final double newRoll = oldRoll + interpolate(deltaRoll, progress);
             final double newPitch = oldPitch + interpolate(deltaPitch, progress);
             final double newYaw = oldYaw + interpolate(deltaYaw, progress);
-            final CoordinateTransformation newNedC =
-                    new CoordinateTransformation(
-                            newRoll, newPitch, newYaw,
-                            FrameType.BODY_FRAME,
-                            FrameType.LOCAL_NAVIGATION_FRAME);
+            final CoordinateTransformation newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw,
+                    FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
             final NEDPosition newNedPosition = oldNedFrame.getPosition();
 
             newNedFrame.setPosition(newNedPosition);
@@ -12303,13 +10017,12 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
             final double timestampSeconds = j * TIME_INTERVAL_SECONDS;
 
             // update true kinematics using new position and rotation
-            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                    newEcefFrame, oldEcefFrame, trueKinematics);
+            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, oldEcefFrame,
+                    trueKinematics);
 
             // add error to true kinematics
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator
-                    .generate(TIME_INTERVAL_SECONDS, trueKinematics, errors,
-                            random);
+            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                    trueKinematics, errors, random);
 
             final TimedBodyKinematics timedMeasuredKinematics = new TimedBodyKinematics();
             timedMeasuredKinematics.setKinematics(measuredKinematics);
@@ -12317,11 +10030,9 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
             mTimedBodyKinematics.add(timedMeasuredKinematics);
 
-            final StandardDeviationTimedBodyKinematics trueTimedKinematics =
-                    new StandardDeviationTimedBodyKinematics(
-                            new BodyKinematics(trueKinematics), timestampSeconds,
-                            specificForceStandardDeviation,
-                            angularRateStandardDeviation);
+            final StandardDeviationTimedBodyKinematics trueTimedKinematics = new StandardDeviationTimedBodyKinematics(
+                    new BodyKinematics(trueKinematics), timestampSeconds, specificForceStandardDeviation,
+                    angularRateStandardDeviation);
             trueTimedKinematicsList.add(trueTimedKinematics);
 
             oldNedFrame.copyFrom(newNedFrame);
@@ -12337,14 +10048,11 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         trueSequence.setItems(trueTimedKinematicsList);
 
         final Quaternion afterQ = new Quaternion();
-        QuaternionIntegrator.integrateGyroSequence(
-                trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA, afterQ);
+        QuaternionIntegrator.integrateGyroSequence(trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA,
+                afterQ);
 
-        final CoordinateTransformation newNedC =
-                new CoordinateTransformation(
-                        afterQ.asInhomogeneousMatrix(),
-                        FrameType.BODY_FRAME,
-                        FrameType.LOCAL_NAVIGATION_FRAME);
+        final CoordinateTransformation newNedC = new CoordinateTransformation(afterQ.asInhomogeneousMatrix(),
+                FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
         newNedFrame.setCoordinateTransformation(newNedC);
 
         NEDtoECEFFrameConverter.convertNEDtoECEF(newNedFrame, newEcefFrame);
@@ -12356,19 +10064,17 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
 
         // after dynamic sequence finishes, update true kinematics for a
         // static sequence at current frame
-        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                newEcefFrame, newEcefFrame, trueKinematics);
+        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, newEcefFrame, trueKinematics);
     }
 
     // This is required to simulate a smooth transition of values during
     // dynamic period, to avoid a sudden rotation or translation and simulate
     // a more natural behaviour.
-    private double interpolate(final double value, final double progress) {
+    private static double interpolate(final double value, final double progress) {
         return -2.0 * (Math.abs(progress - 0.5) - 0.5) * value;
     }
 
-    private double positionDrift(
-            final ECEFFrame frame1, final ECEFFrame frame2) {
+    private static double positionDrift(final ECEFFrame frame1, final ECEFFrame frame2) {
         final double x1 = frame1.getX();
         final double y1 = frame1.getY();
         final double z1 = frame1.getZ();
@@ -12385,8 +10091,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         return position.getNorm();
     }
 
-    private double velocityDrift(
-            final ECEFFrame frame1, final ECEFFrame frame2) {
+    private static double velocityDrift(final ECEFFrame frame1, final ECEFFrame frame2) {
         final double vx1 = frame1.getVx();
         final double vy1 = frame1.getVy();
         final double vz1 = frame1.getVz();
@@ -12403,8 +10108,7 @@ public class DriftEstimatorTest implements DriftEstimatorListener {
         return velocity.getNorm();
     }
 
-    private double orientationDrift(
-            final ECEFFrame frame1, final ECEFFrame frame2)
+    private static double orientationDrift(final ECEFFrame frame1, final ECEFFrame frame2)
             throws InvalidRotationMatrixException {
         final Matrix c1 = frame1.getCoordinateTransformationMatrix();
         final Matrix c2 = frame2.getCoordinateTransformationMatrix();

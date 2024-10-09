@@ -85,8 +85,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @Test
     public void testConstructor1() {
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator();
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator();
 
         // check default values
         assertNull(creator.getAccelerometerNoiseRootPsdSource());
@@ -109,10 +108,8 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
         final RandomWalkEstimator randomWalkEstimator3 = new RandomWalkEstimator();
         final RandomWalkEstimator randomWalkEstimator4 = new RandomWalkEstimator();
 
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator(generator1, generator2,
-                        randomWalkEstimator1, randomWalkEstimator2,
-                        randomWalkEstimator3, randomWalkEstimator4);
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator(generator1,
+                generator2, randomWalkEstimator1, randomWalkEstimator2, randomWalkEstimator3, randomWalkEstimator4);
 
         // check default values
         assertSame(generator1, creator.getAccelerometerNoiseRootPsdSource());
@@ -130,9 +127,8 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
                 new AccelerometerAndGyroscopeMeasurementsGenerator();
         final RandomWalkEstimator randomWalkEstimator = new RandomWalkEstimator();
 
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator(generator,
-                        randomWalkEstimator);
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator(generator,
+                randomWalkEstimator);
 
         // check default values
         assertSame(generator, creator.getAccelerometerNoiseRootPsdSource());
@@ -150,9 +146,8 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
                 new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator();
         final RandomWalkEstimator randomWalkEstimator = new RandomWalkEstimator();
 
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator(generator,
-                        randomWalkEstimator);
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator(generator,
+                randomWalkEstimator);
 
         // check default values
         assertSame(generator, creator.getAccelerometerNoiseRootPsdSource());
@@ -170,9 +165,8 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
                 new BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
         final RandomWalkEstimator randomWalkEstimator = new RandomWalkEstimator();
 
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator(optimizer,
-                        randomWalkEstimator);
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator(optimizer,
+                randomWalkEstimator);
 
         // check default values
         assertSame(optimizer, creator.getAccelerometerNoiseRootPsdSource());
@@ -190,9 +184,8 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
                 new BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
         final RandomWalkEstimator randomWalkEstimator = new RandomWalkEstimator();
 
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator(optimizer,
-                        randomWalkEstimator);
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator(optimizer,
+                randomWalkEstimator);
 
         // check default values
         assertSame(optimizer, creator.getAccelerometerNoiseRootPsdSource());
@@ -206,8 +199,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @Test
     public void testGetSetAccelerometerNoiseRootPsdSource() {
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator();
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator();
 
         // check default value
         assertNull(creator.getAccelerometerNoiseRootPsdSource());
@@ -223,8 +215,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @Test
     public void testGetSetGyroscopeNoiseRootPsdSource() {
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator();
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator();
 
         // check default value
         assertNull(creator.getGyroscopeNoiseRootPsdSource());
@@ -240,8 +231,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @Test
     public void testGetSetAccelerometerBiasRandomWalkSource() {
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator();
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator();
 
         // check default value
         assertNull(creator.getAccelerometerBiasRandomWalkSource());
@@ -256,8 +246,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @Test
     public void testGetSetGyroscopeBiasRandomWalkSource() {
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator();
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator();
 
         // check default value
         assertNull(creator.getGyroscopeBiasRandomWalkSource());
@@ -272,8 +261,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @Test
     public void testGetSetPositionNoiseStandardDeviationSource() {
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator();
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator();
 
         // check default value
         assertNull(creator.getPositionNoiseStandardDeviationSource());
@@ -288,8 +276,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @Test
     public void testGetSetVelocityNoiseStandardDeviationSource() {
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator();
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator();
 
         // check default value
         assertNull(creator.getVelocityNoiseStandardDeviationSource());
@@ -303,10 +290,8 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
     }
 
     @Test
-    public void testCreate() throws AlgebraException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        InvalidRotationMatrixException, NotReadyException,
-        RandomWalkEstimationException, RotationException {
+    public void testCreate() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException, LockedException,
+        InvalidRotationMatrixException, NotReadyException, RandomWalkEstimationException, RotationException {
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
         final Matrix ma = generateMaCommonAxis();
@@ -318,44 +303,36 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
             final Random random = new Random();
             final UniformRandomizer randomizer = new UniformRandomizer(random);
-            final double latitude = Math.toRadians(
-                    randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+            final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
             final double longitude = Math.toRadians(
                     randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
             final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
             final NEDPosition nedPosition = new NEDPosition(latitude, longitude, height);
 
-            final double roll = Math.toRadians(
-                    randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-            final double pitch = Math.toRadians(
-                    randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-            final double yaw = Math.toRadians(
-                    randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-            final CoordinateTransformation nedC = new CoordinateTransformation(
-                    roll, pitch, yaw, FrameType.BODY_FRAME,
+            final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+            final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+            final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+            final CoordinateTransformation nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
                     FrameType.LOCAL_NAVIGATION_FRAME);
 
             final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             // compute ground-truth kinematics that should be generated at provided
             // position, velocity and orientation
-            final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                    .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                            ecefFrame, ecefFrame);
+            final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                    TIME_INTERVAL_SECONDS, ecefFrame, ecefFrame);
 
             final List<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>> gyroscopeMeasurements =
                     new ArrayList<>();
-            final List<StandardDeviationBodyKinematics> accelerometerMeasurements =
-                    new ArrayList<>();
+            final List<StandardDeviationBodyKinematics> accelerometerMeasurements = new ArrayList<>();
 
             final AccelerometerAndGyroscopeMeasurementsGenerator generator =
                     new AccelerometerAndGyroscopeMeasurementsGenerator(
@@ -363,45 +340,45 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
                                 @Override
                                 public void onInitializationStarted(
                                         final AccelerometerAndGyroscopeMeasurementsGenerator generator) {
-
+                                    // no action needed
                                 }
 
                                 @Override
                                 public void onInitializationCompleted(
                                         final AccelerometerAndGyroscopeMeasurementsGenerator generator,
                                         final double accelerometerBaseNoiseLevel) {
-
+                                    // no action needed
                                 }
 
                                 @Override
                                 public void onError(
                                         final AccelerometerAndGyroscopeMeasurementsGenerator generator,
                                         final TriadStaticIntervalDetector.ErrorReason reason) {
-
+                                    // no action needed
                                 }
 
                                 @Override
                                 public void onStaticIntervalDetected(
                                         final AccelerometerAndGyroscopeMeasurementsGenerator generator) {
-
+                                    // no action needed
                                 }
 
                                 @Override
                                 public void onDynamicIntervalDetected(
                                         final AccelerometerAndGyroscopeMeasurementsGenerator generator) {
-
+                                    // no action needed
                                 }
 
                                 @Override
                                 public void onStaticIntervalSkipped(
                                         final AccelerometerAndGyroscopeMeasurementsGenerator generator) {
-
+                                    // no action needed
                                 }
 
                                 @Override
                                 public void onDynamicIntervalSkipped(
                                         final AccelerometerAndGyroscopeMeasurementsGenerator generator) {
-
+                                    // no action needed
                                 }
 
                                 @Override
@@ -419,17 +396,14 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
                                 }
 
                                 @Override
-                                public void onReset(
-                                        final AccelerometerAndGyroscopeMeasurementsGenerator generator) {
-
+                                public void onReset(final AccelerometerAndGyroscopeMeasurementsGenerator generator) {
+                                    // no action needed
                                 }
                             });
 
             // generate initial static samples
-            final int initialStaticSamples = TriadStaticIntervalDetector
-                    .DEFAULT_INITIAL_STATIC_SAMPLES;
-            generateStaticSamples(generator, initialStaticSamples, trueKinematics,
-                    errors, random, 0);
+            final int initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+            generateStaticSamples(generator, initialStaticSamples, trueKinematics, errors, random, 0);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
@@ -441,13 +415,11 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
             int start = initialStaticSamples;
             for (int i = 0; i < n; i++) {
                 // generate static samples
-                generateStaticSamples(generator, staticPeriodLength, trueKinematics,
-                        errors, random, start);
+                generateStaticSamples(generator, staticPeriodLength, trueKinematics, errors, random, start);
                 start += staticPeriodLength;
 
                 // generate dynamic samples
-                generateDynamicSamples(generator, dynamicPeriodLength,
-                        trueKinematics, randomizer, ecefFrame, nedFrame,
+                generateDynamicSamples(generator, dynamicPeriodLength, trueKinematics, randomizer, ecefFrame, nedFrame,
                         errors, random, start, false);
                 start += dynamicPeriodLength;
             }
@@ -466,10 +438,8 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
             final Matrix initialMg = new Matrix(3, 3);
             final Matrix initialGg = new Matrix(3, 3);
-            final EasyGyroscopeCalibrator gyroCalibrator =
-                    new EasyGyroscopeCalibrator(gyroscopeMeasurements,
-                            true, false,
-                            initialBg, initialMg, initialGg, ba, ma);
+            final EasyGyroscopeCalibrator gyroCalibrator = new EasyGyroscopeCalibrator(gyroscopeMeasurements,
+                    true, false, initialBg, initialMg, initialGg, ba, ma);
 
             try {
                 gyroCalibrator.calibrate();
@@ -481,12 +451,10 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
             final Matrix estimatedMg = gyroCalibrator.getEstimatedMg();
             final Matrix estimatedGg = gyroCalibrator.getEstimatedGg();
 
-            final ECEFGravity gravity = ECEFGravityEstimator
-                    .estimateGravityAndReturnNew(ecefFrame);
+            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(
-                            gravity.getNorm(), accelerometerMeasurements,
+                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), accelerometerMeasurements,
                             true);
 
             try {
@@ -513,8 +481,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
             randomWalkEstimator.setAngularSpeedGDependantCrossBias(estimatedGg);
             randomWalkEstimator.setTimeInterval(TIME_INTERVAL_SECONDS);
 
-            generateStaticSamples(randomWalkEstimator,
-                    trueKinematics, errors, random);
+            generateStaticSamples(randomWalkEstimator, trueKinematics, errors, random);
 
             final double accelerometerBiasPsd = randomWalkEstimator.getAccelerometerBiasPSD();
             final double gyroBiasPsd = randomWalkEstimator.getGyroBiasPSD();
@@ -535,16 +502,13 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
             final double gyroNoisePsd = generator.getGyroscopeBaseNoiseLevelPsd();
             final double accelNoisePsd = generator.getAccelerometerBaseNoiseLevelPsd();
 
-            final INSLooselyCoupledKalmanConfigCreator creator =
-                    new INSLooselyCoupledKalmanConfigCreator(generator, randomWalkEstimator);
+            final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator(generator,
+                    randomWalkEstimator);
             final INSLooselyCoupledKalmanConfig config = creator.create();
 
-            assertEquals(gyroNoisePsd, config.getGyroNoisePSD(),
-                    ABSOLUTE_ERROR);
-            assertEquals(accelNoisePsd, config.getAccelerometerNoisePSD(),
-                    ABSOLUTE_ERROR);
-            assertEquals(accelerometerBiasPsd, config.getAccelerometerBiasPSD(),
-                    0.0);
+            assertEquals(gyroNoisePsd, config.getGyroNoisePSD(), ABSOLUTE_ERROR);
+            assertEquals(accelNoisePsd, config.getAccelerometerNoisePSD(), ABSOLUTE_ERROR);
+            assertEquals(accelerometerBiasPsd, config.getAccelerometerBiasPSD(), 0.0);
             assertEquals(gyroBiasPsd, config.getGyroBiasPSD(), 0.0);
             assertEquals(positionNoiseStd, config.getPositionNoiseSD(), 0.0);
             assertEquals(velocityNoiseStd, config.getVelocityNoiseSD(), 0.0);
@@ -556,30 +520,25 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
         assertTrue(numValid > 0);
 
         // Force NotReadyException
-        final INSLooselyCoupledKalmanConfigCreator creator =
-                new INSLooselyCoupledKalmanConfigCreator();
-        try {
-            creator.create();
-            fail("NotReadyException expected but not thrown");
-        } catch (final NotReadyException ignore) {
-        }
+        final INSLooselyCoupledKalmanConfigCreator creator = new INSLooselyCoupledKalmanConfigCreator();
+        assertThrows(NotReadyException.class, creator::create);
     }
 
-    private Matrix generateBa() {
+    private static Matrix generateBa() {
         return Matrix.newFromArray(new double[]{
                 900 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 -1300 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 800 * MICRO_G_TO_METERS_PER_SECOND_SQUARED});
     }
 
-    private Matrix generateBg() {
+    private static Matrix generateBg() {
         return Matrix.newFromArray(new double[]{
                 -9 * DEG_TO_RAD / 3600.0,
                 13 * DEG_TO_RAD / 3600.0,
                 -8 * DEG_TO_RAD / 3600.0});
     }
 
-    private Matrix generateMaCommonAxis() throws WrongSizeException {
+    private static Matrix generateMaCommonAxis() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -590,7 +549,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
         return result;
     }
 
-    private Matrix generateMg() throws WrongSizeException {
+    private static Matrix generateMg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 400e-6, -300e-6, 250e-6,
@@ -601,51 +560,40 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
         return result;
     }
 
-    private double getAccelNoiseRootPSD() {
+    private static double getAccelNoiseRootPSD() {
         return 100.0 * MICRO_G_TO_METERS_PER_SECOND_SQUARED;
     }
 
-    private double getGyroNoiseRootPSD() {
+    private static double getGyroNoiseRootPSD() {
         return 0.01 * DEG_TO_RAD / 60.0;
     }
 
-    private void generateStaticSamples(
-            final RandomWalkEstimator randomWalkEstimator,
-            final BodyKinematics trueKinematics,
-            final IMUErrors errors,
-            final Random random)
-            throws LockedException, RandomWalkEstimationException,
-            NotReadyException {
+    private static void generateStaticSamples(
+            final RandomWalkEstimator randomWalkEstimator, final BodyKinematics trueKinematics, final IMUErrors errors,
+            final Random random) throws LockedException, RandomWalkEstimationException, NotReadyException {
 
         final BodyKinematics measuredKinematics = new BodyKinematics();
-        for (int i = 0, j = 0; i < 5000; i++, j++) {
+        for (int i = 0; i < 5000; i++) {
 
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
 
             randomWalkEstimator.addBodyKinematics(measuredKinematics);
         }
     }
 
-    private void generateStaticSamples(
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator,
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final IMUErrors errors,
-            final Random random,
-            final int startSample)
+    private static void generateStaticSamples(
+            final AccelerometerAndGyroscopeMeasurementsGenerator generator, final int numSamples,
+            final BodyKinematics trueKinematics, final IMUErrors errors, final Random random, final int startSample)
             throws LockedException {
 
         final TimedBodyKinematics timedMeasuredKinematics = new TimedBodyKinematics();
         final BodyKinematics measuredKinematics = new BodyKinematics();
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
 
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
 
             timedMeasuredKinematics.setKinematics(measuredKinematics);
-            timedMeasuredKinematics.setTimestampSeconds(
-                    j * TIME_INTERVAL_SECONDS);
+            timedMeasuredKinematics.setTimestampSeconds(j * TIME_INTERVAL_SECONDS);
 
             assertTrue(generator.process(timedMeasuredKinematics));
         }
@@ -653,28 +601,19 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
     @SuppressWarnings("SameParameterValue")
     private void generateDynamicSamples(
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator,
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final UniformRandomizer randomizer,
-            final ECEFFrame ecefFrame,
-            final NEDFrame nedFrame,
-            final IMUErrors errors,
-            final Random random,
-            final int startSample,
-            final boolean changePosition)
-        throws InvalidSourceAndDestinationFrameTypeException, LockedException, InvalidRotationMatrixException, RotationException {
+            final AccelerometerAndGyroscopeMeasurementsGenerator generator, final int numSamples,
+            final BodyKinematics trueKinematics, final UniformRandomizer randomizer, final ECEFFrame ecefFrame,
+            final NEDFrame nedFrame, final IMUErrors errors, final Random random, final int startSample,
+            final boolean changePosition) throws InvalidSourceAndDestinationFrameTypeException, LockedException,
+            InvalidRotationMatrixException, RotationException {
 
         final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
         final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
         final double angularRateStandardDeviation = getGyroNoiseRootPSD() / sqrtTimeInterval;
 
-        final double deltaX = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaY = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaZ = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
 
         final double deltaRoll = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
@@ -696,10 +635,10 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
         final Quaternion beforeQ = new Quaternion();
         nedC.asRotation(beforeQ);
 
-        NEDFrame oldNedFrame = new NEDFrame(nedFrame);
-        NEDFrame newNedFrame = new NEDFrame();
-        ECEFFrame oldEcefFrame = new ECEFFrame(ecefFrame);
-        ECEFFrame newEcefFrame = new ECEFFrame();
+        final NEDFrame oldNedFrame = new NEDFrame(nedFrame);
+        final NEDFrame newNedFrame = new NEDFrame();
+        final ECEFFrame oldEcefFrame = new ECEFFrame(ecefFrame);
+        final ECEFFrame newEcefFrame = new ECEFFrame();
 
         double oldEcefX = ecefX - deltaX;
         double oldEcefY = ecefY - deltaY;
@@ -710,8 +649,7 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
         final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> trueSequence =
                 new BodyKinematicsSequence<>();
-        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList =
-                new ArrayList<>();
+        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList = new ArrayList<>();
 
         final TimedBodyKinematics timedMeasuredKinematics = new TimedBodyKinematics();
         final BodyKinematics measuredKinematics = new BodyKinematics();
@@ -722,11 +660,8 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
             final double newRoll = oldRoll + interpolate(deltaRoll, progress);
             final double newPitch = oldPitch + interpolate(deltaPitch, progress);
             final double newYaw = oldYaw + interpolate(deltaYaw, progress);
-            final CoordinateTransformation newNedC =
-                    new CoordinateTransformation(
-                            newRoll, newPitch, newYaw,
-                            FrameType.BODY_FRAME,
-                            FrameType.LOCAL_NAVIGATION_FRAME);
+            final CoordinateTransformation newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw,
+                    FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
             final NEDPosition newNedPosition = oldNedFrame.getPosition();
 
             newNedFrame.setPosition(newNedPosition);
@@ -745,23 +680,20 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
             final double timestampSeconds = j * TIME_INTERVAL_SECONDS;
 
             // update true kinematics using new position and rotation
-            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                    newEcefFrame, oldEcefFrame, trueKinematics);
+            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, oldEcefFrame,
+                    trueKinematics);
 
             // add error to true kinematics
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
 
             timedMeasuredKinematics.setKinematics(measuredKinematics);
             timedMeasuredKinematics.setTimestampSeconds(timestampSeconds);
 
             assertTrue(generator.process(timedMeasuredKinematics));
 
-            final StandardDeviationTimedBodyKinematics trueTimedKinematics =
-                    new StandardDeviationTimedBodyKinematics(
-                            new BodyKinematics(trueKinematics), timestampSeconds,
-                            specificForceStandardDeviation,
-                            angularRateStandardDeviation);
+            final StandardDeviationTimedBodyKinematics trueTimedKinematics = new StandardDeviationTimedBodyKinematics(
+                    new BodyKinematics(trueKinematics), timestampSeconds, specificForceStandardDeviation,
+                    angularRateStandardDeviation);
             trueTimedKinematicsList.add(trueTimedKinematics);
 
             oldNedFrame.copyFrom(newNedFrame);
@@ -777,14 +709,11 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
         trueSequence.setItems(trueTimedKinematicsList);
 
         final Quaternion afterQ = new Quaternion();
-        QuaternionIntegrator.integrateGyroSequence(
-                trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA, afterQ);
+        QuaternionIntegrator.integrateGyroSequence(trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA,
+                afterQ);
 
-        final CoordinateTransformation newNedC =
-                new CoordinateTransformation(
-                        afterQ.asInhomogeneousMatrix(),
-                        FrameType.BODY_FRAME,
-                        FrameType.LOCAL_NAVIGATION_FRAME);
+        final CoordinateTransformation newNedC = new CoordinateTransformation(afterQ.asInhomogeneousMatrix(),
+                FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
         newNedFrame.setCoordinateTransformation(newNedC);
 
         NEDtoECEFFrameConverter.convertNEDtoECEF(newNedFrame, newEcefFrame);
@@ -796,14 +725,13 @@ public class INSLooselyCoupledKalmanConfigCreatorTest {
 
         // after dynamic sequence finishes, update true kinematics for a
         // static sequence at current frame
-        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                newEcefFrame, newEcefFrame, trueKinematics);
+        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, newEcefFrame, trueKinematics);
     }
 
     // This is required to simulate a smooth transition of values during
     // dynamic period, to avoid a sudden rotation or translation and simulate
     // a more natural behaviour.
-    private double interpolate(final double value, final double progress) {
+    private static double interpolate(final double value, final double progress) {
         return -2.0 * (Math.abs(progress - 0.5) - 0.5) * value;
     }
 }

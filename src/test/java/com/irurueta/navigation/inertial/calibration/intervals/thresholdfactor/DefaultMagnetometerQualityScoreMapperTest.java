@@ -30,10 +30,9 @@ public class DefaultMagnetometerQualityScoreMapperTest {
     @Test
     public void testMap() {
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double standardDeviation = randomizer.nextDouble(
-                0.0, MAX_MAGNETIC_FLUX_STD);
-        final StandardDeviationBodyMagneticFluxDensity stdB =
-                new StandardDeviationBodyMagneticFluxDensity(standardDeviation);
+        final double standardDeviation = randomizer.nextDouble(0.0, MAX_MAGNETIC_FLUX_STD);
+        final StandardDeviationBodyMagneticFluxDensity stdB = new StandardDeviationBodyMagneticFluxDensity(
+                standardDeviation);
 
         final DefaultMagnetometerQualityScoreMapper mapper = new DefaultMagnetometerQualityScoreMapper();
 

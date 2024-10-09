@@ -40,7 +40,6 @@ import com.irurueta.navigation.inertial.calibration.generators.AccelerometerGyro
 import com.irurueta.navigation.inertial.calibration.gyroscope.AccelerometerDependentGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeCalibratorMeasurementOrSequenceType;
 import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeNonLinearCalibrator;
-import com.irurueta.navigation.inertial.calibration.gyroscope.KnownBiasGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.OrderedBodyKinematicsSequenceGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.QualityScoredGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.UnknownBiasGyroscopeCalibrator;
@@ -1472,9 +1471,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                     calibrator.setQualityScores(qualityScores);
                 }
                 break;
-            case FRAME_BODY_KINEMATICS:
-                // throw exception. Cannot use frames
-            case STANDARD_DEVIATION_FRAME_BODY_KINEMATICS:
+            case FRAME_BODY_KINEMATICS, STANDARD_DEVIATION_FRAME_BODY_KINEMATICS:
                 // throw exception. Cannot use frames
             default:
                 throw new IntervalDetectorThresholdFactorOptimizerException();
@@ -1532,9 +1529,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
                     calibrator.setQualityScores(qualityScores);
                 }
                 break;
-            case FRAME_BODY_MAGNETIC_FLUX_DENSITY:
-                // throw exception. Cannot use frames
-            case STANDARD_DEVIATION_FRAME_BODY_MAGNETIC_FLUX_DENSITY:
+            case FRAME_BODY_MAGNETIC_FLUX_DENSITY, STANDARD_DEVIATION_FRAME_BODY_MAGNETIC_FLUX_DENSITY:
                 // throw exception. Cannot use frames
             default:
                 throw new IntervalDetectorThresholdFactorOptimizerException();
@@ -1544,18 +1539,14 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
 
         // once we have accelerometer estimations, we can set known
         // accelerometer bias and cross-coupling errors to gyroscope calibrator
-        if (mGyroscopeCalibrator instanceof AccelerometerDependentGyroscopeCalibrator) {
-            final AccelerometerDependentGyroscopeCalibrator accelGyroCalibrator =
-                    (AccelerometerDependentGyroscopeCalibrator) mGyroscopeCalibrator;
+        if (mGyroscopeCalibrator instanceof AccelerometerDependentGyroscopeCalibrator accelGyroCalibrator) {
 
             final double[] bias;
-            if (mAccelerometerCalibrator instanceof UnknownBiasAccelerometerCalibrator) {
-                bias = ((UnknownBiasAccelerometerCalibrator) mAccelerometerCalibrator)
-                        .getEstimatedBiases();
+            if (mAccelerometerCalibrator instanceof UnknownBiasAccelerometerCalibrator unknownBiasAccelerometerCalibrator) {
+                bias = unknownBiasAccelerometerCalibrator.getEstimatedBiases();
 
-            } else if (mAccelerometerCalibrator instanceof KnownBiasAccelerometerCalibrator) {
-                bias = ((KnownBiasAccelerometerCalibrator) mAccelerometerCalibrator)
-                        .getBias();
+            } else if (mAccelerometerCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
+                bias = knownBiasAccelerometerCalibrator.getBias();
             } else {
                 bias = null;
             }
@@ -1689,12 +1680,10 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
         } else {
             mEstimatedAccelerometerMa.copyFrom(mAccelerometerCalibrator.getEstimatedMa());
         }
-        if (mAccelerometerCalibrator instanceof UnknownBiasAccelerometerCalibrator) {
-            mEstimatedAccelerometerBiases = ((UnknownBiasAccelerometerCalibrator) mAccelerometerCalibrator)
-                    .getEstimatedBiases();
-        } else if (mAccelerometerCalibrator instanceof KnownBiasAccelerometerCalibrator) {
-            mEstimatedAccelerometerBiases = ((KnownBiasAccelerometerCalibrator) mAccelerometerCalibrator)
-                    .getBias();
+        if (mAccelerometerCalibrator instanceof UnknownBiasAccelerometerCalibrator unknownBiasAccelerometerCalibrator) {
+            mEstimatedAccelerometerBiases = unknownBiasAccelerometerCalibrator.getEstimatedBiases();
+        } else if (mAccelerometerCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
+            mEstimatedAccelerometerBiases = knownBiasAccelerometerCalibrator.getBias();
         }
 
         if (mEstimatedGyroscopeCovariance == null) {
@@ -1712,12 +1701,10 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
         } else {
             mEstimatedGyroscopeGg.copyFrom(mGyroscopeCalibrator.getEstimatedGg());
         }
-        if (mGyroscopeCalibrator instanceof UnknownBiasGyroscopeCalibrator) {
-            mEstimatedGyroscopeBiases = ((UnknownBiasGyroscopeCalibrator) mGyroscopeCalibrator)
-                    .getEstimatedBiases();
-        } else if (mGyroscopeCalibrator instanceof KnownBiasAccelerometerCalibrator) {
-            mEstimatedGyroscopeBiases = ((KnownBiasGyroscopeCalibrator) mGyroscopeCalibrator)
-                    .getBias();
+        if (mGyroscopeCalibrator instanceof UnknownBiasGyroscopeCalibrator unknownBiasGyroscopeCalibrator) {
+            mEstimatedGyroscopeBiases = unknownBiasGyroscopeCalibrator.getEstimatedBiases();
+        } else if (mGyroscopeCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
+            mEstimatedGyroscopeBiases = knownBiasAccelerometerCalibrator.getBias();
         }
 
         if (mEstimatedMagnetometerCovariance == null) {
@@ -1730,12 +1717,10 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
         } else {
             mEstimatedMagnetometerMm.copyFrom(mMagnetometerCalibrator.getEstimatedMm());
         }
-        if (mMagnetometerCalibrator instanceof UnknownHardIronMagnetometerCalibrator) {
-            mEstimatedMagnetometerHardIron = ((UnknownHardIronMagnetometerCalibrator) mMagnetometerCalibrator)
-                    .getEstimatedHardIron();
-        } else if (mMagnetometerCalibrator instanceof KnownHardIronMagnetometerCalibrator) {
-            mEstimatedMagnetometerHardIron = ((KnownHardIronMagnetometerCalibrator) mMagnetometerCalibrator)
-                    .getHardIron();
+        if (mMagnetometerCalibrator instanceof UnknownHardIronMagnetometerCalibrator unknownHardIronMagnetometerCalibrator) {
+            mEstimatedMagnetometerHardIron = unknownHardIronMagnetometerCalibrator.getEstimatedHardIron();
+        } else if (mMagnetometerCalibrator instanceof KnownHardIronMagnetometerCalibrator knownHardIronMagnetometerCalibrator) {
+            mEstimatedMagnetometerHardIron = knownHardIronMagnetometerCalibrator.getHardIron();
         }
     }
 

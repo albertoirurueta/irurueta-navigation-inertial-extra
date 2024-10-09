@@ -42,13 +42,10 @@ public class DefaultGyroscopeQualityScoreMapperTest {
         double avg = 0.0;
         final List<StandardDeviationTimedBodyKinematics> items = new ArrayList<>();
         for (int i = 0; i < NUM_ITEMS; i++) {
-            final double specificForceStandardDeviation =
-                    randomizer.nextDouble(0.0, MAX_SPECIFIC_FORCE);
-            final double angularRateStandardDeviation =
-                    randomizer.nextDouble(0.0, MAX_ANGULAR_RATE_VALUE);
-            final StandardDeviationTimedBodyKinematics item =
-                    new StandardDeviationTimedBodyKinematics(TIME_INTERVAL * i,
-                            specificForceStandardDeviation, angularRateStandardDeviation);
+            final double specificForceStandardDeviation = randomizer.nextDouble(0.0, MAX_SPECIFIC_FORCE);
+            final double angularRateStandardDeviation = randomizer.nextDouble(0.0, MAX_ANGULAR_RATE_VALUE);
+            final StandardDeviationTimedBodyKinematics item = new StandardDeviationTimedBodyKinematics(
+                    TIME_INTERVAL * i, specificForceStandardDeviation, angularRateStandardDeviation);
             items.add(item);
 
             avg += (specificForceStandardDeviation + angularRateStandardDeviation) / NUM_ITEMS;
@@ -56,8 +53,8 @@ public class DefaultGyroscopeQualityScoreMapperTest {
 
         final double expected = 1.0 / (1.0 + avg);
 
-        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence =
-                new BodyKinematicsSequence<>(items);
+        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence = new BodyKinematicsSequence<>(
+                items);
 
         final DefaultGyroscopeQualityScoreMapper mapper = new DefaultGyroscopeQualityScoreMapper();
         assertEquals(expected, mapper.map(sequence), 0.0);

@@ -33,8 +33,7 @@ public class DefaultAccelerometerGyroscopeAndMagnetometerMseRuleTest {
         final double gyroscopeMse = random.nextDouble();
         final double magnetometerMse = random.nextDouble();
 
-        assertEquals(accelerometerMse + gyroscopeMse + magnetometerMse,
-                rule.evaluate(accelerometerMse, gyroscopeMse, magnetometerMse),
-                0.0);
+        assertEquals(accelerometerMse + gyroscopeMse + magnetometerMse, rule.evaluate(accelerometerMse, gyroscopeMse,
+                        magnetometerMse), 0.0);
     }
 }

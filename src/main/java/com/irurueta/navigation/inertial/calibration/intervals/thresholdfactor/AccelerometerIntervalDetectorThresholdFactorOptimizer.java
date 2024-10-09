@@ -899,9 +899,7 @@ public abstract class AccelerometerIntervalDetectorThresholdFactorOptimizer exte
                     calibrator.setQualityScores(qualityScores);
                 }
                 break;
-            case FRAME_BODY_KINEMATICS:
-                // throw exception. Cannot use frames
-            case STANDARD_DEVIATION_FRAME_BODY_KINEMATICS:
+            case FRAME_BODY_KINEMATICS, STANDARD_DEVIATION_FRAME_BODY_KINEMATICS:
                 // throw exception. Cannot use frames
             default:
                 throw new IntervalDetectorThresholdFactorOptimizerException();
@@ -1008,12 +1006,10 @@ public abstract class AccelerometerIntervalDetectorThresholdFactorOptimizer exte
         } else {
             mEstimatedMa.copyFrom(mCalibrator.getEstimatedMa());
         }
-        if (mCalibrator instanceof UnknownBiasAccelerometerCalibrator) {
-            mEstimatedBiases = ((UnknownBiasAccelerometerCalibrator) mCalibrator)
-                    .getEstimatedBiases();
-        } else if (mCalibrator instanceof KnownBiasAccelerometerCalibrator) {
-            mEstimatedBiases = ((KnownBiasAccelerometerCalibrator) mCalibrator)
-                    .getBias();
+        if (mCalibrator instanceof UnknownBiasAccelerometerCalibrator unknownBiasAccelerometerCalibrator) {
+            mEstimatedBiases = unknownBiasAccelerometerCalibrator.getEstimatedBiases();
+        } else if (mCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
+            mEstimatedBiases = knownBiasAccelerometerCalibrator.getBias();
         }
     }
 

@@ -32,7 +32,6 @@ import com.irurueta.numerical.SingleDimensionFunctionEvaluatorListener;
 import com.irurueta.numerical.optimization.BracketedSingleOptimizer;
 import com.irurueta.numerical.optimization.BrentSingleOptimizer;
 import com.irurueta.numerical.optimization.OnIterationCompletedListener;
-import com.irurueta.numerical.optimization.Optimizer;
 
 /**
  * Optimizes threshold factor for interval detection of accelerometer + gyroscope data
@@ -343,29 +342,21 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
      * Initializes optimizer listeners.
      */
     private void initializeOptimizerListeners() {
-        mOptimizerListener = new SingleDimensionFunctionEvaluatorListener() {
-            @Override
-            public double evaluate(final double point) throws EvaluationException {
-                try {
-                    return evaluateForThresholdFactor(point);
-                } catch (final NavigationException e) {
-                    throw new EvaluationException(e);
-                }
+        mOptimizerListener = point -> {
+            try {
+                return evaluateForThresholdFactor(point);
+            } catch (final NavigationException e) {
+                throw new EvaluationException(e);
             }
         };
 
-        mIterationCompletedListener = new OnIterationCompletedListener() {
-            @Override
-            public void onIterationCompleted(final Optimizer optimizer,
-                                             final int iteration,
-                                             final Integer maxIterations) {
-                if (maxIterations == null) {
-                    return;
-                }
-
-                mProgress = (float) iteration / (float) maxIterations;
-                checkAndNotifyProgress();
+        mIterationCompletedListener = (optimizer, iteration, maxIterations) -> {
+            if (maxIterations == null) {
+                return;
             }
+
+            mProgress = (float) iteration / (float) maxIterations;
+            checkAndNotifyProgress();
         };
     }
 }

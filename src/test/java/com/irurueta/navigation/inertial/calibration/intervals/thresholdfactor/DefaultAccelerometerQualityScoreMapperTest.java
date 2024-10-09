@@ -31,13 +31,10 @@ public class DefaultAccelerometerQualityScoreMapperTest {
     @Test
     public void testMap() {
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double specificForceStandardDeviation =
-                randomizer.nextDouble(0.0, MAX_SPECIFIC_FORCE);
-        final double angularRateStandardDeviation =
-                randomizer.nextDouble(0.0, MAX_ANGULAR_RATE_VALUE);
-        final StandardDeviationBodyKinematics stdKinematics =
-                new StandardDeviationBodyKinematics(specificForceStandardDeviation,
-                        angularRateStandardDeviation);
+        final double specificForceStandardDeviation = randomizer.nextDouble(0.0, MAX_SPECIFIC_FORCE);
+        final double angularRateStandardDeviation = randomizer.nextDouble(0.0, MAX_ANGULAR_RATE_VALUE);
+        final StandardDeviationBodyKinematics stdKinematics = new StandardDeviationBodyKinematics(
+                specificForceStandardDeviation, angularRateStandardDeviation);
 
         final DefaultAccelerometerQualityScoreMapper mapper = new DefaultAccelerometerQualityScoreMapper();
 
