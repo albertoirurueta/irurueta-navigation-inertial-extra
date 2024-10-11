@@ -23,8 +23,7 @@ public class IntervalDetectorThresholdFactorOptimizerExceptionTest {
 
     @Test
     public void testConstructor() {
-        IntervalDetectorThresholdFactorOptimizerException ex =
-                new IntervalDetectorThresholdFactorOptimizerException();
+        IntervalDetectorThresholdFactorOptimizerException ex = new IntervalDetectorThresholdFactorOptimizerException();
         assertNotNull(ex);
 
         ex = new IntervalDetectorThresholdFactorOptimizerException("message");

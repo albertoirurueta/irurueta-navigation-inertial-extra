@@ -1082,7 +1082,6 @@ public class KalmanDriftEstimator extends DriftEstimator {
             throw new LockedException();
         }
 
-        mRunning = true;
         mKalmanEstimator = null;
         mState = null;
         mRunning = false;

@@ -33,7 +33,6 @@ import com.irurueta.navigation.inertial.calibration.generators.GyroscopeMeasurem
 import com.irurueta.navigation.inertial.calibration.generators.GyroscopeMeasurementsGeneratorListener;
 import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeCalibratorMeasurementOrSequenceType;
 import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeNonLinearCalibrator;
-import com.irurueta.navigation.inertial.calibration.gyroscope.KnownBiasGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.OrderedBodyKinematicsSequenceGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.QualityScoredGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.UnknownBiasGyroscopeCalibrator;
@@ -1048,12 +1047,10 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
         } else {
             mEstimatedGg.copyFrom(mCalibrator.getEstimatedGg());
         }
-        if (mCalibrator instanceof UnknownBiasGyroscopeCalibrator) {
-            mEstimatedBiases = ((UnknownBiasGyroscopeCalibrator) mCalibrator)
-                    .getEstimatedBiases();
-        } else if (mCalibrator instanceof KnownBiasAccelerometerCalibrator) {
-            mEstimatedBiases = ((KnownBiasGyroscopeCalibrator) mCalibrator)
-                    .getBias();
+        if (mCalibrator instanceof UnknownBiasGyroscopeCalibrator unknownBiasGyroscopeCalibrator) {
+            mEstimatedBiases = unknownBiasGyroscopeCalibrator.getEstimatedBiases();
+        } else if (mCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
+            mEstimatedBiases = knownBiasAccelerometerCalibrator.getBias();
         }
     }
 

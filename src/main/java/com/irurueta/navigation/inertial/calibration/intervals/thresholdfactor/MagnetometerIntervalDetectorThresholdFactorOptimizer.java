@@ -852,9 +852,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
                     calibrator.setQualityScores(qualityScores);
                 }
                 break;
-            case FRAME_BODY_MAGNETIC_FLUX_DENSITY:
-                // throw exception. Cannot use frames
-            case STANDARD_DEVIATION_FRAME_BODY_MAGNETIC_FLUX_DENSITY:
+            case FRAME_BODY_MAGNETIC_FLUX_DENSITY, STANDARD_DEVIATION_FRAME_BODY_MAGNETIC_FLUX_DENSITY:
                 // throw exception. Cannot use frames
             default:
                 throw new IntervalDetectorThresholdFactorOptimizerException();
@@ -961,12 +959,10 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
         } else {
             mEstimatedMm.copyFrom(mCalibrator.getEstimatedMm());
         }
-        if (mCalibrator instanceof UnknownHardIronMagnetometerCalibrator) {
-            mEstimatedHardIron = ((UnknownHardIronMagnetometerCalibrator) mCalibrator)
-                    .getEstimatedHardIron();
-        } else if (mCalibrator instanceof KnownHardIronMagnetometerCalibrator) {
-            mEstimatedHardIron = ((KnownHardIronMagnetometerCalibrator) mCalibrator)
-                    .getHardIron();
+        if (mCalibrator instanceof UnknownHardIronMagnetometerCalibrator unknownHardIronMagnetometerCalibrator) {
+            mEstimatedHardIron = unknownHardIronMagnetometerCalibrator.getEstimatedHardIron();
+        } else if (mCalibrator instanceof KnownHardIronMagnetometerCalibrator knownHardIronMagnetometerCalibrator) {
+            mEstimatedHardIron = knownHardIronMagnetometerCalibrator.getHardIron();
         }
     }
 

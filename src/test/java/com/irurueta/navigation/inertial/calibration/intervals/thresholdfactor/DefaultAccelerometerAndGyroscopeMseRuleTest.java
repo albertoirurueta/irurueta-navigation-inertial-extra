@@ -25,14 +25,12 @@ public class DefaultAccelerometerAndGyroscopeMseRuleTest {
 
     @Test
     public void testEvaluate() {
-        final DefaultAccelerometerAndGyroscopeMseRule rule =
-                new DefaultAccelerometerAndGyroscopeMseRule();
+        final DefaultAccelerometerAndGyroscopeMseRule rule = new DefaultAccelerometerAndGyroscopeMseRule();
 
         final Random random = new Random();
         final double accelerometerMse = random.nextDouble();
         final double gyroscopeMse = random.nextDouble();
 
-        assertEquals(accelerometerMse + gyroscopeMse,
-                rule.evaluate(accelerometerMse, gyroscopeMse), 0.0);
+        assertEquals(accelerometerMse + gyroscopeMse, rule.evaluate(accelerometerMse, gyroscopeMse), 0.0);
     }
 }

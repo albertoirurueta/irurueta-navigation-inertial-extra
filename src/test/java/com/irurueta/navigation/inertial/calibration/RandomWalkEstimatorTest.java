@@ -105,24 +105,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, bax1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bax1.getUnit());
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, bay1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bay1.getUnit());
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baz1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baz1.getUnit());
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -171,24 +168,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgx1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgx1.getUnit());
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgy1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgy1.getUnit());
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgz1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgz1.getUnit());
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -214,12 +208,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -259,8 +251,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -274,14 +265,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -295,16 +285,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -381,24 +369,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, bax1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bax1.getUnit());
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, bay1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bay1.getUnit());
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baz1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baz1.getUnit());
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -447,24 +432,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgx1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgx1.getUnit());
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgy1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgy1.getUnit());
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgz1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgz1.getUnit());
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -490,12 +472,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -529,14 +509,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -550,11 +529,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -571,16 +549,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -632,8 +608,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                baTriad, ma, bgTriad, mg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -656,31 +631,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -728,31 +697,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -787,12 +750,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -826,14 +787,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -847,11 +807,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -868,16 +827,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -919,46 +876,20 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(baTriad, wrong, bgTriad, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(baTriad, wrong, bgTriad, mg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(baTriad,
-                    new Matrix(1, 3), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad,
-                    new Matrix(3, 1), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad,
+                new Matrix(1, 3), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad,
+                new Matrix(3, 1), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -971,8 +902,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                baTriad, ma, bgTriad, mg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -984,7 +914,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -995,31 +925,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -1056,7 +980,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -1067,31 +991,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -1126,12 +1044,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -1165,14 +1081,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -1186,11 +1101,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -1207,8 +1121,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
@@ -1258,48 +1171,20 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(baTriad, wrong, bgTriad, mg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, wrong,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(baTriad, wrong, bgTriad, mg, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad, wrong, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(baTriad,
-                    new Matrix(1, 3), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad,
-                    new Matrix(3, 1), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad,
+                new Matrix(1, 3), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad,
+                new Matrix(3, 1), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad,
+                new Matrix(3, 1), this));
     }
 
     @Test
@@ -1313,8 +1198,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                baTriad, ma, bgTriad, mg, gg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -1326,7 +1210,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -1337,31 +1221,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -1398,7 +1276,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -1409,31 +1287,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -1468,12 +1340,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -1507,14 +1377,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -1528,11 +1397,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -1549,16 +1417,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -1600,58 +1466,24 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(baTriad, wrong, bgTriad, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(baTriad, wrong, bgTriad, mg, gg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad,
-                    new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad,
-                    new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, mg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, mg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad, mg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad, mg,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -1665,8 +1497,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                baTriad, ma, bgTriad, mg, gg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, mg, gg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -1678,7 +1509,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -1689,31 +1520,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -1750,7 +1575,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -1761,31 +1586,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -1820,12 +1639,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -1859,14 +1676,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -1880,11 +1696,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -1901,16 +1716,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -1952,60 +1765,26 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(baTriad, wrong, bgTriad, mg, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, wrong, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(baTriad, wrong, bgTriad, mg, gg,
+                this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad, wrong, gg,
+                this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad,
-                    new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad,
-                    new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, mg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(baTriad, ma, bgTriad, mg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad, mg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(baTriad, ma, bgTriad, mg,
+                new Matrix(3, 1), this));
     }
 
     @Test
@@ -2018,8 +1797,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ba, ma, bg, mg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ba, ma, bg, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -2042,31 +1820,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -2103,7 +1875,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -2114,31 +1886,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -2173,12 +1939,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -2212,14 +1976,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -2233,11 +1996,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -2254,16 +2016,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -2305,70 +2065,28 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ba, wrong, bg, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ba, wrong, bg, mg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ba, ma, bg, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(new Matrix(1, 1),
-                    ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(new Matrix(3, 3),
-                    ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba,
-                    new Matrix(1, 3), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba,
-                    new Matrix(3, 1), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma,
-                    new Matrix(1, 1), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma,
-                    new Matrix(1, 3), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(new Matrix(1, 1), ma,
+                bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(new Matrix(3, 3), ma,
+                bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, new Matrix(1, 3),
+                bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, new Matrix(3, 1),
+                bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma,
+                new Matrix(1, 1), mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma,
+                new Matrix(1, 3), mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -2381,8 +2099,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ba, ma, bg, mg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ba, ma, bg, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -2405,31 +2122,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -2466,7 +2177,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -2477,31 +2188,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -2536,12 +2241,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -2575,14 +2278,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -2596,11 +2299,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -2617,16 +2319,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -2668,70 +2368,28 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ba, wrong, bg, mg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg, wrong, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ba, wrong, bg, mg, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ba, ma, bg, wrong, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(new Matrix(1, 1),
-                    ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(new Matrix(3, 3),
-                    ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba,
-                    new Matrix(1, 3), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba,
-                    new Matrix(3, 1), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma,
-                    new Matrix(1, 1), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma,
-                    new Matrix(1, 3), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(new Matrix(1, 1), ma,
+                bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(new Matrix(3, 3), ma,
+                bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba,
+                new Matrix(1, 3), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, new Matrix(3, 1),
+                bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma,
+                new Matrix(1, 1), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma,
+                new Matrix(1, 3), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg,
+                new Matrix(3, 1), this));
     }
 
     @Test
@@ -2745,8 +2403,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ba, ma, bg, mg, gg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ba, ma, bg, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -2758,7 +2415,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -2769,31 +2426,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -2830,7 +2481,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -2841,31 +2492,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -2900,12 +2545,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -2939,14 +2582,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -2960,11 +2602,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -2981,16 +2622,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -3032,82 +2671,32 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ba, wrong, bg, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ba, wrong, bg, mg, gg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ba, ma, bg, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(new Matrix(1, 1),
-                    ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(new Matrix(3, 3),
-                    ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba,
-                    new Matrix(1, 3), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba,
-                    new Matrix(3, 1), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma,
-                    new Matrix(1, 1), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma,
-                    new Matrix(1, 3), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg,
-                    new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg,
-                    new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg, mg,
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg, mg,
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(new Matrix(1, 1), ma,
+                bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(new Matrix(3, 3), ma,
+                bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, new Matrix(1, 3),
+                bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, new Matrix(3, 1),
+                bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma,
+                new Matrix(1, 1), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma,
+                new Matrix(1, 3), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg, mg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg, mg,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -3121,8 +2710,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ba, ma, bg, mg, gg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ba, ma, bg, mg, gg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -3134,7 +2722,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -3145,31 +2733,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -3206,7 +2788,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -3217,31 +2799,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -3276,12 +2852,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -3315,14 +2889,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition1.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC1.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertEquals(nedC1, nedC2);
 
@@ -3336,11 +2910,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -3357,16 +2930,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -3408,100 +2979,46 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ba, wrong, bg, mg, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg, wrong, gg,
-                    this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ba, wrong, bg, mg, gg, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ba, ma, bg, wrong, gg, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(new Matrix(1, 1),
-                    ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(new Matrix(3, 3),
-                    ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba,
-                    new Matrix(1, 3), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba,
-                    new Matrix(3, 1), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma,
-                    new Matrix(1, 1), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma,
-                    new Matrix(1, 3), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg,
-                    new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg,
-                    new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg, mg,
-                    new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ba, ma, bg, mg,
-                    new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(new Matrix(1, 1),
+                ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(new Matrix(3, 3),
+                ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, new Matrix(1, 3),
+                bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, new Matrix(3, 1),
+                bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma,
+                new Matrix(1, 1), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma,
+                new Matrix(1, 3), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg, mg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ba, ma, bg, mg,
+                new Matrix(3, 1), this));
     }
 
     @Test
-    public void testConstructor11() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor11() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
 
-        final RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC);
 
         // check default values
         assertNull(estimator.getListener());
 
         final Matrix ba1 = estimator.getAccelerationBias();
-        assertEquals(new Matrix(3, 1), ba1);
+        assertEquals(ba1, new Matrix(3, 1));
         final Matrix ba2 = new Matrix(3, 1);
         estimator.getAccelerationBias(ba2);
         assertEquals(ba1, ba2);
@@ -3528,24 +3045,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, bax1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bax1.getUnit());
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, bay1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bay1.getUnit());
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baz1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baz1.getUnit());
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -3594,24 +3108,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgx1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgx1.getUnit());
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgy1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgy1.getUnit());
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgz1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgz1.getUnit());
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -3637,12 +3148,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -3674,14 +3183,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -3695,11 +3203,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -3716,16 +3223,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -3768,13 +3273,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testConstructor12() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor12() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
 
-        final RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -3807,24 +3310,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, bax1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bax1.getUnit());
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, bay1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bay1.getUnit());
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baz1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baz1.getUnit());
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -3873,24 +3373,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgx1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgx1.getUnit());
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgy1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgy1.getUnit());
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgz1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgz1.getUnit());
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -3916,12 +3413,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -3953,14 +3448,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -3974,11 +3469,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -3995,16 +3489,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -4047,8 +3539,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testConstructor13() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor13() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -4060,8 +3551,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, baTriad, ma, bgTriad, mg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -4073,7 +3563,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -4084,31 +3574,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -4145,7 +3629,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -4156,31 +3640,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -4215,12 +3693,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -4252,14 +3728,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -4273,11 +3748,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -4294,16 +3768,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -4345,53 +3817,26 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, wrong, bgTriad, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, ma, bgTriad, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, wrong, bgTriad,
+                mg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad,
+                wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1)));
     }
 
     @Test
-    public void testConstructor14() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor14() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -4403,8 +3848,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, baTriad, ma, bgTriad, mg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad, mg,
+                this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -4416,7 +3861,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -4427,31 +3872,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -4488,7 +3927,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -4499,31 +3938,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -4558,12 +3991,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -4595,14 +4026,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -4616,11 +4046,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -4637,16 +4066,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -4688,53 +4115,26 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, wrong, bgTriad,
+                mg, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad,
+                wrong, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1), this));
     }
 
     @Test
-    public void testConstructor15() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor15() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -4747,8 +4147,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, baTriad, ma, bgTriad, mg, gg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -4760,7 +4159,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -4771,31 +4170,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -4832,7 +4225,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -4843,31 +4236,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -4902,12 +4289,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -4939,14 +4324,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -4960,11 +4344,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -4981,16 +4364,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -5032,65 +4413,30 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, wrong, bgTriad,
+                mg, gg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad,
+                wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(3, 1)));
     }
 
     @Test
-    public void testConstructor16() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor16() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -5103,8 +4449,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, baTriad, ma, bgTriad, mg, gg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad, mg, gg,
+                this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -5127,31 +4473,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -5199,31 +4539,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -5258,12 +4592,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -5295,14 +4627,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -5316,11 +4647,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -5337,16 +4667,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -5388,65 +4716,30 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, wrong, bgTriad,
+                mg, gg, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad,
+                wrong, gg, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(3, 1), this));
     }
 
     @Test
-    public void testConstructor17() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor17() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -5458,8 +4751,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, ba, ma, bg, mg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -5471,7 +4763,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -5482,31 +4774,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -5543,7 +4829,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -5554,31 +4840,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -5613,12 +4893,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -5650,14 +4928,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -5671,11 +4948,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -5692,16 +4968,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -5743,77 +5017,32 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, wrong, bg, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, ma, bg, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, wrong, bg, mg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, new Matrix(1, 1), mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, new Matrix(3, 3), mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, bg, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, bg, new Matrix(3, 1)));
     }
 
     @Test
-    public void testConstructor18() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor18() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -5825,8 +5054,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, ba, ma, bg, mg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -5838,7 +5066,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -5849,31 +5077,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -5910,7 +5132,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -5921,31 +5143,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -5980,12 +5196,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -6017,14 +5231,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -6038,11 +5251,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -6059,16 +5271,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -6110,77 +5320,34 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, wrong, bg, mg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, ma, bg, wrong, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, wrong, bg, mg,
+                this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, wrong,
+                this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), this));
     }
 
     @Test
-    public void testConstructor19() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor19() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -6193,8 +5360,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, ba, ma, bg, mg, gg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -6206,7 +5372,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -6217,31 +5383,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -6278,7 +5438,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -6289,31 +5449,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -6348,12 +5502,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -6385,14 +5537,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -6406,11 +5557,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -6427,16 +5577,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -6478,89 +5626,36 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, wrong, bg, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, ma, bg, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, wrong, bg, mg, gg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, new Matrix(1, 1), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, new Matrix(3, 3), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, bg, new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, bg, new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, bg, mg, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                ma, bg, mg, new Matrix(3, 1)));
     }
 
     @Test
-    public void testConstructor20() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor20() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -6573,8 +5668,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, ba, ma, bg, mg, gg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg, gg,
+                this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -6586,7 +5681,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -6597,31 +5692,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -6658,7 +5747,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -6669,31 +5758,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -6728,12 +5811,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -6765,14 +5846,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -6786,11 +5866,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -6807,16 +5886,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -6858,98 +5935,45 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, wrong, bg, mg, gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, ma, bg, wrong, gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, wrong, bg, mg, gg,
+                this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, wrong, gg,
+                this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg,
+                new Matrix(3, 1), this));
     }
 
     @Test
-    public void testConstructor21() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor21() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
-        final RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC);
 
         // check default values
         assertNull(estimator.getListener());
@@ -6982,24 +6006,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(0.0, bax1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bax1.getUnit());
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(0.0, bay1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bay1.getUnit());
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
         assertEquals(0.0, baz1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baz1.getUnit());
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -7048,24 +6069,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(0.0, bgx1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgx1.getUnit());
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(0.0, bgy1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgy1.getUnit());
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(0.0, bgz1.getValue().doubleValue(), 0.0);
         assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgz1.getUnit());
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -7091,297 +6109,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, t1.getUnit());
-
-        final Time t2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getTimeIntervalAsTime(t2);
-        assertEquals(t1, t2);
-
-        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
-        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
-
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
-        final ECEFPosition ecefPosition2 = new ECEFPosition();
-        estimator.getEcefPosition(ecefPosition2);
-        assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
-
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
-        final ECEFFrame ecefFrame2 = new ECEFFrame();
-        estimator.getEcefFrame(ecefFrame2);
-        assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
-
-        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
-        final NEDFrame nedFrame2 = new NEDFrame();
-        estimator.getNedFrame(nedFrame2);
-        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
-
-        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
-        final NEDPosition nedPosition2 = new NEDPosition();
-        estimator.getNedPosition(nedPosition2);
-        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
-        assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getEcefC(ecefC2);
-        assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
-
-        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getNedC(nedC2);
-        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
-
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        final Time elapsedTime1 = estimator.getElapsedTime();
-        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
-        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getElapsedTime(elapsedTime2);
-        assertEquals(elapsedTime1, elapsedTime2);
-        assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
-        final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                driftPeriod1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
-        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getDriftPeriod(driftPeriod2);
-        assertEquals(driftPeriod1, driftPeriod2);
-        assertFalse(estimator.isRunning());
-        assertTrue(estimator.isReady());
-
-        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
-        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
-        assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
-        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
-        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
-        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
-        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
-        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
-        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
-        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
-        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
-        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
-        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
-        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
-        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
-        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
-        assertEquals(velocityUncertainty1, velocityUncertainty2);
-        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
-        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
-        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
-        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
-        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
-
-        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
-        assertEquals(new BodyKinematics(), kinematics1);
-        final BodyKinematics kinematics2 = new BodyKinematics();
-        estimator.getFixedKinematics(kinematics2);
-        assertEquals(kinematics1, kinematics2);
-    }
-
-    @Test
-    public void testConstructor22() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException {
-        final NEDPosition nedPosition = createPosition();
-        final CoordinateTransformation nedC = createOrientation();
-        final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
-        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
-
-        final RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, this);
-
-        // check default values
-        assertSame(this, estimator.getListener());
-
-        final Matrix ba1 = estimator.getAccelerationBias();
-        assertEquals(new Matrix(3, 1), ba1);
-        final Matrix ba2 = new Matrix(3, 1);
-        estimator.getAccelerationBias(ba2);
-        assertEquals(ba1, ba2);
-
-        final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(new double[3], ba3, 0.0);
-        final double[] ba4 = new double[3];
-        estimator.getAccelerationBiasArray(ba4);
-        assertArrayEquals(ba3, ba4, 0.0);
-
-        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
-        assertEquals(0.0, triad1.getValueX(), 0.0);
-        assertEquals(0.0, triad1.getValueY(), 0.0);
-        assertEquals(0.0, triad1.getValueZ(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, triad1.getUnit());
-        final AccelerationTriad triad2 = new AccelerationTriad();
-        estimator.getAccelerationBiasAsTriad(triad2);
-        assertEquals(triad1, triad2);
-
-        assertEquals(0.0, estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationBiasZ(), 0.0);
-
-        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(0.0, bax1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bax1.getUnit());
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasXAsAcceleration(bax2);
-        assertEquals(bax1, bax2);
-
-        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(0.0, bay1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bay1.getUnit());
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasYAsAcceleration(bay2);
-        assertEquals(bay1, bay2);
-
-        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(0.0, baz1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baz1.getUnit());
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasZAsAcceleration(baz2);
-        assertEquals(baz1, baz2);
-
-        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
-        assertEquals(new Matrix(3, 3), ma1);
-
-        final Matrix ma2 = new Matrix(3, 3);
-        estimator.getAccelerationCrossCouplingErrors(ma2);
-        assertEquals(ma1, ma2);
-
-        assertEquals(0.0, estimator.getAccelerationSx(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationSy(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationSz(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationMxy(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationMxz(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationMyx(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationMyz(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationMzx(), 0.0);
-        assertEquals(0.0, estimator.getAccelerationMzy(), 0.0);
-
-        final Matrix bg1 = estimator.getAngularSpeedBias();
-        assertEquals(new Matrix(3, 1), bg1);
-        final Matrix bg2 = new Matrix(3, 1);
-        estimator.getAngularSpeedBias(bg2);
-        assertEquals(bg1, bg2);
-
-        final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(new double[3], bg3, 0.0);
-        final double[] bg4 = new double[3];
-        estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg3, bg4, 0.0);
-
-        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
-        assertEquals(0.0, triad3.getValueX(), 0.0);
-        assertEquals(0.0, triad3.getValueY(), 0.0);
-        assertEquals(0.0, triad3.getValueZ(), 0.0);
-        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, triad3.getUnit());
-        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
-        estimator.getAngularSpeedBiasAsTriad(triad4);
-        assertEquals(triad3, triad4);
-
-        assertEquals(0.0, estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedBiasZ(), 0.0);
-
-        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(0.0, bgx1.getValue().doubleValue(), 0.0);
-        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgx1.getUnit());
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
-        assertEquals(bgx1, bgx2);
-
-        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(0.0, bgy1.getValue().doubleValue(), 0.0);
-        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgy1.getUnit());
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
-        assertEquals(bgy1, bgy2);
-
-        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(0.0, bgz1.getValue().doubleValue(), 0.0);
-        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgz1.getUnit());
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
-        assertEquals(bgz1, bgz2);
-
-        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
-        assertEquals(new Matrix(3, 3), mg1);
-        final Matrix mg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedCrossCouplingErrors(mg2);
-        assertEquals(mg1, mg2);
-
-        assertEquals(0.0, estimator.getAngularSpeedSx(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedSy(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedSz(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedMxy(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedMxz(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedMyx(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedMyz(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedMzx(), 0.0);
-        assertEquals(0.0, estimator.getAngularSpeedMzy(), 0.0);
-
-        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(new Matrix(3, 3), gg1);
-        final Matrix gg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedGDependantCrossBias(gg2);
-        assertEquals(gg1, gg2);
-
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
-
-        final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -7413,14 +6144,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -7434,11 +6164,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -7455,16 +6184,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -7507,13 +6234,279 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testConstructor23() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor22() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
+
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, this);
+
+        // check default values
+        assertSame(this, estimator.getListener());
+
+        final Matrix ba1 = estimator.getAccelerationBias();
+        assertEquals(new Matrix(3, 1), ba1);
+        final Matrix ba2 = new Matrix(3, 1);
+        estimator.getAccelerationBias(ba2);
+        assertEquals(ba1, ba2);
+
+        final double[] ba3 = estimator.getAccelerationBiasArray();
+        assertArrayEquals(new double[3], ba3, 0.0);
+        final double[] ba4 = new double[3];
+        estimator.getAccelerationBiasArray(ba4);
+        assertArrayEquals(ba3, ba4, 0.0);
+
+        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
+        assertEquals(0.0, triad1.getValueX(), 0.0);
+        assertEquals(0.0, triad1.getValueY(), 0.0);
+        assertEquals(0.0, triad1.getValueZ(), 0.0);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, triad1.getUnit());
+        final AccelerationTriad triad2 = new AccelerationTriad();
+        estimator.getAccelerationBiasAsTriad(triad2);
+        assertEquals(triad1, triad2);
+
+        assertEquals(0.0, estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationBiasZ(), 0.0);
+
+        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
+        assertEquals(0.0, bax1.getValue().doubleValue(), 0.0);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bax1.getUnit());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasXAsAcceleration(bax2);
+        assertEquals(bax1, bax2);
+
+        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
+        assertEquals(0.0, bay1.getValue().doubleValue(), 0.0);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, bay1.getUnit());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasYAsAcceleration(bay2);
+        assertEquals(bay1, bay2);
+
+        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
+        assertEquals(0.0, baz1.getValue().doubleValue(), 0.0);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, baz1.getUnit());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasZAsAcceleration(baz2);
+        assertEquals(baz1, baz2);
+
+        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
+        assertEquals(new Matrix(3, 3), ma1);
+
+        final Matrix ma2 = new Matrix(3, 3);
+        estimator.getAccelerationCrossCouplingErrors(ma2);
+        assertEquals(ma1, ma2);
+
+        assertEquals(0.0, estimator.getAccelerationSx(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationSy(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationSz(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationMxy(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationMxz(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationMyx(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationMyz(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationMzx(), 0.0);
+        assertEquals(0.0, estimator.getAccelerationMzy(), 0.0);
+
+        final Matrix bg1 = estimator.getAngularSpeedBias();
+        assertEquals(new Matrix(3, 1), bg1);
+        final Matrix bg2 = new Matrix(3, 1);
+        estimator.getAngularSpeedBias(bg2);
+        assertEquals(bg1, bg2);
+
+        final double[] bg3 = estimator.getAngularSpeedBiasArray();
+        assertArrayEquals(new double[3], bg3, 0.0);
+        final double[] bg4 = new double[3];
+        estimator.getAngularSpeedBiasArray(bg4);
+        assertArrayEquals(bg3, bg4, 0.0);
+
+        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
+        assertEquals(0.0, triad3.getValueX(), 0.0);
+        assertEquals(0.0, triad3.getValueY(), 0.0);
+        assertEquals(0.0, triad3.getValueZ(), 0.0);
+        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, triad3.getUnit());
+        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
+        estimator.getAngularSpeedBiasAsTriad(triad4);
+        assertEquals(triad3, triad4);
+
+        assertEquals(0.0, estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedBiasZ(), 0.0);
+
+        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
+        assertEquals(0.0, bgx1.getValue().doubleValue(), 0.0);
+        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgx1.getUnit());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
+        assertEquals(bgx1, bgx2);
+
+        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
+        assertEquals(0.0, bgy1.getValue().doubleValue(), 0.0);
+        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgy1.getUnit());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
+        assertEquals(bgy1, bgy2);
+
+        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
+        assertEquals(0.0, bgz1.getValue().doubleValue(), 0.0);
+        assertEquals(AngularSpeedUnit.RADIANS_PER_SECOND, bgz1.getUnit());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
+        assertEquals(bgz1, bgz2);
+
+        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
+        assertEquals(new Matrix(3, 3), mg1);
+        final Matrix mg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedCrossCouplingErrors(mg2);
+        assertEquals(mg1, mg2);
+
+        assertEquals(0.0, estimator.getAngularSpeedSx(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedSy(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedSz(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedMxy(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedMxz(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedMyx(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedMyz(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedMzx(), 0.0);
+        assertEquals(0.0, estimator.getAngularSpeedMzy(), 0.0);
+
+        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
+        assertEquals(new Matrix(3, 3), gg1);
+        final Matrix gg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedGDependantCrossBias(gg2);
+        assertEquals(gg1, gg2);
+
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
+
+        final Time t1 = estimator.getTimeIntervalAsTime();
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, t1.getUnit());
+
+        final Time t2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getTimeIntervalAsTime(t2);
+        assertEquals(t1, t2);
+
+        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
+
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
+        final ECEFPosition ecefPosition2 = new ECEFPosition();
+        estimator.getEcefPosition(ecefPosition2);
+        assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
+
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
+        final ECEFFrame ecefFrame2 = new ECEFFrame();
+        estimator.getEcefFrame(ecefFrame2);
+        assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
+
+        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
+        final NEDFrame nedFrame2 = new NEDFrame();
+        estimator.getNedFrame(nedFrame2);
+        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
+
+        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
+        final NEDPosition nedPosition2 = new NEDPosition();
+        estimator.getNedPosition(nedPosition2);
+        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
+        assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
+        estimator.getEcefC(ecefC2);
+        assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
+
+        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        estimator.getNedC(nedC2);
+        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
+
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getElapsedTime(elapsedTime2);
+        assertEquals(elapsedTime1, elapsedTime2);
+        assertTrue(estimator.isFixKinematicsEnabled());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
+        final Time driftPeriod1 = estimator.getDriftPeriod();
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
+                driftPeriod1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
+        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getDriftPeriod(driftPeriod2);
+        assertEquals(driftPeriod1, driftPeriod2);
+        assertFalse(estimator.isRunning());
+        assertTrue(estimator.isReady());
+
+        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
+        assertEquals(positionNoiseStd1, positionNoiseStd2);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
+        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
+        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
+        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
+        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
+        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
+        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
+        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
+        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
+        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
+        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
+        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
+        assertEquals(velocityUncertainty1, velocityUncertainty2);
+        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
+        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
+        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
+        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
+        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
+
+        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
+        assertEquals(new BodyKinematics(), kinematics1);
+        final BodyKinematics kinematics2 = new BodyKinematics();
+        estimator.getFixedKinematics(kinematics2);
+        assertEquals(kinematics1, kinematics2);
+    }
+
+    @Test
+    public void testConstructor23() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
+        final NEDPosition nedPosition = createPosition();
+        final CoordinateTransformation nedC = createOrientation();
+        final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -7525,8 +6518,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, baTriad, ma, bgTriad, mg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -7538,7 +6530,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -7549,31 +6541,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -7610,7 +6596,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -7621,31 +6607,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -7680,12 +6660,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -7697,14 +6675,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                10.0 * LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), 10.0 * LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, 10.0 * LARGE_ABSOLUTE_ERROR));
 
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
         final ECEFFrame ecefFrame2 = new ECEFFrame();
         estimator.getEcefFrame(ecefFrame2);
         assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
@@ -7719,14 +6695,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -7740,11 +6715,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -7761,16 +6735,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -7812,58 +6784,30 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, wrong, bgTriad, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, ma, bgTriad, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, wrong, bgTriad,
+                mg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad,
+                wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1)));
     }
 
     @Test
-    public void testConstructor24() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor24() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -7875,8 +6819,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, baTriad, ma, bgTriad, mg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad, mg,
+                this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -7888,7 +6832,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -7899,31 +6843,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -7960,7 +6898,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -7971,31 +6909,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -8030,12 +6962,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -8052,8 +6982,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, VERY_LARGE_ABSOLUTE_ERROR));
 
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                VERY_LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), VERY_LARGE_ABSOLUTE_ERROR));
         final ECEFFrame ecefFrame2 = new ECEFFrame();
         estimator.getEcefFrame(ecefFrame2);
         assertTrue(ecefFrame1.equals(ecefFrame2, VERY_LARGE_ABSOLUTE_ERROR));
@@ -8068,14 +6997,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, VERY_LARGE_ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), VERY_LARGE_ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, VERY_LARGE_ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), VERY_LARGE_ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, VERY_LARGE_ABSOLUTE_ERROR));
 
@@ -8089,11 +7017,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -8110,16 +7037,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -8161,58 +7086,30 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, wrong, bgTriad,
+                mg, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad,
+                wrong, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(3, 1), this));
     }
 
     @Test
-    public void testConstructor25() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor25() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -8225,8 +7122,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, baTriad, ma, bgTriad, mg, gg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -8238,7 +7134,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -8249,31 +7145,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -8310,7 +7200,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -8321,31 +7211,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -8380,12 +7264,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -8397,14 +7279,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
 
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
         final ECEFFrame ecefFrame2 = new ECEFFrame();
         estimator.getEcefFrame(ecefFrame2);
         assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
@@ -8419,14 +7299,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -8440,11 +7319,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -8461,16 +7339,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -8512,72 +7388,36 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, wrong, bgTriad,
+                mg, gg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad,
+                wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(3, 1)));
     }
 
     @Test
-    public void testConstructor26() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor26() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
             final NEDPosition nedPosition = createPosition();
             final CoordinateTransformation nedC = createOrientation();
             final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
             final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
             final Matrix ba = generateBa();
@@ -8590,8 +7430,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             final Matrix mg = generateMg();
             final Matrix gg = generateGg();
 
-            RandomWalkEstimator estimator = new RandomWalkEstimator(
-                    ecefPosition, nedC, baTriad, ma, bgTriad, mg, gg, this);
+            final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad, mg,
+                    gg, this);
 
             // check default values
             assertSame(this, estimator.getListener());
@@ -8614,31 +7454,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getAccelerationBiasAsTriad(triad2);
             assertEquals(triad1, triad2);
 
-            assertEquals(baTriad.getValueX(),
-                    estimator.getAccelerationBiasX(), 0.0);
-            assertEquals(baTriad.getValueY(),
-                    estimator.getAccelerationBiasY(), 0.0);
-            assertEquals(baTriad.getValueZ(),
-                    estimator.getAccelerationBiasZ(), 0.0);
+            assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+            assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+            assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
             final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-            assertEquals(baTriad.getMeasurementX(), bax1);
-            final Acceleration bax2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertEquals(bax1, baTriad.getMeasurementX());
+            final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             estimator.getAccelerationBiasXAsAcceleration(bax2);
             assertEquals(bax1, bax2);
 
             final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-            assertEquals(baTriad.getMeasurementY(), bay1);
-            final Acceleration bay2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertEquals(bay1, baTriad.getMeasurementY());
+            final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             estimator.getAccelerationBiasYAsAcceleration(bay2);
             assertEquals(bay1, bay2);
 
             final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-            assertEquals(baTriad.getMeasurementZ(), baz1);
-            final Acceleration baz2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertEquals(baz1, baTriad.getMeasurementZ());
+            final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             estimator.getAccelerationBiasZAsAcceleration(baz2);
             assertEquals(baz1, baz2);
 
@@ -8675,7 +7509,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             assertEquals(bg1, bg2);
 
             final double[] bg3 = estimator.getAngularSpeedBiasArray();
-            assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+            assertArrayEquals(bg3, bg.getBuffer(), 0.0);
             final double[] bg4 = new double[3];
             estimator.getAngularSpeedBiasArray(bg4);
             assertArrayEquals(bg3, bg4, 0.0);
@@ -8686,31 +7520,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getAngularSpeedBiasAsTriad(triad4);
             assertEquals(triad3, triad4);
 
-            assertEquals(bgTriad.getValueX(),
-                    estimator.getAngularSpeedBiasX(), 0.0);
-            assertEquals(bgTriad.getValueY(),
-                    estimator.getAngularSpeedBiasY(), 0.0);
-            assertEquals(bgTriad.getValueZ(),
-                    estimator.getAngularSpeedBiasZ(), 0.0);
+            assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+            assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+            assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
             final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-            assertEquals(bgTriad.getMeasurementX(), bgx1);
-            final AngularSpeed bgx2 = new AngularSpeed(
-                    1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+            assertEquals(bgx1, bgTriad.getMeasurementX());
+            final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
             estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
             assertEquals(bgx1, bgx2);
 
             final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-            assertEquals(bgTriad.getMeasurementY(), bgy1);
-            final AngularSpeed bgy2 = new AngularSpeed(
-                    1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+            assertEquals(bgy1, bgTriad.getMeasurementY());
+            final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
             estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
             assertEquals(bgy1, bgy2);
 
             final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-            assertEquals(bgTriad.getMeasurementZ(), bgz1);
-            final AngularSpeed bgz2 = new AngularSpeed(
-                    1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+            assertEquals(bgz1, bgTriad.getMeasurementZ());
+            final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
             estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
             assertEquals(bgz1, bgz2);
 
@@ -8745,12 +7573,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getAngularSpeedGDependantCrossBias(gg2);
             assertEquals(gg1, gg2);
 
-            assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                    estimator.getTimeInterval(), 0.0);
+            assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
             final Time t1 = estimator.getTimeIntervalAsTime();
-            assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                    t1.getValue().doubleValue(), 0.0);
+            assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
             assertEquals(TimeUnit.SECOND, t1.getUnit());
 
             final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -8762,18 +7588,15 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
             final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-            if (!ecefPosition1.equals(estimator.getEcefPosition(),
-                    LARGE_ABSOLUTE_ERROR)) {
+            if (!ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR)) {
                 continue;
             }
-            assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                    LARGE_ABSOLUTE_ERROR));
+            assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
             final ECEFPosition ecefPosition2 = new ECEFPosition();
             estimator.getEcefPosition(ecefPosition2);
             assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
 
-            assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                    LARGE_ABSOLUTE_ERROR));
+            assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
             final ECEFFrame ecefFrame2 = new ECEFFrame();
             estimator.getEcefFrame(ecefFrame2);
             assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
@@ -8788,14 +7611,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getNedPosition(nedPosition2);
             assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
             assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-            final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                    FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+            final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                    FrameType.BODY_FRAME);
             estimator.getEcefC(ecefC2);
             assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
             assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-            final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                    FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+            final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                    FrameType.BODY_FRAME);
             estimator.getNedC(nedC2);
             assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -8809,8 +7632,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getElapsedTime(elapsedTime2);
             assertEquals(elapsedTime1, elapsedTime2);
             assertTrue(estimator.isFixKinematicsEnabled());
-            assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                    estimator.getDriftPeriodSamples());
+            assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
             assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                             * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
                     estimator.getDriftPeriodSeconds(), 0.0);
@@ -8830,16 +7652,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
             assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
             assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-            assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                    0.0);
+            assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
             final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
             assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
             assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
             final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
             estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
             assertEquals(positionNoiseStd1, positionNoiseStd2);
-            assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                    0.0);
+            assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
             final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
             assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
             assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -8881,60 +7701,26 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             assertEquals(kinematics1, kinematics2);
 
             // Force AlgebraException
-            estimator = null;
             final Matrix wrong = Matrix.identity(3, 3);
             wrong.multiplyByScalar(-1.0);
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                        baTriad, wrong, bgTriad, mg, gg, this);
-                fail("AlgebraException expected but not thrown");
-            } catch (final AlgebraException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                        baTriad, ma, bgTriad, wrong, gg, this);
-                fail("AlgebraException expected but not thrown");
-            } catch (final AlgebraException ignore) {
-            }
+            assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                    baTriad, wrong, bgTriad, mg, gg, this));
+            assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                    baTriad, ma, bgTriad, wrong, gg, this));
 
             // Force IllegalArgumentException
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                        new Matrix(1, 3), bgTriad, mg, gg, this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                        new Matrix(3, 1), bgTriad, mg, gg, this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                        ma, bgTriad, new Matrix(1, 3), gg, this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                        ma, bgTriad, new Matrix(3, 1), gg, this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                        ma, bgTriad, mg, new Matrix(1, 3), this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                        ma, bgTriad, mg, new Matrix(3, 1), this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            assertNull(estimator);
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    new Matrix(1, 3), bgTriad, mg, gg, this));
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    new Matrix(3, 1), bgTriad, mg, gg, this));
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    ma, bgTriad, new Matrix(1, 3), gg, this));
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    ma, bgTriad, new Matrix(3, 1), gg, this));
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    ma, bgTriad, mg, new Matrix(1, 3), this));
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    ma, bgTriad, mg, new Matrix(3, 1), this));
 
             numValid++;
             break;
@@ -8944,13 +7730,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testConstructor27() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor27() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -8962,8 +7746,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, ba, ma, bg, mg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -8975,7 +7758,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -8986,31 +7769,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -9047,7 +7824,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -9058,31 +7835,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -9117,12 +7888,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -9134,14 +7903,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
 
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
         final ECEFFrame ecefFrame2 = new ECEFFrame();
         estimator.getEcefFrame(ecefFrame2);
         assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
@@ -9156,14 +7923,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -9177,11 +7943,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -9198,16 +7963,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -9249,82 +8012,36 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, wrong, bg, mg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, ma, bg, wrong);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, wrong, bg, mg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, wrong));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, new Matrix(1, 1), mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, new Matrix(3, 3), mg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, bg, new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, bg, new Matrix(3, 1)));
     }
 
     @Test
-    public void testConstructor28() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor28() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -9336,8 +8053,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, ba, ma, bg, mg, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -9349,7 +8065,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -9360,31 +8076,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -9421,7 +8131,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -9432,31 +8142,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -9491,12 +8195,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -9508,14 +8210,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
 
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
         final ECEFFrame ecefFrame2 = new ECEFFrame();
         estimator.getEcefFrame(ecefFrame2);
         assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
@@ -9530,14 +8230,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -9551,11 +8250,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -9572,16 +8270,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -9623,82 +8319,38 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, wrong, bg, mg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, ma, bg, wrong, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, wrong, bg, mg,
+                this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, wrong,
+                this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), this));
     }
 
     @Test
-    public void testConstructor29() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor29() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -9711,8 +8363,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, ba, ma, bg, mg, gg);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg, gg);
 
         // check default values
         assertNull(estimator.getListener());
@@ -9724,7 +8375,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -9735,31 +8386,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -9796,7 +8441,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -9807,31 +8452,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -9866,12 +8505,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -9883,14 +8520,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
 
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
         final ECEFFrame ecefFrame2 = new ECEFFrame();
         estimator.getEcefFrame(ecefFrame2);
         assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
@@ -9905,14 +8540,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -9926,11 +8560,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
                         * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
@@ -9947,16 +8580,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -9998,84 +8629,33 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, wrong, bg, mg, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, ma, bg, wrong, gg);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, wrong, bg, mg, gg));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                ba, ma, bg, wrong, gg));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), gg);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), gg));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg,
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg,
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -10084,8 +8664,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -10098,734 +8677,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final Matrix mg = generateMg();
         final Matrix gg = generateGg();
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, ba, ma, bg, mg, gg, this);
-
-        // check default values
-        assertSame(this, estimator.getListener());
-
-        final Matrix ba1 = estimator.getAccelerationBias();
-        assertEquals(ba, ba1);
-        final Matrix ba2 = new Matrix(3, 1);
-        estimator.getAccelerationBias(ba2);
-        assertEquals(ba1, ba2);
-
-        final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
-        final double[] ba4 = new double[3];
-        estimator.getAccelerationBiasArray(ba4);
-        assertArrayEquals(ba3, ba4, 0.0);
-
-        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
-        assertEquals(baTriad, triad1);
-        final AccelerationTriad triad2 = new AccelerationTriad();
-        estimator.getAccelerationBiasAsTriad(triad2);
-        assertEquals(triad1, triad2);
-
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
-
-        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasXAsAcceleration(bax2);
-        assertEquals(bax1, bax2);
-
-        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasYAsAcceleration(bay2);
-        assertEquals(bay1, bay2);
-
-        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasZAsAcceleration(baz2);
-        assertEquals(baz1, baz2);
-
-        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
-        assertEquals(ma, ma1);
-
-        final Matrix ma2 = new Matrix(3, 3);
-        estimator.getAccelerationCrossCouplingErrors(ma2);
-        assertEquals(ma1, ma2);
-
-        double sx = ma.getElementAt(0, 0);
-        double sy = ma.getElementAt(1, 1);
-        double sz = ma.getElementAt(2, 2);
-        double mxy = ma.getElementAt(0, 1);
-        double mxz = ma.getElementAt(0, 2);
-        double myx = ma.getElementAt(1, 0);
-        double myz = ma.getElementAt(1, 2);
-        double mzx = ma.getElementAt(2, 0);
-        double mzy = ma.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
-        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
-        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
-        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
-        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
-        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
-        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
-        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
-        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
-
-        final Matrix bg1 = estimator.getAngularSpeedBias();
-        assertEquals(bg, bg1);
-        final Matrix bg2 = new Matrix(3, 1);
-        estimator.getAngularSpeedBias(bg2);
-        assertEquals(bg1, bg2);
-
-        final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
-        final double[] bg4 = new double[3];
-        estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg3, bg4, 0.0);
-
-        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
-        assertEquals(bgTriad, triad3);
-        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
-        estimator.getAngularSpeedBiasAsTriad(triad4);
-        assertEquals(triad3, triad4);
-
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
-
-        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
-        assertEquals(bgx1, bgx2);
-
-        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
-        assertEquals(bgy1, bgy2);
-
-        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
-        assertEquals(bgz1, bgz2);
-
-        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
-        assertEquals(mg, mg1);
-        final Matrix mg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedCrossCouplingErrors(mg2);
-        assertEquals(mg1, mg2);
-
-        sx = mg.getElementAt(0, 0);
-        sy = mg.getElementAt(1, 1);
-        sz = mg.getElementAt(2, 2);
-        mxy = mg.getElementAt(0, 1);
-        mxz = mg.getElementAt(0, 2);
-        myx = mg.getElementAt(1, 0);
-        myz = mg.getElementAt(1, 2);
-        mzx = mg.getElementAt(2, 0);
-        mzy = mg.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
-        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
-        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
-        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
-        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
-        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
-        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
-        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
-        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
-
-        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(gg, gg1);
-        final Matrix gg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedGDependantCrossBias(gg2);
-        assertEquals(gg1, gg2);
-
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getTimeInterval(), 0.0);
-
-        final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                t1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, t1.getUnit());
-
-        final Time t2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getTimeIntervalAsTime(t2);
-        assertEquals(t1, t2);
-
-        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
-        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
-
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
-        final ECEFPosition ecefPosition2 = new ECEFPosition();
-        estimator.getEcefPosition(ecefPosition2);
-        assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
-
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
-        final ECEFFrame ecefFrame2 = new ECEFFrame();
-        estimator.getEcefFrame(ecefFrame2);
-        assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
-
-        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
-        final NEDFrame nedFrame2 = new NEDFrame();
-        estimator.getNedFrame(nedFrame2);
-        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
-
-        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
-        final NEDPosition nedPosition2 = new NEDPosition();
-        estimator.getNedPosition(nedPosition2);
-        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
-        assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getEcefC(ecefC2);
-        assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
-
-        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getNedC(nedC2);
-        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
-
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        final Time elapsedTime1 = estimator.getElapsedTime();
-        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
-        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getElapsedTime(elapsedTime2);
-        assertEquals(elapsedTime1, elapsedTime2);
-        assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                estimator.getDriftPeriodSeconds(), 0.0);
-        final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                driftPeriod1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
-        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getDriftPeriod(driftPeriod2);
-        assertEquals(driftPeriod1, driftPeriod2);
-        assertFalse(estimator.isRunning());
-        assertTrue(estimator.isReady());
-
-        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
-        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
-        assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
-        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
-        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
-        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
-        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
-        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
-        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
-        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
-        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
-        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
-        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
-        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
-        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
-        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
-        assertEquals(velocityUncertainty1, velocityUncertainty2);
-        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
-        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
-        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
-        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
-        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
-
-        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
-        assertEquals(new BodyKinematics(), kinematics1);
-        final BodyKinematics kinematics2 = new BodyKinematics();
-        estimator.getFixedKinematics(kinematics2);
-        assertEquals(kinematics1, kinematics2);
-
-        // Force AlgebraException
-        estimator = null;
-        final Matrix wrong = Matrix.identity(3, 3);
-        wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, wrong, bg, mg, gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, ma, bg, wrong, gg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-
-        // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), gg, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(1, 3), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(3, 1), this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
-    }
-
-    @Test
-    public void testConstructor31() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
-        final NEDPosition nedPosition = createPosition();
-        final CoordinateTransformation nedC = createOrientation();
-        final Matrix ba = generateBa();
-        final AccelerationTriad baTriad = new AccelerationTriad();
-        baTriad.setValueCoordinates(ba);
-        final Matrix ma = generateMaGeneral();
-        final Matrix bg = generateBg();
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
-        bgTriad.setValueCoordinates(bg);
-        final Matrix mg = generateMg();
-
-        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
-
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, baTriad, ma, bgTriad, mg, timeInterval);
-
-        // check default values
-        assertNull(estimator.getListener());
-
-        final Matrix ba1 = estimator.getAccelerationBias();
-        assertEquals(ba, ba1);
-        final Matrix ba2 = new Matrix(3, 1);
-        estimator.getAccelerationBias(ba2);
-        assertEquals(ba1, ba2);
-
-        final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
-        final double[] ba4 = new double[3];
-        estimator.getAccelerationBiasArray(ba4);
-        assertArrayEquals(ba3, ba4, 0.0);
-
-        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
-        assertEquals(baTriad, triad1);
-        final AccelerationTriad triad2 = new AccelerationTriad();
-        estimator.getAccelerationBiasAsTriad(triad2);
-        assertEquals(triad1, triad2);
-
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
-
-        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasXAsAcceleration(bax2);
-        assertEquals(bax1, bax2);
-
-        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasYAsAcceleration(bay2);
-        assertEquals(bay1, bay2);
-
-        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasZAsAcceleration(baz2);
-        assertEquals(baz1, baz2);
-
-        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
-        assertEquals(ma, ma1);
-
-        final Matrix ma2 = new Matrix(3, 3);
-        estimator.getAccelerationCrossCouplingErrors(ma2);
-        assertEquals(ma1, ma2);
-
-        double sx = ma.getElementAt(0, 0);
-        double sy = ma.getElementAt(1, 1);
-        double sz = ma.getElementAt(2, 2);
-        double mxy = ma.getElementAt(0, 1);
-        double mxz = ma.getElementAt(0, 2);
-        double myx = ma.getElementAt(1, 0);
-        double myz = ma.getElementAt(1, 2);
-        double mzx = ma.getElementAt(2, 0);
-        double mzy = ma.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
-        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
-        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
-        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
-        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
-        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
-        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
-        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
-        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
-
-        final Matrix bg1 = estimator.getAngularSpeedBias();
-        assertEquals(bg, bg1);
-        final Matrix bg2 = new Matrix(3, 1);
-        estimator.getAngularSpeedBias(bg2);
-        assertEquals(bg1, bg2);
-
-        final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
-        final double[] bg4 = new double[3];
-        estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg3, bg4, 0.0);
-
-        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
-        assertEquals(bgTriad, triad3);
-        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
-        estimator.getAngularSpeedBiasAsTriad(triad4);
-        assertEquals(triad3, triad4);
-
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
-
-        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
-        assertEquals(bgx1, bgx2);
-
-        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
-        assertEquals(bgy1, bgy2);
-
-        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
-        assertEquals(bgz1, bgz2);
-
-        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
-        assertEquals(mg, mg1);
-        final Matrix mg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedCrossCouplingErrors(mg2);
-        assertEquals(mg1, mg2);
-
-        sx = mg.getElementAt(0, 0);
-        sy = mg.getElementAt(1, 1);
-        sz = mg.getElementAt(2, 2);
-        mxy = mg.getElementAt(0, 1);
-        mxz = mg.getElementAt(0, 2);
-        myx = mg.getElementAt(1, 0);
-        myz = mg.getElementAt(1, 2);
-        mzx = mg.getElementAt(2, 0);
-        mzy = mg.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
-        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
-        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
-        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
-        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
-        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
-        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
-        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
-        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
-
-        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(new Matrix(3, 3), gg1);
-        final Matrix gg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedGDependantCrossBias(gg2);
-        assertEquals(gg1, gg2);
-
-        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
-
-        final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, t1.getUnit());
-
-        final Time t2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getTimeIntervalAsTime(t2);
-        assertEquals(t1, t2);
-
-        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
-        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
-
-        assertEquals(ecefPosition1, estimator.getEcefPosition());
-        final ECEFPosition ecefPosition2 = new ECEFPosition();
-        estimator.getEcefPosition(ecefPosition2);
-        assertEquals(ecefPosition1, ecefPosition2);
-
-        assertEquals(ecefFrame1, estimator.getEcefFrame());
-        final ECEFFrame ecefFrame2 = new ECEFFrame();
-        estimator.getEcefFrame(ecefFrame2);
-        assertEquals(ecefFrame1, ecefFrame2);
-
-        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
-        final NEDFrame nedFrame2 = new NEDFrame();
-        estimator.getNedFrame(nedFrame2);
-        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
-
-        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
-        final NEDPosition nedPosition2 = new NEDPosition();
-        estimator.getNedPosition(nedPosition2);
-        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
-        assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getEcefC(ecefC2);
-        assertEquals(ecefC1, ecefC2);
-
-        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getNedC(nedC2);
-        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
-
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        final Time elapsedTime1 = estimator.getElapsedTime();
-        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
-        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getElapsedTime(elapsedTime2);
-        assertEquals(elapsedTime1, elapsedTime2);
-        assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
-        final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                driftPeriod1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
-        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getDriftPeriod(driftPeriod2);
-        assertEquals(driftPeriod1, driftPeriod2);
-        assertFalse(estimator.isRunning());
-        assertTrue(estimator.isReady());
-
-        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
-        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
-        assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
-        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
-        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
-        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
-        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
-        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
-        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
-        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
-        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
-        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
-        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
-        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
-        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
-        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
-        assertEquals(velocityUncertainty1, velocityUncertainty2);
-        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
-        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
-        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
-        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
-        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
-
-        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
-        assertEquals(new BodyKinematics(), kinematics1);
-        final BodyKinematics kinematics2 = new BodyKinematics();
-        estimator.getFixedKinematics(kinematics2);
-        assertEquals(kinematics1, kinematics2);
-
-        // Force AlgebraException
-        estimator = null;
-        final Matrix wrong = Matrix.identity(3, 3);
-        wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-
-        // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
-    }
-
-    @Test
-    public void testConstructor32() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
-        final NEDPosition nedPosition = createPosition();
-        final CoordinateTransformation nedC = createOrientation();
-        final Matrix ba = generateBa();
-        final AccelerationTriad baTriad = new AccelerationTriad();
-        baTriad.setValueCoordinates(ba);
-        final Matrix ma = generateMaGeneral();
-        final Matrix bg = generateBg();
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
-        bgTriad.setValueCoordinates(bg);
-        final Matrix mg = generateMg();
-
-        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
-
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, baTriad, ma, bgTriad, mg, timeInterval,
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg, gg,
                 this);
 
         // check default values
@@ -10838,7 +8690,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -10849,31 +8701,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -10910,7 +8756,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -10921,31 +8767,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -10975,15 +8815,15 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
 
         final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(new Matrix(3, 3), gg1);
+        assertEquals(gg, gg1);
         final Matrix gg2 = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
 
-        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
+        assertEquals(BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, t1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         final Time t2 = new Time(1.0, TimeUnit.DAY);
@@ -10995,15 +8835,15 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
-        assertEquals(ecefPosition1, ecefPosition2);
+        assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
 
-        assertEquals(ecefFrame1, estimator.getEcefFrame());
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
         final ECEFFrame ecefFrame2 = new ECEFFrame();
         estimator.getEcefFrame(ecefFrame2);
-        assertEquals(ecefFrame1, ecefFrame2);
+        assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
 
         assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
         final NEDFrame nedFrame2 = new NEDFrame();
@@ -11014,15 +8854,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final NEDPosition nedPosition2 = new NEDPosition();
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
-        assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
-        assertEquals(ecefC1, ecefC2);
+        assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -11036,14 +8875,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+                        * BodyKinematicsBiasEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -11057,16 +8895,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -11108,57 +8944,38 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, wrong, bg, mg, gg,
+                this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, wrong, gg,
+                this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), gg, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg,
+                new Matrix(1, 3), this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, bg, mg, new Matrix(3, 1), this));
     }
 
     @Test
-    public void testConstructor33() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor31() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -11169,12 +8986,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, baTriad, ma, bgTriad, mg, gg,
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad, mg,
                 timeInterval);
 
         // check default values
@@ -11198,31 +9013,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -11259,7 +9068,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -11270,31 +9079,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -11324,7 +9127,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
 
         final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(gg, gg1);
+        assertEquals(new Matrix(3, 3), gg1);
         final Matrix gg2 = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
@@ -11364,14 +9167,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -11385,15 +9187,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+                        * timeInterval, estimator.getDriftPeriodSeconds(), 0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
         assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                driftPeriod1.getValue().doubleValue(), 0.0);
+                        * timeInterval, driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
         estimator.getDriftPeriod(driftPeriod2);
@@ -11406,16 +9205,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -11457,71 +9254,26 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, gg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, gg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, wrong, bgTriad,
+                mg, timeInterval));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad,
+                wrong, timeInterval));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(1, 3),
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(3, 1),
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(1, 3), timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(3, 1), timeInterval));
     }
 
     @Test
-    public void testConstructor34() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor32() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -11532,12 +9284,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, baTriad, ma, bgTriad, mg, gg,
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad, mg,
                 timeInterval, this);
 
         // check default values
@@ -11561,31 +9311,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -11622,7 +9366,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -11633,31 +9377,324 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
+        assertEquals(bgz1, bgz2);
+
+        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
+        assertEquals(mg, mg1);
+        final Matrix mg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedCrossCouplingErrors(mg2);
+        assertEquals(mg1, mg2);
+
+        sx = mg.getElementAt(0, 0);
+        sy = mg.getElementAt(1, 1);
+        sz = mg.getElementAt(2, 2);
+        mxy = mg.getElementAt(0, 1);
+        mxz = mg.getElementAt(0, 2);
+        myx = mg.getElementAt(1, 0);
+        myz = mg.getElementAt(1, 2);
+        mzx = mg.getElementAt(2, 0);
+        mzy = mg.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
+        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
+        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
+        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
+        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
+        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
+        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
+        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
+        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
+
+        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
+        assertEquals(gg1, new Matrix(3, 3));
+        final Matrix gg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedGDependantCrossBias(gg2);
+        assertEquals(gg1, gg2);
+
+        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
+
+        final Time t1 = estimator.getTimeIntervalAsTime();
+        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, t1.getUnit());
+
+        final Time t2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getTimeIntervalAsTime(t2);
+        assertEquals(t1, t2);
+
+        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
+
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        final ECEFPosition ecefPosition2 = new ECEFPosition();
+        estimator.getEcefPosition(ecefPosition2);
+        assertEquals(ecefPosition1, ecefPosition2);
+
+        assertEquals(ecefFrame1, estimator.getEcefFrame());
+        final ECEFFrame ecefFrame2 = new ECEFFrame();
+        estimator.getEcefFrame(ecefFrame2);
+        assertEquals(ecefFrame1, ecefFrame2);
+
+        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
+        final NEDFrame nedFrame2 = new NEDFrame();
+        estimator.getNedFrame(nedFrame2);
+        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
+
+        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
+        final NEDPosition nedPosition2 = new NEDPosition();
+        estimator.getNedPosition(nedPosition2);
+        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
+        assertEquals(ecefC1, estimator.getEcefC());
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
+        estimator.getEcefC(ecefC2);
+        assertEquals(ecefC1, ecefC2);
+
+        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        estimator.getNedC(nedC2);
+        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
+
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getElapsedTime(elapsedTime2);
+        assertEquals(elapsedTime1, elapsedTime2);
+        assertTrue(estimator.isFixKinematicsEnabled());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
+        final Time driftPeriod1 = estimator.getDriftPeriod();
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
+                driftPeriod1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
+        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getDriftPeriod(driftPeriod2);
+        assertEquals(driftPeriod1, driftPeriod2);
+        assertFalse(estimator.isRunning());
+        assertTrue(estimator.isReady());
+
+        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
+        assertEquals(positionNoiseStd1, positionNoiseStd2);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
+        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
+        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
+        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
+        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
+        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
+        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
+        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
+        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
+        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
+        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
+        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
+        assertEquals(velocityUncertainty1, velocityUncertainty2);
+        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
+        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
+        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
+        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
+        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
+
+        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
+        assertEquals(new BodyKinematics(), kinematics1);
+        final BodyKinematics kinematics2 = new BodyKinematics();
+        estimator.getFixedKinematics(kinematics2);
+        assertEquals(kinematics1, kinematics2);
+
+        // Force AlgebraException
+        final Matrix wrong = Matrix.identity(3, 3);
+        wrong.multiplyByScalar(-1.0);
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                baTriad, wrong, bgTriad, mg, timeInterval, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                baTriad, ma, bgTriad, wrong, timeInterval, this));
+
+        // Force IllegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3), timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1), timeInterval, this));
+    }
+
+    @Test
+    public void testConstructor33() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
+        final NEDPosition nedPosition = createPosition();
+        final CoordinateTransformation nedC = createOrientation();
+        final Matrix ba = generateBa();
+        final AccelerationTriad baTriad = new AccelerationTriad();
+        baTriad.setValueCoordinates(ba);
+        final Matrix ma = generateMaGeneral();
+        final Matrix bg = generateBg();
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
+        bgTriad.setValueCoordinates(bg);
+        final Matrix mg = generateMg();
+        final Matrix gg = generateGg();
+
+        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
+
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad, mg, gg,
+                timeInterval);
+
+        // check default values
+        assertNull(estimator.getListener());
+
+        final Matrix ba1 = estimator.getAccelerationBias();
+        assertEquals(ba, ba1);
+        final Matrix ba2 = new Matrix(3, 1);
+        estimator.getAccelerationBias(ba2);
+        assertEquals(ba1, ba2);
+
+        final double[] ba3 = estimator.getAccelerationBiasArray();
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
+        final double[] ba4 = new double[3];
+        estimator.getAccelerationBiasArray(ba4);
+        assertArrayEquals(ba3, ba4, 0.0);
+
+        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
+        assertEquals(baTriad, triad1);
+        final AccelerationTriad triad2 = new AccelerationTriad();
+        estimator.getAccelerationBiasAsTriad(triad2);
+        assertEquals(triad1, triad2);
+
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
+
+        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasXAsAcceleration(bax2);
+        assertEquals(bax1, bax2);
+
+        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasYAsAcceleration(bay2);
+        assertEquals(bay1, bay2);
+
+        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasZAsAcceleration(baz2);
+        assertEquals(baz1, baz2);
+
+        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
+        assertEquals(ma, ma1);
+
+        final Matrix ma2 = new Matrix(3, 3);
+        estimator.getAccelerationCrossCouplingErrors(ma2);
+        assertEquals(ma1, ma2);
+
+        double sx = ma.getElementAt(0, 0);
+        double sy = ma.getElementAt(1, 1);
+        double sz = ma.getElementAt(2, 2);
+        double mxy = ma.getElementAt(0, 1);
+        double mxz = ma.getElementAt(0, 2);
+        double myx = ma.getElementAt(1, 0);
+        double myz = ma.getElementAt(1, 2);
+        double mzx = ma.getElementAt(2, 0);
+        double mzy = ma.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
+        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
+        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
+        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
+        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
+        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
+        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
+        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
+        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
+
+        final Matrix bg1 = estimator.getAngularSpeedBias();
+        assertEquals(bg, bg1);
+        final Matrix bg2 = new Matrix(3, 1);
+        estimator.getAngularSpeedBias(bg2);
+        assertEquals(bg1, bg2);
+
+        final double[] bg3 = estimator.getAngularSpeedBiasArray();
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
+        final double[] bg4 = new double[3];
+        estimator.getAngularSpeedBiasArray(bg4);
+        assertArrayEquals(bg3, bg4, 0.0);
+
+        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
+        assertEquals(bgTriad, triad3);
+        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
+        estimator.getAngularSpeedBiasAsTriad(triad4);
+        assertEquals(triad3, triad4);
+
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
+
+        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
+        assertEquals(bgx1, bgx2);
+
+        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
+        assertEquals(bgy1, bgy2);
+
+        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -11727,14 +9764,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -11748,14 +9784,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -11769,16 +9802,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -11820,71 +9851,30 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, gg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, gg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, wrong, bgTriad,
+                mg, gg, timeInterval));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad,
+                wrong, gg, timeInterval));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(1, 3),
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(3, 1),
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3), gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1), gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(1, 3), timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(3, 1), timeInterval));
     }
 
     @Test
-    public void testConstructor35() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor34() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -11895,378 +9885,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
+        final Matrix gg = generateGg();
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, ba, ma, bg, mg, timeInterval);
-
-        // check default values
-        assertNull(estimator.getListener());
-
-        final Matrix ba1 = estimator.getAccelerationBias();
-        assertEquals(ba, ba1);
-        final Matrix ba2 = new Matrix(3, 1);
-        estimator.getAccelerationBias(ba2);
-        assertEquals(ba1, ba2);
-
-        final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
-        final double[] ba4 = new double[3];
-        estimator.getAccelerationBiasArray(ba4);
-        assertArrayEquals(ba3, ba4, 0.0);
-
-        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
-        assertEquals(baTriad, triad1);
-        final AccelerationTriad triad2 = new AccelerationTriad();
-        estimator.getAccelerationBiasAsTriad(triad2);
-        assertEquals(triad1, triad2);
-
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
-
-        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasXAsAcceleration(bax2);
-        assertEquals(bax1, bax2);
-
-        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasYAsAcceleration(bay2);
-        assertEquals(bay1, bay2);
-
-        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasZAsAcceleration(baz2);
-        assertEquals(baz1, baz2);
-
-        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
-        assertEquals(ma, ma1);
-
-        final Matrix ma2 = new Matrix(3, 3);
-        estimator.getAccelerationCrossCouplingErrors(ma2);
-        assertEquals(ma1, ma2);
-
-        double sx = ma.getElementAt(0, 0);
-        double sy = ma.getElementAt(1, 1);
-        double sz = ma.getElementAt(2, 2);
-        double mxy = ma.getElementAt(0, 1);
-        double mxz = ma.getElementAt(0, 2);
-        double myx = ma.getElementAt(1, 0);
-        double myz = ma.getElementAt(1, 2);
-        double mzx = ma.getElementAt(2, 0);
-        double mzy = ma.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
-        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
-        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
-        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
-        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
-        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
-        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
-        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
-        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
-
-        final Matrix bg1 = estimator.getAngularSpeedBias();
-        assertEquals(bg, bg1);
-        final Matrix bg2 = new Matrix(3, 1);
-        estimator.getAngularSpeedBias(bg2);
-        assertEquals(bg1, bg2);
-
-        final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
-        final double[] bg4 = new double[3];
-        estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg3, bg4, 0.0);
-
-        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
-        assertEquals(bgTriad, triad3);
-        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
-        estimator.getAngularSpeedBiasAsTriad(triad4);
-        assertEquals(triad3, triad4);
-
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
-
-        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
-        assertEquals(bgx1, bgx2);
-
-        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
-        assertEquals(bgy1, bgy2);
-
-        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
-        assertEquals(bgz1, bgz2);
-
-        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
-        assertEquals(mg, mg1);
-        final Matrix mg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedCrossCouplingErrors(mg2);
-        assertEquals(mg1, mg2);
-
-        sx = mg.getElementAt(0, 0);
-        sy = mg.getElementAt(1, 1);
-        sz = mg.getElementAt(2, 2);
-        mxy = mg.getElementAt(0, 1);
-        mxz = mg.getElementAt(0, 2);
-        myx = mg.getElementAt(1, 0);
-        myz = mg.getElementAt(1, 2);
-        mzx = mg.getElementAt(2, 0);
-        mzy = mg.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
-        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
-        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
-        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
-        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
-        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
-        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
-        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
-        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
-
-        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(new Matrix(3, 3), gg1);
-        final Matrix gg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedGDependantCrossBias(gg2);
-        assertEquals(gg1, gg2);
-
-        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
-
-        final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, t1.getUnit());
-
-        final Time t2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getTimeIntervalAsTime(t2);
-        assertEquals(t1, t2);
-
-        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
-        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
-
-        assertEquals(ecefPosition1, estimator.getEcefPosition());
-        final ECEFPosition ecefPosition2 = new ECEFPosition();
-        estimator.getEcefPosition(ecefPosition2);
-        assertEquals(ecefPosition1, ecefPosition2);
-
-        assertEquals(ecefFrame1, estimator.getEcefFrame());
-        final ECEFFrame ecefFrame2 = new ECEFFrame();
-        estimator.getEcefFrame(ecefFrame2);
-        assertEquals(ecefFrame1, ecefFrame2);
-
-        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
-        final NEDFrame nedFrame2 = new NEDFrame();
-        estimator.getNedFrame(nedFrame2);
-        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
-
-        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
-        final NEDPosition nedPosition2 = new NEDPosition();
-        estimator.getNedPosition(nedPosition2);
-        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
-        assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getEcefC(ecefC2);
-        assertEquals(ecefC1, ecefC2);
-
-        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getNedC(nedC2);
-        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
-
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        final Time elapsedTime1 = estimator.getElapsedTime();
-        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
-        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getElapsedTime(elapsedTime2);
-        assertEquals(elapsedTime1, elapsedTime2);
-        assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
-        final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                driftPeriod1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
-        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getDriftPeriod(driftPeriod2);
-        assertEquals(driftPeriod1, driftPeriod2);
-        assertFalse(estimator.isRunning());
-        assertTrue(estimator.isReady());
-
-        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
-        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
-        assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
-        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
-        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
-        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
-        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
-        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
-        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
-        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
-        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
-        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
-        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
-        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
-        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
-        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
-        assertEquals(velocityUncertainty1, velocityUncertainty2);
-        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
-        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
-        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
-        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
-        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
-
-        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
-        assertEquals(new BodyKinematics(), kinematics1);
-        final BodyKinematics kinematics2 = new BodyKinematics();
-        estimator.getFixedKinematics(kinematics2);
-        assertEquals(kinematics1, kinematics2);
-
-        // Force AlgebraException
-        estimator = null;
-        final Matrix wrong = Matrix.identity(3, 3);
-        wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, wrong, bg, mg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, ma, bg, wrong, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-
-        // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
-    }
-
-    @Test
-    public void testConstructor36() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
-        final NEDPosition nedPosition = createPosition();
-        final CoordinateTransformation nedC = createOrientation();
-        final Matrix ba = generateBa();
-        final AccelerationTriad baTriad = new AccelerationTriad();
-        baTriad.setValueCoordinates(ba);
-        final Matrix ma = generateMaGeneral();
-        final Matrix bg = generateBg();
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
-        bgTriad.setValueCoordinates(bg);
-        final Matrix mg = generateMg();
-
-        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
-
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, ba, ma, bg, mg, timeInterval, this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad, mg, gg,
+                timeInterval, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -12289,31 +9913,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -12350,7 +9968,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -12361,407 +9979,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
-        assertEquals(bgz1, bgz2);
-
-        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
-        assertEquals(mg, mg1);
-        final Matrix mg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedCrossCouplingErrors(mg2);
-        assertEquals(mg1, mg2);
-
-        sx = mg.getElementAt(0, 0);
-        sy = mg.getElementAt(1, 1);
-        sz = mg.getElementAt(2, 2);
-        mxy = mg.getElementAt(0, 1);
-        mxz = mg.getElementAt(0, 2);
-        myx = mg.getElementAt(1, 0);
-        myz = mg.getElementAt(1, 2);
-        mzx = mg.getElementAt(2, 0);
-        mzy = mg.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
-        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
-        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
-        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
-        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
-        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
-        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
-        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
-        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
-
-        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(new Matrix(3, 3), gg1);
-        final Matrix gg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedGDependantCrossBias(gg2);
-        assertEquals(gg1, gg2);
-
-        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
-
-        final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, t1.getUnit());
-
-        final Time t2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getTimeIntervalAsTime(t2);
-        assertEquals(t1, t2);
-
-        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
-        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
-
-        assertEquals(ecefPosition1, estimator.getEcefPosition());
-        final ECEFPosition ecefPosition2 = new ECEFPosition();
-        estimator.getEcefPosition(ecefPosition2);
-        assertEquals(ecefPosition1, ecefPosition2);
-
-        assertEquals(ecefFrame1, estimator.getEcefFrame());
-        final ECEFFrame ecefFrame2 = new ECEFFrame();
-        estimator.getEcefFrame(ecefFrame2);
-        assertEquals(ecefFrame1, ecefFrame2);
-
-        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
-        final NEDFrame nedFrame2 = new NEDFrame();
-        estimator.getNedFrame(nedFrame2);
-        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
-
-        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
-        final NEDPosition nedPosition2 = new NEDPosition();
-        estimator.getNedPosition(nedPosition2);
-        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
-        assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getEcefC(ecefC2);
-        assertEquals(ecefC1, ecefC2);
-
-        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getNedC(nedC2);
-        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
-
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        final Time elapsedTime1 = estimator.getElapsedTime();
-        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
-        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getElapsedTime(elapsedTime2);
-        assertEquals(elapsedTime1, elapsedTime2);
-        assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
-        final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                driftPeriod1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
-        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getDriftPeriod(driftPeriod2);
-        assertEquals(driftPeriod1, driftPeriod2);
-        assertFalse(estimator.isRunning());
-        assertTrue(estimator.isReady());
-
-        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
-        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
-        assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
-        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
-        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
-        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
-        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
-        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
-        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
-        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
-        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
-        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
-        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
-        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
-        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
-        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
-        assertEquals(velocityUncertainty1, velocityUncertainty2);
-        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
-        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
-        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
-        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
-        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
-
-        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
-        assertEquals(new BodyKinematics(), kinematics1);
-        final BodyKinematics kinematics2 = new BodyKinematics();
-        estimator.getFixedKinematics(kinematics2);
-        assertEquals(kinematics1, kinematics2);
-
-        // Force AlgebraException
-        estimator = null;
-        final Matrix wrong = Matrix.identity(3, 3);
-        wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, wrong, bg, mg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, ma, bg, wrong, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-
-        // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
-    }
-
-    @Test
-    public void testConstructor37() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
-        final NEDPosition nedPosition = createPosition();
-        final CoordinateTransformation nedC = createOrientation();
-        final Matrix ba = generateBa();
-        final AccelerationTriad baTriad = new AccelerationTriad();
-        baTriad.setValueCoordinates(ba);
-        final Matrix ma = generateMaGeneral();
-        final Matrix bg = generateBg();
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
-        bgTriad.setValueCoordinates(bg);
-        final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
-
-        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
-
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, ba, ma, bg, mg, gg, timeInterval);
-
-        // check default values
-        assertNull(estimator.getListener());
-
-        final Matrix ba1 = estimator.getAccelerationBias();
-        assertEquals(ba, ba1);
-        final Matrix ba2 = new Matrix(3, 1);
-        estimator.getAccelerationBias(ba2);
-        assertEquals(ba1, ba2);
-
-        final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
-        final double[] ba4 = new double[3];
-        estimator.getAccelerationBiasArray(ba4);
-        assertArrayEquals(ba3, ba4, 0.0);
-
-        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
-        assertEquals(baTriad, triad1);
-        final AccelerationTriad triad2 = new AccelerationTriad();
-        estimator.getAccelerationBiasAsTriad(triad2);
-        assertEquals(triad1, triad2);
-
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
-
-        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasXAsAcceleration(bax2);
-        assertEquals(bax1, bax2);
-
-        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasYAsAcceleration(bay2);
-        assertEquals(bay1, bay2);
-
-        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasZAsAcceleration(baz2);
-        assertEquals(baz1, baz2);
-
-        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
-        assertEquals(ma, ma1);
-
-        final Matrix ma2 = new Matrix(3, 3);
-        estimator.getAccelerationCrossCouplingErrors(ma2);
-        assertEquals(ma1, ma2);
-
-        double sx = ma.getElementAt(0, 0);
-        double sy = ma.getElementAt(1, 1);
-        double sz = ma.getElementAt(2, 2);
-        double mxy = ma.getElementAt(0, 1);
-        double mxz = ma.getElementAt(0, 2);
-        double myx = ma.getElementAt(1, 0);
-        double myz = ma.getElementAt(1, 2);
-        double mzx = ma.getElementAt(2, 0);
-        double mzy = ma.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
-        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
-        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
-        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
-        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
-        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
-        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
-        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
-        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
-
-        final Matrix bg1 = estimator.getAngularSpeedBias();
-        assertEquals(bg, bg1);
-        final Matrix bg2 = new Matrix(3, 1);
-        estimator.getAngularSpeedBias(bg2);
-        assertEquals(bg1, bg2);
-
-        final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
-        final double[] bg4 = new double[3];
-        estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg3, bg4, 0.0);
-
-        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
-        assertEquals(bgTriad, triad3);
-        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
-        estimator.getAngularSpeedBiasAsTriad(triad4);
-        assertEquals(triad3, triad4);
-
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
-
-        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
-        assertEquals(bgx1, bgx2);
-
-        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
-        assertEquals(bgy1, bgy2);
-
-        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -12831,14 +10067,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -12852,14 +10087,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -12873,16 +10105,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -12924,91 +10154,30 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, wrong, bg, mg, gg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, ma, bg, wrong, gg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, wrong, bgTriad,
+                mg, gg, timeInterval, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma, bgTriad,
+                wrong, gg, timeInterval, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, gg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, gg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, gg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, gg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), gg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), gg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(1, 3), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(3, 1), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(1, 3), gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(3, 1), gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma,
+                bgTriad, mg, new Matrix(1, 3), timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, baTriad, ma,
+                bgTriad, mg, new Matrix(3, 1), timeInterval, this));
     }
 
     @Test
-    public void testConstructor38() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor35() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final Matrix ba = generateBa();
@@ -13019,12 +10188,315 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                nedPosition, nedC, ba, ma, bg, mg, gg, timeInterval,
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg, timeInterval);
+
+        // check default values
+        assertNull(estimator.getListener());
+
+        final Matrix ba1 = estimator.getAccelerationBias();
+        assertEquals(ba, ba1);
+        final Matrix ba2 = new Matrix(3, 1);
+        estimator.getAccelerationBias(ba2);
+        assertEquals(ba1, ba2);
+
+        final double[] ba3 = estimator.getAccelerationBiasArray();
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
+        final double[] ba4 = new double[3];
+        estimator.getAccelerationBiasArray(ba4);
+        assertArrayEquals(ba3, ba4, 0.0);
+
+        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
+        assertEquals(baTriad, triad1);
+        final AccelerationTriad triad2 = new AccelerationTriad();
+        estimator.getAccelerationBiasAsTriad(triad2);
+        assertEquals(triad1, triad2);
+
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
+
+        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasXAsAcceleration(bax2);
+        assertEquals(bax1, bax2);
+
+        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasYAsAcceleration(bay2);
+        assertEquals(bay1, bay2);
+
+        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasZAsAcceleration(baz2);
+        assertEquals(baz1, baz2);
+
+        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
+        assertEquals(ma, ma1);
+
+        final Matrix ma2 = new Matrix(3, 3);
+        estimator.getAccelerationCrossCouplingErrors(ma2);
+        assertEquals(ma1, ma2);
+
+        double sx = ma.getElementAt(0, 0);
+        double sy = ma.getElementAt(1, 1);
+        double sz = ma.getElementAt(2, 2);
+        double mxy = ma.getElementAt(0, 1);
+        double mxz = ma.getElementAt(0, 2);
+        double myx = ma.getElementAt(1, 0);
+        double myz = ma.getElementAt(1, 2);
+        double mzx = ma.getElementAt(2, 0);
+        double mzy = ma.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
+        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
+        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
+        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
+        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
+        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
+        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
+        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
+        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
+
+        final Matrix bg1 = estimator.getAngularSpeedBias();
+        assertEquals(bg, bg1);
+        final Matrix bg2 = new Matrix(3, 1);
+        estimator.getAngularSpeedBias(bg2);
+        assertEquals(bg1, bg2);
+
+        final double[] bg3 = estimator.getAngularSpeedBiasArray();
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
+        final double[] bg4 = new double[3];
+        estimator.getAngularSpeedBiasArray(bg4);
+        assertArrayEquals(bg3, bg4, 0.0);
+
+        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
+        assertEquals(bgTriad, triad3);
+        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
+        estimator.getAngularSpeedBiasAsTriad(triad4);
+        assertEquals(triad3, triad4);
+
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
+
+        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
+        assertEquals(bgx1, bgx2);
+
+        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
+        assertEquals(bgy1, bgy2);
+
+        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
+        assertEquals(bgz1, bgz2);
+
+        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
+        assertEquals(mg, mg1);
+        final Matrix mg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedCrossCouplingErrors(mg2);
+        assertEquals(mg1, mg2);
+
+        sx = mg.getElementAt(0, 0);
+        sy = mg.getElementAt(1, 1);
+        sz = mg.getElementAt(2, 2);
+        mxy = mg.getElementAt(0, 1);
+        mxz = mg.getElementAt(0, 2);
+        myx = mg.getElementAt(1, 0);
+        myz = mg.getElementAt(1, 2);
+        mzx = mg.getElementAt(2, 0);
+        mzy = mg.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
+        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
+        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
+        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
+        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
+        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
+        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
+        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
+        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
+
+        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
+        assertEquals(new Matrix(3, 3), gg1);
+        final Matrix gg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedGDependantCrossBias(gg2);
+        assertEquals(gg1, gg2);
+
+        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
+
+        final Time t1 = estimator.getTimeIntervalAsTime();
+        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, t1.getUnit());
+
+        final Time t2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getTimeIntervalAsTime(t2);
+        assertEquals(t1, t2);
+
+        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
+
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        final ECEFPosition ecefPosition2 = new ECEFPosition();
+        estimator.getEcefPosition(ecefPosition2);
+        assertEquals(ecefPosition1, ecefPosition2);
+
+        assertEquals(ecefFrame1, estimator.getEcefFrame());
+        final ECEFFrame ecefFrame2 = new ECEFFrame();
+        estimator.getEcefFrame(ecefFrame2);
+        assertEquals(ecefFrame1, ecefFrame2);
+
+        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
+        final NEDFrame nedFrame2 = new NEDFrame();
+        estimator.getNedFrame(nedFrame2);
+        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
+
+        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
+        final NEDPosition nedPosition2 = new NEDPosition();
+        estimator.getNedPosition(nedPosition2);
+        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
+        assertEquals(ecefC1, estimator.getEcefC());
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
+        estimator.getEcefC(ecefC2);
+        assertEquals(ecefC1, ecefC2);
+
+        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        estimator.getNedC(nedC2);
+        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
+
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getElapsedTime(elapsedTime2);
+        assertEquals(elapsedTime1, elapsedTime2);
+        assertTrue(estimator.isFixKinematicsEnabled());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
+        final Time driftPeriod1 = estimator.getDriftPeriod();
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
+                driftPeriod1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
+        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getDriftPeriod(driftPeriod2);
+        assertEquals(driftPeriod1, driftPeriod2);
+        assertFalse(estimator.isRunning());
+        assertTrue(estimator.isReady());
+
+        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
+        assertEquals(positionNoiseStd1, positionNoiseStd2);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
+        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
+        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
+        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
+        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
+        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
+        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
+        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
+        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
+        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
+        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
+        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
+        assertEquals(velocityUncertainty1, velocityUncertainty2);
+        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
+        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
+        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
+        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
+        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
+
+        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
+        assertEquals(new BodyKinematics(), kinematics1);
+        final BodyKinematics kinematics2 = new BodyKinematics();
+        estimator.getFixedKinematics(kinematics2);
+        assertEquals(kinematics1, kinematics2);
+
+        // Force AlgebraException
+        final Matrix wrong = Matrix.identity(3, 3);
+        wrong.multiplyByScalar(-1.0);
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, wrong, bg, mg,
+                timeInterval));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, wrong,
+                timeInterval));
+
+        // Force IllegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), timeInterval));
+    }
+
+    @Test
+    public void testConstructor36() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
+        final NEDPosition nedPosition = createPosition();
+        final CoordinateTransformation nedC = createOrientation();
+        final Matrix ba = generateBa();
+        final AccelerationTriad baTriad = new AccelerationTriad();
+        baTriad.setValueCoordinates(ba);
+        final Matrix ma = generateMaGeneral();
+        final Matrix bg = generateBg();
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
+        bgTriad.setValueCoordinates(bg);
+        final Matrix mg = generateMg();
+
+        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
+
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg, timeInterval,
                 this);
 
         // check default values
@@ -13037,7 +10509,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -13048,31 +10520,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -13109,7 +10575,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -13120,31 +10586,333 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
+        assertEquals(bgz1, bgz2);
+
+        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
+        assertEquals(mg, mg1);
+        final Matrix mg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedCrossCouplingErrors(mg2);
+        assertEquals(mg1, mg2);
+
+        sx = mg.getElementAt(0, 0);
+        sy = mg.getElementAt(1, 1);
+        sz = mg.getElementAt(2, 2);
+        mxy = mg.getElementAt(0, 1);
+        mxz = mg.getElementAt(0, 2);
+        myx = mg.getElementAt(1, 0);
+        myz = mg.getElementAt(1, 2);
+        mzx = mg.getElementAt(2, 0);
+        mzy = mg.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
+        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
+        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
+        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
+        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
+        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
+        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
+        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
+        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
+
+        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
+        assertEquals(new Matrix(3, 3), gg1);
+        final Matrix gg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedGDependantCrossBias(gg2);
+        assertEquals(gg1, gg2);
+
+        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
+
+        final Time t1 = estimator.getTimeIntervalAsTime();
+        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, t1.getUnit());
+
+        final Time t2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getTimeIntervalAsTime(t2);
+        assertEquals(t1, t2);
+
+        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
+
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        final ECEFPosition ecefPosition2 = new ECEFPosition();
+        estimator.getEcefPosition(ecefPosition2);
+        assertEquals(ecefPosition1, ecefPosition2);
+
+        assertEquals(ecefFrame1, estimator.getEcefFrame());
+        final ECEFFrame ecefFrame2 = new ECEFFrame();
+        estimator.getEcefFrame(ecefFrame2);
+        assertEquals(ecefFrame1, ecefFrame2);
+
+        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
+        final NEDFrame nedFrame2 = new NEDFrame();
+        estimator.getNedFrame(nedFrame2);
+        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
+
+        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
+        final NEDPosition nedPosition2 = new NEDPosition();
+        estimator.getNedPosition(nedPosition2);
+        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
+        assertEquals(ecefC1, estimator.getEcefC());
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
+        estimator.getEcefC(ecefC2);
+        assertEquals(ecefC1, ecefC2);
+
+        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
+        estimator.getNedC(nedC2);
+        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
+
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getElapsedTime(elapsedTime2);
+        assertEquals(elapsedTime1, elapsedTime2);
+        assertTrue(estimator.isFixKinematicsEnabled());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
+        final Time driftPeriod1 = estimator.getDriftPeriod();
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
+                driftPeriod1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
+        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getDriftPeriod(driftPeriod2);
+        assertEquals(driftPeriod1, driftPeriod2);
+        assertFalse(estimator.isRunning());
+        assertTrue(estimator.isReady());
+
+        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
+        assertEquals(positionNoiseStd1, positionNoiseStd2);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
+        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
+        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
+        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
+        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
+        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
+        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
+        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
+        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
+        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
+        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
+        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
+        assertEquals(velocityUncertainty1, velocityUncertainty2);
+        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
+        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
+        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
+        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
+        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
+
+        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
+        assertEquals(new BodyKinematics(), kinematics1);
+        final BodyKinematics kinematics2 = new BodyKinematics();
+        estimator.getFixedKinematics(kinematics2);
+        assertEquals(kinematics1, kinematics2);
+
+        // Force AlgebraException
+        final Matrix wrong = Matrix.identity(3, 3);
+        wrong.multiplyByScalar(-1.0);
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, wrong, bg, mg,
+                timeInterval, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, wrong,
+                timeInterval, this));
+
+        // Force IllegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), timeInterval, this));
+    }
+
+    @Test
+    public void testConstructor37() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
+        final NEDPosition nedPosition = createPosition();
+        final CoordinateTransformation nedC = createOrientation();
+        final Matrix ba = generateBa();
+        final AccelerationTriad baTriad = new AccelerationTriad();
+        baTriad.setValueCoordinates(ba);
+        final Matrix ma = generateMaGeneral();
+        final Matrix bg = generateBg();
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
+        bgTriad.setValueCoordinates(bg);
+        final Matrix mg = generateMg();
+        final Matrix gg = generateGg();
+
+        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
+
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg, gg,
+                timeInterval);
+
+        // check default values
+        assertNull(estimator.getListener());
+
+        final Matrix ba1 = estimator.getAccelerationBias();
+        assertEquals(ba, ba1);
+        final Matrix ba2 = new Matrix(3, 1);
+        estimator.getAccelerationBias(ba2);
+        assertEquals(ba1, ba2);
+
+        final double[] ba3 = estimator.getAccelerationBiasArray();
+        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        final double[] ba4 = new double[3];
+        estimator.getAccelerationBiasArray(ba4);
+        assertArrayEquals(ba3, ba4, 0.0);
+
+        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
+        assertEquals(baTriad, triad1);
+        final AccelerationTriad triad2 = new AccelerationTriad();
+        estimator.getAccelerationBiasAsTriad(triad2);
+        assertEquals(triad1, triad2);
+
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
+
+        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasXAsAcceleration(bax2);
+        assertEquals(bax1, bax2);
+
+        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasYAsAcceleration(bay2);
+        assertEquals(bay1, bay2);
+
+        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasZAsAcceleration(baz2);
+        assertEquals(baz1, baz2);
+
+        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
+        assertEquals(ma, ma1);
+
+        final Matrix ma2 = new Matrix(3, 3);
+        estimator.getAccelerationCrossCouplingErrors(ma2);
+        assertEquals(ma1, ma2);
+
+        double sx = ma.getElementAt(0, 0);
+        double sy = ma.getElementAt(1, 1);
+        double sz = ma.getElementAt(2, 2);
+        double mxy = ma.getElementAt(0, 1);
+        double mxz = ma.getElementAt(0, 2);
+        double myx = ma.getElementAt(1, 0);
+        double myz = ma.getElementAt(1, 2);
+        double mzx = ma.getElementAt(2, 0);
+        double mzy = ma.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
+        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
+        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
+        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
+        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
+        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
+        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
+        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
+        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
+
+        final Matrix bg1 = estimator.getAngularSpeedBias();
+        assertEquals(bg, bg1);
+        final Matrix bg2 = new Matrix(3, 1);
+        estimator.getAngularSpeedBias(bg2);
+        assertEquals(bg1, bg2);
+
+        final double[] bg3 = estimator.getAngularSpeedBiasArray();
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
+        final double[] bg4 = new double[3];
+        estimator.getAngularSpeedBiasArray(bg4);
+        assertArrayEquals(bg3, bg4, 0.0);
+
+        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
+        assertEquals(bgTriad, triad3);
+        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
+        estimator.getAngularSpeedBiasAsTriad(triad4);
+        assertEquals(triad3, triad4);
+
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
+
+        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
+        assertEquals(bgx1, bgx2);
+
+        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
+        assertEquals(bgy1, bgy2);
+
+        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -13214,14 +10982,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertEquals(ecefC1, estimator.getEcefC());
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertEquals(ecefC1, ecefC2);
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -13235,14 +11002,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -13256,16 +11020,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -13307,104 +11069,353 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, wrong, bg, mg, gg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    ba, ma, bg, wrong, gg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, wrong, bg, mg, gg,
+                timeInterval));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, wrong, gg,
+                timeInterval));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, gg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, gg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, gg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, gg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), gg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), gg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(1, 3), timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(nedPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(3, 1), timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg,
+                new Matrix(1, 3), timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg,
+                new Matrix(3, 1), timeInterval));
     }
 
     @Test
-    public void testConstructor39() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor38() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
+        final NEDPosition nedPosition = createPosition();
+        final CoordinateTransformation nedC = createOrientation();
+        final Matrix ba = generateBa();
+        final AccelerationTriad baTriad = new AccelerationTriad();
+        baTriad.setValueCoordinates(ba);
+        final Matrix ma = generateMaGeneral();
+        final Matrix bg = generateBg();
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
+        bgTriad.setValueCoordinates(bg);
+        final Matrix mg = generateMg();
+        final Matrix gg = generateGg();
+
+        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
+
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg, gg,
+                timeInterval, this);
+
+        // check default values
+        assertSame(this, estimator.getListener());
+
+        final Matrix ba1 = estimator.getAccelerationBias();
+        assertEquals(ba, ba1);
+        final Matrix ba2 = new Matrix(3, 1);
+        estimator.getAccelerationBias(ba2);
+        assertEquals(ba1, ba2);
+
+        final double[] ba3 = estimator.getAccelerationBiasArray();
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
+        final double[] ba4 = new double[3];
+        estimator.getAccelerationBiasArray(ba4);
+        assertArrayEquals(ba3, ba4, 0.0);
+
+        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
+        assertEquals(baTriad, triad1);
+        final AccelerationTriad triad2 = new AccelerationTriad();
+        estimator.getAccelerationBiasAsTriad(triad2);
+        assertEquals(triad1, triad2);
+
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
+
+        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasXAsAcceleration(bax2);
+        assertEquals(bax1, bax2);
+
+        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasYAsAcceleration(bay2);
+        assertEquals(bay1, bay2);
+
+        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasZAsAcceleration(baz2);
+        assertEquals(baz1, baz2);
+
+        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
+        assertEquals(ma, ma1);
+
+        final Matrix ma2 = new Matrix(3, 3);
+        estimator.getAccelerationCrossCouplingErrors(ma2);
+        assertEquals(ma1, ma2);
+
+        double sx = ma.getElementAt(0, 0);
+        double sy = ma.getElementAt(1, 1);
+        double sz = ma.getElementAt(2, 2);
+        double mxy = ma.getElementAt(0, 1);
+        double mxz = ma.getElementAt(0, 2);
+        double myx = ma.getElementAt(1, 0);
+        double myz = ma.getElementAt(1, 2);
+        double mzx = ma.getElementAt(2, 0);
+        double mzy = ma.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
+        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
+        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
+        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
+        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
+        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
+        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
+        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
+        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
+
+        final Matrix bg1 = estimator.getAngularSpeedBias();
+        assertEquals(bg, bg1);
+        final Matrix bg2 = new Matrix(3, 1);
+        estimator.getAngularSpeedBias(bg2);
+        assertEquals(bg1, bg2);
+
+        final double[] bg3 = estimator.getAngularSpeedBiasArray();
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
+        final double[] bg4 = new double[3];
+        estimator.getAngularSpeedBiasArray(bg4);
+        assertArrayEquals(bg3, bg4, 0.0);
+
+        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
+        assertEquals(bgTriad, triad3);
+        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
+        estimator.getAngularSpeedBiasAsTriad(triad4);
+        assertEquals(triad3, triad4);
+
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
+
+        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
+        assertEquals(bgx1, bgx2);
+
+        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
+        assertEquals(bgy1, bgy2);
+
+        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
+        assertEquals(bgz1, bgz2);
+
+        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
+        assertEquals(mg, mg1);
+        final Matrix mg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedCrossCouplingErrors(mg2);
+        assertEquals(mg1, mg2);
+
+        sx = mg.getElementAt(0, 0);
+        sy = mg.getElementAt(1, 1);
+        sz = mg.getElementAt(2, 2);
+        mxy = mg.getElementAt(0, 1);
+        mxz = mg.getElementAt(0, 2);
+        myx = mg.getElementAt(1, 0);
+        myz = mg.getElementAt(1, 2);
+        mzx = mg.getElementAt(2, 0);
+        mzy = mg.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
+        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
+        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
+        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
+        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
+        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
+        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
+        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
+        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
+
+        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
+        assertEquals(gg, gg1);
+        final Matrix gg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedGDependantCrossBias(gg2);
+        assertEquals(gg1, gg2);
+
+        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
+
+        final Time t1 = estimator.getTimeIntervalAsTime();
+        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, t1.getUnit());
+
+        final Time t2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getTimeIntervalAsTime(t2);
+        assertEquals(t1, t2);
+
+        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
+
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        final ECEFPosition ecefPosition2 = new ECEFPosition();
+        estimator.getEcefPosition(ecefPosition2);
+        assertEquals(ecefPosition1, ecefPosition2);
+
+        assertEquals(ecefFrame1, estimator.getEcefFrame());
+        final ECEFFrame ecefFrame2 = new ECEFFrame();
+        estimator.getEcefFrame(ecefFrame2);
+        assertEquals(ecefFrame1, ecefFrame2);
+
+        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
+        final NEDFrame nedFrame2 = new NEDFrame();
+        estimator.getNedFrame(nedFrame2);
+        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
+
+        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
+        final NEDPosition nedPosition2 = new NEDPosition();
+        estimator.getNedPosition(nedPosition2);
+        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
+        assertEquals(ecefC1, estimator.getEcefC());
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
+        estimator.getEcefC(ecefC2);
+        assertEquals(ecefC1, ecefC2);
+
+        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        estimator.getNedC(nedC2);
+        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
+
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getElapsedTime(elapsedTime2);
+        assertEquals(elapsedTime1, elapsedTime2);
+        assertTrue(estimator.isFixKinematicsEnabled());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
+        final Time driftPeriod1 = estimator.getDriftPeriod();
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
+                driftPeriod1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
+        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getDriftPeriod(driftPeriod2);
+        assertEquals(driftPeriod1, driftPeriod2);
+        assertFalse(estimator.isRunning());
+        assertTrue(estimator.isReady());
+
+        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
+        assertEquals(positionNoiseStd1, positionNoiseStd2);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
+        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
+        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
+        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
+        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
+        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
+        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
+        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
+        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
+        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
+        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
+        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
+        assertEquals(velocityUncertainty1, velocityUncertainty2);
+        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
+        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
+        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
+        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
+        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
+
+        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
+        assertEquals(new BodyKinematics(), kinematics1);
+        final BodyKinematics kinematics2 = new BodyKinematics();
+        estimator.getFixedKinematics(kinematics2);
+        assertEquals(kinematics1, kinematics2);
+
+        // Force AlgebraException
+        final Matrix wrong = Matrix.identity(3, 3);
+        wrong.multiplyByScalar(-1.0);
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, wrong, bg, mg, gg,
+                timeInterval, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, wrong, gg,
+                timeInterval, this));
+
+        // Force IllegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg,
+                new Matrix(1, 3), timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(nedPosition, nedC, ba, ma, bg, mg,
+                new Matrix(3, 1), timeInterval, this));
+    }
+
+    @Test
+    public void testConstructor39() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -13418,8 +11429,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, baTriad, ma, bgTriad, mg, timeInterval);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad, mg,
+                timeInterval);
 
         // check default values
         assertNull(estimator.getListener());
@@ -13431,7 +11442,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -13442,31 +11453,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
         assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -13503,7 +11508,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -13514,31 +11519,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -13588,8 +11587,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
@@ -13609,14 +11607,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -13630,14 +11627,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -13651,16 +11645,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -13702,60 +11694,32 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, wrong, bgTriad,
+                mg, timeInterval));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad,
+                wrong, timeInterval));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(1, 3), timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(3, 1), timeInterval));
     }
 
     @Test
-    public void testConstructor40() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor40() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
             final NEDPosition nedPosition = createPosition();
             final CoordinateTransformation nedC = createOrientation();
             final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
             final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
             final Matrix ba = generateBa();
@@ -13769,9 +11733,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
 
             final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-            RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, baTriad, ma, bgTriad, mg, timeInterval,
-                this);
+            final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad, mg,
+                    timeInterval, this);
 
             // check default values
             assertSame(this, estimator.getListener());
@@ -13783,7 +11746,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             assertEquals(ba1, ba2);
 
             final double[] ba3 = estimator.getAccelerationBiasArray();
-            assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+            assertArrayEquals(ba3, ba.getBuffer(), 0.0);
             final double[] ba4 = new double[3];
             estimator.getAccelerationBiasArray(ba4);
             assertArrayEquals(ba3, ba4, 0.0);
@@ -13794,31 +11757,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getAccelerationBiasAsTriad(triad2);
             assertEquals(triad1, triad2);
 
-            assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-            assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-            assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+            assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+            assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+            assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
             final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-            assertEquals(baTriad.getMeasurementX(), bax1);
-            final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertEquals(bax1, baTriad.getMeasurementX());
+            final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             estimator.getAccelerationBiasXAsAcceleration(bax2);
             assertEquals(bax1, bax2);
 
             final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-            assertEquals(baTriad.getMeasurementY(), bay1);
-            final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertEquals(bay1, baTriad.getMeasurementY());
+            final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             estimator.getAccelerationBiasYAsAcceleration(bay2);
             assertEquals(bay1, bay2);
 
             final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-            assertEquals(baTriad.getMeasurementZ(), baz1);
-            final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            assertEquals(baz1, baTriad.getMeasurementZ());
+            final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             estimator.getAccelerationBiasZAsAcceleration(baz2);
             assertEquals(baz1, baz2);
 
@@ -13855,7 +11812,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             assertEquals(bg1, bg2);
 
             final double[] bg3 = estimator.getAngularSpeedBiasArray();
-            assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+            assertArrayEquals(bg3, bg.getBuffer(), 0.0);
             final double[] bg4 = new double[3];
             estimator.getAngularSpeedBiasArray(bg4);
             assertArrayEquals(bg3, bg4, 0.0);
@@ -13866,31 +11823,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getAngularSpeedBiasAsTriad(triad4);
             assertEquals(triad3, triad4);
 
-            assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-            assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-            assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+            assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+            assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+            assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
             final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-            assertEquals(bgTriad.getMeasurementX(), bgx1);
-            final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+            assertEquals(bgx1, bgTriad.getMeasurementX());
+            final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
             estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
             assertEquals(bgx1, bgx2);
 
             final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-            assertEquals(bgTriad.getMeasurementY(), bgy1);
-            final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+            assertEquals(bgy1, bgTriad.getMeasurementY());
+            final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
             estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
             assertEquals(bgy1, bgy2);
 
             final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-            assertEquals(bgTriad.getMeasurementZ(), bgz1);
-            final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+            assertEquals(bgz1, bgTriad.getMeasurementZ());
+            final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
             estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
             assertEquals(bgz1, bgz2);
 
@@ -13944,14 +11895,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
                 LARGE_ABSOLUTE_ERROR)) {
                 continue;
             }
-            assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+            assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
             final ECEFPosition ecefPosition2 = new ECEFPosition();
             estimator.getEcefPosition(ecefPosition2);
             assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
 
-            assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
+            assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
             final ECEFFrame ecefFrame2 = new ECEFFrame();
             estimator.getEcefFrame(ecefFrame2);
             assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
@@ -13966,14 +11915,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getNedPosition(nedPosition2);
             assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
             assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-            final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+            final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                    FrameType.BODY_FRAME);
             estimator.getEcefC(ecefC2);
             assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
             assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-            final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+            final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                    FrameType.BODY_FRAME);
             estimator.getNedC(nedC2);
             assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -13987,15 +11936,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             estimator.getElapsedTime(elapsedTime2);
             assertEquals(elapsedTime1, elapsedTime2);
             assertTrue(estimator.isFixKinematicsEnabled());
-            assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-            assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                    * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+            assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+            assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
+                    estimator.getDriftPeriodSeconds(), 0.0);
             final Time driftPeriod1 = estimator.getDriftPeriod();
-            assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                    * timeInterval,
-                driftPeriod1.getValue().doubleValue(), 0.0);
+            assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
+                    driftPeriod1.getValue().doubleValue(), 0.0);
             assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
             final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
             estimator.getDriftPeriod(driftPeriod2);
@@ -14008,16 +11954,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
             assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
             assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-            assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+            assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
             final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
             assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
             assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
             final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
             estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
             assertEquals(positionNoiseStd1, positionNoiseStd2);
-            assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+            assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
             final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
             assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
             assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -14059,52 +12003,22 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             assertEquals(kinematics1, kinematics2);
 
             // Force AlgebraException
-            estimator = null;
             final Matrix wrong = Matrix.identity(3, 3);
             wrong.multiplyByScalar(-1.0);
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, timeInterval, this);
-                fail("AlgebraException expected but not thrown");
-            } catch (final AlgebraException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, timeInterval, this);
-                fail("AlgebraException expected but not thrown");
-            } catch (final AlgebraException ignore) {
-            }
+            assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, wrong,
+                    bgTriad, mg, timeInterval, this));
+            assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad,
+                    wrong, timeInterval, this));
 
             // Force IllegalArgumentException
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, timeInterval,
-                    this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, timeInterval,
-                    this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), timeInterval,
-                    this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            try {
-                estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), timeInterval,
-                    this);
-                fail("IllegalArgumentException expected but not thrown");
-            } catch (final IllegalArgumentException ignore) {
-            }
-            assertNull(estimator);
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    new Matrix(1, 3), bgTriad, mg, timeInterval, this));
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    new Matrix(3, 1), bgTriad, mg, timeInterval, this));
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    ma, bgTriad, new Matrix(1, 3), timeInterval, this));
+            assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                    ma, bgTriad, new Matrix(3, 1), timeInterval, this));
 
             numValid++;
             break;
@@ -14114,13 +12028,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testConstructor41() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor41() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -14135,8 +12047,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, baTriad, ma, bgTriad, mg, gg,
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad, mg, gg,
                 timeInterval);
 
         // check default values
@@ -14149,7 +12060,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -14160,31 +12071,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -14221,7 +12126,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -14232,31 +12137,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -14326,14 +12225,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -14347,14 +12245,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -14368,16 +12263,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -14413,82 +12306,40 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(attitudeUncertainty1, attitudeUncertainty2);
 
         final BodyKinematics kinematics1 = estimator.getFixedKinematics();
-        assertEquals(new BodyKinematics(), kinematics1);
+        assertEquals(kinematics1, new BodyKinematics());
         final BodyKinematics kinematics2 = new BodyKinematics();
         estimator.getFixedKinematics(kinematics2);
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, gg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, gg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                baTriad, wrong, bgTriad, mg, gg, timeInterval));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                baTriad, ma, bgTriad, wrong, gg, timeInterval));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(1, 3),
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(3, 1),
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(1, 3), gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma,
+                bgTriad, new Matrix(3, 1), gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma,
+                bgTriad, mg, new Matrix(1, 3), timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma,
+                bgTriad, mg, new Matrix(3, 1), timeInterval));
     }
 
     @Test
-    public void testConstructor42() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor42() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -14503,9 +12354,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, baTriad, ma, bgTriad, mg, gg, timeInterval,
-                this);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad, mg, gg,
+                timeInterval, this);
 
         // check default values
         assertSame(this, estimator.getListener());
@@ -14517,7 +12367,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -14528,31 +12378,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
         assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -14589,7 +12433,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -14600,31 +12444,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -14674,750 +12512,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
-        final ECEFPosition ecefPosition2 = new ECEFPosition();
-        estimator.getEcefPosition(ecefPosition2);
-        assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
-
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
-        final ECEFFrame ecefFrame2 = new ECEFFrame();
-        estimator.getEcefFrame(ecefFrame2);
-        assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
-
-        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
-        final NEDFrame nedFrame2 = new NEDFrame();
-        estimator.getNedFrame(nedFrame2);
-        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
-
-        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
-        final NEDPosition nedPosition2 = new NEDPosition();
-        estimator.getNedPosition(nedPosition2);
-        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
-        assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getEcefC(ecefC2);
-        assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
-
-        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getNedC(nedC2);
-        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
-
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        final Time elapsedTime1 = estimator.getElapsedTime();
-        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
-        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getElapsedTime(elapsedTime2);
-        assertEquals(elapsedTime1, elapsedTime2);
-        assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
-        final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                driftPeriod1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
-        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getDriftPeriod(driftPeriod2);
-        assertEquals(driftPeriod1, driftPeriod2);
-        assertFalse(estimator.isRunning());
-        assertTrue(estimator.isReady());
-
-        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
-        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
-        assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
-        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
-        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
-        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
-        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
-        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
-        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
-        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
-        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
-        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
-        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
-        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
-        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
-        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
-        assertEquals(velocityUncertainty1, velocityUncertainty2);
-        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
-        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
-        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
-        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
-        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
-
-        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
-        assertEquals(new BodyKinematics(), kinematics1);
-        final BodyKinematics kinematics2 = new BodyKinematics();
-        estimator.getFixedKinematics(kinematics2);
-        assertEquals(kinematics1, kinematics2);
-
-        // Force AlgebraException
-        estimator = null;
-        final Matrix wrong = Matrix.identity(3, 3);
-        wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, wrong, bgTriad, mg, gg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    baTriad, ma, bgTriad, wrong, gg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-
-        // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(1, 3), bgTriad, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    new Matrix(3, 1), bgTriad, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(1, 3), gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, new Matrix(3, 1), gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(1, 3),
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, baTriad,
-                    ma, bgTriad, mg, new Matrix(3, 1),
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
-    }
-
-    @Test
-    public void testConstructor43() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
-        final NEDPosition nedPosition = createPosition();
-        final CoordinateTransformation nedC = createOrientation();
-        final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
-        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
-
-        final Matrix ba = generateBa();
-        final AccelerationTriad baTriad = new AccelerationTriad();
-        baTriad.setValueCoordinates(ba);
-        final Matrix ma = generateMaGeneral();
-        final Matrix bg = generateBg();
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
-        bgTriad.setValueCoordinates(bg);
-        final Matrix mg = generateMg();
-
-        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
-
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, ba, ma, bg, mg, timeInterval);
-
-        // check default values
-        assertNull(estimator.getListener());
-
-        final Matrix ba1 = estimator.getAccelerationBias();
-        assertEquals(ba, ba1);
-        final Matrix ba2 = new Matrix(3, 1);
-        estimator.getAccelerationBias(ba2);
-        assertEquals(ba1, ba2);
-
-        final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
-        final double[] ba4 = new double[3];
-        estimator.getAccelerationBiasArray(ba4);
-        assertArrayEquals(ba3, ba4, 0.0);
-
-        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
-        assertEquals(baTriad, triad1);
-        final AccelerationTriad triad2 = new AccelerationTriad();
-        estimator.getAccelerationBiasAsTriad(triad2);
-        assertEquals(triad1, triad2);
-
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
-
-        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasXAsAcceleration(bax2);
-        assertEquals(bax1, bax2);
-
-        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasYAsAcceleration(bay2);
-        assertEquals(bay1, bay2);
-
-        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasZAsAcceleration(baz2);
-        assertEquals(baz1, baz2);
-
-        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
-        assertEquals(ma, ma1);
-
-        final Matrix ma2 = new Matrix(3, 3);
-        estimator.getAccelerationCrossCouplingErrors(ma2);
-        assertEquals(ma1, ma2);
-
-        double sx = ma.getElementAt(0, 0);
-        double sy = ma.getElementAt(1, 1);
-        double sz = ma.getElementAt(2, 2);
-        double mxy = ma.getElementAt(0, 1);
-        double mxz = ma.getElementAt(0, 2);
-        double myx = ma.getElementAt(1, 0);
-        double myz = ma.getElementAt(1, 2);
-        double mzx = ma.getElementAt(2, 0);
-        double mzy = ma.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
-        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
-        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
-        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
-        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
-        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
-        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
-        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
-        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
-
-        final Matrix bg1 = estimator.getAngularSpeedBias();
-        assertEquals(bg, bg1);
-        final Matrix bg2 = new Matrix(3, 1);
-        estimator.getAngularSpeedBias(bg2);
-        assertEquals(bg1, bg2);
-
-        final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
-        final double[] bg4 = new double[3];
-        estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg3, bg4, 0.0);
-
-        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
-        assertEquals(bgTriad, triad3);
-        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
-        estimator.getAngularSpeedBiasAsTriad(triad4);
-        assertEquals(triad3, triad4);
-
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
-
-        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
-        assertEquals(bgx1, bgx2);
-
-        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
-        assertEquals(bgy1, bgy2);
-
-        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
-        assertEquals(bgz1, bgz2);
-
-        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
-        assertEquals(mg, mg1);
-        final Matrix mg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedCrossCouplingErrors(mg2);
-        assertEquals(mg1, mg2);
-
-        sx = mg.getElementAt(0, 0);
-        sy = mg.getElementAt(1, 1);
-        sz = mg.getElementAt(2, 2);
-        mxy = mg.getElementAt(0, 1);
-        mxz = mg.getElementAt(0, 2);
-        myx = mg.getElementAt(1, 0);
-        myz = mg.getElementAt(1, 2);
-        mzx = mg.getElementAt(2, 0);
-        mzy = mg.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
-        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
-        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
-        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
-        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
-        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
-        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
-        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
-        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
-
-        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(new Matrix(3, 3), gg1);
-        final Matrix gg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedGDependantCrossBias(gg2);
-        assertEquals(gg1, gg2);
-
-        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
-
-        final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, t1.getUnit());
-
-        final Time t2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getTimeIntervalAsTime(t2);
-        assertEquals(t1, t2);
-
-        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
-        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
-
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
-        final ECEFPosition ecefPosition2 = new ECEFPosition();
-        estimator.getEcefPosition(ecefPosition2);
-        assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
-
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
-        final ECEFFrame ecefFrame2 = new ECEFFrame();
-        estimator.getEcefFrame(ecefFrame2);
-        assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
-
-        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
-        final NEDFrame nedFrame2 = new NEDFrame();
-        estimator.getNedFrame(nedFrame2);
-        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
-
-        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
-        final NEDPosition nedPosition2 = new NEDPosition();
-        estimator.getNedPosition(nedPosition2);
-        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
-        assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getEcefC(ecefC2);
-        assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
-
-        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
-        estimator.getNedC(nedC2);
-        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
-
-        assertEquals(0, estimator.getNumberOfProcessedSamples());
-        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
-        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
-        final Time elapsedTime1 = estimator.getElapsedTime();
-        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
-        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getElapsedTime(elapsedTime2);
-        assertEquals(elapsedTime1, elapsedTime2);
-        assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
-        final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                driftPeriod1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
-        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getDriftPeriod(driftPeriod2);
-        assertEquals(driftPeriod1, driftPeriod2);
-        assertFalse(estimator.isRunning());
-        assertTrue(estimator.isReady());
-
-        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
-        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
-        assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
-        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
-        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
-        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
-        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
-        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
-        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
-        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
-        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
-        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
-        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
-        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
-        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
-        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
-        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
-        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
-        assertEquals(velocityUncertainty1, velocityUncertainty2);
-        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
-        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
-        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
-        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
-        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
-        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
-        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
-
-        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
-        assertEquals(new BodyKinematics(), kinematics1);
-        final BodyKinematics kinematics2 = new BodyKinematics();
-        estimator.getFixedKinematics(kinematics2);
-        assertEquals(kinematics1, kinematics2);
-
-        // Force AlgebraException
-        estimator = null;
-        final Matrix wrong = Matrix.identity(3, 3);
-        wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, wrong, bg, mg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, ma, bg, wrong, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-
-        // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
-    }
-
-    @Test
-    public void testConstructor44() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
-        final NEDPosition nedPosition = createPosition();
-        final CoordinateTransformation nedC = createOrientation();
-        final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
-        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
-
-        final Matrix ba = generateBa();
-        final AccelerationTriad baTriad = new AccelerationTriad();
-        baTriad.setValueCoordinates(ba);
-        final Matrix ma = generateMaGeneral();
-        final Matrix bg = generateBg();
-        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
-        bgTriad.setValueCoordinates(bg);
-        final Matrix mg = generateMg();
-
-        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
-
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, ba, ma, bg, mg, timeInterval, this);
-
-        // check default values
-        assertSame(this, estimator.getListener());
-
-        final Matrix ba1 = estimator.getAccelerationBias();
-        assertEquals(ba, ba1);
-        final Matrix ba2 = new Matrix(3, 1);
-        estimator.getAccelerationBias(ba2);
-        assertEquals(ba1, ba2);
-
-        final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
-        final double[] ba4 = new double[3];
-        estimator.getAccelerationBiasArray(ba4);
-        assertArrayEquals(ba3, ba4, 0.0);
-
-        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
-        assertEquals(baTriad, triad1);
-        final AccelerationTriad triad2 = new AccelerationTriad();
-        estimator.getAccelerationBiasAsTriad(triad2);
-        assertEquals(triad1, triad2);
-
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
-
-        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasXAsAcceleration(bax2);
-        assertEquals(bax1, bax2);
-
-        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasYAsAcceleration(bay2);
-        assertEquals(bay1, bay2);
-
-        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-        estimator.getAccelerationBiasZAsAcceleration(baz2);
-        assertEquals(baz1, baz2);
-
-        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
-        assertEquals(ma, ma1);
-
-        final Matrix ma2 = new Matrix(3, 3);
-        estimator.getAccelerationCrossCouplingErrors(ma2);
-        assertEquals(ma1, ma2);
-
-        double sx = ma.getElementAt(0, 0);
-        double sy = ma.getElementAt(1, 1);
-        double sz = ma.getElementAt(2, 2);
-        double mxy = ma.getElementAt(0, 1);
-        double mxz = ma.getElementAt(0, 2);
-        double myx = ma.getElementAt(1, 0);
-        double myz = ma.getElementAt(1, 2);
-        double mzx = ma.getElementAt(2, 0);
-        double mzy = ma.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
-        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
-        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
-        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
-        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
-        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
-        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
-        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
-        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
-
-        final Matrix bg1 = estimator.getAngularSpeedBias();
-        assertEquals(bg, bg1);
-        final Matrix bg2 = new Matrix(3, 1);
-        estimator.getAngularSpeedBias(bg2);
-        assertEquals(bg1, bg2);
-
-        final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
-        final double[] bg4 = new double[3];
-        estimator.getAngularSpeedBiasArray(bg4);
-        assertArrayEquals(bg3, bg4, 0.0);
-
-        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
-        assertEquals(bgTriad, triad3);
-        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
-        estimator.getAngularSpeedBiasAsTriad(triad4);
-        assertEquals(triad3, triad4);
-
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
-
-        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
-        assertEquals(bgx1, bgx2);
-
-        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
-        assertEquals(bgy1, bgy2);
-
-        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
-        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
-        assertEquals(bgz1, bgz2);
-
-        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
-        assertEquals(mg, mg1);
-        final Matrix mg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedCrossCouplingErrors(mg2);
-        assertEquals(mg1, mg2);
-
-        sx = mg.getElementAt(0, 0);
-        sy = mg.getElementAt(1, 1);
-        sz = mg.getElementAt(2, 2);
-        mxy = mg.getElementAt(0, 1);
-        mxz = mg.getElementAt(0, 2);
-        myx = mg.getElementAt(1, 0);
-        myz = mg.getElementAt(1, 2);
-        mzx = mg.getElementAt(2, 0);
-        mzy = mg.getElementAt(2, 1);
-        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
-        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
-        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
-        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
-        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
-        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
-        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
-        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
-        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
-
-        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(new Matrix(3, 3), gg1);
-        final Matrix gg2 = new Matrix(3, 3);
-        estimator.getAngularSpeedGDependantCrossBias(gg2);
-        assertEquals(gg1, gg2);
-
-        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
-
-        final Time t1 = estimator.getTimeIntervalAsTime();
-        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
-        assertEquals(TimeUnit.SECOND, t1.getUnit());
-
-        final Time t2 = new Time(1.0, TimeUnit.DAY);
-        estimator.getTimeIntervalAsTime(t2);
-        assertEquals(t1, t2);
-
-        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
-        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
-
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
@@ -15437,14 +12532,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -15458,14 +12552,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -15479,16 +12570,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -15530,90 +12619,34 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, wrong, bg, mg, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, ma, bg, wrong, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, wrong, bgTriad,
+                mg, gg, timeInterval, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad, ma, bgTriad,
+                wrong, gg, timeInterval, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), timeInterval,
-                    this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(1, 3), bgTriad, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                new Matrix(3, 1), bgTriad, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(1, 3), gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, new Matrix(3, 1), gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(1, 3), timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, baTriad,
+                ma, bgTriad, mg, new Matrix(3, 1), timeInterval, this));
     }
 
     @Test
-    public void testConstructor45() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor43() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -15624,12 +12657,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, ba, ma, bg, mg, gg, timeInterval);
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg, timeInterval);
 
         // check default values
         assertNull(estimator.getListener());
@@ -15641,7 +12672,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba1, ba2);
 
         final double[] ba3 = estimator.getAccelerationBiasArray();
-        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
         final double[] ba4 = new double[3];
         estimator.getAccelerationBiasArray(ba4);
         assertArrayEquals(ba3, ba4, 0.0);
@@ -15652,31 +12683,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -15713,7 +12738,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -15724,31 +12749,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -15778,7 +12797,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
 
         final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
-        assertEquals(gg, gg1);
+        assertEquals(new Matrix(3, 3), gg1);
         final Matrix gg2 = new Matrix(3, 3);
         estimator.getAngularSpeedGDependantCrossBias(gg2);
         assertEquals(gg1, gg2);
@@ -15798,14 +12817,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
 
-        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
         final ECEFFrame ecefFrame2 = new ECEFFrame();
         estimator.getEcefFrame(ecefFrame2);
         assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
@@ -15820,14 +12837,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -15841,14 +12857,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -15862,16 +12875,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -15913,104 +12924,38 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, wrong, bg, mg, gg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, ma, bg, wrong, gg, timeInterval);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, wrong, bg, mg,
+                timeInterval));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, wrong,
+                timeInterval));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), gg,
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(1, 3),
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(3, 1),
-                    timeInterval);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), timeInterval));
     }
 
     @Test
-    public void testConstructor46() throws AlgebraException,
-            InvalidSourceAndDestinationFrameTypeException {
+    public void testConstructor44() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
         final NEDPosition nedPosition = createPosition();
         final CoordinateTransformation nedC = createOrientation();
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final Matrix ba = generateBa();
@@ -16021,12 +12966,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
         bgTriad.setValueCoordinates(bg);
         final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
 
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
 
-        RandomWalkEstimator estimator = new RandomWalkEstimator(
-                ecefPosition, nedC, ba, ma, bg, mg, gg, timeInterval,
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg, timeInterval,
                 this);
 
         // check default values
@@ -16050,31 +12993,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAccelerationBiasAsTriad(triad2);
         assertEquals(triad1, triad2);
 
-        assertEquals(baTriad.getValueX(),
-                estimator.getAccelerationBiasX(), 0.0);
-        assertEquals(baTriad.getValueY(),
-                estimator.getAccelerationBiasY(), 0.0);
-        assertEquals(baTriad.getValueZ(),
-                estimator.getAccelerationBiasZ(), 0.0);
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
 
         final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
-        assertEquals(baTriad.getMeasurementX(), bax1);
-        final Acceleration bax2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bax1, baTriad.getMeasurementX());
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bax2);
         assertEquals(bax1, bax2);
 
         final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
-        assertEquals(baTriad.getMeasurementY(), bay1);
-        final Acceleration bay2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(bay1, baTriad.getMeasurementY());
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(bay2);
         assertEquals(bay1, bay2);
 
         final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
-        assertEquals(baTriad.getMeasurementZ(), baz1);
-        final Acceleration baz2 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(baz2);
         assertEquals(baz1, baz2);
 
@@ -16111,7 +13048,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(bg1, bg2);
 
         final double[] bg3 = estimator.getAngularSpeedBiasArray();
-        assertArrayEquals(bg.getBuffer(), bg3, 0.0);
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
         final double[] bg4 = new double[3];
         estimator.getAngularSpeedBiasArray(bg4);
         assertArrayEquals(bg3, bg4, 0.0);
@@ -16122,31 +13059,336 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getAngularSpeedBiasAsTriad(triad4);
         assertEquals(triad3, triad4);
 
-        assertEquals(bgTriad.getValueX(),
-                estimator.getAngularSpeedBiasX(), 0.0);
-        assertEquals(bgTriad.getValueY(),
-                estimator.getAngularSpeedBiasY(), 0.0);
-        assertEquals(bgTriad.getValueZ(),
-                estimator.getAngularSpeedBiasZ(), 0.0);
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
 
         final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
         assertEquals(bgTriad.getMeasurementX(), bgx1);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
         assertEquals(bgx1, bgx2);
 
         final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementY(), bgy1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
         assertEquals(bgy1, bgy2);
 
         final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        assertEquals(bgTriad.getMeasurementZ(), bgz1);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
+        assertEquals(bgz1, bgz2);
+
+        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
+        assertEquals(mg, mg1);
+        final Matrix mg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedCrossCouplingErrors(mg2);
+        assertEquals(mg1, mg2);
+
+        sx = mg.getElementAt(0, 0);
+        sy = mg.getElementAt(1, 1);
+        sz = mg.getElementAt(2, 2);
+        mxy = mg.getElementAt(0, 1);
+        mxz = mg.getElementAt(0, 2);
+        myx = mg.getElementAt(1, 0);
+        myz = mg.getElementAt(1, 2);
+        mzx = mg.getElementAt(2, 0);
+        mzy = mg.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
+        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
+        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
+        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
+        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
+        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
+        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
+        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
+        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
+
+        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
+        assertEquals(new Matrix(3, 3), gg1);
+        final Matrix gg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedGDependantCrossBias(gg2);
+        assertEquals(gg1, gg2);
+
+        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
+
+        final Time t1 = estimator.getTimeIntervalAsTime();
+        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, t1.getUnit());
+
+        final Time t2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getTimeIntervalAsTime(t2);
+        assertEquals(t1, t2);
+
+        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
+
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
+        final ECEFPosition ecefPosition2 = new ECEFPosition();
+        estimator.getEcefPosition(ecefPosition2);
+        assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
+
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
+        final ECEFFrame ecefFrame2 = new ECEFFrame();
+        estimator.getEcefFrame(ecefFrame2);
+        assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
+
+        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
+        final NEDFrame nedFrame2 = new NEDFrame();
+        estimator.getNedFrame(nedFrame2);
+        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
+
+        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
+        final NEDPosition nedPosition2 = new NEDPosition();
+        estimator.getNedPosition(nedPosition2);
+        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
+        assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
+        estimator.getEcefC(ecefC2);
+        assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
+
+        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        estimator.getNedC(nedC2);
+        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
+
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getElapsedTime(elapsedTime2);
+        assertEquals(elapsedTime1, elapsedTime2);
+        assertTrue(estimator.isFixKinematicsEnabled());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
+        final Time driftPeriod1 = estimator.getDriftPeriod();
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
+                driftPeriod1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
+        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getDriftPeriod(driftPeriod2);
+        assertEquals(driftPeriod1, driftPeriod2);
+        assertFalse(estimator.isRunning());
+        assertTrue(estimator.isReady());
+
+        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
+        assertEquals(positionNoiseStd1, positionNoiseStd2);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
+        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
+        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
+        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
+        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
+        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
+        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
+        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
+        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
+        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
+        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
+        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
+        assertEquals(velocityUncertainty1, velocityUncertainty2);
+        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
+        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
+        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
+        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
+        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
+
+        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
+        assertEquals(new BodyKinematics(), kinematics1);
+        final BodyKinematics kinematics2 = new BodyKinematics();
+        estimator.getFixedKinematics(kinematics2);
+        assertEquals(kinematics1, kinematics2);
+
+        // Force AlgebraException
+        final Matrix wrong = Matrix.identity(3, 3);
+        wrong.multiplyByScalar(-1.0);
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, wrong, bg, mg,
+                this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, wrong,
+                this));
+
+        // Force IllegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), timeInterval, this));
+    }
+
+    @Test
+    public void testConstructor45() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
+        final NEDPosition nedPosition = createPosition();
+        final CoordinateTransformation nedC = createOrientation();
+        final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
+
+        final Matrix ba = generateBa();
+        final AccelerationTriad baTriad = new AccelerationTriad();
+        baTriad.setValueCoordinates(ba);
+        final Matrix ma = generateMaGeneral();
+        final Matrix bg = generateBg();
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
+        bgTriad.setValueCoordinates(bg);
+        final Matrix mg = generateMg();
+        final Matrix gg = generateGg();
+
+        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
+
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg, gg,
+                timeInterval);
+
+        // check default values
+        assertNull(estimator.getListener());
+
+        final Matrix ba1 = estimator.getAccelerationBias();
+        assertEquals(ba, ba1);
+        final Matrix ba2 = new Matrix(3, 1);
+        estimator.getAccelerationBias(ba2);
+        assertEquals(ba1, ba2);
+
+        final double[] ba3 = estimator.getAccelerationBiasArray();
+        assertArrayEquals(ba.getBuffer(), ba3, 0.0);
+        final double[] ba4 = new double[3];
+        estimator.getAccelerationBiasArray(ba4);
+        assertArrayEquals(ba3, ba4, 0.0);
+
+        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
+        assertEquals(baTriad, triad1);
+        final AccelerationTriad triad2 = new AccelerationTriad();
+        estimator.getAccelerationBiasAsTriad(triad2);
+        assertEquals(triad1, triad2);
+
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
+
+        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
+        assertEquals(baTriad.getMeasurementX(), bax1);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasXAsAcceleration(bax2);
+        assertEquals(bax1, bax2);
+
+        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
+        assertEquals(baTriad.getMeasurementY(), bay1);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasYAsAcceleration(bay2);
+        assertEquals(bay1, bay2);
+
+        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasZAsAcceleration(baz2);
+        assertEquals(baz1, baz2);
+
+        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
+        assertEquals(ma, ma1);
+
+        final Matrix ma2 = new Matrix(3, 3);
+        estimator.getAccelerationCrossCouplingErrors(ma2);
+        assertEquals(ma1, ma2);
+
+        double sx = ma.getElementAt(0, 0);
+        double sy = ma.getElementAt(1, 1);
+        double sz = ma.getElementAt(2, 2);
+        double mxy = ma.getElementAt(0, 1);
+        double mxz = ma.getElementAt(0, 2);
+        double myx = ma.getElementAt(1, 0);
+        double myz = ma.getElementAt(1, 2);
+        double mzx = ma.getElementAt(2, 0);
+        double mzy = ma.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
+        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
+        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
+        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
+        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
+        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
+        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
+        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
+        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
+
+        final Matrix bg1 = estimator.getAngularSpeedBias();
+        assertEquals(bg, bg1);
+        final Matrix bg2 = new Matrix(3, 1);
+        estimator.getAngularSpeedBias(bg2);
+        assertEquals(bg1, bg2);
+
+        final double[] bg3 = estimator.getAngularSpeedBiasArray();
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
+        final double[] bg4 = new double[3];
+        estimator.getAngularSpeedBiasArray(bg4);
+        assertArrayEquals(bg3, bg4, 0.0);
+
+        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
+        assertEquals(bgTriad, triad3);
+        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
+        estimator.getAngularSpeedBiasAsTriad(triad4);
+        assertEquals(triad3, triad4);
+
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
+
+        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
+        assertEquals(bgTriad.getMeasurementX(), bgx1);
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
+        assertEquals(bgx1, bgx2);
+
+        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
+        assertEquals(bgy1, bgy2);
+
+        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
         assertEquals(bgz1, bgz2);
 
@@ -16196,8 +13438,322 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(),
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
+        final ECEFPosition ecefPosition2 = new ECEFPosition();
+        estimator.getEcefPosition(ecefPosition2);
+        assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
+
+        assertTrue(ecefFrame1.equals(estimator.getEcefFrame(), LARGE_ABSOLUTE_ERROR));
+        final ECEFFrame ecefFrame2 = new ECEFFrame();
+        estimator.getEcefFrame(ecefFrame2);
+        assertTrue(ecefFrame1.equals(ecefFrame2, LARGE_ABSOLUTE_ERROR));
+
+        assertTrue(nedFrame1.equals(estimator.getNedFrame(), ABSOLUTE_ERROR));
+        final NEDFrame nedFrame2 = new NEDFrame();
+        estimator.getNedFrame(nedFrame2);
+        assertTrue(nedFrame1.equals(nedFrame2, ABSOLUTE_ERROR));
+
+        assertTrue(nedPosition.equals(estimator.getNedPosition(), ABSOLUTE_ERROR));
+        final NEDPosition nedPosition2 = new NEDPosition();
+        estimator.getNedPosition(nedPosition2);
+        assertTrue(nedPosition.equals(nedPosition2, ABSOLUTE_ERROR));
+        assertTrue(ecefC1.equals(estimator.getEcefC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
+        estimator.getEcefC(ecefC2);
+        assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
+
+        assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        estimator.getNedC(nedC2);
+        assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
+
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(0.0, estimator.getElapsedTimeSeconds(), 0.0);
+        final Time elapsedTime1 = estimator.getElapsedTime();
+        assertEquals(0.0, elapsedTime1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, elapsedTime1.getUnit());
+        final Time elapsedTime2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getElapsedTime(elapsedTime2);
+        assertEquals(elapsedTime1, elapsedTime2);
+        assertTrue(estimator.isFixKinematicsEnabled());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
+        final Time driftPeriod1 = estimator.getDriftPeriod();
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
+                driftPeriod1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
+        final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getDriftPeriod(driftPeriod2);
+        assertEquals(driftPeriod1, driftPeriod2);
+        assertFalse(estimator.isRunning());
+        assertTrue(estimator.isReady());
+
+        assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
+        assertEquals(positionNoiseStd1, positionNoiseStd2);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
+        assertEquals(velocityNoiseStd1, velocityNoiseStd2);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(0.0, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
+        final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeNoiseStandardDeviationAsAngle(attitudeNoiseStd2);
+        assertEquals(attitudeNoiseStd1, attitudeNoiseStd2);
+        assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
+        final Distance positionUncertainty1 = estimator.getPositionUncertaintyAsDistance();
+        assertEquals(0.0, positionUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(DistanceUnit.METER, positionUncertainty1.getUnit());
+        final Distance positionUncertainty2 = new Distance(1.0, DistanceUnit.MILE);
+        estimator.getPositionUncertaintyAsDistance(positionUncertainty2);
+        assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
+        final Speed velocityUncertainty1 = estimator.getVelocityUncertaintyAsSpeed();
+        assertEquals(0.0, velocityUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(SpeedUnit.METERS_PER_SECOND, velocityUncertainty1.getUnit());
+        final Speed velocityUncertainty2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
+        estimator.getVelocityUncertaintyAsSpeed(velocityUncertainty2);
+        assertEquals(velocityUncertainty1, velocityUncertainty2);
+        assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
+        final Angle attitudeUncertainty1 = estimator.getAttitudeUncertaintyAsAngle();
+        assertEquals(0.0, attitudeUncertainty1.getValue().doubleValue(), 0.0);
+        assertEquals(AngleUnit.RADIANS, attitudeUncertainty1.getUnit());
+        final Angle attitudeUncertainty2 = new Angle(1.0, AngleUnit.DEGREES);
+        estimator.getAttitudeUncertaintyAsAngle(attitudeUncertainty2);
+        assertEquals(attitudeUncertainty1, attitudeUncertainty2);
+
+        final BodyKinematics kinematics1 = estimator.getFixedKinematics();
+        assertEquals(new BodyKinematics(), kinematics1);
+        final BodyKinematics kinematics2 = new BodyKinematics();
+        estimator.getFixedKinematics(kinematics2);
+        assertEquals(kinematics1, kinematics2);
+
+        // Force AlgebraException
+        final Matrix wrong = Matrix.identity(3, 3);
+        wrong.multiplyByScalar(-1.0);
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, wrong, bg, mg, gg,
+                timeInterval));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, wrong, gg,
+                timeInterval));
+
+        // Force IllegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(1, 1), mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma,
+                new Matrix(3, 3), mg, gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(1, 3), gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg,
+                new Matrix(3, 1), gg, timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg,
+                new Matrix(1, 3), timeInterval));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg,
+                new Matrix(3, 1), timeInterval));
+    }
+
+    @Test
+    public void testConstructor46() throws AlgebraException, InvalidSourceAndDestinationFrameTypeException {
+        final NEDPosition nedPosition = createPosition();
+        final CoordinateTransformation nedC = createOrientation();
+        final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
+
+        final Matrix ba = generateBa();
+        final AccelerationTriad baTriad = new AccelerationTriad();
+        baTriad.setValueCoordinates(ba);
+        final Matrix ma = generateMaGeneral();
+        final Matrix bg = generateBg();
+        final AngularSpeedTriad bgTriad = new AngularSpeedTriad();
+        bgTriad.setValueCoordinates(bg);
+        final Matrix mg = generateMg();
+        final Matrix gg = generateGg();
+
+        final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
+
+        final RandomWalkEstimator estimator = new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, mg, gg,
+                timeInterval, this);
+
+        // check default values
+        assertSame(this, estimator.getListener());
+
+        final Matrix ba1 = estimator.getAccelerationBias();
+        assertEquals(ba, ba1);
+        final Matrix ba2 = new Matrix(3, 1);
+        estimator.getAccelerationBias(ba2);
+        assertEquals(ba1, ba2);
+
+        final double[] ba3 = estimator.getAccelerationBiasArray();
+        assertArrayEquals(ba3, ba.getBuffer(), 0.0);
+        final double[] ba4 = new double[3];
+        estimator.getAccelerationBiasArray(ba4);
+        assertArrayEquals(ba3, ba4, 0.0);
+
+        final AccelerationTriad triad1 = estimator.getAccelerationBiasAsTriad();
+        assertEquals(baTriad, triad1);
+        final AccelerationTriad triad2 = new AccelerationTriad();
+        estimator.getAccelerationBiasAsTriad(triad2);
+        assertEquals(triad1, triad2);
+
+        assertEquals(baTriad.getValueX(), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(baTriad.getValueY(), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(baTriad.getValueZ(), estimator.getAccelerationBiasZ(), 0.0);
+
+        final Acceleration bax1 = estimator.getAccelerationBiasXAsAcceleration();
+        assertEquals(baTriad.getMeasurementX(), bax1);
+        final Acceleration bax2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasXAsAcceleration(bax2);
+        assertEquals(bax1, bax2);
+
+        final Acceleration bay1 = estimator.getAccelerationBiasYAsAcceleration();
+        assertEquals(baTriad.getMeasurementY(), bay1);
+        final Acceleration bay2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasYAsAcceleration(bay2);
+        assertEquals(bay1, bay2);
+
+        final Acceleration baz1 = estimator.getAccelerationBiasZAsAcceleration();
+        assertEquals(baz1, baTriad.getMeasurementZ());
+        final Acceleration baz2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        estimator.getAccelerationBiasZAsAcceleration(baz2);
+        assertEquals(baz1, baz2);
+
+        final Matrix ma1 = estimator.getAccelerationCrossCouplingErrors();
+        assertEquals(ma, ma1);
+
+        final Matrix ma2 = new Matrix(3, 3);
+        estimator.getAccelerationCrossCouplingErrors(ma2);
+        assertEquals(ma1, ma2);
+
+        double sx = ma.getElementAt(0, 0);
+        double sy = ma.getElementAt(1, 1);
+        double sz = ma.getElementAt(2, 2);
+        double mxy = ma.getElementAt(0, 1);
+        double mxz = ma.getElementAt(0, 2);
+        double myx = ma.getElementAt(1, 0);
+        double myz = ma.getElementAt(1, 2);
+        double mzx = ma.getElementAt(2, 0);
+        double mzy = ma.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAccelerationSx(), 0.0);
+        assertEquals(sy, estimator.getAccelerationSy(), 0.0);
+        assertEquals(sz, estimator.getAccelerationSz(), 0.0);
+        assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
+        assertEquals(mxz, estimator.getAccelerationMxz(), 0.0);
+        assertEquals(myx, estimator.getAccelerationMyx(), 0.0);
+        assertEquals(myz, estimator.getAccelerationMyz(), 0.0);
+        assertEquals(mzx, estimator.getAccelerationMzx(), 0.0);
+        assertEquals(mzy, estimator.getAccelerationMzy(), 0.0);
+
+        final Matrix bg1 = estimator.getAngularSpeedBias();
+        assertEquals(bg, bg1);
+        final Matrix bg2 = new Matrix(3, 1);
+        estimator.getAngularSpeedBias(bg2);
+        assertEquals(bg1, bg2);
+
+        final double[] bg3 = estimator.getAngularSpeedBiasArray();
+        assertArrayEquals(bg3, bg.getBuffer(), 0.0);
+        final double[] bg4 = new double[3];
+        estimator.getAngularSpeedBiasArray(bg4);
+        assertArrayEquals(bg3, bg4, 0.0);
+
+        final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
+        assertEquals(bgTriad, triad3);
+        final AngularSpeedTriad triad4 = new AngularSpeedTriad();
+        estimator.getAngularSpeedBiasAsTriad(triad4);
+        assertEquals(triad3, triad4);
+
+        assertEquals(bgTriad.getValueX(), estimator.getAngularSpeedBiasX(), 0.0);
+        assertEquals(bgTriad.getValueY(), estimator.getAngularSpeedBiasY(), 0.0);
+        assertEquals(bgTriad.getValueZ(), estimator.getAngularSpeedBiasZ(), 0.0);
+
+        final AngularSpeed bgx1 = estimator.getAngularSpeedBiasXAsAngularSpeed();
+        assertEquals(bgx1, bgTriad.getMeasurementX());
+        final AngularSpeed bgx2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasXAsAngularSpeed(bgx2);
+        assertEquals(bgx1, bgx2);
+
+        final AngularSpeed bgy1 = estimator.getAngularSpeedBiasYAsAngularSpeed();
+        assertEquals(bgy1, bgTriad.getMeasurementY());
+        final AngularSpeed bgy2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasYAsAngularSpeed(bgy2);
+        assertEquals(bgy1, bgy2);
+
+        final AngularSpeed bgz1 = estimator.getAngularSpeedBiasZAsAngularSpeed();
+        assertEquals(bgz1, bgTriad.getMeasurementZ());
+        final AngularSpeed bgz2 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        estimator.getAngularSpeedBiasZAsAngularSpeed(bgz2);
+        assertEquals(bgz1, bgz2);
+
+        final Matrix mg1 = estimator.getAngularSpeedCrossCouplingErrors();
+        assertEquals(mg, mg1);
+        final Matrix mg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedCrossCouplingErrors(mg2);
+        assertEquals(mg1, mg2);
+
+        sx = mg.getElementAt(0, 0);
+        sy = mg.getElementAt(1, 1);
+        sz = mg.getElementAt(2, 2);
+        mxy = mg.getElementAt(0, 1);
+        mxz = mg.getElementAt(0, 2);
+        myx = mg.getElementAt(1, 0);
+        myz = mg.getElementAt(1, 2);
+        mzx = mg.getElementAt(2, 0);
+        mzy = mg.getElementAt(2, 1);
+        assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
+        assertEquals(sy, estimator.getAngularSpeedSy(), 0.0);
+        assertEquals(sz, estimator.getAngularSpeedSz(), 0.0);
+        assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
+        assertEquals(mxz, estimator.getAngularSpeedMxz(), 0.0);
+        assertEquals(myx, estimator.getAngularSpeedMyx(), 0.0);
+        assertEquals(myz, estimator.getAngularSpeedMyz(), 0.0);
+        assertEquals(mzx, estimator.getAngularSpeedMzx(), 0.0);
+        assertEquals(mzy, estimator.getAngularSpeedMzy(), 0.0);
+
+        final Matrix gg1 = estimator.getAngularSpeedGDependantCrossBias();
+        assertEquals(gg, gg1);
+        final Matrix gg2 = new Matrix(3, 3);
+        estimator.getAngularSpeedGDependantCrossBias(gg2);
+        assertEquals(gg1, gg2);
+
+        assertEquals(timeInterval, estimator.getTimeInterval(), 0.0);
+
+        final Time t1 = estimator.getTimeIntervalAsTime();
+        assertEquals(timeInterval, t1.getValue().doubleValue(), 0.0);
+        assertEquals(TimeUnit.SECOND, t1.getUnit());
+
+        final Time t2 = new Time(1.0, TimeUnit.DAY);
+        estimator.getTimeIntervalAsTime(t2);
+        assertEquals(t1, t2);
+
+        final NEDFrame nedFrame1 = new NEDFrame(nedPosition, nedC);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
+
+        assertTrue(ecefPosition1.equals(estimator.getEcefPosition(), LARGE_ABSOLUTE_ERROR));
         final ECEFPosition ecefPosition2 = new ECEFPosition();
         estimator.getEcefPosition(ecefPosition2);
         assertTrue(ecefPosition1.equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
@@ -16217,14 +13773,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getNedPosition(nedPosition2);
         assertTrue(nedPosition.equals(nedPosition2, LARGE_ABSOLUTE_ERROR));
         assertTrue(ecefC1.equals(estimator.getEcefC(), LARGE_ABSOLUTE_ERROR));
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC2);
         assertTrue(ecefC1.equals(ecefC2, ABSOLUTE_ERROR));
 
         assertTrue(nedC.equals(estimator.getNedC(), ABSOLUTE_ERROR));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC2);
         assertTrue(nedC.equals(nedC2, ABSOLUTE_ERROR));
 
@@ -16238,14 +13792,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getElapsedTime(elapsedTime2);
         assertEquals(elapsedTime1, elapsedTime2);
         assertTrue(estimator.isFixKinematicsEnabled());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES,
-                estimator.getDriftPeriodSamples());
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
-                estimator.getDriftPeriodSeconds(), 0.0);
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES, estimator.getDriftPeriodSamples());
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval, estimator.getDriftPeriodSeconds(),
+                0.0);
         final Time driftPeriod1 = estimator.getDriftPeriod();
-        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES
-                        * timeInterval,
+        assertEquals(RandomWalkEstimator.DEFAULT_DRIFT_PERIOD_SAMPLES * timeInterval,
                 driftPeriod1.getValue().doubleValue(), 0.0);
         assertEquals(TimeUnit.SECOND, driftPeriod1.getUnit());
         final Time driftPeriod2 = new Time(1.0, TimeUnit.DAY);
@@ -16259,16 +13810,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
         final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
         assertEquals(0.0, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
         final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.MILE);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
         final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
         assertEquals(0.0, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
@@ -16310,94 +13859,34 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(kinematics1, kinematics2);
 
         // Force AlgebraException
-        estimator = null;
         final Matrix wrong = Matrix.identity(3, 3);
         wrong.multiplyByScalar(-1.0);
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, wrong, bg, mg, gg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    ba, ma, bg, wrong, gg, timeInterval, this);
-            fail("AlgebraException expected but not thrown");
-        } catch (final AlgebraException ignore) {
-        }
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, wrong, bg, mg, gg,
+                timeInterval, this));
+        assertThrows(AlgebraException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba, ma, bg, wrong, gg,
+                timeInterval, this));
 
         // Force IllegalArgumentException
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(1, 1), ma, bg, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC,
-                    new Matrix(3, 3), ma, bg, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(1, 3), bg, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    new Matrix(3, 1), bg, mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(1, 1), mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, new Matrix(3, 3), mg, gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(1, 3), gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, new Matrix(3, 1), gg,
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(1, 3),
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator = new RandomWalkEstimator(ecefPosition, nedC, ba,
-                    ma, bg, mg, new Matrix(3, 1),
-                    timeInterval, this);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(estimator);
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(1, 1), ma, bg, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC,
+                new Matrix(3, 3), ma, bg, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(1, 3), bg, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                new Matrix(3, 1), bg, mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, new Matrix(1, 1), mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, new Matrix(3, 3), mg, gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, bg, new Matrix(1, 3), gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, bg, new Matrix(3, 1), gg, timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, bg, mg, new Matrix(1, 3), timeInterval, this));
+        assertThrows(IllegalArgumentException.class, () -> new RandomWalkEstimator(ecefPosition, nedC, ba,
+                ma, bg, mg, new Matrix(3, 1), timeInterval, this));
     }
 
     @Test
@@ -16415,8 +13904,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationBias1()
-            throws WrongSizeException, LockedException {
+    public void testGetSetAccelerationBias1() throws WrongSizeException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16435,11 +13923,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ba2, ba4);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAccelerationBias(new Matrix(1, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationBias(new Matrix(1, 1)));
     }
 
     @Test
@@ -16462,16 +13946,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertArrayEquals(ba2, ba4, 0.0);
 
         // Force IllegalArgumentException
-        try {
-            estimator.getAccelerationBiasArray(new double[1]);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias(new double[1]);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.getAccelerationBiasArray(new double[1]));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationBias(new double[1]));
     }
 
     @Test
@@ -16489,8 +13965,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double bx = ba.getElementAtIndex(0);
         final double by = ba.getElementAtIndex(1);
         final double bz = ba.getElementAtIndex(2);
-        final AccelerationTriad triad2 = new AccelerationTriad(
-                AccelerationUnit.METERS_PER_SQUARED_SECOND, bx, by, bz);
+        final AccelerationTriad triad2 = new AccelerationTriad(AccelerationUnit.METERS_PER_SQUARED_SECOND, bx, by, bz);
         estimator.setAccelerationBias(triad2);
 
         // check
@@ -16583,14 +14058,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // set new value
         final Matrix ba = generateBa();
         final double bx = ba.getElementAtIndex(0);
-        final Acceleration bx2 = new Acceleration(
-                bx, AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration bx2 = new Acceleration(bx, AccelerationUnit.METERS_PER_SQUARED_SECOND);
         estimator.setAccelerationBiasX(bx2);
 
         // check
         final Acceleration bx3 = estimator.getAccelerationBiasXAsAcceleration();
-        final Acceleration bx4 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bx4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasXAsAcceleration(bx4);
         assertEquals(bx2, bx3);
         assertEquals(bx2, bx4);
@@ -16608,14 +14081,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // set new value
         final Matrix ba = generateBa();
         final double by = ba.getElementAtIndex(1);
-        final Acceleration by2 = new Acceleration(
-                by, AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration by2 = new Acceleration(by, AccelerationUnit.METERS_PER_SQUARED_SECOND);
         estimator.setAccelerationBiasY(by2);
 
         // check
         final Acceleration by3 = estimator.getAccelerationBiasYAsAcceleration();
-        final Acceleration by4 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration by4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasYAsAcceleration(by4);
         assertEquals(by2, by3);
         assertEquals(by2, by4);
@@ -16633,14 +14104,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // set new value
         final Matrix ba = generateBa();
         final double bz = ba.getElementAtIndex(2);
-        final Acceleration bz2 = new Acceleration(
-                bz, AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration bz2 = new Acceleration(bz, AccelerationUnit.METERS_PER_SQUARED_SECOND);
         estimator.setAccelerationBiasZ(bz2);
 
         // check
         final Acceleration bz3 = estimator.getAccelerationBiasZAsAcceleration();
-        final Acceleration bz4 = new Acceleration(
-                1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration bz4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         estimator.getAccelerationBiasZAsAcceleration(bz4);
         assertEquals(bz2, bz3);
         assertEquals(bz2, bz4);
@@ -16657,26 +14126,19 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
 
         // set new value
         final Matrix ba = generateBa();
-        final Acceleration bx = new Acceleration(ba.getElementAtIndex(0),
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
-        final Acceleration by = new Acceleration(ba.getElementAtIndex(1),
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
-        final Acceleration bz = new Acceleration(ba.getElementAtIndex(2),
-                AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration bx = new Acceleration(ba.getElementAtIndex(0), AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration by = new Acceleration(ba.getElementAtIndex(1), AccelerationUnit.METERS_PER_SQUARED_SECOND);
+        final Acceleration bz = new Acceleration(ba.getElementAtIndex(2), AccelerationUnit.METERS_PER_SQUARED_SECOND);
         estimator.setAccelerationBias(bx, by, bz);
 
         // check
-        assertEquals(ba.getElementAtIndex(0), estimator.getAccelerationBiasX(),
-                0.0);
-        assertEquals(ba.getElementAtIndex(1), estimator.getAccelerationBiasY(),
-                0.0);
-        assertEquals(ba.getElementAtIndex(2), estimator.getAccelerationBiasZ(),
-                0.0);
+        assertEquals(ba.getElementAtIndex(0), estimator.getAccelerationBiasX(), 0.0);
+        assertEquals(ba.getElementAtIndex(1), estimator.getAccelerationBiasY(), 0.0);
+        assertEquals(ba.getElementAtIndex(2), estimator.getAccelerationBiasZ(), 0.0);
     }
 
     @Test
-    public void testGetSetAccelerationCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testGetSetAccelerationCrossCouplingErrors() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16695,23 +14157,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ma2, ma4);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAccelerationCrossCouplingErrors(
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAccelerationCrossCouplingErrors(
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationCrossCouplingErrors(
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAccelerationCrossCouplingErrors(
+                new Matrix(3, 1)));
     }
 
     @Test
-    public void testGetSetAccelerationSx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationSx() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16727,8 +14180,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationSy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationSy() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16744,8 +14196,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationSz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationSz() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16761,8 +14212,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMxy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMxy() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16778,8 +14228,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMxz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMxz() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16795,8 +14244,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMyx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMyx() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16812,8 +14260,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMyz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMyz() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16829,8 +14276,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMzx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMzx() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16846,8 +14292,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAccelerationMzy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAccelerationMzy() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16863,8 +14308,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetAccelerationScalingFactors() throws AlgebraException,
-            LockedException {
+    public void testSetAccelerationScalingFactors() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16886,8 +14330,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetAccelerationCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testSetAccelerationCrossCouplingErrors() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16907,8 +14350,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double mzx = ma.getElementAt(2, 0);
         final double mzy = ma.getElementAt(2, 1);
 
-        estimator.setAccelerationCrossCouplingErrors(
-                mxy, mxz, myx, myz, mzx, mzy);
+        estimator.setAccelerationCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
 
         // check
         assertEquals(mxy, estimator.getAccelerationMxy(), 0.0);
@@ -16920,8 +14362,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetAccelerationScalingFactorsAndCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testSetAccelerationScalingFactorsAndCrossCouplingErrors() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -16947,8 +14388,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double mzx = ma.getElementAt(2, 0);
         final double mzy = ma.getElementAt(2, 1);
 
-        estimator.setAccelerationScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        estimator.setAccelerationScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
 
         // check
         assertEquals(sx, estimator.getAccelerationSx(), 0.0);
@@ -16965,8 +14405,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedBias1()
-            throws WrongSizeException, LockedException {
+    public void testGetSetAngularSpeedBias1() throws WrongSizeException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
@@ -17023,8 +14462,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double bgx = bg.getElementAtIndex(0);
         final double bgy = bg.getElementAtIndex(1);
         final double bgz = bg.getElementAtIndex(2);
-        final AngularSpeedTriad triad2 = new AngularSpeedTriad(
-                AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
+        final AngularSpeedTriad triad2 = new AngularSpeedTriad(AngularSpeedUnit.RADIANS_PER_SECOND, bgx, bgy, bgz);
         estimator.setAngularSpeedBias(triad2);
 
         final AngularSpeedTriad triad3 = estimator.getAngularSpeedBiasAsTriad();
@@ -17107,8 +14545,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedBiasXAsAngularSpeed()
-            throws LockedException {
+    public void testGetSetAngularSpeedBiasXAsAngularSpeed() throws LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17119,14 +14556,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // set new value
         final Matrix bg = generateBg();
         final double bgx = bg.getElementAtIndex(0);
-        final AngularSpeed bgx2 = new AngularSpeed(
-                bgx, AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgx2 = new AngularSpeed(bgx, AngularSpeedUnit.RADIANS_PER_SECOND);
         estimator.setAngularSpeedBiasX(bgx2);
 
         // check
         final AngularSpeed bgx3 = estimator.getAngularSpeedBiasXAsAngularSpeed();
-        final AngularSpeed bgx4 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgx4 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasXAsAngularSpeed(bgx4);
 
         assertEquals(bgx2, bgx3);
@@ -17134,8 +14569,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedBiasYAsAngularSpeed()
-            throws LockedException {
+    public void testGetSetAngularSpeedBiasYAsAngularSpeed() throws LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17146,14 +14580,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // set new value
         final Matrix bg = generateBg();
         final double bgy = bg.getElementAtIndex(1);
-        final AngularSpeed bgy2 = new AngularSpeed(
-                bgy, AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgy2 = new AngularSpeed(bgy, AngularSpeedUnit.RADIANS_PER_SECOND);
         estimator.setAngularSpeedBiasY(bgy2);
 
         // check
         final AngularSpeed bgy3 = estimator.getAngularSpeedBiasYAsAngularSpeed();
-        final AngularSpeed bgy4 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgy4 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasYAsAngularSpeed(bgy4);
 
         assertEquals(bgy2, bgy3);
@@ -17161,8 +14593,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedBiasZAsAngularSpeed()
-            throws LockedException {
+    public void testGetSetAngularSpeedBiasZAsAngularSpeed() throws LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17173,14 +14604,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // set new value
         final Matrix bg = generateBg();
         final double bgz = bg.getElementAtIndex(2);
-        final AngularSpeed bgz2 = new AngularSpeed(
-                bgz, AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgz2 = new AngularSpeed(bgz, AngularSpeedUnit.RADIANS_PER_SECOND);
         estimator.setAngularSpeedBiasZ(bgz2);
 
         // check
         final AngularSpeed bgz3 = estimator.getAngularSpeedBiasZAsAngularSpeed();
-        final AngularSpeed bgz4 = new AngularSpeed(
-                1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
+        final AngularSpeed bgz4 = new AngularSpeed(1.0, AngularSpeedUnit.DEGREES_PER_SECOND);
         estimator.getAngularSpeedBiasZAsAngularSpeed(bgz4);
 
         assertEquals(bgz2, bgz3);
@@ -17202,12 +14631,9 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double bgy = bg.getElementAtIndex(1);
         final double bgz = bg.getElementAtIndex(2);
 
-        final AngularSpeed bgx1 = new AngularSpeed(
-                bgx, AngularSpeedUnit.RADIANS_PER_SECOND);
-        final AngularSpeed bgy1 = new AngularSpeed(
-                bgy, AngularSpeedUnit.RADIANS_PER_SECOND);
-        final AngularSpeed bgz1 = new AngularSpeed(
-                bgz, AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgx1 = new AngularSpeed(bgx, AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgy1 = new AngularSpeed(bgy, AngularSpeedUnit.RADIANS_PER_SECOND);
+        final AngularSpeed bgz1 = new AngularSpeed(bgz, AngularSpeedUnit.RADIANS_PER_SECOND);
         estimator.setAngularSpeedBias(bgx1, bgy1, bgz1);
 
         // check
@@ -17221,8 +14647,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testGetSetAngularSpeedCrossCouplingErrors() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
@@ -17241,23 +14666,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(mg2, mg4);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(
+                new Matrix(3, 1)));
     }
 
     @Test
-    public void testGetSetAngularSpeedSx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedSx() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17273,8 +14689,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedSy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedSy() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17290,8 +14705,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedSz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedSz() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17307,8 +14721,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMxy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMxy() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17324,8 +14737,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMxz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMxz() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17341,8 +14753,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMyx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMyx() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17358,8 +14769,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMyz() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMyz() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17375,8 +14785,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMzx() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMzx() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17392,8 +14801,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedMzy() throws AlgebraException,
-            LockedException {
+    public void testGetSetAngularSpeedMzy() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
@@ -17409,8 +14817,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetAngularSpeedScalingFactors() throws AlgebraException,
-            LockedException {
+    public void testSetAngularSpeedScalingFactors() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
@@ -17431,8 +14838,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetAngularSpeedCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testSetAngularSpeedCrossCouplingErrors() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
@@ -17451,8 +14857,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double myz = mg.getElementAt(1, 2);
         final double mzx = mg.getElementAt(2, 0);
         final double mzy = mg.getElementAt(2, 1);
-        estimator.setAngularSpeedCrossCouplingErrors(
-                mxy, mxz, myx, myz, mzx, mzy);
+        estimator.setAngularSpeedCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
 
         // check
         assertEquals(mxy, estimator.getAngularSpeedMxy(), 0.0);
@@ -17464,8 +14869,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetAngularSpeedScalingFactorAndCrossCouplingErrors()
-            throws AlgebraException, LockedException {
+    public void testSetAngularSpeedScalingFactorAndCrossCouplingErrors() throws AlgebraException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
@@ -17490,8 +14894,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double myz = mg.getElementAt(1, 2);
         final double mzx = mg.getElementAt(2, 0);
         final double mzy = mg.getElementAt(2, 1);
-        estimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        estimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
 
         // check
         assertEquals(sx, estimator.getAngularSpeedSx(), 0.0);
@@ -17506,8 +14909,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetAngularSpeedGDependentCrossBias()
-            throws WrongSizeException, LockedException {
+    public void testGetSetAngularSpeedGDependentCrossBias() throws WrongSizeException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
@@ -17525,18 +14927,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(gg2, gg4);
 
         // Force IllegalArgumentException
-        try {
-            estimator.setAngularSpeedGDependantCrossBias(
-                    new Matrix(1, 3));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedGDependantCrossBias(
-                    new Matrix(3, 1));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedGDependantCrossBias(
+                new Matrix(1, 3)));
+        assertThrows(IllegalArgumentException.class, () -> estimator.setAngularSpeedGDependantCrossBias(
+                new Matrix(3, 1)));
     }
 
     @Test
@@ -17544,8 +14938,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        assertEquals(TIME_INTERVAL_SECONDS, estimator.getTimeInterval(),
-                0.0);
+        assertEquals(TIME_INTERVAL_SECONDS, estimator.getTimeInterval(), 0.0);
 
         // set new value
         final double timeInterval = 2.0 * TIME_INTERVAL_SECONDS;
@@ -17565,8 +14958,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(TimeUnit.SECOND, t1.getUnit());
 
         // set new value
-        final Time t2 = new Time(2.0 * TIME_INTERVAL_SECONDS,
-                TimeUnit.SECOND);
+        final Time t2 = new Time(2.0 * TIME_INTERVAL_SECONDS, TimeUnit.SECOND);
         estimator.setTimeInterval(t2);
 
         // check
@@ -17581,15 +14973,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     public void testGetSetEcefPosition() throws LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
-        final ECEFPosition ecefPosition1 =
-                new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, 0.0, 0.0);
+        final ECEFPosition ecefPosition1 = new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, 0.0, 0.0);
         assertEquals(estimator.getEcefPosition(), ecefPosition1);
 
         // set new value
-        final ECEFPosition ecefPosition2 =
-                new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                        Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                        Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
+        final ECEFPosition ecefPosition2 = new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
+                Constants.EARTH_EQUATORIAL_RADIUS_WGS84, Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
         estimator.setEcefPosition(ecefPosition2);
 
         // check
@@ -17606,20 +14995,16 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
-        final ECEFPosition ecefPosition1 =
-                new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, 0.0, 0.0);
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
+        final ECEFPosition ecefPosition1 = new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, 0.0, 0.0);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
 
         //  set new value
-        estimator.setEcefPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
+        estimator.setEcefPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
                 Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
 
         // check
-        final ECEFPosition ecefPosition2 =
-                new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                        Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                        Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
+        final ECEFPosition ecefPosition2 = new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
+                Constants.EARTH_EQUATORIAL_RADIUS_WGS84, Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
 
         final ECEFPosition ecefPosition3 = estimator.getEcefPosition();
         final ECEFPosition ecefPosition4 = new ECEFPosition();
@@ -17634,20 +15019,16 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
-        final ECEFPosition ecefPosition1 =
-                new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, 0.0, 0.0);
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
+        final ECEFPosition ecefPosition1 = new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, 0.0, 0.0);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
 
         //  set new value
-        final Distance distance = new Distance(
-                Constants.EARTH_EQUATORIAL_RADIUS_WGS84, DistanceUnit.METER);
+        final Distance distance = new Distance(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, DistanceUnit.METER);
         estimator.setEcefPosition(distance, distance, distance);
 
         // check
-        final ECEFPosition ecefPosition2 =
-                new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                        Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                        Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
+        final ECEFPosition ecefPosition2 = new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
+                Constants.EARTH_EQUATORIAL_RADIUS_WGS84, Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
 
         final ECEFPosition ecefPosition3 = estimator.getEcefPosition();
         final ECEFPosition ecefPosition4 = new ECEFPosition();
@@ -17662,22 +15043,17 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
-        final ECEFPosition ecefPosition1 =
-                new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, 0.0, 0.0);
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
+        final ECEFPosition ecefPosition1 = new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84, 0.0, 0.0);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
 
         //  set new value
-        final Point3D position = new InhomogeneousPoint3D(
-                Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
+        final Point3D position = new InhomogeneousPoint3D(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
+                Constants.EARTH_EQUATORIAL_RADIUS_WGS84, Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
         estimator.setEcefPosition(position);
 
         // check
-        final ECEFPosition ecefPosition2 =
-                new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                        Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
-                        Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
+        final ECEFPosition ecefPosition2 = new ECEFPosition(Constants.EARTH_EQUATORIAL_RADIUS_WGS84,
+                Constants.EARTH_EQUATORIAL_RADIUS_WGS84, Constants.EARTH_EQUATORIAL_RADIUS_WGS84);
 
         final ECEFPosition ecefPosition3 = estimator.getEcefPosition();
         final ECEFPosition ecefPosition4 = new ECEFPosition();
@@ -17693,8 +15069,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
 
         // check default value
         final NEDFrame nedFrame1 = new NEDFrame();
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
         assertEquals(estimator.getEcefFrame(), ecefFrame1);
         final ECEFFrame ecefFrame2 = new ECEFFrame();
@@ -17722,9 +15097,9 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // check default value
         final NEDPosition nedPosition1 = estimator.getNedPosition();
 
-        assertEquals(nedPosition1.getLatitude(), 0.0, ABSOLUTE_ERROR);
-        assertEquals(nedPosition1.getLongitude(), 0.0, ABSOLUTE_ERROR);
-        assertEquals(nedPosition1.getHeight(), 0.0, ABSOLUTE_ERROR);
+        assertEquals(0.0, nedPosition1.getLatitude(), ABSOLUTE_ERROR);
+        assertEquals(0.0, nedPosition1.getLongitude(), ABSOLUTE_ERROR);
+        assertEquals(0.0, nedPosition1.getHeight(), ABSOLUTE_ERROR);
 
         // set new value
         final NEDPosition nedPosition2 = createPosition();
@@ -17744,15 +15119,12 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
-        assertTrue(estimator.getNedPosition().equals(new NEDPosition(),
-                ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedPosition().equals(new NEDPosition(), ABSOLUTE_ERROR));
 
         // set new value
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
 
         estimator.setNedPosition(latitude, longitude, height);
@@ -17773,16 +15145,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
-        assertTrue(estimator.getNedPosition().equals(new NEDPosition(),
-                ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedPosition().equals(new NEDPosition(), ABSOLUTE_ERROR));
 
         // set new value
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final Angle latitude = new Angle(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
+        final Angle latitude = new Angle(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
                 AngleUnit.DEGREES);
-        final Angle longitude = new Angle(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
+        final Angle longitude = new Angle(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
                 AngleUnit.DEGREES);
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final Distance heightDistance = new Distance(height, DistanceUnit.METER);
@@ -17790,8 +15159,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.setNedPosition(latitude, longitude, height);
 
         // check
-        final NEDPosition nedPosition2 = new NEDPosition(latitude, longitude,
-                heightDistance);
+        final NEDPosition nedPosition2 = new NEDPosition(latitude, longitude, heightDistance);
 
         final NEDPosition nedPosition3 = estimator.getNedPosition();
         final NEDPosition nedPosition4 = new NEDPosition();
@@ -17806,19 +15174,15 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
-        assertTrue(estimator.getNedPosition().equals(new NEDPosition(),
-                ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedPosition().equals(new NEDPosition(), ABSOLUTE_ERROR));
 
         // set new value
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final Angle latitude = new Angle(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
+        final Angle latitude = new Angle(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
                 AngleUnit.DEGREES);
-        final Angle longitude = new Angle(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
+        final Angle longitude = new Angle(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
                 AngleUnit.DEGREES);
-        final Distance height = new Distance(
-                randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT), DistanceUnit.METER);
+        final Distance height = new Distance(randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT), DistanceUnit.METER);
 
         estimator.setNedPosition(latitude, longitude, height);
 
@@ -17834,26 +15198,23 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetEcefC()
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
+    public void testGetSetEcefC() throws InvalidSourceAndDestinationFrameTypeException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(new NEDFrame());
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(new NEDFrame());
         final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertEquals(estimator.getEcefC(), ecefC1);
 
-        final CoordinateTransformation ecefC2 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.EARTH_CENTERED_EARTH_FIXED_FRAME);
+        final CoordinateTransformation ecefC2 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.EARTH_CENTERED_EARTH_FIXED_FRAME);
         estimator.setEcefC(ecefC2);
 
         // check
         final CoordinateTransformation ecefC3 = estimator.getEcefC();
-        final CoordinateTransformation ecefC4 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC4 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC4);
 
         assertEquals(ecefC2, ecefC3);
@@ -17861,32 +15222,24 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testGetSetNedC()
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
+    public void testGetSetNedC() throws InvalidSourceAndDestinationFrameTypeException, LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default value
-        assertTrue(estimator.getNedC().equals(
-                new CoordinateTransformation(
-                        FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME),
-                ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(FrameType.BODY_FRAME,
+                        FrameType.LOCAL_NAVIGATION_FRAME), ABSOLUTE_ERROR));
 
         // set new value
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC1 = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC1 = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+                FrameType.LOCAL_NAVIGATION_FRAME);
         estimator.setNedC(nedC1);
 
         final CoordinateTransformation nedC2 = estimator.getNedC();
-        final CoordinateTransformation nedC3 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation nedC3 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getNedC(nedC3);
 
         assertTrue(nedC1.equals(nedC2, ABSOLUTE_ERROR));
@@ -17894,17 +15247,14 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetNedPositionAndNedOrientation1()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetNedPositionAndNedOrientation1() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        assertTrue(estimator.getNedPosition().equals(new NEDPosition(),
-                ABSOLUTE_ERROR));
-        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(
-                        FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME),
-                ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedPosition().equals(new NEDPosition(), ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(FrameType.BODY_FRAME,
+                        FrameType.LOCAL_NAVIGATION_FRAME), ABSOLUTE_ERROR));
 
         // set new values
         final NEDPosition nedPosition1 = createPosition();
@@ -17920,34 +15270,25 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertTrue(nedC1.equals(nedC2, ABSOLUTE_ERROR));
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setNedPositionAndNedOrientation(nedPosition1,
-                    new CoordinateTransformation(FrameType.BODY_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setNedPositionAndNedOrientation(nedPosition1, new CoordinateTransformation(
+                        FrameType.BODY_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetNedPositionAndNedOrientation2()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetNedPositionAndNedOrientation2() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        assertTrue(estimator.getNedPosition().equals(new NEDPosition(),
-                ABSOLUTE_ERROR));
-        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(
-                        FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME),
-                ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedPosition().equals(new NEDPosition(), ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(FrameType.BODY_FRAME,
+                        FrameType.LOCAL_NAVIGATION_FRAME), ABSOLUTE_ERROR));
 
         // set new values
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
 
         final CoordinateTransformation nedC1 = createOrientation();
@@ -17964,35 +15305,26 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertTrue(nedC1.equals(nedC2, ABSOLUTE_ERROR));
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setNedPositionAndNedOrientation(latitude, longitude, height,
-                    new CoordinateTransformation(FrameType.BODY_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setNedPositionAndNedOrientation(latitude, longitude, height,
+                        new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetNedPositionAndNedOrientation3()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetNedPositionAndNedOrientation3() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        assertTrue(estimator.getNedPosition().equals(new NEDPosition(),
-                ABSOLUTE_ERROR));
-        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(
-                        FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME),
-                ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedPosition().equals(new NEDPosition(), ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(FrameType.BODY_FRAME,
+                        FrameType.LOCAL_NAVIGATION_FRAME), ABSOLUTE_ERROR));
 
         // set new values
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final Angle latitude = new Angle(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
+        final Angle latitude = new Angle(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
                 AngleUnit.DEGREES);
-        final Angle longitude = new Angle(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
+        final Angle longitude = new Angle(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
                 AngleUnit.DEGREES);
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final Distance heightDistance = new Distance(height, DistanceUnit.METER);
@@ -18002,8 +15334,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.setNedPositionAndNedOrientation(latitude, longitude, height, nedC1);
 
         // check
-        final NEDPosition nedPosition1 = new NEDPosition(latitude, longitude,
-                heightDistance);
+        final NEDPosition nedPosition1 = new NEDPosition(latitude, longitude, heightDistance);
 
         final NEDPosition nedPosition2 = estimator.getNedPosition();
         final CoordinateTransformation nedC2 = estimator.getNedC();
@@ -18012,48 +15343,36 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertTrue(nedC1.equals(nedC2, ABSOLUTE_ERROR));
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setNedPositionAndNedOrientation(latitude, longitude,
-                    height,
-                    new CoordinateTransformation(FrameType.BODY_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setNedPositionAndNedOrientation(latitude, longitude, height,
+                        new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetNedPositionAndNedOrientation4()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetNedPositionAndNedOrientation4() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        assertTrue(estimator.getNedPosition().equals(new NEDPosition(),
-                ABSOLUTE_ERROR));
-        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(
-                        FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME),
-                ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedPosition().equals(new NEDPosition(), ABSOLUTE_ERROR));
+        assertTrue(estimator.getNedC().equals(new CoordinateTransformation(FrameType.BODY_FRAME,
+                        FrameType.LOCAL_NAVIGATION_FRAME), ABSOLUTE_ERROR));
 
         // set new values
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final Angle latitude = new Angle(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
+        final Angle latitude = new Angle(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
                 AngleUnit.DEGREES);
-        final Angle longitude = new Angle(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
+        final Angle longitude = new Angle(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
                 AngleUnit.DEGREES);
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final Distance heightDistance = new Distance(height, DistanceUnit.METER);
 
         final CoordinateTransformation nedC1 = createOrientation();
 
-        estimator.setNedPositionAndNedOrientation(latitude, longitude, heightDistance,
-                nedC1);
+        estimator.setNedPositionAndNedOrientation(latitude, longitude, heightDistance, nedC1);
 
         // check
-        final NEDPosition nedPosition1 = new NEDPosition(latitude, longitude,
-                heightDistance);
+        final NEDPosition nedPosition1 = new NEDPosition(latitude, longitude, heightDistance);
 
         final NEDPosition nedPosition2 = estimator.getNedPosition();
         final CoordinateTransformation nedC2 = estimator.getNedC();
@@ -18062,43 +15381,33 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertTrue(nedC1.equals(nedC2, ABSOLUTE_ERROR));
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setNedPositionAndNedOrientation(latitude, longitude,
-                    heightDistance,
-                    new CoordinateTransformation(FrameType.BODY_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setNedPositionAndNedOrientation(latitude, longitude, heightDistance,
+                        new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetEcefPositionAndEcefOrientation1()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetEcefPositionAndEcefOrientation1() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(new NEDFrame());
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(new NEDFrame());
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
-        assertEquals(estimator.getEcefC(), ecefC1);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        assertEquals(ecefC1, estimator.getEcefC());
 
         // set new values
         final NEDPosition nedPosition2 = createPosition();
         final CoordinateTransformation nedC2 = createOrientation();
 
         final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame2);
+        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
         final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-        final CoordinateTransformation ecefC2 = ecefFrame2
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
         estimator.setEcefPositionAndEcefOrientation(ecefPosition2, ecefC2);
 
@@ -18108,8 +15417,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getEcefPosition(ecefPosition4);
 
         final CoordinateTransformation ecefC3 = estimator.getEcefC();
-        final CoordinateTransformation ecefC4 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC4 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC4);
 
         assertEquals(ecefPosition2, ecefPosition3);
@@ -18119,27 +15428,20 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ecefC2, ecefC4);
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setEcefPositionAndEcefOrientation(ecefPosition1,
-                    new CoordinateTransformation(FrameType.BODY_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setEcefPositionAndEcefOrientation(ecefPosition1, new CoordinateTransformation(
+                        FrameType.BODY_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetEcefPositionAndEcefOrientation2()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetEcefPositionAndEcefOrientation2() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(new NEDFrame());
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(new NEDFrame());
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertEquals(estimator.getEcefPosition(), ecefPosition1);
         assertEquals(estimator.getEcefC(), ecefC1);
@@ -18149,12 +15451,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final CoordinateTransformation nedC2 = createOrientation();
 
         final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame2);
+        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
         final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-        final CoordinateTransformation ecefC2 = ecefFrame2
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
         final double x = ecefPosition2.getX();
         final double y = ecefPosition2.getY();
@@ -18167,8 +15467,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getEcefPosition(ecefPosition4);
 
         final CoordinateTransformation ecefC3 = estimator.getEcefC();
-        final CoordinateTransformation ecefC4 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC4 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC4);
 
         assertEquals(ecefPosition2, ecefPosition3);
@@ -18178,27 +15478,20 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ecefC2, ecefC4);
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setEcefPositionAndEcefOrientation(x, y, z,
-                    new CoordinateTransformation(FrameType.BODY_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setEcefPositionAndEcefOrientation(x, y, z, new CoordinateTransformation(
+                        FrameType.BODY_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetEcefPositionAndEcefOrientation3()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetEcefPositionAndEcefOrientation3() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(new NEDFrame());
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(new NEDFrame());
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertEquals(estimator.getEcefPosition(), ecefPosition1);
         assertEquals(estimator.getEcefC(), ecefC1);
@@ -18208,12 +15501,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final CoordinateTransformation nedC2 = createOrientation();
 
         final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame2);
+        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
         final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-        final CoordinateTransformation ecefC2 = ecefFrame2
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
         final Distance x = new Distance(ecefPosition2.getX(), DistanceUnit.METER);
         final Distance y = new Distance(ecefPosition2.getY(), DistanceUnit.METER);
@@ -18226,8 +15517,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getEcefPosition(ecefPosition4);
 
         final CoordinateTransformation ecefC3 = estimator.getEcefC();
-        final CoordinateTransformation ecefC4 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC4 = new CoordinateTransformation(FrameType.BODY_FRAME, FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC4);
 
         assertEquals(ecefPosition2, ecefPosition3);
@@ -18237,24 +15527,18 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ecefC2, ecefC4);
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setEcefPositionAndEcefOrientation(x, y, z,
-                    new CoordinateTransformation(FrameType.BODY_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setEcefPositionAndEcefOrientation(x, y, z, new CoordinateTransformation(
+                        FrameType.BODY_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetEcefPositionAndEcefOrientation4()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetEcefPositionAndEcefOrientation4() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(new NEDFrame());
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(new NEDFrame());
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
         final CoordinateTransformation ecefC1 = ecefFrame1
                 .getCoordinateTransformation();
@@ -18286,8 +15570,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.getEcefPosition(ecefPosition4);
 
         final CoordinateTransformation ecefC3 = estimator.getEcefC();
-        final CoordinateTransformation ecefC4 = new CoordinateTransformation(
-                FrameType.BODY_FRAME, FrameType.BODY_FRAME);
+        final CoordinateTransformation ecefC4 = new CoordinateTransformation(FrameType.BODY_FRAME,
+                FrameType.BODY_FRAME);
         estimator.getEcefC(ecefC4);
 
         assertEquals(ecefPosition2, ecefPosition3);
@@ -18297,32 +15581,24 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(ecefC2, ecefC4);
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setEcefPositionAndEcefOrientation(point,
-                    new CoordinateTransformation(FrameType.BODY_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setEcefPositionAndEcefOrientation(point, new CoordinateTransformation(
+                        FrameType.BODY_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetNedPositionAndEcefOrientation1()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetNedPositionAndEcefOrientation1() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
         final NEDFrame nedFrame1 = new NEDFrame();
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
         final NEDPosition nedPosition1 = nedFrame1.getPosition();
-        final CoordinateTransformation nedC1 = nedFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation nedC1 = nedFrame1.getCoordinateTransformation();
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertTrue(estimator.getNedPosition().equals(nedPosition1, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC1, ABSOLUTE_ERROR));
@@ -18334,12 +15610,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final CoordinateTransformation nedC2 = createOrientation();
 
         final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame2);
+        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
         final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-        final CoordinateTransformation ecefC2 = ecefFrame2
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
         estimator.setNedPositionAndEcefOrientation(nedPosition2, ecefC2);
 
@@ -18350,139 +15624,105 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(estimator.getEcefC(), ecefC2);
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setNedPositionAndEcefOrientation(nedPosition1,
-                    new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setNedPositionAndEcefOrientation(nedPosition1, new CoordinateTransformation(
+                        FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetNedPositionAndEcefOrientation2()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetNedPositionAndEcefOrientation2() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
         final NEDFrame nedFrame1 = new NEDFrame();
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
         final NEDPosition nedPosition1 = nedFrame1.getPosition();
-        final CoordinateTransformation nedC1 = nedFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation nedC1 = nedFrame1.getCoordinateTransformation();
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertTrue(estimator.getNedPosition().equals(nedPosition1, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC1, ABSOLUTE_ERROR));
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
-        assertEquals(estimator.getEcefC(), ecefC1);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        assertEquals(ecefC1, estimator.getEcefC());
 
         // set new values
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final NEDPosition nedPosition2 = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+                FrameType.LOCAL_NAVIGATION_FRAME);
 
         final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame2);
+        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
         final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-        final CoordinateTransformation ecefC2 = ecefFrame2
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
-        estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
-                ecefC2);
+        estimator.setNedPositionAndEcefOrientation(latitude, longitude, height, ecefC2);
 
         // check
         assertTrue(estimator.getNedPosition().equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC2, ABSOLUTE_ERROR));
-        assertEquals(estimator.getEcefPosition(), ecefPosition2);
-        assertEquals(estimator.getEcefC(), ecefC2);
+        assertEquals(ecefPosition2, estimator.getEcefPosition());
+        assertEquals(ecefC2, estimator.getEcefC());
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
-                    new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
+                        new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetNedPositionAndEcefOrientation3()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetNedPositionAndEcefOrientation3() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
         final NEDFrame nedFrame1 = new NEDFrame();
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
         final NEDPosition nedPosition1 = nedFrame1.getPosition();
-        final CoordinateTransformation nedC1 = nedFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation nedC1 = nedFrame1.getCoordinateTransformation();
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertTrue(estimator.getNedPosition().equals(nedPosition1, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC1, ABSOLUTE_ERROR));
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
-        assertEquals(estimator.getEcefC(), ecefC1);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        assertEquals(ecefC1, estimator.getEcefC());
 
         // set new values
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final Angle latitude = new Angle(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
+        final Angle latitude = new Angle(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
                 AngleUnit.DEGREES);
-        final Angle longitude = new Angle(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
+        final Angle longitude = new Angle(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
                 AngleUnit.DEGREES);
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final Distance heightDistance = new Distance(height, DistanceUnit.METER);
-        final NEDPosition nedPosition2 = new NEDPosition(latitude, longitude,
-                heightDistance);
+        final NEDPosition nedPosition2 = new NEDPosition(latitude, longitude, heightDistance);
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME,
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
                 FrameType.LOCAL_NAVIGATION_FRAME);
 
         final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame2);
+        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
         final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-        final CoordinateTransformation ecefC2 = ecefFrame2
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
-        estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
-                ecefC2);
+        estimator.setNedPositionAndEcefOrientation(latitude, longitude, height, ecefC2);
 
         // check
         assertTrue(estimator.getNedPosition().equals(nedPosition2, ABSOLUTE_ERROR));
@@ -18491,110 +15731,83 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(estimator.getEcefC(), ecefC2);
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
-                    new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
+                        new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetNedPositionAndEcefOrientation4()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetNedPositionAndEcefOrientation4() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
         final NEDFrame nedFrame1 = new NEDFrame();
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
         final NEDPosition nedPosition1 = nedFrame1.getPosition();
-        final CoordinateTransformation nedC1 = nedFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation nedC1 = nedFrame1.getCoordinateTransformation();
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertTrue(estimator.getNedPosition().equals(nedPosition1, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC1, ABSOLUTE_ERROR));
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
-        assertEquals(estimator.getEcefC(), ecefC1);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        assertEquals(ecefC1, estimator.getEcefC());
 
         // set new values
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final Angle latitude = new Angle(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
+        final Angle latitude = new Angle(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES),
                 AngleUnit.DEGREES);
-        final Angle longitude = new Angle(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
+        final Angle longitude = new Angle(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES),
                 AngleUnit.DEGREES);
-        final Distance height = new Distance(
-                randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT), DistanceUnit.METER);
-        final NEDPosition nedPosition2 = new NEDPosition(latitude, longitude,
-                height);
+        final Distance height = new Distance(randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT), DistanceUnit.METER);
+        final NEDPosition nedPosition2 = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC2 = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME,
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC2 = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
                 FrameType.LOCAL_NAVIGATION_FRAME);
 
         final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame2);
+        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
         final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-        final CoordinateTransformation ecefC2 = ecefFrame2
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
-        estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
-                ecefC2);
+        estimator.setNedPositionAndEcefOrientation(latitude, longitude, height, ecefC2);
 
         // check
         assertTrue(estimator.getNedPosition().equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC2, ABSOLUTE_ERROR));
-        assertEquals(estimator.getEcefPosition(), ecefPosition2);
-        assertEquals(estimator.getEcefC(), ecefC2);
+        assertEquals(ecefPosition2, estimator.getEcefPosition());
+        assertEquals(ecefC2, estimator.getEcefC());
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
-                    new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setNedPositionAndEcefOrientation(latitude, longitude, height,
+                        new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetEcefPositionAndNedOrientation1()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetEcefPositionAndNedOrientation1() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
         final NEDFrame nedFrame1 = new NEDFrame();
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
         final NEDPosition nedPosition1 = nedFrame1.getPosition();
-        final CoordinateTransformation nedC1 = nedFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation nedC1 = nedFrame1.getCoordinateTransformation();
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertTrue(estimator.getNedPosition().equals(nedPosition1, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC1, ABSOLUTE_ERROR));
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
-        assertEquals(estimator.getEcefC(), ecefC1);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        assertEquals(ecefC1, estimator.getEcefC());
 
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
@@ -18603,12 +15816,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             final CoordinateTransformation nedC2 = createOrientation();
 
             final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-            final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame2);
+            final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
             final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-            final CoordinateTransformation ecefC2 = ecefFrame2
-                    .getCoordinateTransformation();
+            final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
             estimator.setEcefPositionAndNedOrientation(ecefPosition2, nedC2);
 
@@ -18618,8 +15829,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             if (!estimator.getEcefPosition().equals(ecefPosition2, 5.0 * ABSOLUTE_ERROR)) {
                 continue;
             }
-            assertTrue(estimator.getEcefPosition().equals(ecefPosition2,
-                    5.0 * ABSOLUTE_ERROR));
+            assertTrue(estimator.getEcefPosition().equals(ecefPosition2, 5.0 * ABSOLUTE_ERROR));
             assertTrue(estimator.getEcefC().equals(ecefC2, ABSOLUTE_ERROR));
 
             numValid++;
@@ -18629,18 +15839,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertTrue(numValid > 0);
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setEcefPositionAndNedOrientation(ecefPosition1,
-                    new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setEcefPositionAndNedOrientation(ecefPosition1, new CoordinateTransformation(
+                        FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
-    public void testSetEcefPositionAndNedOrientation2()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetEcefPositionAndNedOrientation2() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
@@ -18648,32 +15853,27 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
 
             // check default values
             final NEDFrame nedFrame1 = new NEDFrame();
-            final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame1);
+            final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
             final NEDPosition nedPosition1 = nedFrame1.getPosition();
-            final CoordinateTransformation nedC1 = nedFrame1
-                    .getCoordinateTransformation();
+            final CoordinateTransformation nedC1 = nedFrame1.getCoordinateTransformation();
             final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-            final CoordinateTransformation ecefC1 = ecefFrame1
-                    .getCoordinateTransformation();
+            final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
             assertTrue(estimator.getNedPosition().equals(nedPosition1, ABSOLUTE_ERROR));
             assertTrue(estimator.getNedC().equals(nedC1, ABSOLUTE_ERROR));
-            assertEquals(estimator.getEcefPosition(), ecefPosition1);
-            assertEquals(estimator.getEcefC(), ecefC1);
+            assertEquals(ecefPosition1, estimator.getEcefPosition());
+            assertEquals(ecefC1, estimator.getEcefC());
 
             // set new values
             final NEDPosition nedPosition2 = createPosition();
             final CoordinateTransformation nedC2 = createOrientation();
 
             final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-            final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame2);
+            final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
             final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-            final CoordinateTransformation ecefC2 = ecefFrame2
-                    .getCoordinateTransformation();
+            final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
             final double x = ecefPosition2.getX();
             final double y = ecefPosition2.getY();
@@ -18690,25 +15890,19 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
                 continue;
             }
             assertTrue(estimator.getNedC().equals(nedC2, ABSOLUTE_ERROR));
-            if (!estimator.getEcefPosition().equals(ecefPosition2,
-                    LARGE_ABSOLUTE_ERROR)) {
+            if (!estimator.getEcefPosition().equals(ecefPosition2, LARGE_ABSOLUTE_ERROR)) {
                 continue;
             }
-            assertTrue(estimator.getEcefPosition().equals(ecefPosition2,
-                    LARGE_ABSOLUTE_ERROR));
+            assertTrue(estimator.getEcefPosition().equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
             if (!estimator.getEcefC().equals(ecefC2, ABSOLUTE_ERROR)) {
                 continue;
             }
             assertTrue(estimator.getEcefC().equals(ecefC2, ABSOLUTE_ERROR));
 
             // Force InvalidSourceAndDestinationFrameTypeException
-            try {
-                estimator.setEcefPositionAndNedOrientation(x, y, z,
-                        new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME,
-                                FrameType.BODY_FRAME));
-                fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-            } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-            }
+            assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                    () -> estimator.setEcefPositionAndNedOrientation(x, y, z, new CoordinateTransformation(
+                            FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME)));
 
             numValid++;
             break;
@@ -18718,27 +15912,23 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetEcefPositionAndNedOrientation3()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetEcefPositionAndNedOrientation3() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
         final NEDFrame nedFrame1 = new NEDFrame();
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
         final NEDPosition nedPosition1 = nedFrame1.getPosition();
-        final CoordinateTransformation nedC1 = nedFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation nedC1 = nedFrame1.getCoordinateTransformation();
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertTrue(estimator.getNedPosition().equals(nedPosition1, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC1, ABSOLUTE_ERROR));
-        assertEquals(estimator.getEcefPosition(), ecefPosition1);
-        assertEquals(estimator.getEcefC(), ecefC1);
+        assertEquals(ecefPosition1, estimator.getEcefPosition());
+        assertEquals(ecefC1, estimator.getEcefC());
 
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
@@ -18747,12 +15937,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             final CoordinateTransformation nedC2 = createOrientation();
 
             final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-            final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame2);
+            final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
             final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-            final CoordinateTransformation ecefC2 = ecefFrame2
-                    .getCoordinateTransformation();
+            final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
             final Distance x = new Distance(ecefPosition2.getX(), DistanceUnit.METER);
             final Distance y = new Distance(ecefPosition2.getY(), DistanceUnit.METER);
@@ -18766,18 +15954,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             if (!estimator.getEcefPosition().equals(ecefPosition2, LARGE_ABSOLUTE_ERROR)) {
                 continue;
             }
-            assertTrue(estimator.getEcefPosition().equals(ecefPosition2,
-                    LARGE_ABSOLUTE_ERROR));
+            assertTrue(estimator.getEcefPosition().equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
             assertTrue(estimator.getEcefC().equals(ecefC2, ABSOLUTE_ERROR));
 
             // Force InvalidSourceAndDestinationFrameTypeException
-            try {
-                estimator.setEcefPositionAndNedOrientation(x, y, z,
-                        new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME,
-                                FrameType.BODY_FRAME));
-                fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-            } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-            }
+            assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                    () -> estimator.setEcefPositionAndNedOrientation(x, y, z, new CoordinateTransformation(
+                            FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME)));
 
             numValid++;
             break;
@@ -18787,22 +15970,18 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testSetEcefPositionAndNedOrientation4()
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void testSetEcefPositionAndNedOrientation4() throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
 
         // check default values
         final NEDFrame nedFrame1 = new NEDFrame();
-        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame1);
+        final ECEFFrame ecefFrame1 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame1);
 
         final NEDPosition nedPosition1 = nedFrame1.getPosition();
-        final CoordinateTransformation nedC1 = nedFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation nedC1 = nedFrame1.getCoordinateTransformation();
         final ECEFPosition ecefPosition1 = ecefFrame1.getECEFPosition();
-        final CoordinateTransformation ecefC1 = ecefFrame1
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC1 = ecefFrame1.getCoordinateTransformation();
 
         assertTrue(estimator.getNedPosition().equals(nedPosition1, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC1, ABSOLUTE_ERROR));
@@ -18814,12 +15993,10 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final CoordinateTransformation nedC2 = createOrientation();
 
         final NEDFrame nedFrame2 = new NEDFrame(nedPosition2, nedC2);
-        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame2);
+        final ECEFFrame ecefFrame2 = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame2);
 
         final ECEFPosition ecefPosition2 = ecefFrame2.getECEFPosition();
-        final CoordinateTransformation ecefC2 = ecefFrame2
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC2 = ecefFrame2.getCoordinateTransformation();
 
         final double x = ecefPosition2.getX();
         final double y = ecefPosition2.getY();
@@ -18831,18 +16008,13 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // check
         assertTrue(estimator.getNedPosition().equals(nedPosition2, ABSOLUTE_ERROR));
         assertTrue(estimator.getNedC().equals(nedC2, ABSOLUTE_ERROR));
-        assertTrue(estimator.getEcefPosition().equals(ecefPosition2,
-                LARGE_ABSOLUTE_ERROR));
+        assertTrue(estimator.getEcefPosition().equals(ecefPosition2, LARGE_ABSOLUTE_ERROR));
         assertTrue(estimator.getEcefC().equals(ecefC2, ABSOLUTE_ERROR));
 
         // Force InvalidSourceAndDestinationFrameTypeException
-        try {
-            estimator.setEcefPositionAndNedOrientation(point,
-                    new CoordinateTransformation(FrameType.LOCAL_NAVIGATION_FRAME,
-                            FrameType.BODY_FRAME));
-            fail("InvalidSourceAndDestinationFrameTypeException expected but not thrown");
-        } catch (final InvalidSourceAndDestinationFrameTypeException ignore) {
-        }
+        assertThrows(InvalidSourceAndDestinationFrameTypeException.class,
+                () -> estimator.setEcefPositionAndNedOrientation(point, new CoordinateTransformation(
+                        FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME)));
     }
 
     @Test
@@ -18860,10 +16032,8 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     }
 
     @Test
-    public void testAddBodyKinematicsWithFixEnabledAndReset()
-            throws AlgebraException, LockedException,
-            InvalidSourceAndDestinationFrameTypeException,
-            RandomWalkEstimationException, NotReadyException {
+    public void testAddBodyKinematicsWithFixEnabledAndReset() throws AlgebraException, LockedException,
+            InvalidSourceAndDestinationFrameTypeException, RandomWalkEstimationException, NotReadyException {
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
         final Matrix ma = generateMaCommonAxis();
@@ -18874,33 +16044,26 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final NEDPosition nedPosition = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+                FrameType.LOCAL_NAVIGATION_FRAME);
 
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-        final CoordinateTransformation ecefC = ecefFrame
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
@@ -18914,25 +16077,24 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.setListener(this);
 
         reset();
-        assertEquals(mStart, 0);
-        assertEquals(mBodyKinematicsAdded, 0);
-        assertEquals(mReset, 0);
+        assertEquals(0, mStart);
+        assertEquals(0, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
         assertTrue(estimator.isReady());
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
         assertFalse(estimator.isRunning());
         assertTrue(estimator.isFixKinematicsEnabled());
 
         // this is the true body kinematics that should be measured on a perfect
         // sensor if there were no noise or calibration errors at current position
         // and orientations
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                ecefPosition);
 
         final BodyKinematics measuredKinematics = new BodyKinematics();
         for (int i = 0; i < N_SAMPLES; i++) {
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
 
             estimator.addBodyKinematics(measuredKinematics);
 
@@ -18940,11 +16102,11 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
             assertFalse(estimator.isRunning());
         }
 
-        assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+        assertEquals(N_SAMPLES, estimator.getNumberOfProcessedSamples());
         assertFalse(estimator.isRunning());
-        assertEquals(mStart, 1);
-        assertEquals(mBodyKinematicsAdded, N_SAMPLES);
-        assertEquals(mReset, 0);
+        assertEquals(1, mStart);
+        assertEquals(N_SAMPLES, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
 
         final double accelerometerBiasPsd = estimator.getAccelerometerBiasPSD();
         assertTrue(accelerometerBiasPsd > 0.0);
@@ -18961,47 +16123,33 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double attitudeNoiseVariance = estimator.getAttitudeNoiseVariance();
         assertTrue(attitudeNoiseVariance > 0.0);
 
-        final double positionNoiseStandardDeviation =
-                estimator.getPositionNoiseStandardDeviation();
-        assertEquals(Math.sqrt(positionNoiseVariance),
-                positionNoiseStandardDeviation, 0.0);
+        final double positionNoiseStandardDeviation = estimator.getPositionNoiseStandardDeviation();
+        assertEquals(Math.sqrt(positionNoiseVariance), positionNoiseStandardDeviation, 0.0);
 
-        final Distance positionNoiseStd1 =
-                estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(positionNoiseStandardDeviation,
-                positionNoiseStd1.getValue().doubleValue(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(positionNoiseStandardDeviation, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
 
-        final Distance positionNoiseStd2 = new Distance(1.0,
-                DistanceUnit.INCH);
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.INCH);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
 
-        final double velocityNoiseStandardDeviation =
-                estimator.getVelocityNoiseStandardDeviation();
-        assertEquals(Math.sqrt(velocityNoiseVariance),
-                velocityNoiseStandardDeviation, 0.0);
+        final double velocityNoiseStandardDeviation = estimator.getVelocityNoiseStandardDeviation();
+        assertEquals(Math.sqrt(velocityNoiseVariance), velocityNoiseStandardDeviation, 0.0);
 
-        final Speed velocityNoiseStd1 =
-                estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(velocityNoiseStandardDeviation,
-                velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(velocityNoiseStandardDeviation, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
 
-        final Speed velocityNoiseStd2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
         estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
         assertEquals(velocityNoiseStd1, velocityNoiseStd2);
 
-        final double attitudeNoiseStandardDeviation =
-                estimator.getAttitudeNoiseStandardDeviation();
-        assertEquals(Math.sqrt(attitudeNoiseVariance),
-                attitudeNoiseStandardDeviation, 0.0);
+        final double attitudeNoiseStandardDeviation = estimator.getAttitudeNoiseStandardDeviation();
+        assertEquals(Math.sqrt(attitudeNoiseVariance), attitudeNoiseStandardDeviation, 0.0);
 
-        final Angle attitudeNoiseStd1 =
-                estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(attitudeNoiseStandardDeviation,
-                attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(attitudeNoiseStandardDeviation, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
 
         final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
@@ -19025,34 +16173,29 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(fixedKinematics1, fixedKinematics3);
 
         assertTrue(estimator.reset());
-        assertEquals(mReset, 1);
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(1, mReset);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
         assertFalse(estimator.isRunning());
         assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
         assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
         assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
         assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
         assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
 
         assertFalse(estimator.reset());
-        assertEquals(mReset, 1);
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(1, mReset);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
     }
 
     @Test
-    public void testAddBodyKinematicsWithFixDisabledAndReset()
-            throws AlgebraException, LockedException,
-            InvalidSourceAndDestinationFrameTypeException,
-            RandomWalkEstimationException, NotReadyException {
+    public void testAddBodyKinematicsWithFixDisabledAndReset() throws AlgebraException, LockedException,
+            InvalidSourceAndDestinationFrameTypeException, RandomWalkEstimationException, NotReadyException {
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
         final Matrix ma = generateMaCommonAxis();
@@ -19063,33 +16206,26 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final NEDPosition nedPosition = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+                FrameType.LOCAL_NAVIGATION_FRAME);
 
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-        final CoordinateTransformation ecefC = ecefFrame
-                .getCoordinateTransformation();
+        final CoordinateTransformation ecefC = ecefFrame.getCoordinateTransformation();
         final ECEFPosition ecefPosition = ecefFrame.getECEFPosition();
 
         final RandomWalkEstimator estimator = new RandomWalkEstimator();
@@ -19104,20 +16240,20 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         estimator.setFixKinematicsEnabled(false);
 
         reset();
-        assertEquals(mStart, 0);
-        assertEquals(mBodyKinematicsAdded, 0);
-        assertEquals(mReset, 0);
+        assertEquals(0, mStart);
+        assertEquals(0, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
         assertTrue(estimator.isReady());
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
         assertFalse(estimator.isRunning());
         assertFalse(estimator.isFixKinematicsEnabled());
 
         // this is the true body kinematics that should be measured on a perfect
         // sensor if there were no noise or calibration errors at current position
         // and orientations
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefC, ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                ecefPosition);
 
         BodyKinematicsFixer fixer = new BodyKinematicsFixer();
         fixer.setAccelerationBias(ba);
@@ -19131,20 +16267,19 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         // that still contains noise
         final BodyKinematics fixedKinematics1 = new BodyKinematics();
         for (int i = 0; i < N_SAMPLES; i++) {
-            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random, measuredKinematics);
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
             fixer.fix(measuredKinematics, fixedKinematics1);
             estimator.addBodyKinematics(fixedKinematics1);
 
-            assertEquals(estimator.getNumberOfProcessedSamples(), i + 1);
+            assertEquals(i + 1, estimator.getNumberOfProcessedSamples());
             assertFalse(estimator.isRunning());
         }
 
-        assertEquals(estimator.getNumberOfProcessedSamples(), N_SAMPLES);
+        assertEquals(N_SAMPLES, estimator.getNumberOfProcessedSamples());
         assertFalse(estimator.isRunning());
-        assertEquals(mStart, 1);
-        assertEquals(mBodyKinematicsAdded, N_SAMPLES);
-        assertEquals(mReset, 0);
+        assertEquals(1, mStart);
+        assertEquals(N_SAMPLES, mBodyKinematicsAdded);
+        assertEquals(0, mReset);
 
         final double accelerometerBiasPsd = estimator.getAccelerometerBiasPSD();
         assertTrue(accelerometerBiasPsd > 0.0);
@@ -19161,47 +16296,33 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         final double attitudeNoiseVariance = estimator.getAttitudeNoiseVariance();
         assertTrue(attitudeNoiseVariance > 0.0);
 
-        final double positionNoiseStandardDeviation =
-                estimator.getPositionNoiseStandardDeviation();
-        assertEquals(Math.sqrt(positionNoiseVariance),
-                positionNoiseStandardDeviation, 0.0);
+        final double positionNoiseStandardDeviation = estimator.getPositionNoiseStandardDeviation();
+        assertEquals(Math.sqrt(positionNoiseVariance), positionNoiseStandardDeviation, 0.0);
 
-        final Distance positionNoiseStd1 =
-                estimator.getPositionNoiseStandardDeviationAsDistance();
-        assertEquals(positionNoiseStandardDeviation,
-                positionNoiseStd1.getValue().doubleValue(), 0.0);
+        final Distance positionNoiseStd1 = estimator.getPositionNoiseStandardDeviationAsDistance();
+        assertEquals(positionNoiseStandardDeviation, positionNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(DistanceUnit.METER, positionNoiseStd1.getUnit());
 
-        final Distance positionNoiseStd2 = new Distance(1.0,
-                DistanceUnit.INCH);
+        final Distance positionNoiseStd2 = new Distance(1.0, DistanceUnit.INCH);
         estimator.getPositionNoiseStandardDeviationAsDistance(positionNoiseStd2);
         assertEquals(positionNoiseStd1, positionNoiseStd2);
 
-        final double velocityNoiseStandardDeviation =
-                estimator.getVelocityNoiseStandardDeviation();
-        assertEquals(Math.sqrt(velocityNoiseVariance),
-                velocityNoiseStandardDeviation, 0.0);
+        final double velocityNoiseStandardDeviation = estimator.getVelocityNoiseStandardDeviation();
+        assertEquals(Math.sqrt(velocityNoiseVariance), velocityNoiseStandardDeviation, 0.0);
 
-        final Speed velocityNoiseStd1 =
-                estimator.getVelocityNoiseStandardDeviationAsSpeed();
-        assertEquals(velocityNoiseStandardDeviation,
-                velocityNoiseStd1.getValue().doubleValue(), 0.0);
+        final Speed velocityNoiseStd1 = estimator.getVelocityNoiseStandardDeviationAsSpeed();
+        assertEquals(velocityNoiseStandardDeviation, velocityNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(SpeedUnit.METERS_PER_SECOND, velocityNoiseStd1.getUnit());
 
-        final Speed velocityNoiseStd2 = new Speed(1.0,
-                SpeedUnit.KILOMETERS_PER_HOUR);
+        final Speed velocityNoiseStd2 = new Speed(1.0, SpeedUnit.KILOMETERS_PER_HOUR);
         estimator.getVelocityNoiseStandardDeviationAsSpeed(velocityNoiseStd2);
         assertEquals(velocityNoiseStd1, velocityNoiseStd2);
 
-        final double attitudeNoiseStandardDeviation =
-                estimator.getAttitudeNoiseStandardDeviation();
-        assertEquals(Math.sqrt(attitudeNoiseVariance),
-                attitudeNoiseStandardDeviation, 0.0);
+        final double attitudeNoiseStandardDeviation = estimator.getAttitudeNoiseStandardDeviation();
+        assertEquals(Math.sqrt(attitudeNoiseVariance), attitudeNoiseStandardDeviation, 0.0);
 
-        final Angle attitudeNoiseStd1 =
-                estimator.getAttitudeNoiseStandardDeviationAsAngle();
-        assertEquals(attitudeNoiseStandardDeviation,
-                attitudeNoiseStd1.getValue().doubleValue(), 0.0);
+        final Angle attitudeNoiseStd1 = estimator.getAttitudeNoiseStandardDeviationAsAngle();
+        assertEquals(attitudeNoiseStandardDeviation, attitudeNoiseStd1.getValue().doubleValue(), 0.0);
         assertEquals(AngleUnit.RADIANS, attitudeNoiseStd1.getUnit());
 
         final Angle attitudeNoiseStd2 = new Angle(1.0, AngleUnit.DEGREES);
@@ -19217,27 +16338,24 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(fixedKinematics1, fixedKinematics3);
 
         assertTrue(estimator.reset());
-        assertEquals(mReset, 1);
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(1, mReset);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
         assertFalse(estimator.isRunning());
         assertEquals(0.0, estimator.getAccelerometerBiasPSD(), 0.0);
         assertEquals(0.0, estimator.getGyroBiasPSD(), 0.0);
         assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getVelocityNoiseVariance(), 0.0);
         assertEquals(0.0, estimator.getAttitudeNoiseVariance(), 0.0);
-        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(),
-                0.0);
-        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(),
-                0.0);
-        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(),
-                0.0);
+        assertEquals(0.0, estimator.getPositionNoiseStandardDeviation(), 0.0);
+        assertEquals(0.0, estimator.getVelocityNoiseStandardDeviation(), 0.0);
+        assertEquals(0.0, estimator.getAttitudeNoiseStandardDeviation(), 0.0);
         assertEquals(0.0, estimator.getPositionUncertainty(), 0.0);
         assertEquals(0.0, estimator.getVelocityUncertainty(), 0.0);
         assertEquals(0.0, estimator.getAttitudeUncertainty(), 0.0);
 
         assertFalse(estimator.reset());
-        assertEquals(mReset, 1);
-        assertEquals(estimator.getNumberOfProcessedSamples(), 0);
+        assertEquals(1, mReset);
+        assertEquals(0, estimator.getNumberOfProcessedSamples());
     }
 
     @Override
@@ -19248,8 +16366,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
 
     @Override
     public void onBodyKinematicsAdded(
-            final RandomWalkEstimator estimator,
-            final BodyKinematics measuredKinematics,
+            final RandomWalkEstimator estimator, final BodyKinematics measuredKinematics,
             final BodyKinematics fixedKinematics) {
         if (mBodyKinematicsAdded == 0) {
             checkLocked(estimator);
@@ -19263,521 +16380,109 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         mReset++;
     }
 
-    private void checkLocked(RandomWalkEstimator estimator) {
+    private static void checkLocked(RandomWalkEstimator estimator) {
         assertTrue(estimator.isRunning());
-        try {
-            estimator.setListener(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias((Matrix) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias((double[]) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias((AccelerationTriad) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasX(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasY(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasZ(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasX(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasY(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBiasZ(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationBias(null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAccelerationCrossCouplingErrors(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationSx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationSy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMxy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMxz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMyx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMyz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMzx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationMzy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationScalingFactors(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationCrossCouplingErrors(
-                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAccelerationScalingFactorsAndCrossCouplingErrors(
-                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedBias((Matrix) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias((double[]) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias((AngularSpeedTriad) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasX(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasY(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasZ(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasX(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasY(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBiasZ(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedBias(null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedSx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedSy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedSz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMxy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMxz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMyx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMyz(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMzx(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedMzy(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedScalingFactors(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedCrossCouplingErrors(
-                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
-                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final AlgebraException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setAngularSpeedGDependantCrossBias(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setTimeInterval(0.01);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setTimeInterval(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setEcefPosition((ECEFPosition) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setEcefPosition(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setEcefPosition(null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setEcefPosition((Point3D) null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setNedPosition(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setNedPosition(0.0, 0.0, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setNedPosition(null, null, 0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setNedPosition(null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setEcefC(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedC(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedPositionAndNedOrientation(null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedPositionAndNedOrientation(
-                    0.0, 0.0, 0.0, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedPositionAndNedOrientation(
-                    null, null, 0.0, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedPositionAndNedOrientation(
-                    null, null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setEcefPositionAndEcefOrientation(
-                    (ECEFPosition) null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setEcefPositionAndEcefOrientation(
-                    0.0, 0.0, 0.0, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setEcefPositionAndEcefOrientation(
-                    null, null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setEcefPositionAndEcefOrientation(
-                    (Point3D) null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedPositionAndEcefOrientation(null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedPositionAndEcefOrientation(
-                    0.0, 0.0, 0.0, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedPositionAndEcefOrientation(
-                    null, null, 0.0, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setNedPositionAndEcefOrientation(
-                    null, null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setEcefPositionAndNedOrientation(
-                    (ECEFPosition) null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setEcefPositionAndNedOrientation(
-                    0.0, 0.0, 0.0, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setEcefPositionAndNedOrientation(
-                    null, null, null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setEcefPositionAndNedOrientation(
-                    (Point3D) null, null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final InvalidSourceAndDestinationFrameTypeException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.setFixKinematicsEnabled(true);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.setDriftPeriodSamples(1);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            estimator.addBodyKinematics(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final RandomWalkEstimationException | NotReadyException e) {
-            fail("LockedException expected but not thrown");
-        }
-        try {
-            estimator.reset();
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
+        assertThrows(LockedException.class, () -> estimator.setListener(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias((Matrix) null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias((double[]) null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias((AccelerationTriad) null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasX(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasY(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasZ(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasX(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasY(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBiasZ(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationBias(null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationCrossCouplingErrors(null));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationSx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationSy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMxy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMxz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMyx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMyz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMzx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationMzy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationScalingFactors(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationCrossCouplingErrors(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAccelerationScalingFactorsAndCrossCouplingErrors(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias((Matrix) null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias((double[]) null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias((AngularSpeedTriad) null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasX(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasY(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasZ(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasX(null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasY(null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBiasZ(null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedBias(null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(null));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedSx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedSy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedSz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMxy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMxz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMyx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMyz(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMzx(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedMzy(0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedScalingFactors(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedCrossCouplingErrors(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setAngularSpeedGDependantCrossBias(null));
+        assertThrows(LockedException.class, () -> estimator.setTimeInterval(0.01));
+        assertThrows(LockedException.class, () -> estimator.setTimeInterval(null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPosition((ECEFPosition) null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPosition(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setEcefPosition(null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPosition((Point3D) null));
+        assertThrows(LockedException.class, () -> estimator.setNedPosition(null));
+        assertThrows(LockedException.class, () -> estimator.setNedPosition(0.0, 0.0, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setNedPosition(null, null, 0.0));
+        assertThrows(LockedException.class, () -> estimator.setNedPosition(null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setEcefC(null));
+        assertThrows(LockedException.class, () -> estimator.setNedC(null));
+        assertThrows(LockedException.class, () -> estimator.setNedPositionAndNedOrientation(
+                null, null));
+        assertThrows(LockedException.class, () -> estimator.setNedPositionAndNedOrientation(
+                0.0, 0.0, 0.0, null));
+        assertThrows(LockedException.class, () -> estimator.setNedPositionAndNedOrientation(null, null,
+                0.0, null));
+        assertThrows(LockedException.class, () -> estimator.setNedPositionAndNedOrientation(
+                null, null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPositionAndEcefOrientation((ECEFPosition) null,
+                null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPositionAndEcefOrientation(0.0, 0.0, 0.0,
+                null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPositionAndEcefOrientation(
+                null, null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPositionAndEcefOrientation((Point3D) null,
+                null));
+        assertThrows(LockedException.class, () -> estimator.setNedPositionAndEcefOrientation(null,
+                null));
+        assertThrows(LockedException.class, () -> estimator.setNedPositionAndEcefOrientation(
+                0.0, 0.0, 0.0, null));
+        assertThrows(LockedException.class, () -> estimator.setNedPositionAndEcefOrientation(
+                null, null, 0.0, null));
+        assertThrows(LockedException.class, () -> estimator.setNedPositionAndEcefOrientation(
+                null, null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPositionAndNedOrientation((ECEFPosition) null,
+                null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPositionAndNedOrientation(
+                0.0, 0.0, 0.0, null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPositionAndNedOrientation(
+                null, null, null, null));
+        assertThrows(LockedException.class, () -> estimator.setEcefPositionAndNedOrientation((Point3D) null,
+                null));
+        assertThrows(LockedException.class, () -> estimator.setFixKinematicsEnabled(true));
+        assertThrows(LockedException.class, () -> estimator.setDriftPeriodSamples(1));
+        assertThrows(LockedException.class, () -> estimator.addBodyKinematics(null));
+        assertThrows(LockedException.class, estimator::reset);
     }
 
     private void reset() {
@@ -19786,21 +16491,21 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         mReset = 0;
     }
 
-    private Matrix generateBa() {
+    private static Matrix generateBa() {
         return Matrix.newFromArray(new double[]{
                 900 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 -1300 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 800 * MICRO_G_TO_METERS_PER_SECOND_SQUARED});
     }
 
-    private Matrix generateBg() {
+    private static Matrix generateBg() {
         return Matrix.newFromArray(new double[]{
                 -9 * DEG_TO_RAD / 3600.0,
                 13 * DEG_TO_RAD / 3600.0,
                 -8 * DEG_TO_RAD / 3600.0});
     }
 
-    private Matrix generateMaGeneral() throws WrongSizeException {
+    private static Matrix generateMaGeneral() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -19811,7 +16516,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         return result;
     }
 
-    private Matrix generateMaCommonAxis() throws WrongSizeException {
+    private static Matrix generateMaCommonAxis() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -19822,7 +16527,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         return result;
     }
 
-    private Matrix generateMg() throws WrongSizeException {
+    private static Matrix generateMg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 400e-6, -300e-6, 250e-6,
@@ -19833,7 +16538,7 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         return result;
     }
 
-    private Matrix generateGg() throws WrongSizeException {
+    private static Matrix generateGg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         final double tmp = DEG_TO_RAD / (3600 * 9.80665);
         result.fromArray(new double[]{
@@ -19845,33 +16550,27 @@ public class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         return result;
     }
 
-    private double getAccelNoiseRootPSD() {
+    private static double getAccelNoiseRootPSD() {
         return 100.0 * MICRO_G_TO_METERS_PER_SECOND_SQUARED;
     }
 
-    private double getGyroNoiseRootPSD() {
+    private static double getGyroNoiseRootPSD() {
         return 0.01 * DEG_TO_RAD / 60.0;
     }
 
-    private NEDPosition createPosition() {
+    private static NEDPosition createPosition() {
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         return new NEDPosition(latitude, longitude, height);
     }
 
-    private CoordinateTransformation createOrientation() {
+    private static CoordinateTransformation createOrientation() {
         final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        return new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        return new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
     }
 }

@@ -18,7 +18,6 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
 import com.irurueta.algebra.Matrix;
 import com.irurueta.algebra.WrongSizeException;
 import com.irurueta.navigation.LockedException;
-import com.irurueta.navigation.NavigationException;
 import com.irurueta.navigation.NotReadyException;
 import com.irurueta.navigation.frames.CoordinateTransformation;
 import com.irurueta.navigation.frames.ECEFFrame;
@@ -54,7 +53,6 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -115,10 +113,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
     private static final long END_TIMESTAMP_MILLIS;
 
     static {
-        START_CALENDAR.set(2020, Calendar.JANUARY, 1,
-                0, 0, 0);
-        END_CALENDAR.set(2025, Calendar.DECEMBER, 31,
-                23, 59, 59);
+        START_CALENDAR.set(2020, Calendar.JANUARY, 1, 0, 0, 0);
+        END_CALENDAR.set(2025, Calendar.DECEMBER, 31, 23, 59, 59);
 
         START_TIMESTAMP_MILLIS = START_CALENDAR.getTimeInMillis();
         END_TIMESTAMP_MILLIS = END_CALENDAR.getTimeInMillis();
@@ -143,15 +139,13 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
     private final MagnetometerMeasurementsGeneratorListener mGeneratorListener =
             new MagnetometerMeasurementsGeneratorListener() {
         @Override
-        public void onInitializationStarted(
-                final MagnetometerMeasurementsGenerator generator) {
+        public void onInitializationStarted(final MagnetometerMeasurementsGenerator generator) {
             // not used
         }
 
         @Override
         public void onInitializationCompleted(
-                final MagnetometerMeasurementsGenerator generator,
-                final double baseNoiseLevel) {
+                final MagnetometerMeasurementsGenerator generator, final double baseNoiseLevel) {
             // not used
         }
 
@@ -163,14 +157,12 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         }
 
         @Override
-        public void onStaticIntervalDetected(
-                final MagnetometerMeasurementsGenerator generator) {
+        public void onStaticIntervalDetected(final MagnetometerMeasurementsGenerator generator) {
             // not used
         }
 
         @Override
-        public void onDynamicIntervalDetected(
-                final MagnetometerMeasurementsGenerator generator) {
+        public void onDynamicIntervalDetected(final MagnetometerMeasurementsGenerator generator) {
             // not used
         }
 
@@ -199,8 +191,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         }
     };
 
-    private final List<StandardDeviationBodyMagneticFluxDensity> mGeneratorMeasurements =
-            new ArrayList<>();
+    private final List<StandardDeviationBodyMagneticFluxDensity> mGeneratorMeasurements = new ArrayList<>();
 
     private int mStart;
 
@@ -226,23 +217,18 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertFalse(optimizer.isReady());
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -250,33 +236,24 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedHardIron());
@@ -284,8 +261,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
     }
 
     @Test
@@ -309,23 +286,18 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertFalse(optimizer.isReady());
         assertSame(dataSource, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -333,33 +305,24 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedHardIron());
@@ -367,8 +330,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
     }
 
     @Test
@@ -376,9 +339,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final KnownPositionAndInstantMagnetometerCalibrator calibrator =
                 new KnownPositionAndInstantMagnetometerCalibrator();
 
-        ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                        calibrator);
+        final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
+                new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(calibrator);
 
         // check default values
         assertEquals(ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
@@ -393,23 +355,18 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertFalse(optimizer.isReady());
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -417,33 +374,24 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedHardIron());
@@ -451,18 +399,13 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // Force IllegalArgumentException
-        optimizer = null;
-        try {
-            optimizer = new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                    new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(optimizer);
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
+                        new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -473,8 +416,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                 new KnownPositionAndInstantMagnetometerCalibrator();
 
         ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                        dataSource, calibrator);
+                new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(dataSource, calibrator);
 
         // check default values
         assertEquals(ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
@@ -489,23 +431,18 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertTrue(optimizer.isReady());
         assertSame(dataSource, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -513,33 +450,24 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedHardIron());
@@ -547,18 +475,13 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // Force IllegalArgumentException
-        optimizer = null;
-        try {
-            optimizer = new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                    dataSource, new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(optimizer);
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                        new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -577,11 +500,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(2.0, optimizer.getThresholdFactorStep(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setThresholdFactorStep(0.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorStep(0.0));
     }
 
     @Test
@@ -602,12 +521,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertSame(calibrator, optimizer.getCalibrator());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setCalibrator(
-                    new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setCalibrator(
+                new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -648,21 +563,9 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(1.0, optimizer.getMaxThresholdFactor(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setThresholdFactorRange(-1.0, 1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(1.0, -1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(2.0, 1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(-1.0, 1.0));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(1.0, -1.0));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(2.0, 1.0));
     }
 
     @Test
@@ -720,8 +623,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                 new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
 
         // set new value
         final double timeInterval = 0.01;
@@ -731,11 +633,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(timeInterval, optimizer.getTimeInterval(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setTimeInterval(-1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setTimeInterval(-1.0));
     }
 
     @Test
@@ -745,9 +643,9 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
         // check default value
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
 
         // set new value
         final Time timeInterval2 = new Time(0.01, TimeUnit.SECOND);
@@ -762,11 +660,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(timeInterval2, timeInterval4);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setTimeInterval(new Time(-1.0, TimeUnit.SECOND));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setTimeInterval(
+                new Time(-1.0, TimeUnit.SECOND)));
     }
 
     @Test
@@ -775,8 +670,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                 new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
 
         // set new value
         final int minStaticSamples = 50;
@@ -786,11 +680,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(minStaticSamples, optimizer.getMinStaticSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setMinStaticSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setMinStaticSamples(1));
     }
 
     @Test
@@ -799,8 +689,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                 new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
 
         // set new value
         final int maxDynamicSamples = 500;
@@ -810,11 +699,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(maxDynamicSamples, optimizer.getMaxDynamicSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setMaxDynamicSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setMaxDynamicSamples(1));
     }
 
     @Test
@@ -823,8 +708,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                 new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
 
         // set new value
         final int windowSize = 51;
@@ -834,11 +718,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(windowSize, optimizer.getWindowSize());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setWindowSize(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setWindowSize(1));
     }
 
     @Test
@@ -847,8 +727,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                 new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
 
         // set new value
         final int initialStaticSamples = 100;
@@ -858,11 +737,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(initialStaticSamples, optimizer.getInitialStaticSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setInitialStaticSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setInitialStaticSamples(1));
     }
 
     @Test
@@ -879,20 +754,14 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         optimizer.setInstantaneousNoiseLevelFactor(instantaneousNoiseLevelFactor);
 
         // check
-        assertEquals(instantaneousNoiseLevelFactor,
-                optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
+        assertEquals(instantaneousNoiseLevelFactor, optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setInstantaneousNoiseLevelFactor(0.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setInstantaneousNoiseLevelFactor(0.0));
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThreshold()
-            throws LockedException {
+    public void testGetSetBaseNoiseLevelAbsoluteThreshold() throws LockedException {
         final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                 new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
@@ -905,21 +774,14 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         optimizer.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
 
         // check
-        assertEquals(baseNoiseLevelAbsoluteThreshold,
-                optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
+        assertEquals(baseNoiseLevelAbsoluteThreshold, optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(
-                    0.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0));
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement()
-            throws LockedException {
+    public void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement() throws LockedException {
         final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                 new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
@@ -927,20 +789,17 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
 
         // set new value
         final double baseNoiseLevelAbsoluteThreshold = 1e-5;
-        final Acceleration acceleration2 = new Acceleration(
-                baseNoiseLevelAbsoluteThreshold,
+        final Acceleration acceleration2 = new Acceleration(baseNoiseLevelAbsoluteThreshold,
                 AccelerationUnit.METERS_PER_SQUARED_SECOND);
         optimizer.setBaseNoiseLevelAbsoluteThreshold(acceleration2);
 
         // check
         final Acceleration acceleration3 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration4);
 
         assertEquals(acceleration2, acceleration3);
@@ -967,8 +826,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                 new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // set new value
         optimizer.setProgressDelta(0.5f);
@@ -977,22 +836,14 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(0.5f, optimizer.getProgressDelta(), 0.0f);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setProgressDelta(-1.0f);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setProgressDelta(2.0f);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setProgressDelta(-1.0f));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setProgressDelta(2.0f));
     }
 
     @Test
-    public void testOptimizeGeneralWithNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
-            IntervalDetectorThresholdFactorOptimizerException, CalibrationException, IOException {
+    public void testOptimizeGeneralWithNoise() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, CalibrationException,
+            IOException {
 
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
@@ -1012,13 +863,11 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             assertNotNull(mm);
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
-            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(
-                    false, hardIron, mm, accelNoiseRootPSD,
-                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition,
-                    MAGNETOMETER_NOISE_STD));
+            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(false, hardIron, mm, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition, MAGNETOMETER_NOISE_STD));
 
             // configure calibrator and data source
-            KnownPositionAndInstantMagnetometerCalibrator calibrator =
+            final KnownPositionAndInstantMagnetometerCalibrator calibrator =
                     new KnownPositionAndInstantMagnetometerCalibrator();
             calibrator.setPosition(nedPosition);
             calibrator.setCommonAxisUsed(false);
@@ -1026,8 +875,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
             // create optimizer
             final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1041,18 +889,15 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
@@ -1060,15 +905,12 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                     ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertNotNull(optimizer.getEstimatedHardIron());
@@ -1091,8 +933,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
             // generate measurements for calibrator using estimated threshold factor
             // on generator that optimizes calibration
-            final MagnetometerMeasurementsGenerator generator =
-                    new MagnetometerMeasurementsGenerator(mGeneratorListener);
+            final MagnetometerMeasurementsGenerator generator = new MagnetometerMeasurementsGenerator(
+                    mGeneratorListener);
 
             generator.setThresholdFactor(thresholdFactor);
 
@@ -1150,10 +992,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             assertNotNull(mm);
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
-            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(
-                    false, hardIron, mm, accelNoiseRootPSD,
-                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition,
-                    SMALL_MAGNETOMETER_NOISE_STD));
+            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(false, hardIron, mm, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition, SMALL_MAGNETOMETER_NOISE_STD));
 
             // configure calibrator and data source
             KnownPositionAndInstantMagnetometerCalibrator calibrator =
@@ -1164,8 +1004,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
             // create optimizer
             final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1179,18 +1018,15 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
@@ -1198,15 +1034,12 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                     ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertNotNull(optimizer.getEstimatedHardIron());
@@ -1229,8 +1062,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
             // generate measurements for calibrator using estimated threshold factor
             // on generator that optimizes calibration
-            final MagnetometerMeasurementsGenerator generator =
-                    new MagnetometerMeasurementsGenerator(mGeneratorListener);
+            final MagnetometerMeasurementsGenerator generator = new MagnetometerMeasurementsGenerator(
+                    mGeneratorListener);
 
             generator.setThresholdFactor(thresholdFactor);
 
@@ -1265,7 +1098,6 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertTrue(numValid > 0);
     }
 
-    @Ignore
     @Test
     public void testOptimizeCommonAxisSmallNoiseWithRotationAndPositionChange() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
@@ -1289,10 +1121,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             assertNotNull(mm);
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
-            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(
-                    true, hardIron, mm, accelNoiseRootPSD,
-                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition,
-                    SMALL_MAGNETOMETER_NOISE_STD));
+            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(true, hardIron, mm, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition, SMALL_MAGNETOMETER_NOISE_STD));
 
             // configure calibrator and data source
             KnownPositionAndInstantMagnetometerCalibrator calibrator =
@@ -1303,8 +1133,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
             // create optimizer
             final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1318,18 +1147,15 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
@@ -1337,15 +1163,12 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                     ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertNotNull(optimizer.getEstimatedHardIron());
@@ -1368,8 +1191,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
             // generate measurements for calibrator using estimated threshold factor
             // on generator that optimizes calibration
-            final MagnetometerMeasurementsGenerator generator =
-                    new MagnetometerMeasurementsGenerator(mGeneratorListener);
+            final MagnetometerMeasurementsGenerator generator = new MagnetometerMeasurementsGenerator(
+                    mGeneratorListener);
 
             generator.setThresholdFactor(thresholdFactor);
 
@@ -1404,11 +1227,10 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         assertTrue(numValid > 0);
     }
 
-    @Ignore
     @Test
-    public void testOptimizeRobustCalibrator() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
-            IntervalDetectorThresholdFactorOptimizerException, CalibrationException, IOException {
+    public void testOptimizeRobustCalibrator() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, CalibrationException,
+            IOException {
 
         int numValid = 0;
         for (int t = 0; t < TIMES; t++) {
@@ -1428,10 +1250,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             assertNotNull(mm);
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
-            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(
-                    false, hardIron, mm, accelNoiseRootPSD,
-                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition,
-                    MAGNETOMETER_NOISE_STD));
+            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(false, hardIron, mm, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition, MAGNETOMETER_NOISE_STD));
 
             // configure calibrator and data source
             PROMedSRobustKnownPositionAndInstantMagnetometerCalibrator calibrator =
@@ -1442,8 +1262,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
             // create optimizer
             final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1457,18 +1276,15 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
@@ -1476,15 +1292,12 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
                     ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertNotNull(optimizer.getEstimatedHardIron());
@@ -1507,8 +1320,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
             // generate measurements for calibrator using estimated threshold factor
             // on generator that optimizes calibration
-            final MagnetometerMeasurementsGenerator generator =
-                    new MagnetometerMeasurementsGenerator(mGeneratorListener);
+            final MagnetometerMeasurementsGenerator generator = new MagnetometerMeasurementsGenerator(
+                    mGeneratorListener);
 
             generator.setThresholdFactor(thresholdFactor);
 
@@ -1573,91 +1386,24 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         mProgress = progress;
     }
 
-    private void checkLocked(
-            final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer) {
+    private static void checkLocked(final ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer) {
         assertTrue(optimizer.isRunning());
-        try {
-            optimizer.setDataSource(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setListener(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setCalibrator(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setQualityScoreMapper(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(0.0, 1.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setTimeInterval(0.01);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setTimeInterval(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setMinStaticSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setMaxDynamicSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setWindowSize(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setInitialStaticSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setInstantaneousNoiseLevelFactor(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorStep(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.optimize();
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final NavigationException e) {
-            fail("LockedException expected but not thrown");
-        }
+        assertThrows(LockedException.class, () -> optimizer.setDataSource(null));
+        assertThrows(LockedException.class, () -> optimizer.setListener(null));
+        assertThrows(LockedException.class, () -> optimizer.setCalibrator(null));
+        assertThrows(LockedException.class, () -> optimizer.setQualityScoreMapper(null));
+        assertThrows(LockedException.class, () -> optimizer.setThresholdFactorRange(0.0, 1.0));
+        assertThrows(LockedException.class, () -> optimizer.setTimeInterval(0.01));
+        assertThrows(LockedException.class, () -> optimizer.setTimeInterval(null));
+        assertThrows(LockedException.class, () -> optimizer.setMinStaticSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setMaxDynamicSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setWindowSize(0));
+        assertThrows(LockedException.class, () -> optimizer.setInitialStaticSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setInstantaneousNoiseLevelFactor(0.0));
+        assertThrows(LockedException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0));
+        assertThrows(LockedException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(null));
+        assertThrows(LockedException.class, () -> optimizer.setThresholdFactorStep(0.0));
+        assertThrows(LockedException.class, optimizer::optimize);
     }
 
     private void reset() {
@@ -1667,13 +1413,10 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     private boolean generateBodyKinematicsAndMagneticFluxDensity(
-            final boolean changePosition, Matrix hardIron, final Matrix mm,
-            final double accelNoiseRootPSD, final double gyroNoiseRootPSD,
-            final int numMeasurements, final Date timestamp,
-            final NEDPosition nedPosition,
-            final double magnetometerNoiseStd) throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException,
-            IOException {
+            final boolean changePosition, Matrix hardIron, final Matrix mm, final double accelNoiseRootPSD,
+            final double gyroNoiseRootPSD, final int numMeasurements, final Date timestamp,
+            final NEDPosition nedPosition, final double magnetometerNoiseStd) throws WrongSizeException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, IOException {
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
         final Matrix ma = generateMaCommonAxis();
@@ -1683,38 +1426,33 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final WMMEarthMagneticFluxDensityEstimator wmmEstimator =
-                new WMMEarthMagneticFluxDensityEstimator();
+        final WMMEarthMagneticFluxDensityEstimator wmmEstimator = new WMMEarthMagneticFluxDensityEstimator();
 
-        final GaussianRandomizer noiseRandomizer = new GaussianRandomizer(
-                new Random(), 0.0, magnetometerNoiseStd);
+        final GaussianRandomizer noiseRandomizer = new GaussianRandomizer(new Random(), 0.0,
+                magnetometerNoiseStd);
 
         CoordinateTransformation cnb = generateBodyC(randomizer);
         CoordinateTransformation nedC = cnb.inverseAndReturnNew();
 
         final NEDFrame nedFrame = new NEDFrame(nedPosition, nedC);
-        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                .convertNEDtoECEFAndReturnNew(nedFrame);
+        final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
         // compute ground-truth kinematics that should be generated at provided
         // position, velocity and orientation
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS, ecefFrame, ecefFrame);
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefFrame, ecefFrame);
 
-        final MagnetometerMeasurementsGenerator generator =
-                new MagnetometerMeasurementsGenerator();
+        final MagnetometerMeasurementsGenerator generator = new MagnetometerMeasurementsGenerator();
 
         // generate initial static samples
-        final int initialStaticSamples = TriadStaticIntervalDetector
-                .DEFAULT_INITIAL_STATIC_SAMPLES;
-        generateStaticSamples(generator, initialStaticSamples, trueKinematics,
-                errors, hardIron, mm, wmmEstimator, random, timestamp, nedPosition,
-                cnb, noiseRandomizer);
+        final int initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+        generateStaticSamples(generator, initialStaticSamples, trueKinematics, errors, hardIron, mm, wmmEstimator,
+                random, timestamp, nedPosition, cnb, noiseRandomizer);
 
         final int staticPeriodLength = 3 * TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
         final int dynamicPeriodLength = 2 * TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
@@ -1725,76 +1463,53 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             cnb = nedC.inverseAndReturnNew();
 
             // generate static samples
-            generateStaticSamples(generator, staticPeriodLength, trueKinematics,
-                    errors, hardIron, mm, wmmEstimator, random, timestamp, nedPosition,
-                    cnb, noiseRandomizer);
+            generateStaticSamples(generator, staticPeriodLength, trueKinematics, errors, hardIron, mm, wmmEstimator,
+                    random, timestamp, nedPosition, cnb, noiseRandomizer);
 
             // generate dynamic samples
-            generateDynamicSamples(generator, dynamicPeriodLength, trueKinematics,
-                    randomizer, ecefFrame, nedFrame, errors, hardIron, mm,
-                    wmmEstimator, random, timestamp, nedPosition, cnb,
-                    noiseRandomizer, changePosition);
+            generateDynamicSamples(generator, dynamicPeriodLength, trueKinematics, randomizer, ecefFrame, nedFrame,
+                    errors, hardIron, mm, wmmEstimator, random, timestamp, nedPosition, cnb, noiseRandomizer,
+                    changePosition);
         }
 
         return generator.getStatus() != TriadStaticIntervalDetector.Status.FAILED;
     }
 
     private static BodyMagneticFluxDensity generateB(
-            final double[] hardIron, final Matrix softIron,
-            final WMMEarthMagneticFluxDensityEstimator wmmEstimator,
-            final GaussianRandomizer noiseRandomizer,
-            final Date timestamp,
-            final NEDPosition position,
+            final double[] hardIron, final Matrix softIron, final WMMEarthMagneticFluxDensityEstimator wmmEstimator,
+            final GaussianRandomizer noiseRandomizer, final Date timestamp, final NEDPosition position,
             final CoordinateTransformation cnb) {
 
-        final NEDMagneticFluxDensity earthB = wmmEstimator.estimate(
-                position, timestamp);
+        final NEDMagneticFluxDensity earthB = wmmEstimator.estimate(position, timestamp);
 
-        final BodyMagneticFluxDensity truthMagnetic =
-                BodyMagneticFluxDensityEstimator.estimate(earthB, cnb);
-        final BodyMagneticFluxDensity measuredMagnetic =
-                generateMeasuredMagneticFluxDensity(truthMagnetic,
-                        hardIron, softIron);
+        final BodyMagneticFluxDensity truthMagnetic = BodyMagneticFluxDensityEstimator.estimate(earthB, cnb);
+        final BodyMagneticFluxDensity measuredMagnetic = generateMeasuredMagneticFluxDensity(truthMagnetic, hardIron,
+                softIron);
 
         if (noiseRandomizer != null) {
-            measuredMagnetic.setBx(measuredMagnetic.getBx()
-                    + noiseRandomizer.nextDouble());
-            measuredMagnetic.setBy(measuredMagnetic.getBy()
-                    + noiseRandomizer.nextDouble());
-            measuredMagnetic.setBz(measuredMagnetic.getBz()
-                    + noiseRandomizer.nextDouble());
+            measuredMagnetic.setBx(measuredMagnetic.getBx() + noiseRandomizer.nextDouble());
+            measuredMagnetic.setBy(measuredMagnetic.getBy() + noiseRandomizer.nextDouble());
+            measuredMagnetic.setBz(measuredMagnetic.getBz() + noiseRandomizer.nextDouble());
         }
 
         return measuredMagnetic;
     }
 
-    private static CoordinateTransformation generateBodyC(
-            final UniformRandomizer randomizer) {
+    private static CoordinateTransformation generateBodyC(final UniformRandomizer randomizer) {
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES,
-                        MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES,
-                        MAX_ANGLE_DEGREES));
-        final double yaw1 = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES,
-                        MAX_ANGLE_DEGREES));
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw1 = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
 
-        return new CoordinateTransformation(
-                roll, pitch, yaw1, FrameType.LOCAL_NAVIGATION_FRAME,
-                FrameType.BODY_FRAME);
+        return new CoordinateTransformation(roll, pitch, yaw1, FrameType.LOCAL_NAVIGATION_FRAME, FrameType.BODY_FRAME);
     }
 
     private static BodyMagneticFluxDensity generateMeasuredMagneticFluxDensity(
-            final BodyMagneticFluxDensity input, final double[] hardIron,
-            final Matrix softIron) {
-        return BodyMagneticFluxDensityGenerator.generate(input, hardIron,
-                softIron);
+            final BodyMagneticFluxDensity input, final double[] hardIron, final Matrix softIron) {
+        return BodyMagneticFluxDensityGenerator.generate(input, hardIron, softIron);
     }
 
-    private static double[] generateHardIron(
-            final UniformRandomizer randomizer) {
+    private static double[] generateHardIron(final UniformRandomizer randomizer) {
         final double[] result = new double[BodyMagneticFluxDensity.COMPONENTS];
         randomizer.fill(result, MIN_HARD_IRON, MAX_HARD_IRON);
         return result;
@@ -1816,8 +1531,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
     private static Matrix generateSoftIronGeneral() {
         try {
-            return Matrix.createWithUniformRandomValues(
-                    BodyMagneticFluxDensity.COMPONENTS,
+            return Matrix.createWithUniformRandomValues(BodyMagneticFluxDensity.COMPONENTS,
                     BodyMagneticFluxDensity.COMPONENTS, MIN_SOFT_IRON, MAX_SOFT_IRON);
         } catch (final WrongSizeException ignore) {
             // never happens
@@ -1825,38 +1539,33 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         }
     }
 
-    private static NEDPosition createPosition(
-            final UniformRandomizer randomizer) {
-        final double latitude = Math.toRadians(randomizer.nextDouble(
-                MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(randomizer.nextDouble(
-                MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
-        final double height = randomizer.nextDouble(
-                MIN_HEIGHT_METERS, MAX_HEIGHT_METERS);
+    private static NEDPosition createPosition(final UniformRandomizer randomizer) {
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double height = randomizer.nextDouble(MIN_HEIGHT_METERS, MAX_HEIGHT_METERS);
 
         return new NEDPosition(latitude, longitude, height);
     }
 
     private static long createTimestamp(final UniformRandomizer randomizer) {
-        return randomizer.nextLong(
-                START_TIMESTAMP_MILLIS, END_TIMESTAMP_MILLIS);
+        return randomizer.nextLong(START_TIMESTAMP_MILLIS, END_TIMESTAMP_MILLIS);
     }
 
-    private Matrix generateBa() {
+    private static Matrix generateBa() {
         return Matrix.newFromArray(new double[]{
                 900 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 -1300 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 800 * MICRO_G_TO_METERS_PER_SECOND_SQUARED});
     }
 
-    private Matrix generateBg() {
+    private static Matrix generateBg() {
         return Matrix.newFromArray(new double[]{
                 -9 * DEG_TO_RAD / 3600.0,
                 13 * DEG_TO_RAD / 3600.0,
                 -8 * DEG_TO_RAD / 3600.0});
     }
 
-    private Matrix generateMaCommonAxis() throws WrongSizeException {
+    private static Matrix generateMaCommonAxis() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -1867,7 +1576,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         return result;
     }
 
-    private Matrix generateMg() throws WrongSizeException {
+    private static Matrix generateMg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 400e-6, -300e-6, 250e-6,
@@ -1878,7 +1587,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         return result;
     }
 
-    private Matrix generateGg() throws WrongSizeException {
+    private static Matrix generateGg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         final double tmp = DEG_TO_RAD / (3600 * 9.80665);
         result.fromArray(new double[]{
@@ -1890,39 +1599,29 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         return result;
     }
 
-    private double getAccelNoiseRootPSD() {
+    private static double getAccelNoiseRootPSD() {
         return 100.0 * MICRO_G_TO_METERS_PER_SECOND_SQUARED;
     }
 
-    private double getGyroNoiseRootPSD() {
+    private static double getGyroNoiseRootPSD() {
         return 0.01 * DEG_TO_RAD / 60.0;
     }
 
     private void generateStaticSamples(
-            final MagnetometerMeasurementsGenerator generator,
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final IMUErrors errors,
-            final Matrix hardIron,
-            final Matrix mm,
-            final WMMEarthMagneticFluxDensityEstimator wmmEstimator,
-            final Random random,
-            final Date timestamp,
-            final NEDPosition nedPosition,
-            final CoordinateTransformation cnb,
-            final GaussianRandomizer noiseRandomizer) throws LockedException {
+            final MagnetometerMeasurementsGenerator generator, final int numSamples,
+            final BodyKinematics trueKinematics, final IMUErrors errors, final Matrix hardIron, final Matrix mm,
+            final WMMEarthMagneticFluxDensityEstimator wmmEstimator, final Random random, final Date timestamp,
+            final NEDPosition nedPosition, final CoordinateTransformation cnb, final GaussianRandomizer noiseRandomizer)
+            throws LockedException {
 
         for (int i = 0; i < numSamples; i++) {
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator
-                    .generate(TIME_INTERVAL_SECONDS, trueKinematics, errors,
-                            random);
+            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                    trueKinematics, errors, random);
 
-            final BodyMagneticFluxDensity b = generateB(hardIron.getBuffer(),
-                    mm, wmmEstimator, noiseRandomizer, timestamp, nedPosition,
-                    cnb);
-            final BodyKinematicsAndMagneticFluxDensity kb =
-                    new BodyKinematicsAndMagneticFluxDensity(
-                            measuredKinematics, b);
+            final BodyMagneticFluxDensity b = generateB(hardIron.getBuffer(), mm, wmmEstimator, noiseRandomizer,
+                    timestamp, nedPosition, cnb);
+            final BodyKinematicsAndMagneticFluxDensity kb = new BodyKinematicsAndMagneticFluxDensity(measuredKinematics,
+                    b);
             assertTrue(generator.process(kb));
 
             mBodyKinematicsAndMagneticFluxDensities.add(kb);
@@ -1931,38 +1630,22 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
     @SuppressWarnings("SameParameterValue")
     private void generateDynamicSamples(
-            final MagnetometerMeasurementsGenerator generator,
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final UniformRandomizer randomizer,
-            final ECEFFrame ecefFrame,
-            final NEDFrame nedFrame,
-            final IMUErrors errors,
-            final Matrix hardIron,
-            final Matrix mm,
-            final WMMEarthMagneticFluxDensityEstimator wmmEstimator,
-            final Random random,
-            final Date timestamp,
-            final NEDPosition nedPosition,
-            final CoordinateTransformation cnb,
-            final GaussianRandomizer noiseRandomizer,
-            final boolean changePosition)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
+            final MagnetometerMeasurementsGenerator generator, final int numSamples,
+            final BodyKinematics trueKinematics, final UniformRandomizer randomizer, final ECEFFrame ecefFrame,
+            final NEDFrame nedFrame, final IMUErrors errors, final Matrix hardIron, final Matrix mm,
+            final WMMEarthMagneticFluxDensityEstimator wmmEstimator, final Random random, final Date timestamp,
+            final NEDPosition nedPosition, final CoordinateTransformation cnb, final GaussianRandomizer noiseRandomizer,
+            final boolean changePosition) throws InvalidSourceAndDestinationFrameTypeException, LockedException {
 
-        final double deltaX = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaY = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaZ = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
 
         final double deltaRoll = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
         final double deltaPitch = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
-        final double deltaYaw = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final double deltaYaw = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
 
         final double ecefX = ecefFrame.getX();
         final double ecefY = ecefFrame.getY();
@@ -1974,10 +1657,10 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
         final double pitch = nedC.getPitchEulerAngle();
         final double yaw = nedC.getYawEulerAngle();
 
-        NEDFrame oldNedFrame = new NEDFrame(nedFrame);
-        NEDFrame newNedFrame = new NEDFrame();
-        ECEFFrame oldEcefFrame = new ECEFFrame(ecefFrame);
-        ECEFFrame newEcefFrame = new ECEFFrame();
+        final NEDFrame oldNedFrame = new NEDFrame(nedFrame);
+        final NEDFrame newNedFrame = new NEDFrame();
+        final ECEFFrame oldEcefFrame = new ECEFFrame(ecefFrame);
+        final ECEFFrame newEcefFrame = new ECEFFrame();
 
         double oldEcefX = ecefX - deltaX;
         double oldEcefY = ecefY - deltaY;
@@ -1990,11 +1673,8 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             final double newRoll = oldRoll + deltaRoll;
             final double newPitch = oldPitch + deltaPitch;
             final double newYaw = oldYaw + deltaYaw;
-            final CoordinateTransformation newNedC =
-                    new CoordinateTransformation(
-                            newRoll, newPitch, newYaw,
-                            FrameType.BODY_FRAME,
-                            FrameType.LOCAL_NAVIGATION_FRAME);
+            final CoordinateTransformation newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw,
+                    FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
             final NEDPosition newNedPosition = oldNedFrame.getPosition();
 
             newNedFrame.setPosition(newNedPosition);
@@ -2011,20 +1691,17 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
             ECEFtoNEDFrameConverter.convertECEFtoNED(newEcefFrame, newNedFrame);
 
             // update true kinematics using new position and rotation
-            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                    newEcefFrame, oldEcefFrame, trueKinematics);
+            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, oldEcefFrame,
+                    trueKinematics);
 
             // add error to true kinematics
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator
-                    .generate(TIME_INTERVAL_SECONDS, trueKinematics, errors,
-                            random);
+            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                    trueKinematics, errors, random);
 
-            final BodyMagneticFluxDensity b = generateB(hardIron.getBuffer(),
-                    mm, wmmEstimator, noiseRandomizer, timestamp, nedPosition,
-                    cnb);
-            final BodyKinematicsAndMagneticFluxDensity kb =
-                    new BodyKinematicsAndMagneticFluxDensity(
-                            measuredKinematics, b);
+            final BodyMagneticFluxDensity b = generateB(hardIron.getBuffer(), mm, wmmEstimator, noiseRandomizer,
+                    timestamp, nedPosition, cnb);
+            final BodyKinematicsAndMagneticFluxDensity kb = new BodyKinematicsAndMagneticFluxDensity(measuredKinematics,
+                    b);
             assertTrue(generator.process(kb));
 
             mBodyKinematicsAndMagneticFluxDensities.add(kb);
@@ -2045,7 +1722,6 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest 
 
         // after dynamic sequence finishes, update true kinematics for a
         // static sequence at current frame
-        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                newEcefFrame, newEcefFrame, trueKinematics);
+        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, newEcefFrame, trueKinematics);
     }
 }

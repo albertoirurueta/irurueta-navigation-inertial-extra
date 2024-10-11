@@ -21,7 +21,6 @@ import com.irurueta.geometry.InvalidRotationMatrixException;
 import com.irurueta.geometry.Quaternion;
 import com.irurueta.geometry.RotationException;
 import com.irurueta.navigation.LockedException;
-import com.irurueta.navigation.NavigationException;
 import com.irurueta.navigation.NotReadyException;
 import com.irurueta.navigation.frames.CoordinateTransformation;
 import com.irurueta.navigation.frames.ECEFFrame;
@@ -130,10 +129,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
     private static final long END_TIMESTAMP_MILLIS;
 
     static {
-        START_CALENDAR.set(2020, Calendar.JANUARY, 1,
-                0, 0, 0);
-        END_CALENDAR.set(2025, Calendar.DECEMBER, 31,
-                23, 59, 59);
+        START_CALENDAR.set(2020, Calendar.JANUARY, 1, 0, 0, 0);
+        END_CALENDAR.set(2025, Calendar.DECEMBER, 31, 23, 59, 59);
 
         START_TIMESTAMP_MILLIS = START_CALENDAR.getTimeInMillis();
         END_TIMESTAMP_MILLIS = END_CALENDAR.getTimeInMillis();
@@ -230,14 +227,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 }
             };
 
-    private final List<StandardDeviationBodyKinematics> mAccelerometerGeneratorMeasurements =
-            new ArrayList<>();
+    private final List<StandardDeviationBodyKinematics> mAccelerometerGeneratorMeasurements = new ArrayList<>();
 
     private final List<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>> mGyroscopeGeneratorMeasurements =
             new ArrayList<>();
 
-    private final List<StandardDeviationBodyMagneticFluxDensity> mMagnetometerGeneratorMeasurements =
-            new ArrayList<>();
+    private final List<StandardDeviationBodyMagneticFluxDensity> mMagnetometerGeneratorMeasurements = new ArrayList<>();
 
     private int mStart;
 
@@ -260,14 +255,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(DefaultAccelerometerQualityScoreMapper.class,
                 optimizer.getAccelerometerQualityScoreMapper().getClass());
         assertNotNull(optimizer.getGyroscopeQualityScoreMapper());
-        assertEquals(DefaultGyroscopeQualityScoreMapper.class,
-                optimizer.getGyroscopeQualityScoreMapper().getClass());
+        assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getGyroscopeQualityScoreMapper().getClass());
         assertNotNull(optimizer.getMagnetometerQualityScoreMapper());
         assertEquals(DefaultMagnetometerQualityScoreMapper.class,
                 optimizer.getMagnetometerQualityScoreMapper().getClass());
         assertNotNull(optimizer.getMseRule());
-        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class,
-                optimizer.getMseRule().getClass());
+        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class, optimizer.getMseRule().getClass());
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MIN_THRESHOLD_FACTOR,
                 optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
@@ -275,23 +268,18 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertFalse(optimizer.isReady());
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -299,37 +287,26 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm());
@@ -350,8 +327,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
     }
 
     @Test
@@ -360,8 +337,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 mock(AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
 
         final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                        dataSource);
+                new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(dataSource);
 
         // check default values
         assertEquals(ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
@@ -373,14 +349,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(DefaultAccelerometerQualityScoreMapper.class,
                 optimizer.getAccelerometerQualityScoreMapper().getClass());
         assertNotNull(optimizer.getGyroscopeQualityScoreMapper());
-        assertEquals(DefaultGyroscopeQualityScoreMapper.class,
-                optimizer.getGyroscopeQualityScoreMapper().getClass());
+        assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getGyroscopeQualityScoreMapper().getClass());
         assertNotNull(optimizer.getMagnetometerQualityScoreMapper());
         assertEquals(DefaultMagnetometerQualityScoreMapper.class,
                 optimizer.getMagnetometerQualityScoreMapper().getClass());
         assertNotNull(optimizer.getMseRule());
-        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class,
-                optimizer.getMseRule().getClass());
+        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class, optimizer.getMseRule().getClass());
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MIN_THRESHOLD_FACTOR,
                 optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
@@ -388,23 +362,18 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertFalse(optimizer.isReady());
         assertSame(dataSource, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -412,37 +381,26 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm());
@@ -463,16 +421,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
     }
 
     @Test
     public void testConstructor3() {
         final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
                 new KnownGravityNormAccelerometerCalibrator();
-        final EasyGyroscopeCalibrator gyroscopeCalibrator =
-                new EasyGyroscopeCalibrator();
+        final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
         final KnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
                 new KnownPositionAndInstantMagnetometerCalibrator();
 
@@ -490,14 +447,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(DefaultAccelerometerQualityScoreMapper.class,
                 optimizer.getAccelerometerQualityScoreMapper().getClass());
         assertNotNull(optimizer.getGyroscopeQualityScoreMapper());
-        assertEquals(DefaultGyroscopeQualityScoreMapper.class,
-                optimizer.getGyroscopeQualityScoreMapper().getClass());
+        assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getGyroscopeQualityScoreMapper().getClass());
         assertNotNull(optimizer.getMagnetometerQualityScoreMapper());
         assertEquals(DefaultMagnetometerQualityScoreMapper.class,
                 optimizer.getMagnetometerQualityScoreMapper().getClass());
         assertNotNull(optimizer.getMseRule());
-        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class,
-                optimizer.getMseRule().getClass());
+        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class, optimizer.getMseRule().getClass());
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MIN_THRESHOLD_FACTOR,
                 optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
@@ -505,23 +460,18 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertFalse(optimizer.isReady());
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -529,37 +479,26 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm());
@@ -580,33 +519,22 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // Force IllegalArgumentException
-        optimizer = null;
-        try {
-            optimizer = new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                    new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator(),
-                    gyroscopeCalibrator, magnetometerCalibrator);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer = new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                    accelerometerCalibrator, new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator(),
-                    magnetometerCalibrator);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer = new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                    accelerometerCalibrator, gyroscopeCalibrator,
-                    new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(optimizer);
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+                        new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator(), gyroscopeCalibrator,
+                        magnetometerCalibrator));
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+                        accelerometerCalibrator, new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator(),
+                        magnetometerCalibrator));
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+                        accelerometerCalibrator, gyroscopeCalibrator,
+                        new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -616,15 +544,13 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
                 new KnownGravityNormAccelerometerCalibrator();
-        final EasyGyroscopeCalibrator gyroscopeCalibrator =
-                new EasyGyroscopeCalibrator();
+        final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
         final KnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
                 new KnownPositionAndInstantMagnetometerCalibrator();
 
-        ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                        dataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                        magnetometerCalibrator);
+        final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
+                new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                        accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
 
         // check default values
         assertEquals(ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
@@ -636,14 +562,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(DefaultAccelerometerQualityScoreMapper.class,
                 optimizer.getAccelerometerQualityScoreMapper().getClass());
         assertNotNull(optimizer.getGyroscopeQualityScoreMapper());
-        assertEquals(DefaultGyroscopeQualityScoreMapper.class,
-                optimizer.getGyroscopeQualityScoreMapper().getClass());
+        assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getGyroscopeQualityScoreMapper().getClass());
         assertNotNull(optimizer.getMagnetometerQualityScoreMapper());
         assertEquals(DefaultMagnetometerQualityScoreMapper.class,
                 optimizer.getMagnetometerQualityScoreMapper().getClass());
         assertNotNull(optimizer.getMseRule());
-        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class,
-                optimizer.getMseRule().getClass());
+        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class, optimizer.getMseRule().getClass());
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MIN_THRESHOLD_FACTOR,
                 optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
@@ -651,23 +575,18 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertTrue(optimizer.isReady());
         assertSame(dataSource, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -675,37 +594,26 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm());
@@ -726,34 +634,22 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // Force IllegalArgumentException
-        optimizer = null;
-        try {
-            optimizer = new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                    dataSource, new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator(),
-                    gyroscopeCalibrator, magnetometerCalibrator);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer = new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                    dataSource, accelerometerCalibrator,
-                    new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator(),
-                    magnetometerCalibrator);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer = new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                    dataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                    new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(optimizer);
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+                dataSource, new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator(), gyroscopeCalibrator,
+                        magnetometerCalibrator));
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+                        dataSource, accelerometerCalibrator, new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator(),
+                        magnetometerCalibrator));
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+                        dataSource, accelerometerCalibrator, gyroscopeCalibrator,
+                        new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -763,7 +659,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         // check default value
         assertEquals(ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer
-                        .DEFAULT_STEP, optimizer.getThresholdFactorStep(), 0.0);
+                .DEFAULT_STEP, optimizer.getThresholdFactorStep(), 0.0);
 
         // set new value
         optimizer.setThresholdFactorStep(2.0);
@@ -772,11 +668,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(2.0, optimizer.getThresholdFactorStep(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setThresholdFactorStep(0.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorStep(0.0));
     }
 
     @Test
@@ -788,8 +680,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertNull(optimizer.getAccelerometerCalibrator());
 
         // set new value
-        final KnownGravityNormAccelerometerCalibrator calibrator =
-                new KnownGravityNormAccelerometerCalibrator();
+        final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator();
 
         optimizer.setAccelerometerCalibrator(calibrator);
 
@@ -797,12 +688,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertSame(calibrator, optimizer.getAccelerometerCalibrator());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setAccelerometerCalibrator(
-                    new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setAccelerometerCalibrator(
+                new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -822,12 +709,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertSame(calibrator, optimizer.getGyroscopeCalibrator());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setGyroscopeCalibrator(
-                    new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setGyroscopeCalibrator(
+                new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -848,12 +731,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertSame(calibrator, optimizer.getMagnetometerCalibrator());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setMagnetometerCalibrator(
-                    new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setMagnetometerCalibrator(
+                new KnownFrameMagnetometerNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -868,8 +747,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         // set new value
         //noinspection unchecked
-        final QualityScoreMapper<StandardDeviationBodyKinematics> qualityScoreMapper =
-                mock(QualityScoreMapper.class);
+        final QualityScoreMapper<StandardDeviationBodyKinematics> qualityScoreMapper = mock(QualityScoreMapper.class);
         optimizer.setAccelerometerQualityScoreMapper(qualityScoreMapper);
 
         // check
@@ -883,8 +761,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         // check default value
         assertNotNull(optimizer.getGyroscopeQualityScoreMapper());
-        assertEquals(DefaultGyroscopeQualityScoreMapper.class,
-                optimizer.getGyroscopeQualityScoreMapper().getClass());
+        assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getGyroscopeQualityScoreMapper().getClass());
 
         // set new value
         //noinspection unchecked
@@ -923,8 +800,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         // check default value
         assertNotNull(optimizer.getMseRule());
-        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class,
-                optimizer.getMseRule().getClass());
+        assertEquals(DefaultAccelerometerGyroscopeAndMagnetometerMseRule.class, optimizer.getMseRule().getClass());
 
         // set new value
         final AccelerometerGyroscopeAndMagnetometerMseRule rule =
@@ -942,11 +818,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         // check default values
         assertEquals(ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer
-                        .DEFAULT_MIN_THRESHOLD_FACTOR,
-                optimizer.getMinThresholdFactor(), 0.0);
+                        .DEFAULT_MIN_THRESHOLD_FACTOR, optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer
-                        .DEFAULT_MAX_THRESHOLD_FACTOR,
-                optimizer.getMaxThresholdFactor(), 0.0);
+                        .DEFAULT_MAX_THRESHOLD_FACTOR, optimizer.getMaxThresholdFactor(), 0.0);
 
         // set new value
         optimizer.setThresholdFactorRange(0.0, 1.0);
@@ -956,21 +830,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(1.0, optimizer.getMaxThresholdFactor(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setThresholdFactorRange(-1.0, 1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(1.0, -1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(2.0, 1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(-1.0, 1.0));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(1.0, -1.0));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(2.0, 1.0));
     }
 
     @Test
@@ -1037,8 +899,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertFalse(optimizer.isReady());
 
         // set quality score mapper
-        optimizer.setAccelerometerQualityScoreMapper(
-                new DefaultAccelerometerQualityScoreMapper());
+        optimizer.setAccelerometerQualityScoreMapper(new DefaultAccelerometerQualityScoreMapper());
 
         // check
         assertTrue(optimizer.isReady());
@@ -1050,8 +911,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertFalse(optimizer.isReady());
 
         // set quality score mapper
-        optimizer.setGyroscopeQualityScoreMapper(
-                new DefaultGyroscopeQualityScoreMapper());
+        optimizer.setGyroscopeQualityScoreMapper(new DefaultGyroscopeQualityScoreMapper());
 
         // check
         assertTrue(optimizer.isReady());
@@ -1069,8 +929,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
 
         // set new value
         final double timeInterval = 0.01;
@@ -1080,11 +939,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(timeInterval, optimizer.getTimeInterval(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setTimeInterval(-1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setTimeInterval(-1.0));
     }
 
     @Test
@@ -1094,9 +949,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         // check default value
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
 
         // set new value
         final Time timeInterval2 = new Time(0.01, TimeUnit.SECOND);
@@ -1111,11 +966,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(timeInterval2, timeInterval4);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setTimeInterval(new Time(-1.0, TimeUnit.SECOND));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> optimizer.setTimeInterval(new Time(-1.0, TimeUnit.SECOND)));
     }
 
     @Test
@@ -1124,8 +976,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
 
         // set new value
         final int minStaticSamples = 50;
@@ -1135,11 +986,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(minStaticSamples, optimizer.getMinStaticSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setMinStaticSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setMinStaticSamples(1));
     }
 
     @Test
@@ -1148,8 +995,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
 
         // set new value
         final int maxDynamicSamples = 500;
@@ -1159,11 +1005,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(maxDynamicSamples, optimizer.getMaxDynamicSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setMaxDynamicSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setMaxDynamicSamples(1));
     }
 
     @Test
@@ -1172,8 +1014,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
 
         // set new value
         final int windowSize = 51;
@@ -1183,11 +1024,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(windowSize, optimizer.getWindowSize());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setWindowSize(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setWindowSize(1));
     }
 
     @Test
@@ -1196,8 +1033,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
 
         // set new value
         final int initialStaticSamples = 100;
@@ -1207,11 +1043,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(initialStaticSamples, optimizer.getInitialStaticSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setInitialStaticSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setInitialStaticSamples(1));
     }
 
     @Test
@@ -1228,20 +1060,14 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         optimizer.setInstantaneousNoiseLevelFactor(instantaneousNoiseLevelFactor);
 
         // check
-        assertEquals(instantaneousNoiseLevelFactor,
-                optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
+        assertEquals(instantaneousNoiseLevelFactor, optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setInstantaneousNoiseLevelFactor(0.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setInstantaneousNoiseLevelFactor(0.0));
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThreshold()
-            throws LockedException {
+    public void testGetSetBaseNoiseLevelAbsoluteThreshold() throws LockedException {
         final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                 new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
@@ -1254,21 +1080,14 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         optimizer.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
 
         // check
-        assertEquals(baseNoiseLevelAbsoluteThreshold,
-                optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
+        assertEquals(baseNoiseLevelAbsoluteThreshold, optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(
-                    0.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0));
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement()
-            throws LockedException {
+    public void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement() throws LockedException {
         final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                 new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
@@ -1276,20 +1095,17 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
 
         // set new value
         final double baseNoiseLevelAbsoluteThreshold = 1e-5;
-        final Acceleration acceleration2 = new Acceleration(
-                baseNoiseLevelAbsoluteThreshold,
+        final Acceleration acceleration2 = new Acceleration(baseNoiseLevelAbsoluteThreshold,
                 AccelerationUnit.METERS_PER_SQUARED_SECOND);
         optimizer.setBaseNoiseLevelAbsoluteThreshold(acceleration2);
 
         // check
         final Acceleration acceleration3 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration4);
 
         assertEquals(acceleration2, acceleration3);
@@ -1316,8 +1132,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                 new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer();
 
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // set new value
         optimizer.setProgressDelta(0.5f);
@@ -1326,23 +1142,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertEquals(0.5f, optimizer.getProgressDelta(), 0.0f);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setProgressDelta(-1.0f);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setProgressDelta(2.0f);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setProgressDelta(-1.0f));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setProgressDelta(2.0f));
     }
 
     @Test
     public void testOptimizeMaCommonAxisWithNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-        InvalidRotationMatrixException, IOException, RotationException {
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, IOException,
+            RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1366,8 +1174,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final UniformRandomizer randomizer = new UniformRandomizer(random);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
@@ -1377,9 +1184,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
             generateTimedBodyKinematicsAndMagneticFluxDensity(nedFrame, ecefFrame, false, ma,
-                    accelNoiseRootPSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements, hardIron, mm, timestamp, nedPosition,
-                    MAGNETOMETER_NOISE_STD);
+                    accelNoiseRootPSD, gyroNoiseRootPSD, numSequences, numMeasurements, hardIron, mm, timestamp,
+                    nedPosition, MAGNETOMETER_NOISE_STD);
 
             final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator =
                     new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(mGeneratorListener);
@@ -1401,15 +1207,13 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator
-                    .estimateGravityAndReturnNew(ecefFrame);
+            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
             final Matrix initialBa = new Matrix(3, 1);
             final Matrix initialMa = new Matrix(3, 3);
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(
-                            gravity.getNorm(), true, initialBa,
+                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true, initialBa,
                             initialMa);
 
             final Matrix initialMg = new Matrix(3, 3);
@@ -1430,8 +1234,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             // create optimizer
             final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                     new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                            magnetometerCalibrator);
+                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1445,18 +1248,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -1468,15 +1268,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -1618,11 +1415,11 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertTrue(numValid > 0);
     }
 
-    @Ignore
+    @Ignore("too slow")
     @Test
     public void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, InvalidRotationMatrixException, IOException, RotationException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1645,8 +1442,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final UniformRandomizer randomizer = new UniformRandomizer(random);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
@@ -1656,9 +1452,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
             generateTimedBodyKinematicsAndMagneticFluxDensity(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements, hardIron, mm, timestamp, nedPosition,
-                    SMALL_MAGNETOMETER_NOISE_STD);
+                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences, numMeasurements, hardIron, mm, timestamp,
+                    nedPosition, SMALL_MAGNETOMETER_NOISE_STD);
 
             final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator =
                     new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(mGeneratorListener);
@@ -1688,15 +1483,13 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator
-                    .estimateGravityAndReturnNew(ecefFrame);
+            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
             final Matrix initialBa = new Matrix(3, 1);
             final Matrix initialMa = new Matrix(3, 3);
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(
-                            gravity.getNorm(), false, initialBa,
+                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), false, initialBa,
                             initialMa);
 
             final Matrix initialMg = new Matrix(3, 3);
@@ -1708,7 +1501,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             gyroscopeCalibrator.setInitialMg(initialMg);
             gyroscopeCalibrator.setInitialGg(initialGg);
 
-            KnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
+            final KnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
                     new KnownPositionAndInstantMagnetometerCalibrator();
             magnetometerCalibrator.setPosition(nedPosition);
             magnetometerCalibrator.setCommonAxisUsed(false);
@@ -1717,8 +1510,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             // create optimizer
             final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                     new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                            magnetometerCalibrator);
+                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1737,18 +1529,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -1760,15 +1549,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -1912,8 +1698,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     @Test
     public void testOptimizeCommonAxisNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, InvalidRotationMatrixException, IOException, RotationException {
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1936,8 +1722,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final UniformRandomizer randomizer = new UniformRandomizer(random);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
@@ -1947,9 +1732,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
             generateTimedBodyKinematicsAndMagneticFluxDensity(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements, hardIron, mm, timestamp, nedPosition,
-                    SMALL_MAGNETOMETER_NOISE_STD);
+                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences, numMeasurements, hardIron, mm, timestamp,
+                    nedPosition, SMALL_MAGNETOMETER_NOISE_STD);
 
             final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator =
                     new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(mGeneratorListener);
@@ -1971,15 +1755,13 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator
-                    .estimateGravityAndReturnNew(ecefFrame);
+            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
             final Matrix initialBa = new Matrix(3, 1);
             final Matrix initialMa = new Matrix(3, 3);
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(
-                            gravity.getNorm(), true, initialBa,
+                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true, initialBa,
                             initialMa);
 
             final Matrix initialMg = new Matrix(3, 3);
@@ -1991,7 +1773,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             gyroscopeCalibrator.setInitialMg(initialMg);
             gyroscopeCalibrator.setInitialGg(initialGg);
 
-            KnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
+            final KnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
                     new KnownPositionAndInstantMagnetometerCalibrator();
             magnetometerCalibrator.setPosition(nedPosition);
             magnetometerCalibrator.setCommonAxisUsed(true);
@@ -2000,8 +1782,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             // create optimizer
             final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                     new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                            magnetometerCalibrator);
+                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
             optimizer.setListener(this);
 
             reset();
@@ -2020,18 +1801,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -2043,15 +1821,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -2195,9 +1970,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     @Test
     public void testOptimizeGeneralGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-        InvalidRotationMatrixException, IOException, RotationException {
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, IOException,
+            RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2220,8 +1995,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final UniformRandomizer randomizer = new UniformRandomizer(random);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
@@ -2231,9 +2005,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
             generateTimedBodyKinematicsAndMagneticFluxDensity(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements, hardIron, mm, timestamp, nedPosition,
-                    SMALL_MAGNETOMETER_NOISE_STD);
+                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences, numMeasurements, hardIron, mm, timestamp,
+                    nedPosition, SMALL_MAGNETOMETER_NOISE_STD);
 
             final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator =
                     new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(mGeneratorListener);
@@ -2255,15 +2028,13 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator
-                    .estimateGravityAndReturnNew(ecefFrame);
+            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
             final Matrix initialBa = new Matrix(3, 1);
             final Matrix initialMa = new Matrix(3, 3);
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(
-                            gravity.getNorm(), false, initialBa,
+                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), false, initialBa,
                             initialMa);
 
             final Matrix initialMg = new Matrix(3, 3);
@@ -2284,8 +2055,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             // create optimizer
             final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                     new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                            magnetometerCalibrator);
+                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
             optimizer.setListener(this);
 
             reset();
@@ -2299,18 +2069,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -2322,15 +2089,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -2474,8 +2238,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     @Test
     public void testOptimizeCommonAxisGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, InvalidRotationMatrixException, IOException, RotationException {
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2498,8 +2262,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final UniformRandomizer randomizer = new UniformRandomizer(random);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
@@ -2509,9 +2272,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
             generateTimedBodyKinematicsAndMagneticFluxDensity(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements, hardIron, mm, timestamp, nedPosition,
-                    SMALL_MAGNETOMETER_NOISE_STD);
+                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences, numMeasurements, hardIron, mm, timestamp,
+                    nedPosition, SMALL_MAGNETOMETER_NOISE_STD);
 
             final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator =
                     new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(mGeneratorListener);
@@ -2533,15 +2295,13 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator
-                    .estimateGravityAndReturnNew(ecefFrame);
+            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
             final Matrix initialBa = new Matrix(3, 1);
             final Matrix initialMa = new Matrix(3, 3);
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(
-                            gravity.getNorm(), true, initialBa,
+                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true, initialBa,
                             initialMa);
 
             final Matrix initialMg = new Matrix(3, 3);
@@ -2562,8 +2322,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             // create optimizer
             final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                     new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                            magnetometerCalibrator);
+                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
             optimizer.setListener(this);
 
             reset();
@@ -2582,18 +2341,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -2605,15 +2361,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -2755,12 +2508,10 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertTrue(numValid > 0);
     }
 
-    @Ignore
     @Test
     public void testOptimizeCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange()
-        throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
-        LockedException, NotReadyException,
-        InvalidRotationMatrixException, IOException, RotationException {
+            throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException, LockedException,
+            NotReadyException, InvalidRotationMatrixException, IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2783,8 +2534,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final UniformRandomizer randomizer = new UniformRandomizer(random);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
@@ -2794,9 +2544,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
             generateTimedBodyKinematicsAndMagneticFluxDensity(nedFrame, ecefFrame, true, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements, hardIron, mm, timestamp, nedPosition,
-                    SMALL_MAGNETOMETER_NOISE_STD);
+                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences, numMeasurements, hardIron, mm, timestamp,
+                    nedPosition, SMALL_MAGNETOMETER_NOISE_STD);
 
             final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator =
                     new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(mGeneratorListener);
@@ -2818,15 +2567,13 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator
-                    .estimateGravityAndReturnNew(ecefFrame);
+            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
             final Matrix initialBa = new Matrix(3, 1);
             final Matrix initialMa = new Matrix(3, 3);
             final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(
-                            gravity.getNorm(), true, initialBa,
+                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true, initialBa,
                             initialMa);
 
             final Matrix initialMg = new Matrix(3, 3);
@@ -2838,7 +2585,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             gyroscopeCalibrator.setInitialMg(initialMg);
             gyroscopeCalibrator.setInitialGg(initialGg);
 
-            KnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
+            final KnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
                     new KnownPositionAndInstantMagnetometerCalibrator();
             magnetometerCalibrator.setPosition(nedPosition);
             magnetometerCalibrator.setCommonAxisUsed(true);
@@ -2847,8 +2594,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             // create optimizer
             final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                     new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                            magnetometerCalibrator);
+                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
             optimizer.setListener(this);
 
             reset();
@@ -2867,18 +2613,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -2890,15 +2633,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -3040,12 +2780,11 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         assertTrue(numValid > 0);
     }
 
-    @Ignore
     @Test
     public void testOptimizeRobustCalibrators() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-        InvalidRotationMatrixException, IOException, RotationException {
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, IOException,
+            RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -3068,8 +2807,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final UniformRandomizer randomizer = new UniformRandomizer(random);
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = 3 * EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = 3 * NUM_MEASUREMENTS;
@@ -3079,9 +2817,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final Date timestamp = new Date(createTimestamp(randomizer));
             NEDPosition nedPosition = createPosition(randomizer);
             generateTimedBodyKinematicsAndMagneticFluxDensity(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements, hardIron, mm, timestamp, nedPosition,
-                    SMALL_MAGNETOMETER_NOISE_STD);
+                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences, numMeasurements, hardIron, mm, timestamp,
+                    nedPosition, SMALL_MAGNETOMETER_NOISE_STD);
 
             final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator =
                     new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(mGeneratorListener);
@@ -3103,8 +2840,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator
-                    .estimateGravityAndReturnNew(ecefFrame);
+            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
             final Matrix initialBa = new Matrix(3, 1);
@@ -3118,15 +2854,14 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
             final Matrix initialMg = new Matrix(3, 3);
             final Matrix initialGg = new Matrix(3, 3);
-            final PROMedSRobustEasyGyroscopeCalibrator gyroscopeCalibrator =
-                    new PROMedSRobustEasyGyroscopeCalibrator();
+            final PROMedSRobustEasyGyroscopeCalibrator gyroscopeCalibrator = new PROMedSRobustEasyGyroscopeCalibrator();
             gyroscopeCalibrator.setCommonAxisUsed(true);
             gyroscopeCalibrator.setGDependentCrossBiasesEstimated(false);
             gyroscopeCalibrator.setInitialBias(initialBg);
             gyroscopeCalibrator.setInitialMg(initialMg);
             gyroscopeCalibrator.setInitialGg(initialGg);
 
-            PROMedSRobustKnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
+            final PROMedSRobustKnownPositionAndInstantMagnetometerCalibrator magnetometerCalibrator =
                     new PROMedSRobustKnownPositionAndInstantMagnetometerCalibrator();
             magnetometerCalibrator.setPosition(nedPosition);
             magnetometerCalibrator.setCommonAxisUsed(true);
@@ -3135,8 +2870,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             // create optimizer
             final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer =
                     new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                            magnetometerCalibrator);
+                            mDataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
             optimizer.setListener(this);
 
             reset();
@@ -3150,18 +2884,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -3173,15 +2904,12 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -3353,116 +3081,37 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         mProgress = progress;
     }
 
-    private void checkLocked(
+    private static void checkLocked(
             final ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer) {
         assertTrue(optimizer.isRunning());
-        try {
-            optimizer.setDataSource(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setListener(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setAccelerometerCalibrator(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setGyroscopeCalibrator(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setAccelerometerQualityScoreMapper(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setGyroscopeQualityScoreMapper(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(0.0, 1.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setTimeInterval(0.01);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setTimeInterval(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setMinStaticSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setMaxDynamicSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setWindowSize(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setInitialStaticSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setInstantaneousNoiseLevelFactor(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorStep(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.optimize();
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final NavigationException e) {
-            fail("LockedException expected but not thrown");
-        }
+        assertThrows(LockedException.class, () -> optimizer.setDataSource(null));
+        assertThrows(LockedException.class, () -> optimizer.setListener(null));
+        assertThrows(LockedException.class, () -> optimizer.setAccelerometerCalibrator(null));
+        assertThrows(LockedException.class, () -> optimizer.setGyroscopeCalibrator(null));
+        assertThrows(LockedException.class, () -> optimizer.setAccelerometerQualityScoreMapper(null));
+        assertThrows(LockedException.class, () -> optimizer.setGyroscopeQualityScoreMapper(null));
+        assertThrows(LockedException.class, () -> optimizer.setThresholdFactorRange(0.0, 1.0));
+        assertThrows(LockedException.class, () -> optimizer.setTimeInterval(0.01));
+        assertThrows(LockedException.class, () -> optimizer.setTimeInterval(null));
+        assertThrows(LockedException.class, () -> optimizer.setMinStaticSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setMaxDynamicSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setWindowSize(0));
+        assertThrows(LockedException.class, () -> optimizer.setInitialStaticSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setInstantaneousNoiseLevelFactor(0.0));
+        assertThrows(LockedException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0));
+        assertThrows(LockedException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(null));
+        assertThrows(LockedException.class, () -> optimizer.setThresholdFactorStep(0.0));
+        assertThrows(LockedException.class, optimizer::optimize);
     }
 
     @SuppressWarnings("SameParameterValue")
     private void generateTimedBodyKinematicsAndMagneticFluxDensity(
             final NEDFrame nedFrame, final ECEFFrame ecefFrame,
             final boolean changePosition, final Matrix ma, final double accelNoiseRootPSD,
-            final double gyroNoiseRootPSD, final int numSequences,
-            final int numMeasurements,
-            final Matrix hardIron,
-            final Matrix mm,
-            final Date timestamp,
-            final NEDPosition nedPosition,
-            final double magnetometerNoiseStd) throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException,
-        InvalidRotationMatrixException, IOException, RotationException {
+            final double gyroNoiseRootPSD, final int numSequences, final int numMeasurements, final Matrix hardIron,
+            final Matrix mm, final Date timestamp, final NEDPosition nedPosition, final double magnetometerNoiseStd)
+            throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException, InvalidRotationMatrixException,
+            IOException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -3472,32 +3121,28 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final WMMEarthMagneticFluxDensityEstimator wmmEstimator =
-                new WMMEarthMagneticFluxDensityEstimator();
+        final WMMEarthMagneticFluxDensityEstimator wmmEstimator = new WMMEarthMagneticFluxDensityEstimator();
 
-        final GaussianRandomizer noiseRandomizer = new GaussianRandomizer(
-                new Random(), 0.0, magnetometerNoiseStd);
+        final GaussianRandomizer noiseRandomizer = new GaussianRandomizer(new Random(), 0.0,
+                magnetometerNoiseStd);
 
         CoordinateTransformation nedC = nedFrame.getCoordinateTransformation();
         CoordinateTransformation cnb = nedC.inverseAndReturnNew();
 
         // compute ground-truth kinematics that should be generated at provided
         // position, velocity and orientation
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefFrame, ecefFrame);
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefFrame, ecefFrame);
 
         // generate initial static samples
-        final int initialStaticSamples = TriadStaticIntervalDetector
-                .DEFAULT_INITIAL_STATIC_SAMPLES;
-        generateStaticSamples(initialStaticSamples, trueKinematics, errors, random,
-                0, hardIron, mm, wmmEstimator, timestamp, nedPosition,
-                cnb, noiseRandomizer);
+        final int initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+        generateStaticSamples(initialStaticSamples, trueKinematics, errors, random, 0, hardIron, mm,
+                wmmEstimator, timestamp, nedPosition, cnb, noiseRandomizer);
 
         final int n = Math.max(numSequences + 1, numMeasurements);
 
@@ -3511,58 +3156,43 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             cnb = nedC.inverseAndReturnNew();
 
             // generate static samples
-            generateStaticSamples(staticPeriodLength, trueKinematics, errors, random,
-                    start, hardIron, mm, wmmEstimator, timestamp, nedPosition,
-                    cnb, noiseRandomizer);
+            generateStaticSamples(staticPeriodLength, trueKinematics, errors, random, start, hardIron, mm, wmmEstimator,
+                    timestamp, nedPosition, cnb, noiseRandomizer);
             start += staticPeriodLength;
 
             // generate dynamic samples
-            generateDynamicSamples(dynamicPeriodLength, trueKinematics,
-                    randomizer, ecefFrame, nedFrame, errors, random, start,
-                    changePosition, hardIron, mm, wmmEstimator, timestamp, nedPosition,
-                    cnb, noiseRandomizer);
+            generateDynamicSamples(dynamicPeriodLength, trueKinematics, randomizer, ecefFrame, nedFrame, errors, random,
+                    start, changePosition, hardIron, mm, wmmEstimator, timestamp, nedPosition, cnb, noiseRandomizer);
             start += dynamicPeriodLength;
         }
     }
 
     private static BodyMagneticFluxDensity generateB(
-            final double[] hardIron, final Matrix softIron,
-            final WMMEarthMagneticFluxDensityEstimator wmmEstimator,
-            final GaussianRandomizer noiseRandomizer,
-            final Date timestamp,
-            final NEDPosition position,
+            final double[] hardIron, final Matrix softIron, final WMMEarthMagneticFluxDensityEstimator wmmEstimator,
+            final GaussianRandomizer noiseRandomizer, final Date timestamp, final NEDPosition position,
             final CoordinateTransformation cnb) {
 
-        final NEDMagneticFluxDensity earthB = wmmEstimator.estimate(
-                position, timestamp);
+        final NEDMagneticFluxDensity earthB = wmmEstimator.estimate(position, timestamp);
 
-        final BodyMagneticFluxDensity truthMagnetic =
-                BodyMagneticFluxDensityEstimator.estimate(earthB, cnb);
-        final BodyMagneticFluxDensity measuredMagnetic =
-                generateMeasuredMagneticFluxDensity(truthMagnetic,
-                        hardIron, softIron);
+        final BodyMagneticFluxDensity truthMagnetic = BodyMagneticFluxDensityEstimator.estimate(earthB, cnb);
+        final BodyMagneticFluxDensity measuredMagnetic = generateMeasuredMagneticFluxDensity(truthMagnetic, hardIron,
+                softIron);
 
         if (noiseRandomizer != null) {
-            measuredMagnetic.setBx(measuredMagnetic.getBx()
-                    + noiseRandomizer.nextDouble());
-            measuredMagnetic.setBy(measuredMagnetic.getBy()
-                    + noiseRandomizer.nextDouble());
-            measuredMagnetic.setBz(measuredMagnetic.getBz()
-                    + noiseRandomizer.nextDouble());
+            measuredMagnetic.setBx(measuredMagnetic.getBx() + noiseRandomizer.nextDouble());
+            measuredMagnetic.setBy(measuredMagnetic.getBy() + noiseRandomizer.nextDouble());
+            measuredMagnetic.setBz(measuredMagnetic.getBz() + noiseRandomizer.nextDouble());
         }
 
         return measuredMagnetic;
     }
 
     private static BodyMagneticFluxDensity generateMeasuredMagneticFluxDensity(
-            final BodyMagneticFluxDensity input, final double[] hardIron,
-            final Matrix softIron) {
-        return BodyMagneticFluxDensityGenerator.generate(input, hardIron,
-                softIron);
+            final BodyMagneticFluxDensity input, final double[] hardIron, final Matrix softIron) {
+        return BodyMagneticFluxDensityGenerator.generate(input, hardIron, softIron);
     }
 
-    private static double[] generateHardIron(
-            final UniformRandomizer randomizer) {
+    private static double[] generateHardIron(final UniformRandomizer randomizer) {
         final double[] result = new double[BodyMagneticFluxDensity.COMPONENTS];
         randomizer.fill(result, MIN_HARD_IRON, MAX_HARD_IRON);
         return result;
@@ -3584,8 +3214,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     private static Matrix generateSoftIronGeneral() {
         try {
-            return Matrix.createWithUniformRandomValues(
-                    BodyMagneticFluxDensity.COMPONENTS,
+            return Matrix.createWithUniformRandomValues(BodyMagneticFluxDensity.COMPONENTS,
                     BodyMagneticFluxDensity.COMPONENTS, MIN_SOFT_IRON, MAX_SOFT_IRON);
         } catch (final WrongSizeException ignore) {
             // never happens
@@ -3593,60 +3222,50 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         }
     }
 
-    private static NEDPosition createPosition(
-            final UniformRandomizer randomizer) {
-        final double latitude = Math.toRadians(randomizer.nextDouble(
-                MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(randomizer.nextDouble(
-                MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
-        final double height = randomizer.nextDouble(
-                MIN_HEIGHT, MAX_HEIGHT);
+    private static NEDPosition createPosition(final UniformRandomizer randomizer) {
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
 
         return new NEDPosition(latitude, longitude, height);
     }
 
     private static long createTimestamp(final UniformRandomizer randomizer) {
-        return randomizer.nextLong(
-                START_TIMESTAMP_MILLIS, END_TIMESTAMP_MILLIS);
+        return randomizer.nextLong(START_TIMESTAMP_MILLIS, END_TIMESTAMP_MILLIS);
     }
 
-    private NEDFrame generateFrame() throws InvalidSourceAndDestinationFrameTypeException {
+    private static NEDFrame generateFrame() throws InvalidSourceAndDestinationFrameTypeException {
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final NEDPosition nedPosition = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+                FrameType.LOCAL_NAVIGATION_FRAME);
 
         return new NEDFrame(nedPosition, nedC);
     }
 
-    private Matrix generateBa() {
+    private static Matrix generateBa() {
         return Matrix.newFromArray(new double[]{
                 900 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 -1300 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 800 * MICRO_G_TO_METERS_PER_SECOND_SQUARED});
     }
 
-    private Matrix generateBg() {
+    private static Matrix generateBg() {
         return Matrix.newFromArray(new double[]{
                 -9 * DEG_TO_RAD / 3600.0,
                 13 * DEG_TO_RAD / 3600.0,
                 -8 * DEG_TO_RAD / 3600.0});
     }
 
-    private Matrix generateMaCommonAxis() throws WrongSizeException {
+    private static Matrix generateMaCommonAxis() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -3657,7 +3276,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         return result;
     }
 
-    private Matrix generateMaGeneral() throws WrongSizeException {
+    private static Matrix generateMaGeneral() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -3668,7 +3287,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         return result;
     }
 
-    private Matrix generateMg() throws WrongSizeException {
+    private static Matrix generateMg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 400e-6, -300e-6, 250e-6,
@@ -3679,7 +3298,7 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         return result;
     }
 
-    private Matrix generateGg() throws WrongSizeException {
+    private static Matrix generateGg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         final double tmp = DEG_TO_RAD / (3600 * 9.80665);
         result.fromArray(new double[]{
@@ -3691,37 +3310,28 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         return result;
     }
 
-    private double getAccelNoiseRootPSD() {
+    private static double getAccelNoiseRootPSD() {
         return 100.0 * MICRO_G_TO_METERS_PER_SECOND_SQUARED;
     }
 
-    private double getGyroNoiseRootPSD() {
+    private static double getGyroNoiseRootPSD() {
         return 0.01 * DEG_TO_RAD / 60.0;
     }
 
     private void generateStaticSamples(
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final IMUErrors errors,
-            final Random random,
-            final int startSample,
-            final Matrix hardIron,
-            final Matrix mm,
-            final WMMEarthMagneticFluxDensityEstimator wmmEstimator,
-            final Date timestamp,
-            final NEDPosition nedPosition,
-            final CoordinateTransformation cnb,
+            final int numSamples, final BodyKinematics trueKinematics, final IMUErrors errors, final Random random,
+            final int startSample, final Matrix hardIron, final Matrix mm,
+            final WMMEarthMagneticFluxDensityEstimator wmmEstimator, final Date timestamp,
+            final NEDPosition nedPosition, final CoordinateTransformation cnb,
             final GaussianRandomizer noiseRandomizer) {
 
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
 
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator
-                    .generate(TIME_INTERVAL_SECONDS, trueKinematics, errors,
-                            random);
+            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                    trueKinematics, errors, random);
 
-            final BodyMagneticFluxDensity b = generateB(hardIron.getBuffer(),
-                    mm, wmmEstimator, noiseRandomizer, timestamp, nedPosition,
-                    cnb);
+            final BodyMagneticFluxDensity b = generateB(hardIron.getBuffer(), mm, wmmEstimator, noiseRandomizer,
+                    timestamp, nedPosition, cnb);
 
             final TimedBodyKinematicsAndMagneticFluxDensity tkb = new TimedBodyKinematicsAndMagneticFluxDensity();
             tkb.setKinematics(measuredKinematics);
@@ -3734,42 +3344,26 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
     @SuppressWarnings("SameParameterValue")
     private void generateDynamicSamples(
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final UniformRandomizer randomizer,
-            final ECEFFrame ecefFrame,
-            final NEDFrame nedFrame,
-            final IMUErrors errors,
-            final Random random,
-            final int startSample,
-            final boolean changePosition,
-            final Matrix hardIron,
-            final Matrix mm,
-            final WMMEarthMagneticFluxDensityEstimator wmmEstimator,
-            final Date timestamp,
-            final NEDPosition nedPosition,
-            final CoordinateTransformation cnb,
-            final GaussianRandomizer noiseRandomizer)
-        throws InvalidSourceAndDestinationFrameTypeException,
-        InvalidRotationMatrixException, RotationException {
+            final int numSamples, final BodyKinematics trueKinematics, final UniformRandomizer randomizer,
+            final ECEFFrame ecefFrame, final NEDFrame nedFrame, final IMUErrors errors, final Random random,
+            final int startSample, final boolean changePosition, final Matrix hardIron, final Matrix mm,
+            final WMMEarthMagneticFluxDensityEstimator wmmEstimator, final Date timestamp,
+            final NEDPosition nedPosition, final CoordinateTransformation cnb, final GaussianRandomizer noiseRandomizer)
+            throws InvalidSourceAndDestinationFrameTypeException, InvalidRotationMatrixException, RotationException {
 
         final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
         final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
         final double angularRateStandardDeviation = getGyroNoiseRootPSD() / sqrtTimeInterval;
 
-        final double deltaX = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaY = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaZ = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
 
         final double deltaRoll = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
         final double deltaPitch = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
-        final double deltaYaw = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final double deltaYaw = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
 
         final double ecefX = ecefFrame.getX();
         final double ecefY = ecefFrame.getY();
@@ -3796,22 +3390,18 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         double oldPitch = pitch - deltaPitch;
         double oldYaw = yaw - deltaYaw;
 
-        final BodyKinematics measuredBeforeGravityKinematics = BodyKinematicsGenerator
-                .generate(TIME_INTERVAL_SECONDS,
-                        trueKinematics, errors, random);
+        final BodyKinematics measuredBeforeGravityKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                trueKinematics, errors, random);
         final double beforeMeanFx = measuredBeforeGravityKinematics.getFx();
         final double beforeMeanFy = measuredBeforeGravityKinematics.getFy();
         final double beforeMeanFz = measuredBeforeGravityKinematics.getFz();
 
-        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence =
-                new BodyKinematicsSequence<>();
-        sequence.setBeforeMeanSpecificForceCoordinates(
-                beforeMeanFx, beforeMeanFy, beforeMeanFz);
+        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence = new BodyKinematicsSequence<>();
+        sequence.setBeforeMeanSpecificForceCoordinates(beforeMeanFx, beforeMeanFy, beforeMeanFz);
 
         final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> trueSequence =
                 new BodyKinematicsSequence<>();
-        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList =
-                new ArrayList<>();
+        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList = new ArrayList<>();
 
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
             final double progress = (double) i / (double) numSamples;
@@ -3819,11 +3409,8 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final double newRoll = oldRoll + interpolate(deltaRoll, progress);
             final double newPitch = oldPitch + interpolate(deltaPitch, progress);
             final double newYaw = oldYaw + interpolate(deltaYaw, progress);
-            final CoordinateTransformation newNedC =
-                    new CoordinateTransformation(
-                            newRoll, newPitch, newYaw,
-                            FrameType.BODY_FRAME,
-                            FrameType.LOCAL_NAVIGATION_FRAME);
+            final CoordinateTransformation newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw,
+                    FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
             final NEDPosition newNedPosition = oldNedFrame.getPosition();
 
             newNedFrame.setPosition(newNedPosition);
@@ -3842,17 +3429,15 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
             final double timestampSeconds = j * TIME_INTERVAL_SECONDS;
 
             // update true kinematics using new position and rotation
-            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                    newEcefFrame, oldEcefFrame, trueKinematics);
+            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, oldEcefFrame,
+                    trueKinematics);
 
             // add error to true kinematics
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator
-                    .generate(TIME_INTERVAL_SECONDS, trueKinematics, errors,
-                            random);
+            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                    trueKinematics, errors, random);
 
-            final BodyMagneticFluxDensity b = generateB(hardIron.getBuffer(),
-                    mm, wmmEstimator, noiseRandomizer, timestamp, nedPosition,
-                    cnb);
+            final BodyMagneticFluxDensity b = generateB(hardIron.getBuffer(), mm, wmmEstimator, noiseRandomizer,
+                    timestamp, nedPosition, cnb);
 
             final TimedBodyKinematicsAndMagneticFluxDensity tkb = new TimedBodyKinematicsAndMagneticFluxDensity();
             tkb.setKinematics(measuredKinematics);
@@ -3861,11 +3446,9 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
             mTimedBodyKinematicsAndMagneticFluxDensities.add(tkb);
 
-            final StandardDeviationTimedBodyKinematics trueTimedKinematics =
-                    new StandardDeviationTimedBodyKinematics(
-                            new BodyKinematics(trueKinematics), timestampSeconds,
-                            specificForceStandardDeviation,
-                            angularRateStandardDeviation);
+            final StandardDeviationTimedBodyKinematics trueTimedKinematics = new StandardDeviationTimedBodyKinematics(
+                    new BodyKinematics(trueKinematics), timestampSeconds, specificForceStandardDeviation,
+                    angularRateStandardDeviation);
             trueTimedKinematicsList.add(trueTimedKinematics);
 
             oldNedFrame.copyFrom(newNedFrame);
@@ -3881,14 +3464,11 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
         trueSequence.setItems(trueTimedKinematicsList);
 
         final Quaternion afterQ = new Quaternion();
-        QuaternionIntegrator.integrateGyroSequence(
-                trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA, afterQ);
+        QuaternionIntegrator.integrateGyroSequence(trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA,
+                afterQ);
 
-        final CoordinateTransformation newNedC =
-                new CoordinateTransformation(
-                        afterQ.asInhomogeneousMatrix(),
-                        FrameType.BODY_FRAME,
-                        FrameType.LOCAL_NAVIGATION_FRAME);
+        final CoordinateTransformation newNedC = new CoordinateTransformation(afterQ.asInhomogeneousMatrix(),
+                FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
         newNedFrame.setCoordinateTransformation(newNedC);
 
         NEDtoECEFFrameConverter.convertNEDtoECEF(newNedFrame, newEcefFrame);
@@ -3900,14 +3480,13 @@ public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThre
 
         // after dynamic sequence finishes, update true kinematics for a
         // static sequence at current frame
-        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                newEcefFrame, newEcefFrame, trueKinematics);
+        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, newEcefFrame, trueKinematics);
     }
 
     // This is required to simulate a smooth transition of values during
     // dynamic period, to avoid a sudden rotation or translation and simulate
     // a more natural behaviour.
-    private double interpolate(final double value, final double progress) {
+    private static double interpolate(final double value, final double progress) {
         return -2.0 * (Math.abs(progress - 0.5) - 0.5) * value;
     }
 

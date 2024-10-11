@@ -21,7 +21,6 @@ import com.irurueta.geometry.InvalidRotationMatrixException;
 import com.irurueta.geometry.Quaternion;
 import com.irurueta.geometry.RotationException;
 import com.irurueta.navigation.LockedException;
-import com.irurueta.navigation.NavigationException;
 import com.irurueta.navigation.NotReadyException;
 import com.irurueta.navigation.frames.CoordinateTransformation;
 import com.irurueta.navigation.frames.ECEFFrame;
@@ -57,7 +56,6 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -123,15 +121,13 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
     private final GyroscopeMeasurementsGeneratorListener mGeneratorListener =
             new GyroscopeMeasurementsGeneratorListener() {
                 @Override
-                public void onInitializationStarted(
-                        final GyroscopeMeasurementsGenerator generator) {
+                public void onInitializationStarted(final GyroscopeMeasurementsGenerator generator) {
                     // not used
                 }
 
                 @Override
                 public void onInitializationCompleted(
-                        final GyroscopeMeasurementsGenerator generator,
-                        final double baseNoiseLevel) {
+                        final GyroscopeMeasurementsGenerator generator, final double baseNoiseLevel) {
                     // not used
                 }
 
@@ -143,26 +139,22 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 }
 
                 @Override
-                public void onStaticIntervalDetected(
-                        final GyroscopeMeasurementsGenerator generator) {
+                public void onStaticIntervalDetected(final GyroscopeMeasurementsGenerator generator) {
                     // not used
                 }
 
                 @Override
-                public void onDynamicIntervalDetected(
-                        final GyroscopeMeasurementsGenerator generator) {
+                public void onDynamicIntervalDetected(final GyroscopeMeasurementsGenerator generator) {
                     // not used
                 }
 
                 @Override
-                public void onStaticIntervalSkipped(
-                        final GyroscopeMeasurementsGenerator generator) {
+                public void onStaticIntervalSkipped(final GyroscopeMeasurementsGenerator generator) {
                     // not used
                 }
 
                 @Override
-                public void onDynamicIntervalSkipped(
-                        final GyroscopeMeasurementsGenerator generator) {
+                public void onDynamicIntervalSkipped(final GyroscopeMeasurementsGenerator generator) {
                     // not used
                 }
 
@@ -174,8 +166,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 }
 
                 @Override
-                public void onReset(
-                        final GyroscopeMeasurementsGenerator generator) {
+                public void onReset(final GyroscopeMeasurementsGenerator generator) {
                     // not used
                 }
             };
@@ -196,8 +187,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
         // check default values
         assertNotNull(optimizer.getMseOptimizer());
-        assertEquals(BrentSingleOptimizer.class,
-                optimizer.getMseOptimizer().getClass());
+        assertEquals(BrentSingleOptimizer.class, optimizer.getMseOptimizer().getClass());
         assertNull(optimizer.getCalibrator());
         assertNotNull(optimizer.getQualityScoreMapper());
         assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getQualityScoreMapper().getClass());
@@ -208,23 +198,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertFalse(optimizer.isReady());
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -232,37 +217,26 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -275,8 +249,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
     }
 
     @Test
@@ -289,8 +263,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
         // check default values
         assertNotNull(optimizer.getMseOptimizer());
-        assertEquals(BrentSingleOptimizer.class,
-                optimizer.getMseOptimizer().getClass());
+        assertEquals(BrentSingleOptimizer.class, optimizer.getMseOptimizer().getClass());
         assertNull(optimizer.getCalibrator());
         assertNotNull(optimizer.getQualityScoreMapper());
         assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getQualityScoreMapper().getClass());
@@ -301,23 +274,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertFalse(optimizer.isReady());
         assertSame(dataSource, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -325,37 +293,26 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -368,22 +325,20 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
     }
 
     @Test
     public void testConstructor3() {
         final EasyGyroscopeCalibrator calibrator = new EasyGyroscopeCalibrator();
 
-        BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                        calibrator);
+        final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
+                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(calibrator);
 
         // check default values
         assertNotNull(optimizer.getMseOptimizer());
-        assertEquals(BrentSingleOptimizer.class,
-                optimizer.getMseOptimizer().getClass());
+        assertEquals(BrentSingleOptimizer.class, optimizer.getMseOptimizer().getClass());
         assertSame(calibrator, optimizer.getCalibrator());
         assertNotNull(optimizer.getQualityScoreMapper());
         assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getQualityScoreMapper().getClass());
@@ -394,23 +349,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertFalse(optimizer.isReady());
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -418,37 +368,26 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -461,18 +400,13 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // Force IllegalArgumentException
-        optimizer = null;
-        try {
-            optimizer = new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                    new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(optimizer);
+        assertThrows(IllegalArgumentException.class,
+                () -> new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                        new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -481,14 +415,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 mock(GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
         final EasyGyroscopeCalibrator calibrator = new EasyGyroscopeCalibrator();
 
-        BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                        dataSource, calibrator);
+        final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
+                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource, calibrator);
 
         // check default values
         assertNotNull(optimizer.getMseOptimizer());
-        assertEquals(BrentSingleOptimizer.class,
-                optimizer.getMseOptimizer().getClass());
+        assertEquals(BrentSingleOptimizer.class, optimizer.getMseOptimizer().getClass());
         assertSame(calibrator, optimizer.getCalibrator());
         assertNotNull(optimizer.getQualityScoreMapper());
         assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getQualityScoreMapper().getClass());
@@ -499,23 +431,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertTrue(optimizer.isReady());
         assertSame(dataSource, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -523,37 +450,26 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -566,18 +482,13 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // Force IllegalArgumentException
-        optimizer = null;
-        try {
-            optimizer = new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                    dataSource, new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(optimizer);
+        assertThrows(IllegalArgumentException.class,
+                () -> new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource,
+                        new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -585,8 +496,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final BrentSingleOptimizer mseOptimizer = new BrentSingleOptimizer();
 
         final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                        mseOptimizer);
+                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(mseOptimizer);
 
         // check default values
         assertSame(mseOptimizer, optimizer.getMseOptimizer());
@@ -600,23 +510,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertFalse(optimizer.isReady());
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -624,37 +529,26 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -667,8 +561,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
     }
 
     @Test
@@ -679,8 +573,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 mock(GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
 
         final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                        dataSource, mseOptimizer);
+                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource, mseOptimizer);
 
         // check default values
         assertSame(mseOptimizer, optimizer.getMseOptimizer());
@@ -694,23 +587,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertFalse(optimizer.isReady());
         assertSame(dataSource, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -718,37 +606,26 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -761,8 +638,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
     }
 
     @Test
@@ -770,9 +647,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final EasyGyroscopeCalibrator calibrator = new EasyGyroscopeCalibrator();
         final BrentSingleOptimizer mseOptimizer = new BrentSingleOptimizer();
 
-        BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                        calibrator, mseOptimizer);
+        final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
+                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(calibrator, mseOptimizer);
 
         // check default values
         assertSame(mseOptimizer, optimizer.getMseOptimizer());
@@ -786,23 +662,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertFalse(optimizer.isReady());
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -810,37 +681,26 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -853,19 +713,13 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // Force IllegalArgumentException
-        optimizer = null;
-        try {
-            optimizer = new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                    new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator(),
-                    mseOptimizer);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(optimizer);
+        assertThrows(IllegalArgumentException.class,
+                () -> new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                        new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator(), mseOptimizer));
     }
 
     @Test
@@ -875,9 +729,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final EasyGyroscopeCalibrator calibrator = new EasyGyroscopeCalibrator();
         final BrentSingleOptimizer mseOptimizer = new BrentSingleOptimizer();
 
-        BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                        dataSource, calibrator, mseOptimizer);
+        final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
+                new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource, calibrator, mseOptimizer);
 
         // check default values
         assertSame(mseOptimizer, optimizer.getMseOptimizer());
@@ -891,23 +744,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertTrue(optimizer.isReady());
         assertSame(dataSource, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
         final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
@@ -915,37 +763,26 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
+        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(),
-                0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
         final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                0.0);
-        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(),
-                0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
+        assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
+        assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
         final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
+        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -958,19 +795,13 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // Force IllegalArgumentException
-        optimizer = null;
-        try {
-            optimizer = new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                    dataSource, new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator(),
-                    mseOptimizer);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        assertNull(optimizer);
+        assertThrows(IllegalArgumentException.class,
+                () -> new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource,
+                        new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator(), mseOptimizer));
     }
 
     @Test
@@ -1054,12 +885,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertSame(calibrator, optimizer.getCalibrator());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setCalibrator(
-                    new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator());
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setCalibrator(
+                new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator()));
     }
 
     @Test
@@ -1100,21 +927,9 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(1.0, optimizer.getMaxThresholdFactor(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setThresholdFactorRange(-1.0, 1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(1.0, -1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(2.0, 1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(-1.0, 1.0));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(1.0, -1.0));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setThresholdFactorRange(2.0, 1.0));
     }
 
     @Test
@@ -1141,8 +956,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                optimizer.getTimeInterval(), 0.0);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
 
         // set new value
         final double timeInterval = 0.01;
@@ -1152,11 +966,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(timeInterval, optimizer.getTimeInterval(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setTimeInterval(-1.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setTimeInterval(-1.0));
     }
 
     @Test
@@ -1166,9 +976,9 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
         // check default value
         final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
-        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS,
-                timeInterval1.getValue().doubleValue(), 0.0);
-        assertEquals(timeInterval1.getUnit(), TimeUnit.SECOND);
+        assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
+                0.0);
+        assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
 
         // set new value
         final Time timeInterval2 = new Time(0.01, TimeUnit.SECOND);
@@ -1183,11 +993,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(timeInterval2, timeInterval4);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setTimeInterval(new Time(-1.0, TimeUnit.SECOND));
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setTimeInterval(
+                new Time(-1.0, TimeUnit.SECOND)));
     }
 
     @Test
@@ -1196,8 +1003,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES,
-                optimizer.getMinStaticSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
 
         // set new value
         final int minStaticSamples = 50;
@@ -1207,11 +1013,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(minStaticSamples, optimizer.getMinStaticSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setMinStaticSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setMinStaticSamples(1));
     }
 
     @Test
@@ -1220,8 +1022,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES,
-                optimizer.getMaxDynamicSamples());
+        assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
 
         // set new value
         final int maxDynamicSamples = 500;
@@ -1231,11 +1032,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(maxDynamicSamples, optimizer.getMaxDynamicSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setMaxDynamicSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setMaxDynamicSamples(1));
     }
 
     @Test
@@ -1244,8 +1041,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE,
-                optimizer.getWindowSize());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
 
         // set new value
         final int windowSize = 51;
@@ -1255,11 +1051,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(windowSize, optimizer.getWindowSize());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setWindowSize(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setWindowSize(1));
     }
 
     @Test
@@ -1268,8 +1060,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                 new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES,
-                optimizer.getInitialStaticSamples());
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
 
         // set new value
         final int initialStaticSamples = 100;
@@ -1279,11 +1070,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(initialStaticSamples, optimizer.getInitialStaticSamples());
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setInitialStaticSamples(1);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setInitialStaticSamples(1));
     }
 
     @Test
@@ -1300,20 +1087,14 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         optimizer.setInstantaneousNoiseLevelFactor(instantaneousNoiseLevelFactor);
 
         // check
-        assertEquals(instantaneousNoiseLevelFactor,
-                optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
+        assertEquals(instantaneousNoiseLevelFactor, optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setInstantaneousNoiseLevelFactor(0.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setInstantaneousNoiseLevelFactor(0.0));
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThreshold()
-            throws LockedException {
+    public void testGetSetBaseNoiseLevelAbsoluteThreshold() throws LockedException {
         final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
                 new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
@@ -1326,21 +1107,14 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         optimizer.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
 
         // check
-        assertEquals(baseNoiseLevelAbsoluteThreshold,
-                optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
+        assertEquals(baseNoiseLevelAbsoluteThreshold, optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(
-                    0.0);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0));
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement()
-            throws LockedException {
+    public void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement() throws LockedException {
         final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
                 new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
@@ -1348,20 +1122,17 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
-        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                acceleration1.getUnit());
+        assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
 
         // set new value
         final double baseNoiseLevelAbsoluteThreshold = 1e-5;
-        final Acceleration acceleration2 = new Acceleration(
-                baseNoiseLevelAbsoluteThreshold,
+        final Acceleration acceleration2 = new Acceleration(baseNoiseLevelAbsoluteThreshold,
                 AccelerationUnit.METERS_PER_SQUARED_SECOND);
         optimizer.setBaseNoiseLevelAbsoluteThreshold(acceleration2);
 
         // check
         final Acceleration acceleration3 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        final Acceleration acceleration4 = new Acceleration(1.0,
-                AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration4);
 
         assertEquals(acceleration2, acceleration3);
@@ -1388,8 +1159,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
                 new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA,
-                optimizer.getProgressDelta(), 0.0);
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+                0.0);
 
         // set new value
         optimizer.setProgressDelta(0.5f);
@@ -1398,16 +1169,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertEquals(0.5f, optimizer.getProgressDelta(), 0.0f);
 
         // Force IllegalArgumentException
-        try {
-            optimizer.setProgressDelta(-1.0f);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
-        try {
-            optimizer.setProgressDelta(2.0f);
-            fail("IllegalArgumentException expected but not thrown");
-        } catch (final IllegalArgumentException ignore) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setProgressDelta(-1.0f));
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setProgressDelta(2.0f));
     }
 
     @Test
@@ -1433,17 +1196,14 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             // generate measurements
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
-            generateBodyKinematics(nedFrame, ecefFrame, false, ma,
-                    accelNoiseRootPSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements);
+            generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD, gyroNoiseRootPSD,
+                    numSequences, numMeasurements);
 
-            final GyroscopeMeasurementsGenerator generator =
-                    new GyroscopeMeasurementsGenerator(mGeneratorListener);
+            final GyroscopeMeasurementsGenerator generator = new GyroscopeMeasurementsGenerator(mGeneratorListener);
 
             for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
                 assertTrue(generator.process(timedBodyKinematics));
@@ -1475,8 +1235,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
             // create optimizer
             final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1490,18 +1249,15 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -1513,15 +1269,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -1598,9 +1351,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
     @Test
     public void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-        InvalidRotationMatrixException, RotationException {
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1618,17 +1370,14 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             // generate measurements
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
-            generateBodyKinematics(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements);
+            generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
+                    numSequences, numMeasurements);
 
-            final GyroscopeMeasurementsGenerator generator =
-                    new GyroscopeMeasurementsGenerator(mGeneratorListener);
+            final GyroscopeMeasurementsGenerator generator = new GyroscopeMeasurementsGenerator(mGeneratorListener);
 
             for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
                 assertTrue(generator.process(timedBodyKinematics));
@@ -1660,8 +1409,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
             // create optimizer
             final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1675,18 +1423,15 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -1698,15 +1443,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -1783,9 +1525,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
     @Test
     public void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-        InvalidRotationMatrixException, RotationException {
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1803,16 +1544,13 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             // generate measurements
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            generateBodyKinematics(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    NUM_MEASUREMENTS);
+            generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
+                    numSequences, NUM_MEASUREMENTS);
 
-            final GyroscopeMeasurementsGenerator generator =
-                    new GyroscopeMeasurementsGenerator(mGeneratorListener);
+            final GyroscopeMeasurementsGenerator generator = new GyroscopeMeasurementsGenerator(mGeneratorListener);
 
             for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
                 assertTrue(generator.process(timedBodyKinematics));
@@ -1844,8 +1582,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
             // create optimizer
             final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -1859,18 +1596,15 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -1882,15 +1616,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -1967,9 +1698,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
     @Test
     public void testOptimizeGeneralGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-        InvalidRotationMatrixException, RotationException {
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -1987,17 +1717,14 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             // generate measurements
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
-            generateBodyKinematics(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements);
+            generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
+                    numSequences, numMeasurements);
 
-            final GyroscopeMeasurementsGenerator generator =
-                    new GyroscopeMeasurementsGenerator(mGeneratorListener);
+            final GyroscopeMeasurementsGenerator generator = new GyroscopeMeasurementsGenerator(mGeneratorListener);
 
             for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
                 assertTrue(generator.process(timedBodyKinematics));
@@ -2029,8 +1756,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
             // create optimizer
             final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -2044,18 +1770,15 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -2067,15 +1790,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -2152,8 +1872,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
     @Test
     public void testOptimizeMaCommonAxisGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        InvalidRotationMatrixException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, RotationException {
+        InvalidSourceAndDestinationFrameTypeException, LockedException, InvalidRotationMatrixException,
+            NotReadyException, IntervalDetectorThresholdFactorOptimizerException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2171,15 +1891,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             // generate measurements
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
-            generateBodyKinematics(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    NUM_MEASUREMENTS);
+            generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
+                    numSequences, NUM_MEASUREMENTS);
 
-            final GyroscopeMeasurementsGenerator generator =
-                    new GyroscopeMeasurementsGenerator(mGeneratorListener);
+            final GyroscopeMeasurementsGenerator generator = new GyroscopeMeasurementsGenerator(mGeneratorListener);
 
             for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
                 assertTrue(generator.process(timedBodyKinematics));
@@ -2211,8 +1928,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
             // create optimizer
             final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -2226,18 +1942,15 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -2249,15 +1962,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -2332,13 +2042,11 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertTrue(numValid > 0);
     }
 
-    @Ignore
     @Test
     public void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange()
-        throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-        InvalidRotationMatrixException, RotationException {
+            throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException, LockedException,
+            NotReadyException, IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException,
+            RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2356,16 +2064,13 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             // generate measurements
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            generateBodyKinematics(nedFrame, ecefFrame, true, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    NUM_MEASUREMENTS);
+            generateBodyKinematics(nedFrame, ecefFrame, true, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
+                    numSequences, NUM_MEASUREMENTS);
 
-            final GyroscopeMeasurementsGenerator generator =
-                    new GyroscopeMeasurementsGenerator(mGeneratorListener);
+            final GyroscopeMeasurementsGenerator generator = new GyroscopeMeasurementsGenerator(mGeneratorListener);
 
             for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
                 assertTrue(generator.process(timedBodyKinematics));
@@ -2397,8 +2102,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
             // create optimizer
             final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -2412,18 +2116,15 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -2435,15 +2136,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -2518,12 +2216,10 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         assertTrue(numValid > 0);
     }
 
-    @Ignore
     @Test
-    public void testOptimizeRobustCalibrator() throws WrongSizeException,
-        InvalidSourceAndDestinationFrameTypeException, LockedException,
-        NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
-        InvalidRotationMatrixException, RotationException {
+    public void testOptimizeRobustCalibrator() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+            InvalidRotationMatrixException, RotationException {
 
         final Matrix ba = generateBa();
         final Matrix bg = generateBg();
@@ -2541,17 +2237,14 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             // generate measurements
 
             final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter
-                    .convertNEDtoECEFAndReturnNew(nedFrame);
+            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
             final int numSequences = 3 * EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
             final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
-            generateBodyKinematics(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, gyroNoiseRootPSD, numSequences,
-                    numMeasurements);
+            generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
+                    numSequences, numMeasurements);
 
-            final GyroscopeMeasurementsGenerator generator =
-                    new GyroscopeMeasurementsGenerator(mGeneratorListener);
+            final GyroscopeMeasurementsGenerator generator = new GyroscopeMeasurementsGenerator(mGeneratorListener);
 
             for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
                 assertTrue(generator.process(timedBodyKinematics));
@@ -2572,8 +2265,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             // configure calibrator and data source
             final Matrix initialMg = new Matrix(3, 3);
             final Matrix initialGg = new Matrix(3, 3);
-            final PROMedSRobustEasyGyroscopeCalibrator calibrator =
-                    new PROMedSRobustEasyGyroscopeCalibrator();
+            final PROMedSRobustEasyGyroscopeCalibrator calibrator = new PROMedSRobustEasyGyroscopeCalibrator();
             calibrator.setCommonAxisUsed(true);
             calibrator.setGDependentCrossBiasesEstimated(false);
             calibrator.setInitialBias(initialBg);
@@ -2584,8 +2276,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
             // create optimizer
             final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                            mDataSource, calibrator);
+                    new BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
             optimizer.setListener(this);
 
             reset();
@@ -2599,18 +2290,15 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             assertEquals(1, mStart);
             assertEquals(1, mEnd);
             assertTrue(mProgress > 0.0f);
-            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(),
-                    0.0);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND,
-                    accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
-            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(
-                    accelerometerBaseNoiseLevel2);
+            assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
+            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+                    AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelPsd() > 0.0);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
@@ -2622,15 +2310,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
                     SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
-                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(),
-                    SMALL_ABSOLUTE_ERROR);
+                    optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(),
-                    0.0);
+            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(
-                    1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -2707,14 +2392,16 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
     @Override
     public void onOptimizeStart(
-            final IntervalDetectorThresholdFactorOptimizer<TimedBodyKinematics, GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource> optimizer) {
+            final IntervalDetectorThresholdFactorOptimizer<TimedBodyKinematics,
+                    GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource> optimizer) {
         mStart++;
         checkLocked((BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer) optimizer);
     }
 
     @Override
     public void onOptimizeEnd(
-            final IntervalDetectorThresholdFactorOptimizer<TimedBodyKinematics, GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource> optimizer) {
+            final IntervalDetectorThresholdFactorOptimizer<TimedBodyKinematics,
+                    GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource> optimizer) {
         mEnd++;
         checkLocked((BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer) optimizer);
     }
@@ -2733,97 +2420,29 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         mProgress = progress;
     }
 
-    private void checkLocked(
-            final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer) {
+    private static void checkLocked(final BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer) {
         assertTrue(optimizer.isRunning());
-        try {
-            optimizer.setDataSource(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setListener(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setCalibrator(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setQualityScoreMapper(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setThresholdFactorRange(0.0, 1.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setTimeInterval(0.01);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setTimeInterval(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setMinStaticSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setMaxDynamicSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setWindowSize(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setInitialStaticSamples(0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setInstantaneousNoiseLevelFactor(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setBaseNoiseLevelAbsoluteThreshold(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.setMseOptimizer(null);
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        }
-        try {
-            optimizer.optimize();
-            fail("LockedException expected but not thrown");
-        } catch (final LockedException ignore) {
-        } catch (final NavigationException e) {
-            fail("LockedException expected but not thrown");
-        }
+        assertThrows(LockedException.class, () -> optimizer.setDataSource(null));
+        assertThrows(LockedException.class, () -> optimizer.setListener(null));
+        assertThrows(LockedException.class, () -> optimizer.setCalibrator(null));
+        assertThrows(LockedException.class, () -> optimizer.setQualityScoreMapper(null));
+        assertThrows(LockedException.class, () -> optimizer.setThresholdFactorRange(0.0, 1.0));
+        assertThrows(LockedException.class, () -> optimizer.setTimeInterval(0.01));
+        assertThrows(LockedException.class, () -> optimizer.setTimeInterval(null));
+        assertThrows(LockedException.class, () -> optimizer.setMinStaticSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setMaxDynamicSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setWindowSize(0));
+        assertThrows(LockedException.class, () -> optimizer.setInitialStaticSamples(0));
+        assertThrows(LockedException.class, () -> optimizer.setInstantaneousNoiseLevelFactor(0.0));
+        assertThrows(LockedException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(0.0));
+        assertThrows(LockedException.class, () -> optimizer.setBaseNoiseLevelAbsoluteThreshold(null));
+        assertThrows(LockedException.class, () -> optimizer.setMseOptimizer(null));
+        assertThrows(LockedException.class, optimizer::optimize);
     }
 
     private void generateBodyKinematics(
-            final NEDFrame nedFrame, final ECEFFrame ecefFrame,
-            final boolean changePosition, final Matrix ma, final double accelNoiseRootPSD,
-            final double gyroNoiseRootPSD, final int numSequences,
+            final NEDFrame nedFrame, final ECEFFrame ecefFrame, final boolean changePosition, final Matrix ma,
+            final double accelNoiseRootPSD, final double gyroNoiseRootPSD, final int numSequences,
             final int numMeasurements) throws WrongSizeException,
         InvalidSourceAndDestinationFrameTypeException,
         InvalidRotationMatrixException, RotationException {
@@ -2836,23 +2455,20 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         final double accelQuantLevel = 0.0;
         final double gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD,
-                gyroNoiseRootPSD, accelQuantLevel, gyroQuantLevel);
+        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+                gyroQuantLevel);
 
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
 
         // compute ground-truth kinematics that should be generated at provided
         // position, velocity and orientation
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator
-                .estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
-                        ecefFrame, ecefFrame);
+        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
+                TIME_INTERVAL_SECONDS, ecefFrame, ecefFrame);
 
         // generate initial static samples
-        final int initialStaticSamples = TriadStaticIntervalDetector
-                .DEFAULT_INITIAL_STATIC_SAMPLES;
-        generateStaticSamples(initialStaticSamples, trueKinematics, errors, random,
-                0);
+        final int initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+        generateStaticSamples(initialStaticSamples, trueKinematics, errors, random, 0);
 
         final int n = Math.max(numSequences + 1, numMeasurements);
 
@@ -2862,55 +2478,48 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         int start = initialStaticSamples;
         for (int i = 0; i < n; i++) {
             // generate static samples
-            generateStaticSamples(staticPeriodLength, trueKinematics, errors, random,
-                    start);
+            generateStaticSamples(staticPeriodLength, trueKinematics, errors, random, start);
             start += staticPeriodLength;
 
             // generate dynamic samples
-            generateDynamicSamples(dynamicPeriodLength, trueKinematics,
-                    randomizer, ecefFrame, nedFrame, errors, random, start,
-                    changePosition);
+            generateDynamicSamples(dynamicPeriodLength, trueKinematics, randomizer, ecefFrame, nedFrame, errors, random,
+                    start, changePosition);
             start += dynamicPeriodLength;
         }
     }
 
-    private NEDFrame generateFrame() throws InvalidSourceAndDestinationFrameTypeException {
+    private static NEDFrame generateFrame() throws InvalidSourceAndDestinationFrameTypeException {
         final Random random = new Random();
         final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final double latitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(
-                randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
         final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
         final NEDPosition nedPosition = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(
-                randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC = new CoordinateTransformation(
-                roll, pitch, yaw, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final CoordinateTransformation nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+                FrameType.LOCAL_NAVIGATION_FRAME);
 
         return new NEDFrame(nedPosition, nedC);
     }
 
-    private Matrix generateBa() {
+    private static Matrix generateBa() {
         return Matrix.newFromArray(new double[]{
                 900 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 -1300 * MICRO_G_TO_METERS_PER_SECOND_SQUARED,
                 800 * MICRO_G_TO_METERS_PER_SECOND_SQUARED});
     }
 
-    private Matrix generateBg() {
+    private static Matrix generateBg() {
         return Matrix.newFromArray(new double[]{
                 -9 * DEG_TO_RAD / 3600.0,
                 13 * DEG_TO_RAD / 3600.0,
                 -8 * DEG_TO_RAD / 3600.0});
     }
 
-    private Matrix generateMaCommonAxis() throws WrongSizeException {
+    private static Matrix generateMaCommonAxis() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -2921,7 +2530,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         return result;
     }
 
-    private Matrix generateMaGeneral() throws WrongSizeException {
+    private static Matrix generateMaGeneral() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
@@ -2932,7 +2541,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         return result;
     }
 
-    private Matrix generateMg() throws WrongSizeException {
+    private static Matrix generateMg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 400e-6, -300e-6, 250e-6,
@@ -2943,7 +2552,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         return result;
     }
 
-    private Matrix generateGg() throws WrongSizeException {
+    private static Matrix generateGg() throws WrongSizeException {
         final Matrix result = new Matrix(3, 3);
         final double tmp = DEG_TO_RAD / (3600 * 9.80665);
         result.fromArray(new double[]{
@@ -2955,26 +2564,22 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         return result;
     }
 
-    private double getAccelNoiseRootPSD() {
+    private static double getAccelNoiseRootPSD() {
         return 100.0 * MICRO_G_TO_METERS_PER_SECOND_SQUARED;
     }
 
-    private double getGyroNoiseRootPSD() {
+    private static double getGyroNoiseRootPSD() {
         return 0.01 * DEG_TO_RAD / 60.0;
     }
 
     private void generateStaticSamples(
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final IMUErrors errors,
-            final Random random,
+            final int numSamples, final BodyKinematics trueKinematics, final IMUErrors errors, final Random random,
             final int startSample) {
 
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
 
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator
-                    .generate(TIME_INTERVAL_SECONDS, trueKinematics, errors,
-                            random);
+            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                    trueKinematics, errors, random);
 
             final TimedBodyKinematics timedMeasuredKinematics = new TimedBodyKinematics();
             timedMeasuredKinematics.setKinematics(measuredKinematics);
@@ -2987,35 +2592,24 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
     @SuppressWarnings("SameParameterValue")
     private void generateDynamicSamples(
-            final int numSamples,
-            final BodyKinematics trueKinematics,
-            final UniformRandomizer randomizer,
-            final ECEFFrame ecefFrame,
-            final NEDFrame nedFrame,
-            final IMUErrors errors,
-            final Random random,
-            final int startSample,
-            final boolean changePosition)
-        throws InvalidSourceAndDestinationFrameTypeException,
-        InvalidRotationMatrixException, RotationException {
+            final int numSamples, final BodyKinematics trueKinematics, final UniformRandomizer randomizer,
+            final ECEFFrame ecefFrame, final NEDFrame nedFrame, final IMUErrors errors, final Random random,
+            final int startSample, final boolean changePosition) throws InvalidSourceAndDestinationFrameTypeException,
+            InvalidRotationMatrixException, RotationException {
 
         final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
         final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
         final double angularRateStandardDeviation = getGyroNoiseRootPSD() / sqrtTimeInterval;
 
-        final double deltaX = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaY = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaZ = changePosition ?
-                randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final double deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
 
         final double deltaRoll = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
         final double deltaPitch = Math.toRadians(randomizer.nextDouble(
                 MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
-        final double deltaYaw = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final double deltaYaw = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
 
         final double ecefX = ecefFrame.getX();
         final double ecefY = ecefFrame.getY();
@@ -3042,22 +2636,18 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         double oldPitch = pitch - deltaPitch;
         double oldYaw = yaw - deltaYaw;
 
-        final BodyKinematics measuredBeforeGravityKinematics = BodyKinematicsGenerator
-                .generate(TIME_INTERVAL_SECONDS,
-                        trueKinematics, errors, random);
+        final BodyKinematics measuredBeforeGravityKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                trueKinematics, errors, random);
         final double beforeMeanFx = measuredBeforeGravityKinematics.getFx();
         final double beforeMeanFy = measuredBeforeGravityKinematics.getFy();
         final double beforeMeanFz = measuredBeforeGravityKinematics.getFz();
 
-        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence =
-                new BodyKinematicsSequence<>();
-        sequence.setBeforeMeanSpecificForceCoordinates(
-                beforeMeanFx, beforeMeanFy, beforeMeanFz);
+        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence = new BodyKinematicsSequence<>();
+        sequence.setBeforeMeanSpecificForceCoordinates(beforeMeanFx, beforeMeanFy, beforeMeanFz);
 
         final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> trueSequence =
                 new BodyKinematicsSequence<>();
-        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList =
-                new ArrayList<>();
+        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList = new ArrayList<>();
 
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
             final double progress = (double) i / (double) numSamples;
@@ -3065,11 +2655,8 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             final double newRoll = oldRoll + interpolate(deltaRoll, progress);
             final double newPitch = oldPitch + interpolate(deltaPitch, progress);
             final double newYaw = oldYaw + interpolate(deltaYaw, progress);
-            final CoordinateTransformation newNedC =
-                    new CoordinateTransformation(
-                            newRoll, newPitch, newYaw,
-                            FrameType.BODY_FRAME,
-                            FrameType.LOCAL_NAVIGATION_FRAME);
+            final CoordinateTransformation newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw,
+                    FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
             final NEDPosition newNedPosition = oldNedFrame.getPosition();
 
             newNedFrame.setPosition(newNedPosition);
@@ -3088,13 +2675,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
             final double timestampSeconds = j * TIME_INTERVAL_SECONDS;
 
             // update true kinematics using new position and rotation
-            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                    newEcefFrame, oldEcefFrame, trueKinematics);
+            ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, oldEcefFrame,
+                    trueKinematics);
 
             // add error to true kinematics
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator
-                    .generate(TIME_INTERVAL_SECONDS, trueKinematics, errors,
-                            random);
+            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+                    trueKinematics, errors, random);
 
             final TimedBodyKinematics timedMeasuredKinematics = new TimedBodyKinematics();
             timedMeasuredKinematics.setKinematics(measuredKinematics);
@@ -3102,11 +2688,9 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
             mTimedBodyKinematics.add(timedMeasuredKinematics);
 
-            final StandardDeviationTimedBodyKinematics trueTimedKinematics =
-                    new StandardDeviationTimedBodyKinematics(
-                            new BodyKinematics(trueKinematics), timestampSeconds,
-                            specificForceStandardDeviation,
-                            angularRateStandardDeviation);
+            final StandardDeviationTimedBodyKinematics trueTimedKinematics = new StandardDeviationTimedBodyKinematics(
+                    new BodyKinematics(trueKinematics), timestampSeconds, specificForceStandardDeviation,
+                    angularRateStandardDeviation);
             trueTimedKinematicsList.add(trueTimedKinematics);
 
             oldNedFrame.copyFrom(newNedFrame);
@@ -3122,14 +2706,11 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
         trueSequence.setItems(trueTimedKinematicsList);
 
         final Quaternion afterQ = new Quaternion();
-        QuaternionIntegrator.integrateGyroSequence(
-                trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA, afterQ);
+        QuaternionIntegrator.integrateGyroSequence(trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA,
+                afterQ);
 
-        final CoordinateTransformation newNedC =
-                new CoordinateTransformation(
-                        afterQ.asInhomogeneousMatrix(),
-                        FrameType.BODY_FRAME,
-                        FrameType.LOCAL_NAVIGATION_FRAME);
+        final CoordinateTransformation newNedC = new CoordinateTransformation(afterQ.asInhomogeneousMatrix(),
+                FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
         newNedFrame.setCoordinateTransformation(newNedC);
 
         NEDtoECEFFrameConverter.convertNEDtoECEF(newNedFrame, newEcefFrame);
@@ -3141,14 +2722,13 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest impl
 
         // after dynamic sequence finishes, update true kinematics for a
         // static sequence at current frame
-        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS,
-                newEcefFrame, newEcefFrame, trueKinematics);
+        ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, newEcefFrame, trueKinematics);
     }
 
     // This is required to simulate a smooth transition of values during
     // dynamic period, to avoid a sudden rotation or translation and simulate
     // a more natural behaviour.
-    private double interpolate(final double value, final double progress) {
+    private static double interpolate(final double value, final double progress) {
         return -2.0 * (Math.abs(progress - 0.5) - 0.5) * value;
     }
 

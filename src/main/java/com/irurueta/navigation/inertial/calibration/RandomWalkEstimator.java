@@ -4167,7 +4167,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
                 final double diffVelocityDrift = velocityDrift - mAvgVelocityDrift;
                 final double diffAttitudeDrift = attitudeDrift - mAvgAttitudeDrift;
 
-                final double diffPositionDrift2 = diffPositionDrift * diffAttitudeDrift;
+                final double diffPositionDrift2 = diffPositionDrift * diffPositionDrift;
                 final double diffVelocityDrift2 = diffVelocityDrift * diffVelocityDrift;
                 final double diffAttitudeDrift2 = diffAttitudeDrift * diffAttitudeDrift;
 
