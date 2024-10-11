@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.irurueta:irurueta-navigation-inertial-extra</a> &gt; <a href="index.source.html" class="el_package">com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor</a> &gt; <span class="el_source">ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer.java</span></div><h1>ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2021 Alberto Irurueta Carro (alberto@irurueta.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
+
+import com.irurueta.navigation.LockedException;
+import com.irurueta.navigation.NotReadyException;
+import com.irurueta.navigation.inertial.calibration.BodyKinematicsSequence;
+import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeCalibratorMeasurementOrSequenceType;
+import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeNonLinearCalibrator;
+
+/**
+ * Optimizes threshold factor for interval detection of accelerometer + gyroscope data
+ * based on results of calibration.
+ * Only gyroscope calibrators based on unknown orientation are supported (in other terms,
+ * calibrators must be {@link GyroscopeNonLinearCalibrator} and must support
+ * {@link GyroscopeCalibratorMeasurementOrSequenceType#BODY_KINEMATICS_SEQUENCE}).
+ * This implementation makes an exhaustive search between minimum and maximum
+ * threshold factor values in order to find the threshold value that produces the
+ * minimum Mean Square Error (MSE) for calibration parameters.
+ */
+public class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer extends
+        GyroscopeIntervalDetectorThresholdFactorOptimizer {
+
+    /**
+     * Default step value to make exhaustive search of threshold factor values.
+     */
+    public static final double DEFAULT_STEP = 1.0;
+
+    /**
+     * Step to make exhaustive search of threshold factor values between
+     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     */
+<span class="fc" id="L46">    private double mThresholdFactorStep = DEFAULT_STEP;</span>
+
+    /**
+     * Constructor.
+     */
+    public ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer() {
+<span class="fc" id="L52">        super();</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource instance in charge of retrieving data for this optimizer.
+     */
+    public ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
+<span class="fc" id="L62">        super(dataSource);</span>
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param calibrator a gyroscope calibrator to be used to optimize its
+     *                   Mean Square Error (MSE).
+     * @throws IllegalArgumentException if gyroscope calibrator does not use
+     *                                  {@link BodyKinematicsSequence} sequences.
+     */
+    public ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final GyroscopeNonLinearCalibrator calibrator) {
+<span class="fc" id="L75">        super(calibrator);</span>
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource instance in charge of retrieving data for this optimizer.
+     * @param calibrator a gyroscope calibrator to be used to optimize its
+     *                   Mean Square Error (MSE).
+     * @throws IllegalArgumentException if gyroscope calibrator does not use
+     *                                  {@link BodyKinematicsSequence} sequences.
+     */
+    public ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final GyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
+            final GyroscopeNonLinearCalibrator calibrator) {
+<span class="fc" id="L90">        super(dataSource, calibrator);</span>
+<span class="fc" id="L91">    }</span>
+
+    /**
+     * Gets step to make exhaustive search of threshold values between
+     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     *
+     * @return step to make exhaustive search of threshold values.
+     */
+    public double getThresholdFactorStep() {
+<span class="fc" id="L100">        return mThresholdFactorStep;</span>
+    }
+
+    /**
+     * Sets step to make exhaustive search of threshold values between
+     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     *
+     * @param thresholdStep step to make exhaustive search of threshold values.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is zero or negative.
+     */
+    public void setThresholdFactorStep(final double thresholdStep)
+            throws LockedException {
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (mRunning) {</span>
+<span class="fc" id="L114">            throw new LockedException();</span>
+        }
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (thresholdStep &lt;= 0.0) {</span>
+<span class="fc" id="L117">            throw new IllegalArgumentException();</span>
+        }
+
+<span class="fc" id="L120">        mThresholdFactorStep = thresholdStep;</span>
+<span class="fc" id="L121">    }</span>
+
+    /**
+     * Optimizes threshold factor for a static interval detector or measurement
+     * generator in order to minimize MSE (Minimum Squared Error) of estimated
+     * calibration parameters.
+     *
+     * @return optimized threshold factor.
+     * @throws NotReadyException                                 if this optimizer is not ready to start optimization.
+     * @throws LockedException                                   if optimizer is already running.
+     * @throws IntervalDetectorThresholdFactorOptimizerException if optimization fails for
+     *                                                           some reason.
+     */
+    @Override
+    public double optimize() throws NotReadyException, LockedException,
+            IntervalDetectorThresholdFactorOptimizerException {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (mRunning) {</span>
+<span class="fc" id="L138">            throw new LockedException();</span>
+        }
+
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        if (!isReady()) {</span>
+<span class="nc" id="L142">            throw new NotReadyException();</span>
+        }
+
+<span class="fc" id="L145">        boolean hasResult = false;</span>
+<span class="fc" id="L146">        mMinMse = Double.MAX_VALUE;</span>
+        try {
+<span class="fc" id="L148">            mRunning = true;</span>
+
+<span class="fc" id="L150">            initProgress();</span>
+<span class="fc" id="L151">            final float progressStep = (float) (mThresholdFactorStep</span>
+                    / (mThresholdFactorStep + mMaxThresholdFactor - mMinThresholdFactor));
+
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">            if (mListener != null) {</span>
+<span class="fc" id="L155">                mListener.onOptimizeStart(this);</span>
+            }
+
+<span class="fc" id="L158">            for (double thresholdFactor = mMinThresholdFactor;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">                 thresholdFactor &lt;= mMaxThresholdFactor;</span>
+<span class="fc" id="L160">                 thresholdFactor += mThresholdFactorStep) {</span>
+                try {
+<span class="fc" id="L162">                    evaluateForThresholdFactor(thresholdFactor);</span>
+<span class="fc" id="L163">                    hasResult = true;</span>
+<span class="nc" id="L164">                } catch (final Exception ignore) {</span>
+                    // when an error occurs, skip to next iteration
+<span class="fc" id="L166">                }</span>
+
+<span class="fc" id="L168">                mProgress += progressStep;</span>
+<span class="fc" id="L169">                checkAndNotifyProgress();</span>
+            }
+
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">            if (!hasResult) {</span>
+<span class="nc" id="L173">                throw new IntervalDetectorThresholdFactorOptimizerException();</span>
+            }
+
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">            if (mListener != null) {</span>
+<span class="fc" id="L177">                mListener.onOptimizeEnd(this);</span>
+            }
+
+        } finally {
+<span class="fc" id="L181">            mRunning = false;</span>
+        }
+
+<span class="fc" id="L184">        return mOptimalThresholdFactor;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
