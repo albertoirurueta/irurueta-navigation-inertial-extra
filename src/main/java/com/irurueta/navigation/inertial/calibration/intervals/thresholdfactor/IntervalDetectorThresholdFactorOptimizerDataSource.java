@@ -30,7 +30,7 @@ public interface IntervalDetectorThresholdFactorOptimizerDataSource<T> {
     int count();
 
     /**
-     * Gets data at provided position.
+     * Gets data at the provided position.
      *
      * @param index position to retrieve data from.
      * @return retrieved data.

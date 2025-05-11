@@ -36,8 +36,7 @@ public class DefaultAccelerometerGyroscopeAndMagnetometerMseRule implements
      * @return single MSE value.
      */
     @Override
-    public double evaluate(double accelerometerMse, double gyroscopeMse,
-                           double magnetometerMse) {
+    public double evaluate(double accelerometerMse, double gyroscopeMse, double magnetometerMse) {
         return accelerometerMse + gyroscopeMse + magnetometerMse;
     }
 }

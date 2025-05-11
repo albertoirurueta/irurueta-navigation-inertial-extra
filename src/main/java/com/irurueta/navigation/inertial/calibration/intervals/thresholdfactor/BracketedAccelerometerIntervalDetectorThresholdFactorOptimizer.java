@@ -30,7 +30,7 @@ import com.irurueta.numerical.optimization.BrentSingleOptimizer;
 import com.irurueta.numerical.optimization.OnIterationCompletedListener;
 
 /**
- * Optimizes threshold factor for interval detection of accelerometer data based on
+ * Optimizes the threshold factor for interval detection of accelerometer data based on
  * results of calibration.
  * Only accelerometer calibrators based on unknown orientation are supported (in other terms,
  * calibrators must be {@link AccelerometerNonLinearCalibrator} and must support
@@ -45,17 +45,17 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
      * A bracketed single optimizer to find the threshold factor value that
      * minimizes the Mean Square Error (MSE) for calibration parameters.
      */
-    private BracketedSingleOptimizer mMseOptimizer;
+    private BracketedSingleOptimizer mseOptimizer;
 
     /**
      * Listener for optimizer.
      */
-    private SingleDimensionFunctionEvaluatorListener mOptimizerListener;
+    private SingleDimensionFunctionEvaluatorListener optimizerListener;
 
     /**
      * Iteration listener for {@link BracketedSingleOptimizer}.
      */
-    private OnIterationCompletedListener mIterationCompletedListener;
+    private OnIterationCompletedListener iterationCompletedListener;
 
     /**
      * Constructor.
@@ -132,8 +132,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
      * @param mseOptimizer optimizer to find the threshold factor value that
      *                     minimizes MSE for calibration parameters.
      */
-    public BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(
-            final BracketedSingleOptimizer mseOptimizer) {
+    public BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(final BracketedSingleOptimizer mseOptimizer) {
         initializeOptimizerListeners();
         try {
             setMseOptimizer(mseOptimizer);
@@ -215,7 +214,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
      * MSE for calibration parameters.
      */
     public BracketedSingleOptimizer getMseOptimizer() {
-        return mMseOptimizer;
+        return mseOptimizer;
     }
 
     /**
@@ -226,20 +225,18 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
      *                  the MSE for calibration parameters.
      * @throws LockedException if optimizer is already running.
      */
-    public void setMseOptimizer(final BracketedSingleOptimizer optimizer)
-            throws LockedException {
-        if (mRunning) {
+    public void setMseOptimizer(final BracketedSingleOptimizer optimizer) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
         try {
             if (optimizer != null) {
-                optimizer.setBracket(mMinThresholdFactor, mMinThresholdFactor,
-                        mMaxThresholdFactor);
-                optimizer.setListener(mOptimizerListener);
-                optimizer.setOnIterationCompletedListener(mIterationCompletedListener);
+                optimizer.setBracket(minThresholdFactor, minThresholdFactor, maxThresholdFactor);
+                optimizer.setListener(optimizerListener);
+                optimizer.setOnIterationCompletedListener(iterationCompletedListener);
             }
-            mMseOptimizer = optimizer;
+            mseOptimizer = optimizer;
         } catch (final com.irurueta.numerical.LockedException e) {
             throw new LockedException(e);
         } catch (final InvalidBracketRangeException ignore) {
@@ -254,12 +251,12 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
      */
     @Override
     public boolean isReady() {
-        return super.isReady() && mMseOptimizer != null;
+        return super.isReady() && mseOptimizer != null;
     }
 
     /**
-     * Optimizes threshold factor for a static interval detector or measurement
-     * generator in order to minimize MSE (Minimum Squared Error) of estimated
+     * Optimizes the threshold factor for a static interval detector or measurement
+     * generator to minimize MSE (Minimum Squared Error) of estimated
      * calibration parameters.
      *
      * @return optimized threshold factor.
@@ -271,7 +268,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
     @Override
     public double optimize() throws NotReadyException, LockedException,
             IntervalDetectorThresholdFactorOptimizerException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
@@ -280,26 +277,26 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
         }
 
         try {
-            mRunning = true;
+            running = true;
 
             initProgress();
 
-            if (mListener != null) {
-                mListener.onOptimizeStart(this);
+            if (listener != null) {
+                listener.onOptimizeStart(this);
             }
 
-            mMinMse = Double.MAX_VALUE;
-            mMseOptimizer.minimize();
+            minMse = Double.MAX_VALUE;
+            mseOptimizer.minimize();
 
-            if (mListener != null) {
-                mListener.onOptimizeEnd(this);
+            if (listener != null) {
+                listener.onOptimizeEnd(this);
             }
 
-            return mOptimalThresholdFactor;
+            return optimalThresholdFactor;
         } catch (final NumericalException e) {
             throw new IntervalDetectorThresholdFactorOptimizerException(e);
         } finally {
-            mRunning = false;
+            running = false;
         }
     }
 
@@ -307,7 +304,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
      * Initializes optimizer listener.
      */
     private void initializeOptimizerListeners() {
-        mOptimizerListener = point -> {
+        optimizerListener = point -> {
             try {
                 return evaluateForThresholdFactor(point);
             } catch (final NavigationException e) {
@@ -315,12 +312,12 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
             }
         };
 
-        mIterationCompletedListener = (optimizer, iteration, maxIterations) -> {
+        iterationCompletedListener = (optimizer, iteration, maxIterations) -> {
             if (maxIterations == null) {
                 return;
             }
 
-            mProgress = (float) iteration / (float) maxIterations;
+            progress = (float) iteration / (float) maxIterations;
             checkAndNotifyProgress();
         };
     }

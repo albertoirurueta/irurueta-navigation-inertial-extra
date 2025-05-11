@@ -17,26 +17,24 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
 
 import com.irurueta.navigation.inertial.calibration.StandardDeviationBodyKinematics;
 import com.irurueta.statistics.UniformRandomizer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.util.Random;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.Assert.assertEquals;
-
-public class DefaultAccelerometerQualityScoreMapperTest {
+class DefaultAccelerometerQualityScoreMapperTest {
 
     private static final double MAX_SPECIFIC_FORCE = 9.81;
     private static final double MAX_ANGULAR_RATE_VALUE = 1.0;
 
     @Test
     public void testMap() {
-        final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double specificForceStandardDeviation = randomizer.nextDouble(0.0, MAX_SPECIFIC_FORCE);
-        final double angularRateStandardDeviation = randomizer.nextDouble(0.0, MAX_ANGULAR_RATE_VALUE);
-        final StandardDeviationBodyKinematics stdKinematics = new StandardDeviationBodyKinematics(
-                specificForceStandardDeviation, angularRateStandardDeviation);
+        final var randomizer = new UniformRandomizer();
+        final var specificForceStandardDeviation = randomizer.nextDouble(0.0, MAX_SPECIFIC_FORCE);
+        final var angularRateStandardDeviation = randomizer.nextDouble(0.0, MAX_ANGULAR_RATE_VALUE);
+        final var stdKinematics = new StandardDeviationBodyKinematics(specificForceStandardDeviation,
+                angularRateStandardDeviation);
 
-        final DefaultAccelerometerQualityScoreMapper mapper = new DefaultAccelerometerQualityScoreMapper();
+        final var mapper = new DefaultAccelerometerQualityScoreMapper();
 
         assertEquals(1.0 / (1.0 + specificForceStandardDeviation + angularRateStandardDeviation),
                 mapper.map(stdKinematics), 0.0);

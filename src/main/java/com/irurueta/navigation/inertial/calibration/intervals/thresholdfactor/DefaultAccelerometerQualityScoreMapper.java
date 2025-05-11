@@ -21,8 +21,7 @@ import com.irurueta.navigation.inertial.calibration.StandardDeviationBodyKinemat
  * Default implementation to map a given measurement into a given quality score to be
  * used for accelerometer calibration.
  */
-public class DefaultAccelerometerQualityScoreMapper implements
-        QualityScoreMapper<StandardDeviationBodyKinematics> {
+public class DefaultAccelerometerQualityScoreMapper implements QualityScoreMapper<StandardDeviationBodyKinematics> {
 
     /**
      * Maps a given value corresponding to a measurement, into a given quality score.

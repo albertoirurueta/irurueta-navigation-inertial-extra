@@ -37,7 +37,7 @@ import com.irurueta.numerical.optimization.BrentSingleOptimizer;
 import com.irurueta.numerical.optimization.OnIterationCompletedListener;
 
 /**
- * Optimizes threshold factor for interval detection of accelerometer + gyroscope
+ * Optimizes the threshold factor for interval detection of accelerometer and gyroscope
  * data based on results of calibration.
  * Only accelerometer calibrators based on unknown orientation are supported (in other terms,
  * calibrators must be {@link AccelerometerNonLinearCalibrator} and must support
@@ -45,7 +45,7 @@ import com.irurueta.numerical.optimization.OnIterationCompletedListener;
  * Only gyroscope calibrators based on unknown orientation are supported (in other terms,
  * calibrators must be {@link GyroscopeNonLinearCalibrator} and must support
  * {@link GyroscopeCalibratorMeasurementOrSequenceType#BODY_KINEMATICS_SEQUENCE}).
- * Only magnetometer calibrators based on unknown orientation are supported (in other terms,
+ * Only magnetometer calibrators based on unknown orientation are supported, in other terms,
  * calibrators must be {@link MagnetometerNonLinearCalibrator} and must support
  * {@link MagnetometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY}.
  * This implementation uses a {@link BracketedSingleOptimizer} to find the threshold
@@ -58,17 +58,17 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * A bracketed single optimizer to find the threshold factor value that
      * minimizes the Mean Square Error (MSE) for calibration parameters.
      */
-    private BracketedSingleOptimizer mMseOptimizer;
+    private BracketedSingleOptimizer mseOptimizer;
 
     /**
      * Listener for optimizer.
      */
-    private SingleDimensionFunctionEvaluatorListener mOptimizerListener;
+    private SingleDimensionFunctionEvaluatorListener optimizerListener;
 
     /**
      * Iteration listener for {@link BracketedSingleOptimizer}.
      */
-    private OnIterationCompletedListener mIterationCompletedListener;
+    private OnIterationCompletedListener iterationCompletedListener;
 
     /**
      * Constructor.
@@ -152,8 +152,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
             final AccelerometerNonLinearCalibrator accelerometerCalibrator,
             final GyroscopeNonLinearCalibrator gyroscopeCalibrator,
             final MagnetometerNonLinearCalibrator magnetometerCalibrator) {
-        super(dataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                magnetometerCalibrator);
+        super(dataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
         initializeOptimizerListeners();
         try {
             setMseOptimizer(new BrentSingleOptimizer());
@@ -257,8 +256,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
             final GyroscopeNonLinearCalibrator gyroscopeCalibrator,
             final MagnetometerNonLinearCalibrator magnetometerCalibrator,
             final BracketedSingleOptimizer mseOptimizer) {
-        super(dataSource, accelerometerCalibrator, gyroscopeCalibrator,
-                magnetometerCalibrator);
+        super(dataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);
         initializeOptimizerListeners();
         try {
             setMseOptimizer(mseOptimizer);
@@ -275,7 +273,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * MSE for calibration parameters.
      */
     public BracketedSingleOptimizer getMseOptimizer() {
-        return mMseOptimizer;
+        return mseOptimizer;
     }
 
     /**
@@ -288,18 +286,17 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      */
     public void setMseOptimizer(final BracketedSingleOptimizer optimizer)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
         try {
             if (optimizer != null) {
-                optimizer.setBracket(mMinThresholdFactor, mMinThresholdFactor,
-                        mMaxThresholdFactor);
-                optimizer.setListener(mOptimizerListener);
-                optimizer.setOnIterationCompletedListener(mIterationCompletedListener);
+                optimizer.setBracket(minThresholdFactor, minThresholdFactor, maxThresholdFactor);
+                optimizer.setListener(optimizerListener);
+                optimizer.setOnIterationCompletedListener(iterationCompletedListener);
             }
-            mMseOptimizer = optimizer;
+            mseOptimizer = optimizer;
         } catch (final com.irurueta.numerical.LockedException e) {
             throw new LockedException(e);
         } catch (final InvalidBracketRangeException ignore) {
@@ -314,12 +311,12 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      */
     @Override
     public boolean isReady() {
-        return super.isReady() && mMseOptimizer != null;
+        return super.isReady() && mseOptimizer != null;
     }
 
     /**
-     * Optimizes threshold factor for a static interval detector or measurement
-     * generator in order to minimize MSE (Minimum Squared Error) of estimated
+     * Optimizes the threshold factor for a static interval detector or measurement
+     * generator to minimize MSE (Minimum Squared Error) of estimated
      * calibration parameters.
      *
      * @return optimized threshold factor.
@@ -331,7 +328,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
     @Override
     public double optimize() throws NotReadyException, LockedException,
             IntervalDetectorThresholdFactorOptimizerException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
@@ -340,26 +337,26 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
         }
 
         try {
-            mRunning = true;
+            running = true;
 
             initProgress();
 
-            if (mListener != null) {
-                mListener.onOptimizeStart(this);
+            if (listener != null) {
+                listener.onOptimizeStart(this);
             }
 
-            mMinMse = Double.MAX_VALUE;
-            mMseOptimizer.minimize();
+            minMse = Double.MAX_VALUE;
+            mseOptimizer.minimize();
 
-            if (mListener != null) {
-                mListener.onOptimizeEnd(this);
+            if (listener != null) {
+                listener.onOptimizeEnd(this);
             }
 
-            return mOptimalThresholdFactor;
+            return optimalThresholdFactor;
         } catch (final NumericalException e) {
             throw new IntervalDetectorThresholdFactorOptimizerException(e);
         } finally {
-            mRunning = false;
+            running = false;
         }
     }
 
@@ -367,7 +364,7 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * Initializes optimizer listener.
      */
     private void initializeOptimizerListeners() {
-        mOptimizerListener = point -> {
+        optimizerListener = point -> {
             try {
                 return evaluateForThresholdFactor(point);
             } catch (final NavigationException e) {
@@ -375,12 +372,12 @@ public class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
             }
         };
 
-        mIterationCompletedListener = (optimizer, iteration, maxIterations) -> {
+        iterationCompletedListener = (optimizer, iteration, maxIterations) -> {
             if (maxIterations == null) {
                 return;
             }
 
-            mProgress = (float) iteration / (float) maxIterations;
+            progress = (float) iteration / (float) maxIterations;
             checkAndNotifyProgress();
         };
     }

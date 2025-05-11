@@ -20,7 +20,6 @@ import com.irurueta.algebra.Matrix;
 import com.irurueta.geometry.InvalidRotationMatrixException;
 import com.irurueta.navigation.LockedException;
 import com.irurueta.navigation.NotReadyException;
-import com.irurueta.navigation.frames.CoordinateTransformation;
 import com.irurueta.navigation.frames.ECEFFrame;
 import com.irurueta.navigation.frames.NEDFrame;
 import com.irurueta.navigation.inertial.BodyKinematics;
@@ -40,23 +39,23 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * Configuration parameters for INS Loosely Coupled Kalman filter obtained
      * through calibration.
      */
-    private INSLooselyCoupledKalmanConfig mKalmanConfig;
+    private INSLooselyCoupledKalmanConfig kalmanConfig;
 
     /**
      * Configuration parameters determining initial system noise covariance matrix.
      */
-    private INSLooselyCoupledKalmanInitializerConfig mInitConfig;
+    private INSLooselyCoupledKalmanInitializerConfig initConfig;
 
     /**
      * Internal INS loosely coupled Kalman filtered estimator to estimate
      * accumulated body position, velocity and orientation.
      */
-    private INSLooselyCoupledKalmanFilteredEstimator mKalmanEstimator;
+    private INSLooselyCoupledKalmanFilteredEstimator kalmanEstimator;
 
     /**
      * Current Kalman filter state.
      */
-    private INSLooselyCoupledKalmanState mState;
+    private INSLooselyCoupledKalmanState state;
 
     /**
      * Constructor.
@@ -84,8 +83,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
     public KalmanDriftEstimator(
             final INSLooselyCoupledKalmanConfig kalmanConfig,
             final INSLooselyCoupledKalmanInitializerConfig initConfig) {
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -101,8 +100,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) {
         super(listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -119,8 +118,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanConfig kalmanConfig,
             final INSLooselyCoupledKalmanInitializerConfig initConfig) {
         super(referenceFrame);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -139,8 +138,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) {
         super(referenceFrame, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -157,8 +156,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanConfig kalmanConfig,
             final INSLooselyCoupledKalmanInitializerConfig initConfig) {
         super(referenceFrame);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -177,23 +176,23 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) {
         super(referenceFrame, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
      * Constructor.
      *
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig configuration parameters obtained through calibration.
      * @param initConfig   configuration parameters determining initial system
      *                     noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final AccelerationTriad ba,
@@ -204,24 +203,24 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(ba, ma, bg, mg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
      * Constructor.
      *
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig configuration parameters obtained through calibration.
      * @param initConfig   configuration parameters determining initial system
      *                     noise covariance matrix.
      * @param listener     listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final AccelerationTriad ba,
@@ -232,24 +231,24 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(ba, ma, bg, mg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
      * Constructor.
      *
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig configuration parameters obtained through calibration.
      * @param initConfig   configuration parameters determining initial system
      *                     noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final AccelerationTriad ba,
@@ -261,25 +260,25 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(ba, ma, bg, mg, gg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
      * Constructor.
      *
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig configuration parameters obtained through calibration.
      * @param initConfig   configuration parameters determining initial system
      *                     noise covariance matrix.
      * @param listener     listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final AccelerationTriad ba,
@@ -291,8 +290,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(ba, ma, bg, mg, gg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -300,16 +299,16 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *
      * @param ba           acceleration bias to be set expressed in meters per squared second
      *                     (m/s`2). Must be 3x1.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set expressed in radians per second
      *                     (rad/s). Must be 3x1.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig configuration parameters obtained through calibration.
      * @param initConfig   configuration parameters determining initial system
      *                     noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final Matrix ba,
@@ -320,8 +319,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(ba, ma, bg, mg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -329,17 +328,17 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *
      * @param ba           acceleration bias to be set expressed in meters per squared second
      *                     (m/s`2). Must be 3x1.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set expressed in radians per second
      *                     (rad/s). Must be 3x1.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig configuration parameters obtained through calibration.
      * @param initConfig   configuration parameters determining initial system
      *                     noise covariance matrix.
      * @param listener     listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final Matrix ba,
@@ -350,8 +349,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(ba, ma, bg, mg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -359,17 +358,17 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *
      * @param ba           acceleration bias to be set expressed in meters per squared second
      *                     (m/s`2). Must be 3x1.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set expressed in radians per second
      *                     (rad/s). Must be 3x1.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig configuration parameters obtained through calibration.
      * @param initConfig   configuration parameters determining initial system
      *                     noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final Matrix ba,
@@ -381,8 +380,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(ba, ma, bg, mg, gg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -390,18 +389,18 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *
      * @param ba           acceleration bias to be set expressed in meters per squared second
      *                     (m/s`2). Must be 3x1.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set expressed in radians per second
      *                     (rad/s). Must be 3x1.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig configuration parameters obtained through calibration.
      * @param initConfig   configuration parameters determining initial system
      *                     noise covariance matrix.
      * @param listener     listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final Matrix ba,
@@ -413,8 +412,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(ba, ma, bg, mg, gg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -423,15 +422,15 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final ECEFFrame referenceFrame,
@@ -443,8 +442,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -453,16 +452,16 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final ECEFFrame referenceFrame,
@@ -474,8 +473,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -484,16 +483,16 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final ECEFFrame referenceFrame,
@@ -506,8 +505,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, gg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -516,17 +515,17 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final ECEFFrame referenceFrame,
@@ -539,8 +538,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, gg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -550,16 +549,16 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final ECEFFrame referenceFrame,
@@ -571,8 +570,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -582,17 +581,17 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final ECEFFrame referenceFrame,
@@ -604,8 +603,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -615,17 +614,17 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final ECEFFrame referenceFrame,
@@ -638,8 +637,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, gg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -649,18 +648,18 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final ECEFFrame referenceFrame,
@@ -673,8 +672,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, gg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -683,15 +682,15 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final NEDFrame referenceFrame,
@@ -703,8 +702,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -713,16 +712,16 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final NEDFrame referenceFrame,
@@ -734,8 +733,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -744,16 +743,16 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final NEDFrame referenceFrame,
@@ -766,8 +765,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, gg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -776,17 +775,17 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final NEDFrame referenceFrame,
@@ -799,8 +798,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, gg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -810,16 +809,16 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final NEDFrame referenceFrame,
@@ -831,8 +830,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -842,17 +841,17 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final NEDFrame referenceFrame,
@@ -864,8 +863,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -875,17 +874,17 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final NEDFrame referenceFrame,
@@ -898,8 +897,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig)
             throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, gg);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -909,18 +908,18 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param kalmanConfig   configuration parameters obtained through calibration.
      * @param initConfig     configuration parameters determining initial system
      *                       noise covariance matrix.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public KalmanDriftEstimator(
             final NEDFrame referenceFrame,
@@ -933,8 +932,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
             final INSLooselyCoupledKalmanInitializerConfig initConfig,
             final DriftEstimatorListener listener) throws AlgebraException {
         super(referenceFrame, ba, ma, bg, mg, gg, listener);
-        mKalmanConfig = kalmanConfig;
-        mInitConfig = initConfig;
+        this.kalmanConfig = kalmanConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -944,7 +943,7 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @return configuration parameters for Kalman filter or null.
      */
     public INSLooselyCoupledKalmanConfig getKalmanConfig() {
-        return mKalmanConfig;
+        return kalmanConfig;
     }
 
     /**
@@ -954,13 +953,12 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @param kalmanConfig configuration parameters for Kalman filter.
      * @throws LockedException if estimator is already running.
      */
-    public void setKalmanConfig(final INSLooselyCoupledKalmanConfig kalmanConfig)
-            throws LockedException {
-        if (mRunning) {
+    public void setKalmanConfig(final INSLooselyCoupledKalmanConfig kalmanConfig) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mKalmanConfig = kalmanConfig;
+        this.kalmanConfig = kalmanConfig;
     }
 
     /**
@@ -971,7 +969,7 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * matrix or null.
      */
     public INSLooselyCoupledKalmanInitializerConfig getInitConfig() {
-        return mInitConfig;
+        return initConfig;
     }
 
     /**
@@ -982,13 +980,12 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                   covariance matrix.
      * @throws LockedException if estimator is already running.
      */
-    public void setInitConfig(final INSLooselyCoupledKalmanInitializerConfig initConfig)
-            throws LockedException {
-        if (mRunning) {
+    public void setInitConfig(final INSLooselyCoupledKalmanInitializerConfig initConfig) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mInitConfig = initConfig;
+        this.initConfig = initConfig;
     }
 
     /**
@@ -999,11 +996,11 @@ public class KalmanDriftEstimator extends DriftEstimator {
      */
     @Override
     public boolean isReady() {
-        return super.isReady() && mKalmanConfig != null && mInitConfig != null;
+        return super.isReady() && kalmanConfig != null && initConfig != null;
     }
 
     /**
-     * Adds a sample of measured body kinematics (accelerometer + gyroscope readings)
+     * Adds a sample of measured body kinematics (accelerometer and gyroscope readings)
      * obtained from an IMU, fixes their values and uses fixed values to estimate
      * current drift and their average values.
      *
@@ -1013,8 +1010,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @throws DriftEstimationException if estimation fails for some reason.
      */
     @Override
-    public void addBodyKinematics(final BodyKinematics kinematics)
-            throws LockedException, NotReadyException, DriftEstimationException {
+    public void addBodyKinematics(final BodyKinematics kinematics) throws LockedException, NotReadyException,
+            DriftEstimationException {
         if (isRunning()) {
             throw new LockedException();
         }
@@ -1024,31 +1021,31 @@ public class KalmanDriftEstimator extends DriftEstimator {
         }
 
         try {
-            mRunning = true;
+            running = true;
 
-            if (mNumberOfProcessedSamples == 0) {
-                if (mListener != null) {
-                    mListener.onStart(this);
+            if (numberOfProcessedSamples == 0) {
+                if (listener != null) {
+                    listener.onStart(this);
                 }
 
                 initialize();
             }
 
-            if (mFixKinematics) {
+            if (fixKinematics) {
                 // fix kinematics and update kalman filter
-                mFixer.fix(kinematics, mFixedKinematics);
+                fixer.fix(kinematics, fixedKinematics);
             } else {
                 // only update kalman filter
-                mFixedKinematics.copyFrom(kinematics);
+                fixedKinematics.copyFrom(kinematics);
             }
 
-            final double timestamp = getElapsedTimeSeconds();
-            mKalmanEstimator.update(mFixedKinematics, timestamp);
+            final var timestamp = getElapsedTimeSeconds();
+            kalmanEstimator.update(fixedKinematics, timestamp);
 
-            if (mState == null) {
-                mState = mKalmanEstimator.getState();
+            if (state == null) {
+                state = kalmanEstimator.getState();
             } else {
-                mKalmanEstimator.getState(mState);
+                kalmanEstimator.getState(state);
             }
 
             // estimate drift values
@@ -1056,18 +1053,15 @@ public class KalmanDriftEstimator extends DriftEstimator {
             computeCurrentVelocityDrift();
             computeCurrentOrientationDrift();
 
-            mNumberOfProcessedSamples++;
+            numberOfProcessedSamples++;
 
-            if (mListener != null) {
-                mListener.onBodyKinematicsAdded(this,
-                        kinematics, mFixedKinematics);
+            if (listener != null) {
+                listener.onBodyKinematicsAdded(this, kinematics, fixedKinematics);
             }
-
-        } catch (final AlgebraException | InvalidRotationMatrixException
-                | INSException e) {
+        } catch (final AlgebraException | InvalidRotationMatrixException | INSException e) {
             throw new DriftEstimationException(e);
         } finally {
-            mRunning = false;
+            running = false;
         }
     }
 
@@ -1082,9 +1076,9 @@ public class KalmanDriftEstimator extends DriftEstimator {
             throw new LockedException();
         }
 
-        mKalmanEstimator = null;
-        mState = null;
-        mRunning = false;
+        kalmanEstimator = null;
+        state = null;
+        running = false;
 
         super.reset();
     }
@@ -1096,20 +1090,20 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @return state of internal Kalman filter.
      */
     public INSLooselyCoupledKalmanState getState() {
-        return mKalmanEstimator != null ? mKalmanEstimator.getState() : null;
+        return kalmanEstimator != null ? kalmanEstimator.getState() : null;
     }
 
     /**
      * Gets state of internal Kalman filter containing current body position,
      * orientation and velocity after last provided body kinematics measurement.
      *
-     * @param result instance where result will be stored.
-     * @return true if internal Kalman filter state is available and result is
+     * @param result instance where the result will be stored.
+     * @return true if the internal Kalman filter state is available and the result is
      * updated, false otherwise.
      */
     public boolean getState(final INSLooselyCoupledKalmanState result) {
-        if (mKalmanEstimator != null) {
-            return mKalmanEstimator.getState(result);
+        if (kalmanEstimator != null) {
+            return kalmanEstimator.getState(result);
         } else {
             return false;
         }
@@ -1123,57 +1117,57 @@ public class KalmanDriftEstimator extends DriftEstimator {
      *                                        numerical reasons.
      */
     private void initialize() throws InvalidRotationMatrixException {
-        final CoordinateTransformation c = mReferenceFrame
-                .getCoordinateTransformation();
-        c.asRotation(mRefQ);
-        mRefQ.inverse(mInvRefQ);
+        final var c = referenceFrame.getCoordinateTransformation();
+        c.asRotation(refQ);
+        refQ.inverse(invRefQ);
 
-        mFrame.copyFrom(mReferenceFrame);
+        frame.copyFrom(referenceFrame);
 
-        mKalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(
-                mKalmanConfig, mInitConfig, mFrame);
+        kalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(kalmanConfig, initConfig, frame);
     }
 
     /**
      * Computes current position drift.
      */
-    private void computeCurrentPositionDrift() {
-        final double initX = mReferenceFrame.getX();
-        final double initY = mReferenceFrame.getY();
-        final double initZ = mReferenceFrame.getZ();
+    @Override
+    protected void computeCurrentPositionDrift() {
+        final var initX = referenceFrame.getX();
+        final var initY = referenceFrame.getY();
+        final var initZ = referenceFrame.getZ();
 
-        final double currentX = mState.getX();
-        final double currentY = mState.getY();
-        final double currentZ = mState.getZ();
+        final var currentX = state.getX();
+        final var currentY = state.getY();
+        final var currentZ = state.getZ();
 
-        final double diffX = currentX - initX;
-        final double diffY = currentY - initY;
-        final double diffZ = currentZ - initZ;
+        final var diffX = currentX - initX;
+        final var diffY = currentY - initY;
+        final var diffZ = currentZ - initZ;
 
-        mCurrentPositionDrift.setCoordinates(diffX, diffY, diffZ);
+        currentPositionDrift.setCoordinates(diffX, diffY, diffZ);
 
-        mCurrentPositionDriftMeters = mCurrentPositionDrift.getNorm();
+        currentPositionDriftMeters = currentPositionDrift.getNorm();
     }
 
     /**
      * Computes current velocity drift.
      */
-    private void computeCurrentVelocityDrift() {
-        final double initVx = mReferenceFrame.getVx();
-        final double initVy = mReferenceFrame.getVy();
-        final double initVz = mReferenceFrame.getVz();
+    @Override
+    protected void computeCurrentVelocityDrift() {
+        final var initVx = referenceFrame.getVx();
+        final var initVy = referenceFrame.getVy();
+        final var initVz = referenceFrame.getVz();
 
-        final double currentVx = mState.getVx();
-        final double currentVy = mState.getVy();
-        final double currentVz = mState.getVz();
+        final var currentVx = state.getVx();
+        final var currentVy = state.getVy();
+        final var currentVz = state.getVz();
 
-        final double diffVx = currentVx - initVx;
-        final double diffVy = currentVy - initVy;
-        final double diffVz = currentVz - initVz;
+        final var diffVx = currentVx - initVx;
+        final var diffVy = currentVy - initVy;
+        final var diffVz = currentVz - initVz;
 
-        mCurrentVelocityDrift.setCoordinates(diffVx, diffVy, diffVz);
+        currentVelocityDrift.setCoordinates(diffVx, diffVy, diffVz);
 
-        mCurrentVelocityDriftMetersPerSecond = mCurrentVelocityDrift.getNorm();
+        currentVelocityDriftMetersPerSecond = currentVelocityDrift.getNorm();
     }
 
     /**
@@ -1182,12 +1176,13 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * @throws InvalidRotationMatrixException if rotation cannot be accurately
      *                                        estimated.
      */
-    private void computeCurrentOrientationDrift() throws InvalidRotationMatrixException {
-        mCurrentC = mState.getBodyToEcefCoordinateTransformationMatrix();
+    @Override
+    protected void computeCurrentOrientationDrift() throws InvalidRotationMatrixException {
+        currentC = state.getBodyToEcefCoordinateTransformationMatrix();
 
-        mQ.fromMatrix(mCurrentC);
-        mQ.combine(mInvRefQ);
+        q.fromMatrix(currentC);
+        q.combine(invRefQ);
 
-        mCurrentOrientationDriftRadians = mQ.getRotationAngle();
+        currentOrientationDriftRadians = q.getRotationAngle();
     }
 }

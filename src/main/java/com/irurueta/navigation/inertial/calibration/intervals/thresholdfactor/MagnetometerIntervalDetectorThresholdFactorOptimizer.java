@@ -35,15 +35,16 @@ import com.irurueta.navigation.inertial.calibration.magnetometer.UnorderedStanda
 import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Optimizes threshold factor for interval detection of magnetometer data based
+ * Optimizes the threshold factor for interval detection of magnetometer data based
  * on results of calibration.
- * Implementations of this class will attempt to find best threshold factor
- * between provided range of values.
- * Only magnetometer calibrators based on unknown orientation are supported (in other terms,
+ * Implementations of this class will attempt to find the best threshold factor
+ * between the provided range of values.
+ * Only magnetometer calibrators based on unknown orientation are supported, in other terms,
  * calibrators must be {@link MagnetometerNonLinearCalibrator} and must support
  * {@link MagnetometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY}.
  */
@@ -65,33 +66,33 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
     /**
      * Minimum threshold factor.
      */
-    protected double mMinThresholdFactor = DEFAULT_MIN_THRESHOLD_FACTOR;
+    protected double minThresholdFactor = DEFAULT_MIN_THRESHOLD_FACTOR;
 
     /**
      * Maximum threshold factor.
      */
-    protected double mMaxThresholdFactor = DEFAULT_MAX_THRESHOLD_FACTOR;
+    protected double maxThresholdFactor = DEFAULT_MAX_THRESHOLD_FACTOR;
 
     /**
      * Magnetometer calibrator.
      */
-    private MagnetometerNonLinearCalibrator mCalibrator;
+    private MagnetometerNonLinearCalibrator calibrator;
 
     /**
      * A measurement generator for magnetometer calibrators.
      */
-    private MagnetometerMeasurementsGenerator mGenerator;
+    private MagnetometerMeasurementsGenerator generator;
 
     /**
      * Generated measurements to be used for magnetometer calibration.
      */
-    private List<StandardDeviationBodyMagneticFluxDensity> mMeasurements;
+    private List<StandardDeviationBodyMagneticFluxDensity> measurements;
 
     /**
      * Mapper to convert {@link StandardDeviationBodyMagneticFluxDensity} measurements
      * into quality scores.
      */
-    private QualityScoreMapper<StandardDeviationBodyMagneticFluxDensity> mQualityScoreMapper =
+    private QualityScoreMapper<StandardDeviationBodyMagneticFluxDensity> qualityScoreMapper =
             new DefaultMagnetometerQualityScoreMapper();
 
     /**
@@ -99,28 +100,28 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * initialization of the best solution that has been found expressed in
      * meters per squared second (m/s^2).
      * This is equal to the standard deviation of the accelerometer measurements
-     * during initialization phase.
+     * during the initialization phase.
      */
-    private double mBaseNoiseLevel;
+    private double baseNoiseLevel;
 
     /**
      * Threshold to determine static/dynamic period changes expressed in
      * meters per squared second (m/s^2) for the best calibration solution that
      * has been found.
      */
-    private double mThreshold;
+    private double threshold;
 
     /**
      * Estimated covariance matrix for estimated parameters.
      */
-    private Matrix mEstimatedCovariance;
+    private Matrix estimatedCovariance;
 
     /**
      * Estimated magnetometer soft-iron matrix containing scale factors
-     * and cross coupling errors.
-     * This is the product of matrix Tm containing cross coupling errors and Km
+     * and cross-coupling errors.
+     * This is the product of matrix Tm containing cross-coupling errors and Km
      * containing scaling factors.
-     * So tat:
+     * So that:
      * <pre>
      *     Mm = [sx    mxy  mxz] = Tm*Km
      *          [myx   sy   myz]
@@ -144,7 +145,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
      *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
      * </pre>
-     * This instance allows any 3x3 matrix however, typically alphaYx, alphaZx and alphaZy
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
      * are considered to be zero if the accelerometer z-axis is assumed to be the same
      * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Mm matrix
      * becomes upper diagonal:
@@ -155,13 +156,13 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * </pre>
      * Values of this matrix are unit-less.
      */
-    private Matrix mEstimatedMm;
+    private Matrix estimatedMm;
 
     /**
      * Estimated magnetometer hard-iron biases for each magnetometer axis
      * expressed in Teslas (T).
      */
-    private double[] mEstimatedHardIron;
+    private double[] estimatedHardIron;
 
     /**
      * Constructor.
@@ -189,8 +190,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws IllegalArgumentException if magnetometer calibrator does not use
      *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
      */
-    protected MagnetometerIntervalDetectorThresholdFactorOptimizer(
-            final MagnetometerNonLinearCalibrator calibrator) {
+    protected MagnetometerIntervalDetectorThresholdFactorOptimizer(final MagnetometerNonLinearCalibrator calibrator) {
         try {
             setCalibrator(calibrator);
         } catch (final LockedException ignore) {
@@ -226,29 +226,28 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @return magnetometer calibrator to be used to optimize its MSE.
      */
     public MagnetometerNonLinearCalibrator getCalibrator() {
-        return mCalibrator;
+        return calibrator;
     }
 
     /**
-     * Sets magnetometer calibrator to be used to optimize its Mean Square Error.
+     * Sets a magnetometer calibrator to be used to optimize its Mean Square Error.
      *
      * @param calibrator magnetometer calibrator to be used to optimize its MSE.
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if magnetometer calibrator does not use
      *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
      */
-    public void setCalibrator(final MagnetometerNonLinearCalibrator calibrator)
-            throws LockedException {
-        if (mRunning) {
+    public void setCalibrator(final MagnetometerNonLinearCalibrator calibrator) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        if (calibrator != null && calibrator.getMeasurementType() !=
-                MagnetometerCalibratorMeasurementType.STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY) {
+        if (calibrator != null && calibrator.getMeasurementType()
+                != MagnetometerCalibratorMeasurementType.STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY) {
             throw new IllegalArgumentException();
         }
 
-        mCalibrator = calibrator;
+        this.calibrator = calibrator;
     }
 
     /**
@@ -258,7 +257,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @return mapper to convert measurements into quality scores.
      */
     public QualityScoreMapper<StandardDeviationBodyMagneticFluxDensity> getQualityScoreMapper() {
-        return mQualityScoreMapper;
+        return qualityScoreMapper;
     }
 
     /**
@@ -271,55 +270,53 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
     public void setQualityScoreMapper(
             final QualityScoreMapper<StandardDeviationBodyMagneticFluxDensity> qualityScoreMapper)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mQualityScoreMapper = qualityScoreMapper;
+        this.qualityScoreMapper = qualityScoreMapper;
     }
 
     /**
-     * Gets minimum threshold factor.
+     * Gets the minimum threshold factor.
      *
      * @return minimum threshold factor.
      */
     public double getMinThresholdFactor() {
-        return mMinThresholdFactor;
+        return minThresholdFactor;
     }
 
     /**
-     * Gets maximum threshold factor.
+     * Gets the maximum threshold factor.
      *
      * @return maximum threshold factor.
      */
     public double getMaxThresholdFactor() {
-        return mMaxThresholdFactor;
+        return maxThresholdFactor;
     }
 
     /**
-     * Sets range of threshold factor values to obtain an optimized
+     * Sets a range of threshold factor values to get an optimized
      * threshold factor value.
      *
      * @param minThresholdFactor minimum threshold.
      * @param maxThresholdFactor maximum threshold.
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if either minimum or maximum values are
-     *                                  negative or if minimum value is larger
-     *                                  than maximum one.
+     *                                  negative, or if the minimum value is larger
+     *                                  than the maximum one.
      */
-    public void setThresholdFactorRange(
-            final double minThresholdFactor, final double maxThresholdFactor)
+    public void setThresholdFactorRange(final double minThresholdFactor, final double maxThresholdFactor)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
-        if (minThresholdFactor < 0.0 || maxThresholdFactor < 0.0
-                || minThresholdFactor >= maxThresholdFactor) {
+        if (minThresholdFactor < 0.0 || maxThresholdFactor < 0.0 || minThresholdFactor >= maxThresholdFactor) {
             throw new IllegalArgumentException();
         }
 
-        mMinThresholdFactor = minThresholdFactor;
-        mMaxThresholdFactor = maxThresholdFactor;
+        this.minThresholdFactor = minThresholdFactor;
+        this.maxThresholdFactor = maxThresholdFactor;
     }
 
     /**
@@ -329,17 +326,17 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      */
     @Override
     public boolean isReady() {
-        return super.isReady() && mCalibrator != null && mQualityScoreMapper != null;
+        return super.isReady() && calibrator != null && qualityScoreMapper != null;
     }
 
     /**
-     * Gets time interval between input measurements provided to the
+     * Gets the time interval between input measurements provided to the
      * {@link #getDataSource()} expressed in seconds (s).
      *
      * @return time interval between input measurements.
      */
     public double getTimeInterval() {
-        return mGenerator.getTimeInterval();
+        return generator.getTimeInterval();
     }
 
     /**
@@ -351,31 +348,31 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws IllegalArgumentException if provided value is negative.
      */
     public void setTimeInterval(final double timeInterval) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setTimeInterval(timeInterval);
+        generator.setTimeInterval(timeInterval);
     }
 
     /**
-     * Gets time interval between input measurements provided to the
+     * Gets the time interval between input measurements provided to the
      * {@link #getDataSource()}.
      *
      * @return time interval between input measurements.
      */
     public Time getTimeIntervalAsTime() {
-        return mGenerator.getTimeIntervalAsTime();
+        return generator.getTimeIntervalAsTime();
     }
 
     /**
-     * Gets time interval between input measurements provided to the
+     * Gets the time interval between input measurements provided to the
      * {@link #getDataSource()}.
      *
-     * @param result instance where time interval will be stored.
+     * @param result instance where the time interval will be stored.
      */
     public void getTimeIntervalAsTime(final Time result) {
-        mGenerator.getTimeIntervalAsTime(result);
+        generator.getTimeIntervalAsTime(result);
     }
 
     /**
@@ -387,11 +384,11 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws IllegalArgumentException if provided value is negative.
      */
     public void setTimeInterval(final Time timeInterval) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setTimeInterval(timeInterval);
+        generator.setTimeInterval(timeInterval);
     }
 
     /**
@@ -400,11 +397,11 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * into account.
      * Smaller static intervals will be discarded.
      *
-     * @return minimum number of input measurements required in a static interval
+     * @return a minimum number of input measurements required in a static interval
      * to be taken into account.
      */
     public int getMinStaticSamples() {
-        return mGenerator.getMinStaticSamples();
+        return generator.getMinStaticSamples();
     }
 
     /**
@@ -413,18 +410,18 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * into account.
      * Smaller static intervals will be discarded.
      *
-     * @param minStaticSamples minimum number of input measurements required in
+     * @param minStaticSamples a minimum number of input measurements required in
      *                         a static interval to be taken into account.
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is less than 2.
      */
     public void setMinStaticSamples(final int minStaticSamples)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setMinStaticSamples(minStaticSamples);
+        generator.setMinStaticSamples(minStaticSamples);
     }
 
     /**
@@ -434,7 +431,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @return maximum number of input measurements allowed in dynamic intervals.
      */
     public int getMaxDynamicSamples() {
-        return mGenerator.getMaxDynamicSamples();
+        return generator.getMaxDynamicSamples();
     }
 
     /**
@@ -446,13 +443,12 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is less than 2.
      */
-    public void setMaxDynamicSamples(final int maxDynamicSamples)
-            throws LockedException {
-        if (mRunning) {
+    public void setMaxDynamicSamples(final int maxDynamicSamples) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setMaxDynamicSamples(maxDynamicSamples);
+        generator.setMaxDynamicSamples(maxDynamicSamples);
     }
 
     /**
@@ -463,14 +459,14 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @return length of input measurements to keep within the window.
      */
     public int getWindowSize() {
-        return mGenerator.getWindowSize();
+        return generator.getWindowSize();
     }
 
     /**
      * Sets length of number of input measurements provided to the
      * {@link #getDataSource()} to keep within the window being processed
      * to determine instantaneous noise level.
-     * Window size must always be larger than allowed minimum value, which is 2
+     * Window size must always be larger than the allowed minimum value, which is 2
      * and must have an odd value.
      *
      * @param windowSize length of number of samples to keep within the window.
@@ -478,41 +474,40 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws IllegalArgumentException if provided value is not valid.
      */
     public void setWindowSize(final int windowSize) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setWindowSize(windowSize);
+        generator.setWindowSize(windowSize);
     }
 
     /**
      * Gets number of input measurements provided to the
-     * {@link #getDataSource()} to be processed initially while keeping he sensor
-     * static in order to find the base noise level when device is static.
+     * {@link #getDataSource()} to be processed initially while keeping the sensor
+     * static to find the base noise level when the device is static.
      *
      * @return number of samples to be processed initially.
      */
     public int getInitialStaticSamples() {
-        return mGenerator.getInitialStaticSamples();
+        return generator.getInitialStaticSamples();
     }
 
     /**
      * Sets number of input parameters provided to the {@link #getDataSource()}
-     * to be processed initially while keeping the sensor static in order to
-     * find the base noise level when device is static.
+     * to be processed initially while keeping the sensor static to
+     * find the base noise level when the device is static.
      *
      * @param initialStaticSamples number of samples ot be processed initially.
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is less than
      *                                  {@link TriadStaticIntervalDetector#MINIMUM_INITIAL_STATIC_SAMPLES}.
      */
-    public void setInitialStaticSamples(final int initialStaticSamples)
-            throws LockedException {
-        if (mRunning) {
+    public void setInitialStaticSamples(final int initialStaticSamples) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setInitialStaticSamples(initialStaticSamples);
+        generator.setInitialStaticSamples(initialStaticSamples);
     }
 
     /**
@@ -524,7 +519,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @return factor to determine that a sudden movement has occurred.
      */
     public double getInstantaneousNoiseLevelFactor() {
-        return mGenerator.getInstantaneousNoiseLevelFactor();
+        return generator.getInstantaneousNoiseLevelFactor();
     }
 
     /**
@@ -539,18 +534,16 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is zero or negative.
      */
-    public void setInstantaneousNoiseLevelFactor(
-            final double instantaneousNoiseLevelFactor) throws LockedException {
-        if (mRunning) {
+    public void setInstantaneousNoiseLevelFactor(final double instantaneousNoiseLevelFactor) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setInstantaneousNoiseLevelFactor(
-                instantaneousNoiseLevelFactor);
+        generator.setInstantaneousNoiseLevelFactor(instantaneousNoiseLevelFactor);
     }
 
     /**
-     * Gets overall absolute threshold to determine whether there has been
+     * Gets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      * This threshold is expressed in meters per squared second (m/s^2).
      *
@@ -558,11 +551,11 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * excessive motion.
      */
     public double getBaseNoiseLevelAbsoluteThreshold() {
-        return mGenerator.getBaseNoiseLevelAbsoluteThreshold();
+        return generator.getBaseNoiseLevelAbsoluteThreshold();
     }
 
     /**
-     * Sets overall absolute threshold to determine whether there has been
+     * Sets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      * This threshold is expressed in meters per squared second (m/s^2).
      *
@@ -572,40 +565,38 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is zero or negative.
      */
-    public void setBaseNoiseLevelAbsoluteThreshold(
-            final double baseNoiseLevelAbsoluteThreshold) throws LockedException {
-        if (mRunning) {
+    public void setBaseNoiseLevelAbsoluteThreshold(final double baseNoiseLevelAbsoluteThreshold)
+            throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setBaseNoiseLevelAbsoluteThreshold(
-                baseNoiseLevelAbsoluteThreshold);
+        generator.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
     }
 
     /**
-     * Gets overall absolute threshold to determine whether there has been
+     * Gets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      *
      * @return overall absolute threshold to determine whether there has been
      * excessive motion.
      */
     public Acceleration getBaseNoiseLevelAbsoluteThresholdAsMeasurement() {
-        return mGenerator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        return generator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
     }
 
     /**
-     * Gets overall absolute threshold to determine whether there has been
+     * Gets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
-    public void getBaseNoiseLevelAbsoluteThresholdAsMeasurement(
-            final Acceleration result) {
-        mGenerator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(result);
+    public void getBaseNoiseLevelAbsoluteThresholdAsMeasurement(final Acceleration result) {
+        generator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(result);
     }
 
     /**
-     * Sets overall absolute threshold to determine whether there has been
+     * Sets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      *
      * @param baseNoiseLevelAbsoluteThreshold overall absolute threshold to
@@ -614,14 +605,13 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is zero or negative.
      */
-    public void setBaseNoiseLevelAbsoluteThreshold(
-            final Acceleration baseNoiseLevelAbsoluteThreshold) throws LockedException {
-        if (mRunning) {
+    public void setBaseNoiseLevelAbsoluteThreshold(final Acceleration baseNoiseLevelAbsoluteThreshold)
+            throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setBaseNoiseLevelAbsoluteThreshold(
-                baseNoiseLevelAbsoluteThreshold);
+        generator.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
     }
 
     /**
@@ -629,116 +619,115 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * initialization of the best solution that has been found expressed in
      * meters per squared second (m/s^2).
      * This is equal to the standard deviation of the accelerometer measurements
-     * during initialization phase.
+     * during the initialization phase.
      *
-     * @return accelerometer base noise level of best solution that has been
+     * @return accelerometer base noise level of the best solution that has been
      * found.
      */
     public double getAccelerometerBaseNoiseLevel() {
-        return mBaseNoiseLevel;
+        return baseNoiseLevel;
     }
 
     /**
      * Gets accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found.
      * This is equal to the standard deviation of the accelerometer measurements
-     * during initialization phase.
+     * during the initialization phase.
      *
-     * @return accelerometer base noise level of best solution that has been
+     * @return accelerometer base noise level of the best solution that has been
      * found.
      */
     public Acceleration getAccelerometerBaseNoiseLevelAsMeasurement() {
-        return createMeasurement(mBaseNoiseLevel, getDefaultUnit());
+        return createMeasurement(baseNoiseLevel, getDefaultUnit());
     }
 
     /**
      * Gets accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found.
      * This is equal to the standard deviation of the accelerometer measurements
-     * during initialization phase.
+     * during the initialization phase.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
-    public void getAccelerometerBaseNoiseLevelAsMeasurement(
-            final Acceleration result) {
-        result.setValue(mBaseNoiseLevel);
+    public void getAccelerometerBaseNoiseLevelAsMeasurement(final Acceleration result) {
+        result.setValue(baseNoiseLevel);
         result.setUnit(getDefaultUnit());
     }
 
     /**
      * Gets accelerometer base noise level PSD (Power Spectral Density)
-     * expressed in (m^2 * s^-3) of best solution that has been found.
+     * expressed in (m^2 * s^-3) of the best solution that has been found.
      *
-     * @return accelerometer base noise level PSD of best solution that has
+     * @return accelerometer base noise level PSD of the best solution that has
      * been found.
      */
     public double getAccelerometerBaseNoiseLevelPsd() {
-        return mBaseNoiseLevel * mBaseNoiseLevel * getTimeInterval();
+        return baseNoiseLevel * baseNoiseLevel * getTimeInterval();
     }
 
     /**
      * Gets accelerometer base noise level root PSD (Power Spectral Density)
-     * expressed in (m * s^-1.5) of best solution that has been found.
+     * expressed in (m * s^-1.5) of the best solution that has been found.
      *
-     * @return accelerometer base noise level root PSD of best solution that has
+     * @return accelerometer base noise level root PSD of the best solution that has
      * been found.
      */
     @Override
     public double getAccelerometerBaseNoiseLevelRootPsd() {
-        return mBaseNoiseLevel * Math.sqrt(getTimeInterval());
+        return baseNoiseLevel * Math.sqrt(getTimeInterval());
     }
 
     /**
-     * Gets threshold to determine static/dynamic period changes expressed in
+     * Gets the threshold to determine static/dynamic period changes expressed in
      * meters per squared second (m/s^2) for the best calibration solution that
      * has been found.
      *
-     * @return threshold to determine static/dynamic period changes for best
+     * @return threshold to determine static/dynamic period changes for the best
      * solution.
      */
     public double getThreshold() {
-        return mThreshold;
+        return threshold;
     }
 
     /**
-     * Gets threshold to determine static/dynamic period changes for the best
+     * Gets the threshold to determine static/dynamic period changes for the best
      * calibration solution that has been found.
      *
-     * @return threshold to determine static/dynamic period changes for best
+     * @return threshold to determine static/dynamic period changes for the best
      * solution.
      */
     public Acceleration getThresholdAsMeasurement() {
-        return createMeasurement(mThreshold, getDefaultUnit());
+        return createMeasurement(threshold, getDefaultUnit());
     }
 
     /**
-     * Get threshold to determine static/dynamic period changes for the best
+     * Get the threshold to determine static/dynamic period changes for the best
      * calibration solution that has been found.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getThresholdAsMeasurement(final Acceleration result) {
-        result.setValue(mThreshold);
+        result.setValue(threshold);
         result.setUnit(getDefaultUnit());
     }
 
     /**
-     * Gets array containing x,y,z components of estimated magnetometer
+     * Gets the array containing x,y,z components of estimated magnetometer
      * hard-iron biases expressed in Teslas (T).
      *
      * @return array containing x,y,z components of estimated magnetometer
      * hard-iron biases.
      */
     public double[] getEstimatedHardIron() {
-        return mEstimatedHardIron;
+        return estimatedHardIron;
     }
 
     /**
      * Gets estimated magnetometer soft-iron matrix containing scale factors
-     * and cross coupling errors.
-     * This is the product of matrix Tm containing cross coupling errors and Km
+     * and cross-coupling errors.
+     * This is the product of matrix Tm containing cross-coupling errors and Km
      * containing scaling factors.
-     * So tat:
+     * So that:
      * <pre>
      *     Mm = [sx    mxy  mxz] = Tm*Km
      *          [myx   sy   myz]
@@ -762,7 +751,7 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
      *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
      * </pre>
-     * This instance allows any 3x3 matrix however, typically alphaYx, alphaZx and alphaZy
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
      * are considered to be zero if the accelerometer z-axis is assumed to be the same
      * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Mm matrix
      * becomes upper diagonal:
@@ -773,95 +762,92 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
      * </pre>
      * Values of this matrix are unit-less.
      *
-     * @return estimated magnetometer soft-iron scale factors and cross coupling errors,
+     * @return estimated magnetometer soft-iron scale factors and cross-coupling errors,
      * or null if not available.
      */
     public Matrix getEstimatedMm() {
-        return mEstimatedMm;
+        return estimatedMm;
     }
 
     /**
-     * Evaluates calibration Mean Square Error (MSE) for provided threshold factor.
+     * Evaluates calibration Mean Square Error (MSE) for the provided threshold factor.
      *
      * @param thresholdFactor threshold factor to be used for interval detection
-     *                        and measurements generation to be used for
+     *                        and measurement generation to be used for
      *                        calibration.
      * @return calibration MSE.
-     * @throws LockedException                                   if generator is busy.
+     * @throws LockedException                                   if the generator is busy.
      * @throws CalibrationException                              if calibration fails.
-     * @throws NotReadyException                                 if calibrator is not ready.
+     * @throws NotReadyException                                 if the calibrator is not ready.
      * @throws IntervalDetectorThresholdFactorOptimizerException interval detection failed.
      */
-    protected double evaluateForThresholdFactor(final double thresholdFactor)
-            throws LockedException, CalibrationException, NotReadyException,
-            IntervalDetectorThresholdFactorOptimizerException {
-        if (mMeasurements == null) {
-            mMeasurements = new ArrayList<>();
+    protected double evaluateForThresholdFactor(final double thresholdFactor) throws LockedException,
+            CalibrationException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException {
+        if (measurements == null) {
+            measurements = new ArrayList<>();
         } else {
-            mMeasurements.clear();
+            measurements.clear();
         }
 
-        mGenerator.reset();
-        mGenerator.setThresholdFactor(thresholdFactor);
+        generator.reset();
+        generator.setThresholdFactor(thresholdFactor);
 
-        int count = mDataSource.count();
-        boolean failed = false;
-        for (int i = 0; i < count; i++) {
-            final BodyKinematicsAndMagneticFluxDensity bodyKinematics =
-                    mDataSource.getAt(i);
-            if (!mGenerator.process(bodyKinematics)) {
+        var count = dataSource.count();
+        var failed = false;
+        for (var i = 0; i < count; i++) {
+            final var bodyKinematics = dataSource.getAt(i);
+            if (!generator.process(bodyKinematics)) {
                 failed = true;
                 break;
             }
         }
 
-        if (failed || mGenerator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
+        if (failed || generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
             // interval detection failed
             return Double.MAX_VALUE;
         }
 
         // check that enough measurements have been obtained
-        if (mMeasurements.size() < mCalibrator.getMinimumRequiredMeasurements()) {
+        if (measurements.size() < calibrator.getMinimumRequiredMeasurements()) {
             return Double.MAX_VALUE;
         }
 
         // set calibrator measurements
-        switch (mCalibrator.getMeasurementType()) {
+        switch (calibrator.getMeasurementType()) {
             case STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY:
-                if (mCalibrator.isOrderedMeasurementsRequired()) {
-                    final OrderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator calibrator =
-                            (OrderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator) mCalibrator;
+                if (calibrator.isOrderedMeasurementsRequired()) {
+                    final var cal =
+                            (OrderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator) this.calibrator;
 
-                    calibrator.setMeasurements(mMeasurements);
+                    cal.setMeasurements(measurements);
                 } else {
-                    final UnorderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator calibrator =
-                            (UnorderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator) mCalibrator;
+                    final var cal =
+                            (UnorderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator) this.calibrator;
 
-                    calibrator.setMeasurements(mMeasurements);
+                    cal.setMeasurements(measurements);
                 }
 
-                if (mCalibrator.isQualityScoresRequired()) {
-                    final QualityScoredMagnetometerCalibrator calibrator =
-                            (QualityScoredMagnetometerCalibrator) mCalibrator;
+                if (calibrator.isQualityScoresRequired()) {
+                    final var cal = (QualityScoredMagnetometerCalibrator) this.calibrator;
 
-                    final int size = mMeasurements.size();
-                    final double[] qualityScores = new double[size];
-                    for (int i = 0; i < size; i++) {
-                        qualityScores[i] = mQualityScoreMapper.map(mMeasurements.get(i));
+                    final var size = measurements.size();
+                    final var qualityScores = new double[size];
+                    for (var i = 0; i < size; i++) {
+                        qualityScores[i] = qualityScoreMapper.map(measurements.get(i));
                     }
-                    calibrator.setQualityScores(qualityScores);
+                    cal.setQualityScores(qualityScores);
                 }
                 break;
             case FRAME_BODY_MAGNETIC_FLUX_DENSITY, STANDARD_DEVIATION_FRAME_BODY_MAGNETIC_FLUX_DENSITY:
-                // throw exception. Cannot use frames
+                // Throw exception. Cannot use frames
             default:
                 throw new IntervalDetectorThresholdFactorOptimizerException();
         }
 
-        mCalibrator.calibrate();
+        calibrator.calibrate();
 
-        final double mse = mCalibrator.getEstimatedMse();
-        if (mse < mMinMse) {
+        final var mse = calibrator.getEstimatedMse();
+        if (mse < minMse) {
             keepBestResult(mse, thresholdFactor);
         }
         return mse;
@@ -869,117 +855,108 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
 
     /**
      * Initializes magnetometer measurement generator to convert
-     * body kinematics + magnetic flux measurements after interval detection into
+     * body kinematics and magnetic flux measurements after interval detection into
      * measurements used for magnetometer calibration.
      */
     private void initialize() {
-        final MagnetometerMeasurementsGeneratorListener generatorListener =
-                new MagnetometerMeasurementsGeneratorListener() {
-                    @Override
-                    public void onInitializationStarted(
-                            final MagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+        final var generatorListener = new MagnetometerMeasurementsGeneratorListener() {
+            @Override
+            public void onInitializationStarted(final MagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onInitializationCompleted(
-                            final MagnetometerMeasurementsGenerator generator,
-                            final double baseNoiseLevel) {
-                        // not needed
-                    }
+            @Override
+            public void onInitializationCompleted(
+                    final MagnetometerMeasurementsGenerator generator, final double baseNoiseLevel) {
+                // not needed
+            }
 
-                    @Override
-                    public void onError(
-                            final MagnetometerMeasurementsGenerator generator,
-                            final TriadStaticIntervalDetector.ErrorReason reason) {
-                        // not needed
-                    }
+            @Override
+            public void onError(
+                    final MagnetometerMeasurementsGenerator generator,
+                    final TriadStaticIntervalDetector.ErrorReason reason) {
+                // not needed
+            }
 
-                    @Override
-                    public void onStaticIntervalDetected(
-                            final MagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+            @Override
+            public void onStaticIntervalDetected(final MagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onDynamicIntervalDetected(
-                            final MagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+            @Override
+            public void onDynamicIntervalDetected(final MagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onStaticIntervalSkipped(
-                            final MagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+            @Override
+            public void onStaticIntervalSkipped(final MagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onDynamicIntervalSkipped(
-                            final MagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+            @Override
+            public void onDynamicIntervalSkipped(final MagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onGeneratedMeasurement(
-                            final MagnetometerMeasurementsGenerator generator,
-                            final StandardDeviationBodyMagneticFluxDensity measurement) {
-                        mMeasurements.add(measurement);
-                    }
+            @Override
+            public void onGeneratedMeasurement(
+                    final MagnetometerMeasurementsGenerator generator,
+                    final StandardDeviationBodyMagneticFluxDensity measurement) {
+                measurements.add(measurement);
+            }
 
-                    @Override
-                    public void onReset(
-                            final MagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
-                };
+            @Override
+            public void onReset(final MagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
+        };
 
-        mGenerator = new MagnetometerMeasurementsGenerator(generatorListener);
+        generator = new MagnetometerMeasurementsGenerator(generatorListener);
     }
 
     /**
-     * Keeps best calibration solution found so far.
+     * Keeps the best calibration solution found so far.
      *
      * @param mse             Estimated Mean Square Error during calibration.
      * @param thresholdFactor threshold factor to be kept.
      */
     private void keepBestResult(final double mse, final double thresholdFactor) {
-        mMinMse = mse;
-        mOptimalThresholdFactor = thresholdFactor;
+        minMse = mse;
+        optimalThresholdFactor = thresholdFactor;
 
-        mBaseNoiseLevel = mGenerator.getAccelerometerBaseNoiseLevel();
-        mThreshold = mGenerator.getThreshold();
+        baseNoiseLevel = generator.getAccelerometerBaseNoiseLevel();
+        threshold = generator.getThreshold();
 
-        if (mEstimatedCovariance == null) {
-            mEstimatedCovariance = new Matrix(mCalibrator.getEstimatedCovariance());
+        if (estimatedCovariance == null) {
+            estimatedCovariance = new Matrix(calibrator.getEstimatedCovariance());
         } else {
-            mEstimatedCovariance.copyFrom(mCalibrator.getEstimatedCovariance());
+            estimatedCovariance.copyFrom(calibrator.getEstimatedCovariance());
         }
-        if (mEstimatedMm == null) {
-            mEstimatedMm = new Matrix(mCalibrator.getEstimatedMm());
+        if (estimatedMm == null) {
+            estimatedMm = new Matrix(calibrator.getEstimatedMm());
         } else {
-            mEstimatedMm.copyFrom(mCalibrator.getEstimatedMm());
+            estimatedMm.copyFrom(calibrator.getEstimatedMm());
         }
-        if (mCalibrator instanceof UnknownHardIronMagnetometerCalibrator unknownHardIronMagnetometerCalibrator) {
-            mEstimatedHardIron = unknownHardIronMagnetometerCalibrator.getEstimatedHardIron();
-        } else if (mCalibrator instanceof KnownHardIronMagnetometerCalibrator knownHardIronMagnetometerCalibrator) {
-            mEstimatedHardIron = knownHardIronMagnetometerCalibrator.getHardIron();
+        if (calibrator instanceof UnknownHardIronMagnetometerCalibrator unknownHardIronMagnetometerCalibrator) {
+            estimatedHardIron = unknownHardIronMagnetometerCalibrator.getEstimatedHardIron();
+        } else if (calibrator instanceof KnownHardIronMagnetometerCalibrator knownHardIronMagnetometerCalibrator) {
+            estimatedHardIron = knownHardIronMagnetometerCalibrator.getHardIron();
         }
     }
 
     /**
-     * Creates an acceleration instance using provided value and unit.
+     * Creates an acceleration instance using the provided value and unit.
      *
      * @param value value of measurement.
      * @param unit  unit of value.
      * @return created acceleration.
      */
-    private Acceleration createMeasurement(
-            final double value, final AccelerationUnit unit) {
+    private Acceleration createMeasurement(final double value, final AccelerationUnit unit) {
         return new Acceleration(value, unit);
     }
 
     /**
-     * Gets default unit for acceleration, which is meters per
+     * Gets the default unit for acceleration, which is meters per
      * squared second (m/s^2).
      *
      * @return default unit for acceleration.

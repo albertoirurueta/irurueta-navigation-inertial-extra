@@ -19,14 +19,14 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
  * Provides a rule or function to convert estimated accelerometer calibration
  * Mean Square Error (MSE) and estimated gyroscope calibration Mean Square Error
  * (MSE) into a single MSE value.
- * Typical implementation simply sums both MSE values, however, custom
+ * Typical implementation simply sums both MSE values. However, custom
  * implementations can be made to make one error more prevalent than the other, etc.
  */
 public interface AccelerometerAndGyroscopeMseRule {
 
     /**
      * Evaluates provided accelerometer calibration MSE and gyroscope calibration
-     * MSE in order to obtain a single MSE value representing both.
+     * MSE to get a single MSE value representing both.
      *
      * @param accelerometerMse accelerometer calibration MSE.
      * @param gyroscopeMse     gyroscope calibration MSE.

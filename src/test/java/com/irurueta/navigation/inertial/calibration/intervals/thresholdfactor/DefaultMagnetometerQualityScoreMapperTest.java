@@ -17,24 +17,21 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
 
 import com.irurueta.navigation.inertial.calibration.StandardDeviationBodyMagneticFluxDensity;
 import com.irurueta.statistics.UniformRandomizer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.util.Random;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.Assert.assertEquals;
-
-public class DefaultMagnetometerQualityScoreMapperTest {
+class DefaultMagnetometerQualityScoreMapperTest {
 
     private static final double MAX_MAGNETIC_FLUX_STD = 1e-9;
 
     @Test
-    public void testMap() {
-        final UniformRandomizer randomizer = new UniformRandomizer(new Random());
-        final double standardDeviation = randomizer.nextDouble(0.0, MAX_MAGNETIC_FLUX_STD);
-        final StandardDeviationBodyMagneticFluxDensity stdB = new StandardDeviationBodyMagneticFluxDensity(
-                standardDeviation);
+    void testMap() {
+        final var randomizer = new UniformRandomizer();
+        final var standardDeviation = randomizer.nextDouble(0.0, MAX_MAGNETIC_FLUX_STD);
+        final var stdB = new StandardDeviationBodyMagneticFluxDensity(standardDeviation);
 
-        final DefaultMagnetometerQualityScoreMapper mapper = new DefaultMagnetometerQualityScoreMapper();
+        final var mapper = new DefaultMagnetometerQualityScoreMapper();
 
         assertEquals(1.0 / (1.0 + standardDeviation), mapper.map(stdB), 0.0);
     }

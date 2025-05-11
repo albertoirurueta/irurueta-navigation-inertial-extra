@@ -27,7 +27,6 @@ import com.irurueta.navigation.frames.NEDFrame;
 import com.irurueta.navigation.frames.converters.ECEFtoNEDFrameConverter;
 import com.irurueta.navigation.frames.converters.NEDtoECEFFrameConverter;
 import com.irurueta.navigation.inertial.BodyKinematics;
-import com.irurueta.navigation.inertial.ECEFGravity;
 import com.irurueta.navigation.frames.NEDPosition;
 import com.irurueta.navigation.inertial.calibration.BodyKinematicsGenerator;
 import com.irurueta.navigation.inertial.calibration.CalibrationException;
@@ -49,17 +48,17 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest implements
-        IntervalDetectorThresholdFactorOptimizerListener<BodyKinematics,
+class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest implements 
+        IntervalDetectorThresholdFactorOptimizerListener<BodyKinematics, 
                 AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource> {
 
     private static final double TIME_INTERVAL_SECONDS = 0.02;
@@ -92,22 +91,22 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
 
     private static final double SMALL_ROOT_PSD = 1e-15;
 
-    private final List<BodyKinematics> mBodyKinematics = new ArrayList<>();
+    private final List<BodyKinematics> bodyKinematics = new ArrayList<>();
 
-    private final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource mDataSource =
+    private final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
             new AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource() {
                 @Override
                 public int count() {
-                    return mBodyKinematics.size();
+                    return bodyKinematics.size();
                 }
 
                 @Override
                 public BodyKinematics getAt(int index) {
-                    return mBodyKinematics.get(index);
+                    return bodyKinematics.get(index);
                 }
             };
 
-    private final AccelerometerMeasurementsGeneratorListener mGeneratorListener =
+    private final AccelerometerMeasurementsGeneratorListener generatorListener =
             new AccelerometerMeasurementsGeneratorListener() {
                 @Override
                 public void onInitializationStarted(final AccelerometerMeasurementsGenerator generator) {
@@ -151,7 +150,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 public void onGeneratedMeasurement(
                         final AccelerometerMeasurementsGenerator generator,
                         final StandardDeviationBodyKinematics measurement) {
-                    mGeneratorMeasurements.add(measurement);
+                    generatorMeasurements.add(measurement);
                 }
 
                 @Override
@@ -160,18 +159,17 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 }
             };
 
-    private final List<StandardDeviationBodyKinematics> mGeneratorMeasurements = new ArrayList<>();
+    private final List<StandardDeviationBodyKinematics> generatorMeasurements = new ArrayList<>();
 
-    private int mStart;
+    private int start;
 
-    private int mEnd;
+    private int end;
 
-    private float mProgress;
+    private float progress;
 
     @Test
-    public void testConstructor1() {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testConstructor1() {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default values
         assertNotNull(optimizer.getMseOptimizer());
@@ -186,11 +184,11 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -201,27 +199,27 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -233,17 +231,15 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(0.0, optimizer.getMinMse(), 0.0);
         assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
         assertNull(optimizer.getListener());
-        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
+        assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(), 
                 0.0);
     }
 
     @Test
-    public void testConstructor2() {
-        final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
+    void testConstructor2() {
+        final var ds = mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
 
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource);
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(ds);
 
         // check default values
         assertNotNull(optimizer.getMseOptimizer());
@@ -255,14 +251,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(AccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
                 optimizer.getMaxThresholdFactor(), 0.0);
-        assertSame(dataSource, optimizer.getDataSource());
+        assertSame(ds, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -273,27 +269,27 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -310,11 +306,10 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testConstructor3() {
-        final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator();
+    void testConstructor3() {
+        final var calibrator = new KnownGravityNormAccelerometerCalibrator();
 
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(calibrator);
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(calibrator);
 
         // check default values
         assertNotNull(optimizer.getMseOptimizer());
@@ -329,11 +324,11 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -344,27 +339,27 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -380,20 +375,19 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 0.0);
 
         // Force IllegalArgumentException
+        final var wrongCalibrator = new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class,
-                () -> new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(
-                        new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator()));
+                () -> new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(wrongCalibrator));
     }
 
     @Test
-    public void testConstructor4() {
-        final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
+    void testConstructor4() {
+        final var ds = mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
 
-        final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator();
+        final var calibrator = new KnownGravityNormAccelerometerCalibrator();
 
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource, calibrator);
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(ds,
+                calibrator);
 
         // check default values
         assertNotNull(optimizer.getMseOptimizer());
@@ -405,14 +399,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(AccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
                 optimizer.getMaxThresholdFactor(), 0.0);
-        assertSame(dataSource, optimizer.getDataSource());
+        assertSame(ds, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -423,27 +417,27 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -459,17 +453,16 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 0.0);
 
         // Force IllegalArgumentException
+        final var wrongCalibrator = new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class,
-                () -> new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
-                        new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator()));
+                () -> new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(ds, wrongCalibrator));
     }
 
     @Test
-    public void testConstructor5() {
-        final BrentSingleOptimizer mseOptimizer = new BrentSingleOptimizer();
+    void testConstructor5() {
+        final var mseOptimizer = new BrentSingleOptimizer();
 
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(mseOptimizer);
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(mseOptimizer);
 
         // check default values
         assertSame(mseOptimizer, optimizer.getMseOptimizer());
@@ -484,11 +477,11 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -499,27 +492,27 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD, 
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -536,13 +529,12 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testConstructor6() {
-        final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
-        final BrentSingleOptimizer mseOptimizer = new BrentSingleOptimizer();
+    void testConstructor6() {
+        final var ds = mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
+        final var mseOptimizer = new BrentSingleOptimizer();
 
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource, mseOptimizer);
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(ds,
+                mseOptimizer);
 
         // check default values
         assertSame(mseOptimizer, optimizer.getMseOptimizer());
@@ -554,14 +546,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(AccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
                 optimizer.getMaxThresholdFactor(), 0.0);
-        assertSame(dataSource, optimizer.getDataSource());
+        assertSame(ds, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -572,27 +564,27 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -609,12 +601,12 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testConstructor7() {
-        final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator();
-        final BrentSingleOptimizer mseOptimizer = new BrentSingleOptimizer();
+    void testConstructor7() {
+        final var calibrator = new KnownGravityNormAccelerometerCalibrator();
+        final var mseOptimizer = new BrentSingleOptimizer();
 
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(calibrator, mseOptimizer);
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(calibrator, 
+                mseOptimizer);
 
         // check default values
         assertSame(mseOptimizer, optimizer.getMseOptimizer());
@@ -624,16 +616,16 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         assertEquals(DefaultAccelerometerQualityScoreMapper.class, optimizer.getQualityScoreMapper().getClass());
         assertEquals(AccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_MIN_THRESHOLD_FACTOR,
                 optimizer.getMinThresholdFactor(), 0.0);
-        assertEquals(AccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
+        assertEquals(AccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR, 
                 optimizer.getMaxThresholdFactor(), 0.0);
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -644,27 +636,27 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -680,23 +672,22 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 0.0);
 
         // Force IllegalArgumentException
+        final var wrongCalibrator = new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class,
-                () -> new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(
-                        new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator(), mseOptimizer));
+                () -> new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(wrongCalibrator,
+                        mseOptimizer));
     }
 
     @Test
-    public void testConstructor8() {
-        final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
+    void testConstructor8() {
+        final var ds = mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
 
-        final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator();
+        final var calibrator = new KnownGravityNormAccelerometerCalibrator();
 
-        final BrentSingleOptimizer mseOptimizer = new BrentSingleOptimizer();
+        final var mseOptimizer = new BrentSingleOptimizer();
 
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource, calibrator,
-                        mseOptimizer);
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(ds, calibrator,
+                mseOptimizer);
 
         // check default values
         assertSame(mseOptimizer, optimizer.getMseOptimizer());
@@ -708,14 +699,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(AccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
                 optimizer.getMaxThresholdFactor(), 0.0);
-        assertSame(dataSource, optimizer.getDataSource());
+        assertSame(ds, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -726,27 +717,27 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedBiasStandardDeviationNorm());
@@ -762,21 +753,21 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                 0.0);
 
         // Force IllegalArgumentException
+        final var wrongCalibrator = new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class,
-                () -> new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
-                        new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator(), mseOptimizer));
+                () -> new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(ds, wrongCalibrator,
+                        mseOptimizer));
     }
 
     @Test
-    public void testGetSetMseOptimizer() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetMseOptimizer() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNotNull(optimizer.getMseOptimizer());
 
-        // set new value
-        final BrentSingleOptimizer mseOptimizer = new BrentSingleOptimizer();
+        // set a new value
+        final var mseOptimizer = new BrentSingleOptimizer();
         optimizer.setMseOptimizer(mseOptimizer);
 
         // check
@@ -790,23 +781,21 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testIsReady() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testIsReady() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertFalse(optimizer.isReady());
 
         // set data source
-        final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
-        optimizer.setDataSource(dataSource);
+        final var ds = mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
+        optimizer.setDataSource(ds);
 
         // check
         assertFalse(optimizer.isReady());
 
         // set calibrator
-        final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator();
+        final var calibrator = new KnownGravityNormAccelerometerCalibrator();
         optimizer.setCalibrator(calibrator);
 
         // check
@@ -832,15 +821,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetCalibrator() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetCalibrator() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNull(optimizer.getCalibrator());
 
-        // set new value
-        final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator();
+        // set a new value
+        final var calibrator = new KnownGravityNormAccelerometerCalibrator();
 
         optimizer.setCalibrator(calibrator);
 
@@ -848,20 +836,19 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         assertSame(calibrator, optimizer.getCalibrator());
 
         // Force IllegalArgumentException
-        assertThrows(IllegalArgumentException.class, () -> optimizer.setCalibrator(
-                new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator()));
+        final var wrongCalibrator = new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator();
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setCalibrator(wrongCalibrator));
     }
 
     @Test
-    public void testGetSetQualityScoreMapper() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetQualityScoreMapper() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNotNull(optimizer.getQualityScoreMapper());
         assertEquals(DefaultAccelerometerQualityScoreMapper.class, optimizer.getQualityScoreMapper().getClass());
 
-        // set new value
+        // set a new value
         //noinspection unchecked
         final QualityScoreMapper<StandardDeviationBodyKinematics> qualityScoreMapper = mock(QualityScoreMapper.class);
         optimizer.setQualityScoreMapper(qualityScoreMapper);
@@ -871,9 +858,8 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetThresholdFactorRange() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetThresholdFactorRange() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default values
         assertEquals(AccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_MIN_THRESHOLD_FACTOR,
@@ -895,33 +881,30 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetDataSource() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetDataSource() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default values
         assertNull(optimizer.getDataSource());
 
-        // set new value
-        final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
+        // set a new value
+        final var ds = mock(AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource.class);
 
-        optimizer.setDataSource(dataSource);
+        optimizer.setDataSource(ds);
 
         // check
-        assertSame(dataSource, optimizer.getDataSource());
+        assertSame(ds, optimizer.getDataSource());
     }
 
     @Test
-    public void testGetSetTimeInterval() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetTimeInterval() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
 
-        // set new value
-        final double timeInterval = 0.01;
+        // set a new value
+        final var timeInterval = 0.01;
         optimizer.setTimeInterval(timeInterval);
 
         // check
@@ -932,43 +915,41 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetTimeIntervalAsTime() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetTimeIntervalAsTime() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
 
-        // set new value
-        final Time timeInterval2 = new Time(0.01, TimeUnit.SECOND);
+        // set a new value
+        final var timeInterval2 = new Time(0.01, TimeUnit.SECOND);
         optimizer.setTimeInterval(timeInterval2);
 
         // check
-        final Time timeInterval3 = optimizer.getTimeIntervalAsTime();
-        final Time timeInterval4 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval3 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval4 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval4);
 
         assertEquals(timeInterval2, timeInterval3);
         assertEquals(timeInterval2, timeInterval4);
 
         // Force IllegalArgumentException
-        assertThrows(IllegalArgumentException.class,
-                () -> optimizer.setTimeInterval(new Time(-1.0, TimeUnit.SECOND)));
+        final var wrongTimeInterval = new Time(-1.0, TimeUnit.SECOND);
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setTimeInterval(wrongTimeInterval));
     }
 
     @Test
-    public void testGetSetMinStaticSamples() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetMinStaticSamples() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
 
-        // set new value
-        final int minStaticSamples = 50;
+        // set a new value
+        final var minStaticSamples = 50;
         optimizer.setMinStaticSamples(minStaticSamples);
 
         // check
@@ -979,15 +960,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetMaxDynamicSamples() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetMaxDynamicSamples() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
 
-        // set new value
-        final int maxDynamicSamples = 500;
+        // set a new value
+        final var maxDynamicSamples = 500;
         optimizer.setMaxDynamicSamples(maxDynamicSamples);
 
         // check
@@ -998,15 +978,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetWindowSize() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetWindowSize() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
 
-        // set new value
-        final int windowSize = 51;
+        // set a new value
+        final var windowSize = 51;
         optimizer.setWindowSize(windowSize);
 
         // check
@@ -1017,15 +996,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetInitialStaticSamples() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetInitialStaticSamples() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
 
-        // set new value
-        final int initialStaticSamples = 100;
+        // set a new value
+        final var initialStaticSamples = 100;
         optimizer.setInitialStaticSamples(initialStaticSamples);
 
         // check
@@ -1036,16 +1014,15 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetInstantaneousNoiseLevelFactor() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetInstantaneousNoiseLevelFactor() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
 
-        // set new value
-        final double instantaneousNoiseLevelFactor = 3.0;
+        // set a new value
+        final var instantaneousNoiseLevelFactor = 3.0;
         optimizer.setInstantaneousNoiseLevelFactor(instantaneousNoiseLevelFactor);
 
         // check
@@ -1056,16 +1033,15 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThreshold() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetBaseNoiseLevelAbsoluteThreshold() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
 
-        // set new value
-        final double baseNoiseLevelAbsoluteThreshold = 1e-5;
+        // set a new value
+        final var baseNoiseLevelAbsoluteThreshold = 1e-5;
         optimizer.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
 
         // check
@@ -1076,25 +1052,24 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
 
-        // set new value
-        final double baseNoiseLevelAbsoluteThreshold = 1e-5;
-        final Acceleration acceleration2 = new Acceleration(baseNoiseLevelAbsoluteThreshold,
+        // set a new value
+        final var baseNoiseLevelAbsoluteThreshold = 1e-5;
+        final var acceleration2 = new Acceleration(baseNoiseLevelAbsoluteThreshold, 
                 AccelerationUnit.METERS_PER_SQUARED_SECOND);
         optimizer.setBaseNoiseLevelAbsoluteThreshold(acceleration2);
 
         // check
-        final Acceleration acceleration3 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration3 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration4);
 
         assertEquals(acceleration2, acceleration3);
@@ -1102,14 +1077,13 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetListener() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetListener() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNull(optimizer.getListener());
 
-        // set new value
+        // set a new value
         optimizer.setListener(this);
 
         // check
@@ -1117,14 +1091,13 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testGetSetProgressDelta() throws LockedException {
-        final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetProgressDelta() throws LockedException {
+        final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer();
 
         assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
                 0.0);
 
-        // set new value
+        // set a new value
         optimizer.setProgressDelta(0.5f);
 
         // check
@@ -1136,58 +1109,58 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testOptimizeGeneralWithNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
-            IntervalDetectorThresholdFactorOptimizerException, CalibrationException {
+    void testOptimizeGeneralWithNoise() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, 
+            CalibrationException {
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mBodyKinematics.clear();
-            mGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematics.clear();
+            generatorMeasurements.clear();
 
             // generate measurements
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
-            final Matrix ma = generateMaGeneral();
-            final double accelNoiseRootPSD = getAccelNoiseRootPSD();
-            final double gyroNoiseRootPSD = getGyroNoiseRootPSD();
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var ma = generateMaGeneral();
+            final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+            final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
             assertTrue(generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD,
                     gyroNoiseRootPSD, numMeasurements));
 
             // configure calibrator and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator(
-                    gravity.getNorm(), false, initialBa, initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var calibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), false,
+                    initialBa, initialMa);
 
             // create optimizer
-            final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
+            final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1199,10 +1172,10 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -1211,13 +1184,13 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertTrue(optimizer.getEstimatedBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedBiases());
-            final Matrix optimalMa = optimizer.getEstimatedMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedBiases());
+            final var optimalMa = optimizer.getEstimatedMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
 
-            final Matrix ba = generateBa();
+            final var ba = generateBa();
 
             if (!ba.equals(optimalBa, LARGE_ABSOLUTE_ERROR)) {
                 continue;
@@ -1228,26 +1201,25 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertTrue(ba.equals(optimalBa, LARGE_ABSOLUTE_ERROR));
             assertTrue(ma.equals(optimalMa, LARGE_ABSOLUTE_ERROR));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            final AccelerometerMeasurementsGenerator generator = new AccelerometerMeasurementsGenerator(
-                    mGeneratorListener);
+            final var generator = new AccelerometerMeasurementsGenerator(generatorListener);
 
             generator.setThresholdFactor(thresholdFactor);
 
-            for (BodyKinematics bodyKinematics : mBodyKinematics) {
-                assertTrue(generator.process(bodyKinematics));
+            for (final var kinematics : bodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            calibrator.setMeasurements(mGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            calibrator.setMeasurements(generatorMeasurements);
 
             // calibrate
             calibrator.calibrate();
 
             // check calibration result
-            final Matrix estimatedBa = calibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = calibrator.getEstimatedMa();
+            final var estimatedBa = calibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = calibrator.getEstimatedMa();
 
             if (!ba.equals(estimatedBa, LARGE_ABSOLUTE_ERROR)) {
                 continue;
@@ -1266,55 +1238,55 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testOptimizeCommonAxisSmallNoiseOnlyRotation() throws InvalidSourceAndDestinationFrameTypeException,
+    void testOptimizeCommonAxisSmallNoiseOnlyRotation() throws InvalidSourceAndDestinationFrameTypeException,
             WrongSizeException, LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
             CalibrationException {
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mBodyKinematics.clear();
-            mGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematics.clear();
+            generatorMeasurements.clear();
 
             // generate measurements
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
-            final Matrix ma = generateMaCommonAxis();
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
-            assertTrue(generateBodyKinematics(nedFrame, ecefFrame, false, ma,
-                    SMALL_ROOT_PSD, SMALL_ROOT_PSD, numMeasurements));
+            final var ma = generateMaCommonAxis();
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            assertTrue(generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD,
+                    SMALL_ROOT_PSD, numMeasurements));
 
             // configure calibrator and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator(
-                    gravity.getNorm(), true, initialBa, initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var calibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true,
+                    initialBa, initialMa);
 
             // create optimizer
-            final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
+            final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1326,10 +1298,10 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -1338,13 +1310,13 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertTrue(optimizer.getEstimatedBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedBiases());
-            final Matrix optimalMa = optimizer.getEstimatedMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedBiases());
+            final var optimalMa = optimizer.getEstimatedMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
 
-            final Matrix ba = generateBa();
+            final var ba = generateBa();
 
             if (!ba.equals(optimalBa, SMALL_ABSOLUTE_ERROR)) {
                 continue;
@@ -1355,26 +1327,25 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertTrue(ba.equals(optimalBa, SMALL_ABSOLUTE_ERROR));
             assertTrue(ma.equals(optimalMa, SMALL_ABSOLUTE_ERROR));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            final AccelerometerMeasurementsGenerator generator = new AccelerometerMeasurementsGenerator(
-                    mGeneratorListener);
+            final var generator = new AccelerometerMeasurementsGenerator(generatorListener);
 
             generator.setThresholdFactor(thresholdFactor);
 
-            for (BodyKinematics bodyKinematics : mBodyKinematics) {
-                assertTrue(generator.process(bodyKinematics));
+            for (final var kinematics : bodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            calibrator.setMeasurements(mGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            calibrator.setMeasurements(generatorMeasurements);
 
             // calibrate
             calibrator.calibrate();
 
             // check calibration result
-            final Matrix estimatedBa = calibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = calibrator.getEstimatedMa();
+            final var estimatedBa = calibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = calibrator.getEstimatedMa();
 
             if (!ba.equals(estimatedBa, SMALL_ABSOLUTE_ERROR)) {
                 continue;
@@ -1393,55 +1364,55 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testOptimizeCommonAxisSmallNoiseWithRotationAndPositionChange()
+    void testOptimizeCommonAxisSmallNoiseWithRotationAndPositionChange()
             throws InvalidSourceAndDestinationFrameTypeException, WrongSizeException, LockedException,
             NotReadyException, IntervalDetectorThresholdFactorOptimizerException, CalibrationException {
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mBodyKinematics.clear();
-            mGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematics.clear();
+            generatorMeasurements.clear();
 
             // generate measurements
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
-            final Matrix ma = generateMaCommonAxis();
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var ma = generateMaCommonAxis();
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
             assertTrue(generateBodyKinematics(nedFrame, ecefFrame, true, ma, SMALL_ROOT_PSD,
                     SMALL_ROOT_PSD, numMeasurements));
 
             // configure calibrator and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator(
-                    gravity.getNorm(), true, initialBa, initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var calibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true,
+                    initialBa, initialMa);
 
             // create optimizer
-            final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
+            final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1453,10 +1424,10 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -1465,13 +1436,13 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertTrue(optimizer.getEstimatedBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedBiases());
-            final Matrix optimalMa = optimizer.getEstimatedMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedBiases());
+            final var optimalMa = optimizer.getEstimatedMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
 
-            final Matrix ba = generateBa();
+            final var ba = generateBa();
 
             if (!ba.equals(optimalBa, ABSOLUTE_ERROR)) {
                 continue;
@@ -1482,26 +1453,25 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertTrue(ba.equals(optimalBa, ABSOLUTE_ERROR));
             assertTrue(ma.equals(optimalMa, ABSOLUTE_ERROR));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            final AccelerometerMeasurementsGenerator generator = new AccelerometerMeasurementsGenerator(
-                    mGeneratorListener);
+            final var generator = new AccelerometerMeasurementsGenerator(generatorListener);
 
             generator.setThresholdFactor(thresholdFactor);
 
-            for (BodyKinematics bodyKinematics : mBodyKinematics) {
-                assertTrue(generator.process(bodyKinematics));
+            for (final var kinematics : bodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            calibrator.setMeasurements(mGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            calibrator.setMeasurements(generatorMeasurements);
 
             // calibrate
             calibrator.calibrate();
 
             // check calibration result
-            final Matrix estimatedBa = calibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = calibrator.getEstimatedMa();
+            final var estimatedBa = calibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = calibrator.getEstimatedMa();
 
             if (!ba.equals(estimatedBa, ABSOLUTE_ERROR)) {
                 continue;
@@ -1520,61 +1490,61 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     @Test
-    public void testOptimizeRobustCalibrator() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
-            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, CalibrationException {
+    void testOptimizeRobustCalibrator() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+            CalibrationException {
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mBodyKinematics.clear();
-            mGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematics.clear();
+            generatorMeasurements.clear();
 
             // generate measurements
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
-            final Matrix ma = generateMaGeneral();
-            final double accelNoiseRootPSD = getAccelNoiseRootPSD();
-            final double gyroNoiseRootPSD = getGyroNoiseRootPSD();
-            final int numMeasurements = 3 * KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var ma = generateMaGeneral();
+            final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+            final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+            final var numMeasurements = 3 * KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
             assertTrue(generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD,
                     gyroNoiseRootPSD, numMeasurements));
 
             // configure calibrator and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final PROMedSRobustKnownGravityNormAccelerometerCalibrator calibrator =
-                    new PROMedSRobustKnownGravityNormAccelerometerCalibrator();
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var calibrator = new PROMedSRobustKnownGravityNormAccelerometerCalibrator();
             calibrator.setGroundTruthGravityNorm(gravity.getNorm());
             calibrator.setCommonAxisUsed(false);
             calibrator.setInitialBias(initialBa);
             calibrator.setInitialMa(initialMa);
 
             // create optimizer
-            final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(mDataSource, calibrator);
+            final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1586,10 +1556,10 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(threshold1.getValue().doubleValue(), optimizer.getThreshold(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedBiasStandardDeviationNorm() > 0.0);
@@ -1598,13 +1568,13 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertTrue(optimizer.getEstimatedBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedBiases());
-            final Matrix optimalMa = optimizer.getEstimatedMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedBiases());
+            final var optimalMa = optimizer.getEstimatedMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
 
-            final Matrix ba = generateBa();
+            final var ba = generateBa();
 
             if (!ba.equals(optimalBa, LARGE_ABSOLUTE_ERROR)) {
                 continue;
@@ -1615,26 +1585,25 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             assertTrue(ba.equals(optimalBa, LARGE_ABSOLUTE_ERROR));
             assertTrue(ma.equals(optimalMa, LARGE_ABSOLUTE_ERROR));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            final AccelerometerMeasurementsGenerator generator = new AccelerometerMeasurementsGenerator(
-                    mGeneratorListener);
+            final var generator = new AccelerometerMeasurementsGenerator(generatorListener);
 
             generator.setThresholdFactor(thresholdFactor);
 
-            for (BodyKinematics bodyKinematics : mBodyKinematics) {
-                assertTrue(generator.process(bodyKinematics));
+            for (final var kinematics : bodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            calibrator.setMeasurements(mGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            calibrator.setMeasurements(generatorMeasurements);
 
             // calibrate
             calibrator.calibrate();
 
             // check calibration result
-            final Matrix estimatedBa = calibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = calibrator.getEstimatedMa();
+            final var estimatedBa = calibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = calibrator.getEstimatedMa();
 
             if (!ba.equals(estimatedBa, LARGE_ABSOLUTE_ERROR)) {
                 continue;
@@ -1656,7 +1625,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     public void onOptimizeStart(
             final IntervalDetectorThresholdFactorOptimizer<BodyKinematics,
                     AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource> optimizer) {
-        mStart++;
+        start++;
         checkLocked((BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer) optimizer);
     }
 
@@ -1664,7 +1633,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     public void onOptimizeEnd(
             final IntervalDetectorThresholdFactorOptimizer<BodyKinematics,
                     AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource> optimizer) {
-        mEnd++;
+        end++;
         checkLocked((BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer) optimizer);
     }
 
@@ -1675,11 +1644,11 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             final float progress) {
         assertTrue(progress >= 0.0f);
         assertTrue(progress <= 1.0f);
-        assertTrue(progress > mProgress);
-        if (mProgress == 0.0f) {
+        assertTrue(progress > this.progress);
+        if (this.progress == 0.0f) {
             checkLocked((BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer) optimizer);
         }
-        mProgress = progress;
+        this.progress = progress;
     }
 
     private static void checkLocked(final BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer optimizer) {
@@ -1706,35 +1675,35 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             final NEDFrame nedFrame, final ECEFFrame ecefFrame, final boolean changePosition, final Matrix ma,
             final double accelNoiseRootPSD, final double gyroNoiseRootPSD, final int numMeasurements)
             throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException, LockedException {
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var mg = generateMg();
+        final var gg = generateGg();
 
-        final double accelQuantLevel = 0.0;
-        final double gyroQuantLevel = 0.0;
+        final var accelQuantLevel = 0.0;
+        final var gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+        final var errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
                 gyroQuantLevel);
 
         // compute ground-truth kinematics that should be generated at provided
         // position, velocity and orientation
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
-                TIME_INTERVAL_SECONDS, ecefFrame, ecefFrame);
+        final var trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
+                ecefFrame, ecefFrame);
 
-        final AccelerometerMeasurementsGenerator generator = new AccelerometerMeasurementsGenerator();
+        final var generator = new AccelerometerMeasurementsGenerator();
 
-        final Random random = new Random();
-        final UniformRandomizer randomizer = new UniformRandomizer(random);
+        final var randomizer = new UniformRandomizer();
 
         // generate initial static samples
-        final int initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+        final var initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+        final var random = new Random();
         generateStaticSamples(generator, initialStaticSamples, trueKinematics, errors, random);
 
-        final int staticPeriodLength = 3 * TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
-        final int dynamicPeriodLength = 2 * TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
+        final var staticPeriodLength = 3 * TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
+        final var dynamicPeriodLength = 2 * TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
 
-        for (int i = 0; i < numMeasurements; i++) {
+        for (var i = 0; i < numMeasurements; i++) {
             // generate static samples
             generateStaticSamples(generator, staticPeriodLength, trueKinematics, errors, random);
 
@@ -1747,17 +1716,16 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     private static NEDFrame generateFrame() throws InvalidSourceAndDestinationFrameTypeException {
-        final Random random = new Random();
-        final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
-        final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
-        final NEDPosition nedPosition = new NEDPosition(latitude, longitude, height);
+        final var randomizer = new UniformRandomizer();
+        final var latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final var longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final var height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
+        final var nedPosition = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+        final var roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final var pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final var yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final var nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
                 FrameType.LOCAL_NAVIGATION_FRAME);
 
         return new NEDFrame(nedPosition, nedC);
@@ -1778,7 +1746,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     private static Matrix generateMaCommonAxis() throws WrongSizeException {
-        final Matrix result = new Matrix(3, 3);
+        final var result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
                 0.0, -600e-6, 250e-6,
@@ -1789,7 +1757,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     private static Matrix generateMaGeneral() throws WrongSizeException {
-        final Matrix result = new Matrix(3, 3);
+        final var result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
                 -150e-6, -600e-6, 250e-6,
@@ -1800,7 +1768,7 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     private static Matrix generateMg() throws WrongSizeException {
-        final Matrix result = new Matrix(3, 3);
+        final var result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 400e-6, -300e-6, 250e-6,
                 0.0, -300e-6, -150e-6,
@@ -1811,8 +1779,8 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
     }
 
     private static Matrix generateGg() throws WrongSizeException {
-        final Matrix result = new Matrix(3, 3);
-        final double tmp = DEG_TO_RAD / (3600 * 9.80665);
+        final var result = new Matrix(3, 3);
+        final var tmp = DEG_TO_RAD / (3600 * 9.80665);
         result.fromArray(new double[]{
                 0.9 * tmp, -1.1 * tmp, -0.6 * tmp,
                 -0.5 * tmp, 1.9 * tmp, -1.6 * tmp,
@@ -1834,13 +1802,13 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             final AccelerometerMeasurementsGenerator generator, final int numSamples,
             final BodyKinematics trueKinematics, final IMUErrors errors, final Random random) throws LockedException {
 
-        for (int i = 0; i < numSamples; i++) {
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random);
+        for (var i = 0; i < numSamples; i++) {
+            final var measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics,
+                    errors, random);
 
             assertTrue(generator.process(measuredKinematics));
 
-            mBodyKinematics.add(measuredKinematics);
+            bodyKinematics.add(measuredKinematics);
         }
     }
 
@@ -1851,54 +1819,52 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
             final NEDFrame nedFrame, final IMUErrors errors, final Random random, final boolean changePosition)
             throws InvalidSourceAndDestinationFrameTypeException, LockedException {
 
-        final double deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final var deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final var deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final var deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
 
-        final double deltaRoll = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
-        final double deltaPitch = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
-        final double deltaYaw = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final var deltaRoll = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final var deltaPitch = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final var deltaYaw = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
 
-        final double ecefX = ecefFrame.getX();
-        final double ecefY = ecefFrame.getY();
-        final double ecefZ = ecefFrame.getZ();
+        final var ecefX = ecefFrame.getX();
+        final var ecefY = ecefFrame.getY();
+        final var ecefZ = ecefFrame.getZ();
 
-        final CoordinateTransformation nedC = nedFrame.getCoordinateTransformation();
+        final var nedC = nedFrame.getCoordinateTransformation();
 
-        final double roll = nedC.getRollEulerAngle();
-        final double pitch = nedC.getPitchEulerAngle();
-        final double yaw = nedC.getYawEulerAngle();
+        final var roll = nedC.getRollEulerAngle();
+        final var pitch = nedC.getPitchEulerAngle();
+        final var yaw = nedC.getYawEulerAngle();
 
-        NEDFrame oldNedFrame = new NEDFrame(nedFrame);
-        NEDFrame newNedFrame = new NEDFrame();
-        ECEFFrame oldEcefFrame = new ECEFFrame(ecefFrame);
-        ECEFFrame newEcefFrame = new ECEFFrame();
+        final var oldNedFrame = new NEDFrame(nedFrame);
+        final var newNedFrame = new NEDFrame();
+        final var oldEcefFrame = new ECEFFrame(ecefFrame);
+        final var newEcefFrame = new ECEFFrame();
 
-        double oldEcefX = ecefX - deltaX;
-        double oldEcefY = ecefY - deltaY;
-        double oldEcefZ = ecefZ - deltaZ;
-        double oldRoll = roll - deltaRoll;
-        double oldPitch = pitch - deltaPitch;
-        double oldYaw = yaw - deltaYaw;
+        var oldEcefX = ecefX - deltaX;
+        var oldEcefY = ecefY - deltaY;
+        var oldEcefZ = ecefZ - deltaZ;
+        var oldRoll = roll - deltaRoll;
+        var oldPitch = pitch - deltaPitch;
+        var oldYaw = yaw - deltaYaw;
 
-        for (int i = 0; i < numSamples; i++) {
-            final double newRoll = oldRoll + deltaRoll;
-            final double newPitch = oldPitch + deltaPitch;
-            final double newYaw = oldYaw + deltaYaw;
-            final CoordinateTransformation newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw,
-                    FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
-            final NEDPosition newNedPosition = oldNedFrame.getPosition();
+        for (var i = 0; i < numSamples; i++) {
+            final var newRoll = oldRoll + deltaRoll;
+            final var newPitch = oldPitch + deltaPitch;
+            final var newYaw = oldYaw + deltaYaw;
+            final var newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw, FrameType.BODY_FRAME,
+                    FrameType.LOCAL_NAVIGATION_FRAME);
+            final var newNedPosition = oldNedFrame.getPosition();
 
             newNedFrame.setPosition(newNedPosition);
             newNedFrame.setCoordinateTransformation(newNedC);
 
             NEDtoECEFFrameConverter.convertNEDtoECEF(newNedFrame, newEcefFrame);
 
-            final double newEcefX = oldEcefX + deltaX;
-            final double newEcefY = oldEcefY + deltaY;
-            final double newEcefZ = oldEcefZ + deltaZ;
+            final var newEcefX = oldEcefX + deltaX;
+            final var newEcefY = oldEcefY + deltaY;
+            final var newEcefZ = oldEcefZ + deltaZ;
 
             newEcefFrame.setCoordinates(newEcefX, newEcefY, newEcefZ);
 
@@ -1909,12 +1875,12 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
                     trueKinematics);
 
             // add error to true kinematics
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random);
+            final var measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics,
+                    errors, random);
 
             assertTrue(generator.process(measuredKinematics));
 
-            mBodyKinematics.add(measuredKinematics);
+            bodyKinematics.add(measuredKinematics);
 
             oldNedFrame.copyFrom(newNedFrame);
             oldEcefFrame.copyFrom(newEcefFrame);
@@ -1930,14 +1896,14 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest 
         ecefFrame.copyFrom(newEcefFrame);
         nedFrame.copyFrom(newNedFrame);
 
-        // after dynamic sequence finishes, update true kinematics for a
-        // static sequence at current frame
+        // after the dynamic sequence finishes, update true kinematics for a
+        // static sequence at the current frame
         ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, newEcefFrame, trueKinematics);
     }
 
     private void reset() {
-        mStart = 0;
-        mEnd = 0;
-        mProgress = 0.0f;
+        start = 0;
+        end = 0;
+        progress = 0.0f;
     }
 }

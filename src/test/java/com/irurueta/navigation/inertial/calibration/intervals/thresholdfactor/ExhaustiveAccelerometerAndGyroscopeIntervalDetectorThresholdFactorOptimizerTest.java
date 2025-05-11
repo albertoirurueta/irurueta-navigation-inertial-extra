@@ -30,9 +30,7 @@ import com.irurueta.navigation.frames.NEDFrame;
 import com.irurueta.navigation.frames.converters.ECEFtoNEDFrameConverter;
 import com.irurueta.navigation.frames.converters.NEDtoECEFFrameConverter;
 import com.irurueta.navigation.inertial.BodyKinematics;
-import com.irurueta.navigation.inertial.ECEFGravity;
 import com.irurueta.navigation.frames.NEDPosition;
-import com.irurueta.navigation.inertial.calibration.AngularSpeedTriad;
 import com.irurueta.navigation.inertial.calibration.BodyKinematicsGenerator;
 import com.irurueta.navigation.inertial.calibration.BodyKinematicsSequence;
 import com.irurueta.navigation.inertial.calibration.CalibrationException;
@@ -60,16 +58,16 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
+class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
         IntervalDetectorThresholdFactorOptimizerListener<TimedBodyKinematics,
                 AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource> {
 
@@ -107,23 +105,23 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
 
     private static final int NUM_MEASUREMENTS = 10;
 
-    private final List<TimedBodyKinematics> mTimedBodyKinematics = new ArrayList<>();
+    private final List<TimedBodyKinematics> timedBodyKinematics = new ArrayList<>();
 
-    private final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource mDataSource =
+    private final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
             new AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource() {
 
                 @Override
                 public int count() {
-                    return mTimedBodyKinematics.size();
+                    return timedBodyKinematics.size();
                 }
 
                 @Override
                 public TimedBodyKinematics getAt(final int index) {
-                    return mTimedBodyKinematics.get(index);
+                    return timedBodyKinematics.get(index);
                 }
             };
 
-    private final AccelerometerAndGyroscopeMeasurementsGeneratorListener mGeneratorListener =
+    private final AccelerometerAndGyroscopeMeasurementsGeneratorListener generatorListener =
             new AccelerometerAndGyroscopeMeasurementsGeneratorListener() {
                 @Override
                 public void onInitializationStarted(final AccelerometerAndGyroscopeMeasurementsGenerator generator) {
@@ -168,14 +166,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 public void onGeneratedAccelerometerMeasurement(
                         final AccelerometerAndGyroscopeMeasurementsGenerator generator,
                         final StandardDeviationBodyKinematics measurement) {
-                    mAccelerometerGeneratorMeasurements.add(measurement);
+                    accelerometerGeneratorMeasurements.add(measurement);
                 }
 
                 @Override
                 public void onGeneratedGyroscopeMeasurement(
                         final AccelerometerAndGyroscopeMeasurementsGenerator generator,
                         final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence) {
-                    mGyroscopeGeneratorMeasurements.add(sequence);
+                    gyroscopeGeneratorMeasurements.add(sequence);
                 }
 
                 @Override
@@ -184,21 +182,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 }
             };
 
-    private final List<StandardDeviationBodyKinematics> mAccelerometerGeneratorMeasurements = new ArrayList<>();
+    private final List<StandardDeviationBodyKinematics> accelerometerGeneratorMeasurements = new ArrayList<>();
 
-    private final List<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>> mGyroscopeGeneratorMeasurements =
+    private final List<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>> gyroscopeGeneratorMeasurements =
             new ArrayList<>();
 
-    private int mStart;
+    private int start;
 
-    private int mEnd;
+    private int end;
 
-    private float mProgress;
+    private float progress;
 
     @Test
-    public void testConstructor1() {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testConstructor1() {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default values
         assertEquals(ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
@@ -220,11 +217,11 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -235,18 +232,18 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
@@ -254,10 +251,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm());
@@ -281,15 +278,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testConstructor2() {
-        final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
+    void testConstructor2() {
+        final var ds = mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
 
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource);
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                ds);
 
         // check default values
-        assertEquals(ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
+        assertEquals(ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP, 
                 optimizer.getThresholdFactorStep(), 0.0);
         assertNull(optimizer.getAccelerometerCalibrator());
         assertNull(optimizer.getGyroscopeCalibrator());
@@ -305,14 +301,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
                 optimizer.getMaxThresholdFactor(), 0.0);
         assertFalse(optimizer.isReady());
-        assertSame(dataSource, optimizer.getDataSource());
+        assertSame(ds, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -323,18 +319,18 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
@@ -342,10 +338,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm());
@@ -369,14 +365,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testConstructor3() {
-        final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                new KnownGravityNormAccelerometerCalibrator();
-        final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+    void testConstructor3() {
+        final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator();
+        final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
 
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(accelerometerCalibrator,
-                        gyroscopeCalibrator);
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                accelerometerCalibrator, gyroscopeCalibrator);
 
         // check default values
         assertEquals(ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
@@ -398,11 +392,11 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertNull(optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -413,18 +407,18 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
@@ -432,10 +426,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm());
@@ -458,25 +452,24 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 0.0);
 
         // Force IllegalArgumentException
+        final var wrongAccelerometerCalibrator = new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class,
                 () -> new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                        new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator(), gyroscopeCalibrator));
+                        wrongAccelerometerCalibrator, gyroscopeCalibrator));
+        final var wrongGyroscopeCalibrator = new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class,
                 () -> new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
-                        accelerometerCalibrator, new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator()));
+                        accelerometerCalibrator, wrongGyroscopeCalibrator));
     }
 
     @Test
-    public void testConstructor4() {
-        final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
-        final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                new KnownGravityNormAccelerometerCalibrator();
-        final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+    void testConstructor4() {
+        final var ds = mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
+        final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator();
+        final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
 
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource,
-                        accelerometerCalibrator, gyroscopeCalibrator);
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                ds, accelerometerCalibrator, gyroscopeCalibrator);
 
         // check default values
         assertEquals(ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
@@ -495,14 +488,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertEquals(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_MAX_THRESHOLD_FACTOR,
                 optimizer.getMaxThresholdFactor(), 0.0);
         assertTrue(optimizer.isReady());
-        assertSame(dataSource, optimizer.getDataSource());
+        assertSame(ds, optimizer.getDataSource());
         assertFalse(optimizer.isRunning());
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
-        final Time timeInterval2 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval2 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval2);
         assertEquals(timeInterval1, timeInterval2);
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
@@ -513,18 +506,18 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
-        final Acceleration acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration2);
         assertEquals(acceleration1, acceleration2);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
-        final Acceleration acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+        final var acceleration3 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
         assertEquals(0.0, acceleration3.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration3.getUnit());
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(acceleration4);
         assertEquals(acceleration3, acceleration4);
         assertEquals(0.0, optimizer.getGyroscopeBaseNoiseLevelPsd(), 0.0);
@@ -532,10 +525,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelPsd(), 0.0);
         assertEquals(0.0, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.0);
         assertEquals(0.0, optimizer.getThreshold(), 0.0);
-        final Acceleration acceleration5 = optimizer.getThresholdAsMeasurement();
+        final var acceleration5 = optimizer.getThresholdAsMeasurement();
         assertEquals(0.0, acceleration5.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration5.getUnit());
-        final Acceleration acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration6 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getThresholdAsMeasurement(acceleration6);
         assertEquals(acceleration5, acceleration6);
         assertNull(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm());
@@ -558,24 +551,25 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                 0.0);
 
         // Force IllegalArgumentException
+        final var wrongAccelerometerCalibrator = new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class,
-                () -> new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource,
-                        new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator(), gyroscopeCalibrator));
+                () -> new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(ds,
+                        wrongAccelerometerCalibrator, gyroscopeCalibrator));
+        final var wrongGyroscopeCalibrator = new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class,
-                () -> new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(dataSource,
-                        accelerometerCalibrator, new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator()));
+                () -> new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(ds,
+                        accelerometerCalibrator, wrongGyroscopeCalibrator));
     }
 
     @Test
-    public void testGetSetThresholdFactorStep() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetThresholdFactorStep() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP,
+        assertEquals(ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizer.DEFAULT_STEP, 
                 optimizer.getThresholdFactorStep(), 0.0);
 
-        // set new value
+        // set a new value
         optimizer.setThresholdFactorStep(2.0);
 
         // check
@@ -586,15 +580,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetAccelerometerCalibrator() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetAccelerometerCalibrator() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNull(optimizer.getAccelerometerCalibrator());
 
-        // set new value
-        final KnownGravityNormAccelerometerCalibrator calibrator = new KnownGravityNormAccelerometerCalibrator();
+        // set a new value
+        final var calibrator = new KnownGravityNormAccelerometerCalibrator();
 
         optimizer.setAccelerometerCalibrator(calibrator);
 
@@ -602,20 +595,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertSame(calibrator, optimizer.getAccelerometerCalibrator());
 
         // Force IllegalArgumentException
+        final var wrongAccelerometerCalibrator = new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator();
         assertThrows(IllegalArgumentException.class, () -> optimizer.setAccelerometerCalibrator(
-                new KnownFrameAccelerometerNonLinearLeastSquaresCalibrator()));
+                wrongAccelerometerCalibrator));
     }
 
     @Test
-    public void testGetSetGyroscopeCalibrator() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetGyroscopeCalibrator() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNull(optimizer.getGyroscopeCalibrator());
 
-        // set new value
-        final EasyGyroscopeCalibrator calibrator = new EasyGyroscopeCalibrator();
+        // set a new value
+        final var calibrator = new EasyGyroscopeCalibrator();
 
         optimizer.setGyroscopeCalibrator(calibrator);
 
@@ -623,21 +616,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         assertSame(calibrator, optimizer.getGyroscopeCalibrator());
 
         // Force IllegalArgumentException
-        assertThrows(IllegalArgumentException.class, () -> optimizer.setGyroscopeCalibrator(
-                new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator()));
+        final var wrongGyroscopeCalibrator = new KnownFrameGyroscopeNonLinearLeastSquaresCalibrator();
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setGyroscopeCalibrator(wrongGyroscopeCalibrator));
     }
 
     @Test
-    public void testGetSetAccelerometerQualityScoreMapper() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetAccelerometerQualityScoreMapper() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNotNull(optimizer.getAccelerometerQualityScoreMapper());
-        assertEquals(DefaultAccelerometerQualityScoreMapper.class,
+        assertEquals(DefaultAccelerometerQualityScoreMapper.class, 
                 optimizer.getAccelerometerQualityScoreMapper().getClass());
 
-        // set new value
+        // set a new value
         //noinspection unchecked
         final QualityScoreMapper<StandardDeviationBodyKinematics> qualityScoreMapper = mock(QualityScoreMapper.class);
         optimizer.setAccelerometerQualityScoreMapper(qualityScoreMapper);
@@ -647,15 +639,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetGyroscopeQualityScoreMapper() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetGyroscopeQualityScoreMapper() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNotNull(optimizer.getGyroscopeQualityScoreMapper());
         assertEquals(DefaultGyroscopeQualityScoreMapper.class, optimizer.getGyroscopeQualityScoreMapper().getClass());
 
-        // set new value
+        // set a new value
         //noinspection unchecked
         final QualityScoreMapper<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>> qualityScoreMapper =
                 mock(QualityScoreMapper.class);
@@ -666,16 +657,15 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetMseRule() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetMseRule() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNotNull(optimizer.getMseRule());
         assertEquals(DefaultAccelerometerAndGyroscopeMseRule.class, optimizer.getMseRule().getClass());
 
-        // set new value
-        final AccelerometerAndGyroscopeMseRule rule = mock(AccelerometerAndGyroscopeMseRule.class);
+        // set a new value
+        final var rule = mock(AccelerometerAndGyroscopeMseRule.class);
         optimizer.setMseRule(rule);
 
         // check
@@ -683,17 +673,16 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetThresholdFactorRange() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetThresholdFactorRange() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default values
         assertEquals(ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
-                        .DEFAULT_MIN_THRESHOLD_FACTOR, optimizer.getMinThresholdFactor(), 0.0);
+                .DEFAULT_MIN_THRESHOLD_FACTOR, optimizer.getMinThresholdFactor(), 0.0);
         assertEquals(ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
-                        .DEFAULT_MAX_THRESHOLD_FACTOR, optimizer.getMaxThresholdFactor(), 0.0);
+                .DEFAULT_MAX_THRESHOLD_FACTOR, optimizer.getMaxThresholdFactor(), 0.0);
 
-        // set new value
+        // set a new value
         optimizer.setThresholdFactorRange(0.0, 1.0);
 
         // check
@@ -707,49 +696,44 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetDataSource() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetDataSource() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default values
         assertNull(optimizer.getDataSource());
 
-        // set new value
-        final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
+        // set a new value
+        final var ds = mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
 
-        optimizer.setDataSource(dataSource);
+        optimizer.setDataSource(ds);
 
         // check
-        assertSame(dataSource, optimizer.getDataSource());
+        assertSame(ds, optimizer.getDataSource());
     }
 
     @Test
-    public void testIsReady() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testIsReady() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertFalse(optimizer.isReady());
 
         // set data source
-        final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource =
-                mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
-        optimizer.setDataSource(dataSource);
+        final var ds = mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class);
+        optimizer.setDataSource(ds);
 
         // check
         assertFalse(optimizer.isReady());
 
         // set accelerometer calibrator
-        final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                new KnownGravityNormAccelerometerCalibrator();
+        final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator();
         optimizer.setAccelerometerCalibrator(accelerometerCalibrator);
 
         // check
         assertFalse(optimizer.isReady());
 
         // set gyroscope calibrator
-        final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+        final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
         optimizer.setGyroscopeCalibrator(gyroscopeCalibrator);
 
         // check
@@ -775,15 +759,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetTimeInterval() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetTimeInterval() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, optimizer.getTimeInterval(), 0.0);
 
-        // set new value
-        final double timeInterval = 0.01;
+        // set a new value
+        final var timeInterval = 0.01;
         optimizer.setTimeInterval(timeInterval);
 
         // check
@@ -794,43 +777,41 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetTimeIntervalAsTime() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetTimeIntervalAsTime() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        final Time timeInterval1 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval1 = optimizer.getTimeIntervalAsTime();
         assertEquals(WindowedTriadNoiseEstimator.DEFAULT_TIME_INTERVAL_SECONDS, timeInterval1.getValue().doubleValue(),
                 0.0);
         assertEquals(TimeUnit.SECOND, timeInterval1.getUnit());
 
-        // set new value
-        final Time timeInterval2 = new Time(0.01, TimeUnit.SECOND);
+        // set a new value
+        final var timeInterval2 = new Time(0.01, TimeUnit.SECOND);
         optimizer.setTimeInterval(timeInterval2);
 
         // check
-        final Time timeInterval3 = optimizer.getTimeIntervalAsTime();
-        final Time timeInterval4 = new Time(1.0, TimeUnit.DAY);
+        final var timeInterval3 = optimizer.getTimeIntervalAsTime();
+        final var timeInterval4 = new Time(1.0, TimeUnit.DAY);
         optimizer.getTimeIntervalAsTime(timeInterval4);
 
         assertEquals(timeInterval2, timeInterval3);
         assertEquals(timeInterval2, timeInterval4);
 
         // Force IllegalArgumentException
-        assertThrows(IllegalArgumentException.class, () -> optimizer.setTimeInterval(
-                new Time(-1.0, TimeUnit.SECOND)));
+        final var wrongTimeInterval = new Time(-1.0, TimeUnit.SECOND);
+        assertThrows(IllegalArgumentException.class, () -> optimizer.setTimeInterval(wrongTimeInterval));
     }
 
     @Test
-    public void testGetSetMinStaticSamples() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetMinStaticSamples() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(MeasurementsGenerator.DEFAULT_MIN_STATIC_SAMPLES, optimizer.getMinStaticSamples());
 
-        // set new value
-        final int minStaticSamples = 50;
+        // set a new value
+        final var minStaticSamples = 50;
         optimizer.setMinStaticSamples(minStaticSamples);
 
         // check
@@ -841,15 +822,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetMaxDynamicSamples() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetMaxDynamicSamples() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(MeasurementsGenerator.DEFAULT_MAX_DYNAMIC_SAMPLES, optimizer.getMaxDynamicSamples());
 
-        // set new value
-        final int maxDynamicSamples = 500;
+        // set a new value
+        final var maxDynamicSamples = 500;
         optimizer.setMaxDynamicSamples(maxDynamicSamples);
 
         // check
@@ -860,15 +840,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetWindowSize() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetWindowSize() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE, optimizer.getWindowSize());
 
-        // set new value
-        final int windowSize = 51;
+        // set a new value
+        final var windowSize = 51;
         optimizer.setWindowSize(windowSize);
 
         // check
@@ -879,15 +858,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetInitialStaticSamples() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetInitialStaticSamples() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES, optimizer.getInitialStaticSamples());
 
-        // set new value
-        final int initialStaticSamples = 100;
+        // set a new value
+        final var initialStaticSamples = 100;
         optimizer.setInitialStaticSamples(initialStaticSamples);
 
         // check
@@ -898,16 +876,15 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetInstantaneousNoiseLevelFactor() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetInstantaneousNoiseLevelFactor() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR,
+        assertEquals(TriadStaticIntervalDetector.DEFAULT_INSTANTANEOUS_NOISE_LEVEL_FACTOR, 
                 optimizer.getInstantaneousNoiseLevelFactor(), 0.0);
 
-        // set new value
-        final double instantaneousNoiseLevelFactor = 3.0;
+        // set a new value
+        final var instantaneousNoiseLevelFactor = 3.0;
         optimizer.setInstantaneousNoiseLevelFactor(instantaneousNoiseLevelFactor);
 
         // check
@@ -918,16 +895,15 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThreshold() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetBaseNoiseLevelAbsoluteThreshold() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
 
-        // set new value
-        final double baseNoiseLevelAbsoluteThreshold = 1e-5;
+        // set a new value
+        final var baseNoiseLevelAbsoluteThreshold = 1e-5;
         optimizer.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
 
         // check
@@ -938,25 +914,24 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetBaseNoiseLevelAbsoluteThresholdAsMeasurement() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
-        final Acceleration acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
 
-        // set new value
-        final double baseNoiseLevelAbsoluteThreshold = 1e-5;
-        final Acceleration acceleration2 = new Acceleration(baseNoiseLevelAbsoluteThreshold,
+        // set a new value
+        final var baseNoiseLevelAbsoluteThreshold = 1e-5;
+        final var acceleration2 = new Acceleration(baseNoiseLevelAbsoluteThreshold, 
                 AccelerationUnit.METERS_PER_SQUARED_SECOND);
         optimizer.setBaseNoiseLevelAbsoluteThreshold(acceleration2);
 
         // check
-        final Acceleration acceleration3 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        final Acceleration acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+        final var acceleration3 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        final var acceleration4 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
         optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(acceleration4);
 
         assertEquals(acceleration2, acceleration3);
@@ -964,14 +939,13 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetListener() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetListener() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         // check default value
         assertNull(optimizer.getListener());
 
-        // set new value
+        // set a new value
         optimizer.setListener(this);
 
         // check
@@ -979,14 +953,13 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testGetSetProgressDelta() throws LockedException {
-        final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
+    void testGetSetProgressDelta() throws LockedException {
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer();
 
         assertEquals(IntervalDetectorThresholdFactorOptimizer.DEFAULT_PROGRESS_DELTA, optimizer.getProgressDelta(),
                 0.0);
 
-        // set new value
+        // set a new value
         optimizer.setProgressDelta(0.5f);
 
         // check
@@ -998,66 +971,63 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testOptimizeMaCommonAxisWithNoise() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
-            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
+    void testOptimizeMaCommonAxisWithNoise() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, 
+            InvalidRotationMatrixException, RotationException {
 
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix ma = generateMaCommonAxis();
-        final Matrix mg = generateMg();
-        final Matrix gg = new Matrix(3, 3);
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var ma = generateMaCommonAxis();
+        final var mg = generateMg();
+        final var gg = new Matrix(3, 3);
 
-        final double accelNoiseRootPSD = getAccelNoiseRootPSD();
-        final double gyroNoiseRootPSD = getGyroNoiseRootPSD();
+        final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+        final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mTimedBodyKinematics.clear();
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            timedBodyKinematics.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
 
             // generate measurements
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
-
-            final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD, gyroNoiseRootPSD,
                     numSequences, numMeasurements);
 
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator =
-                    new AccelerometerAndGyroscopeMeasurementsGenerator(mGeneratorListener);
+            final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // as an initial value for gyroscope bias we can use the average
+            // As an initial value for gyroscope bias, we can use the average
             // gyroscope values during initialization. A more accurate initial
             // guess for bias could be obtained by using leveling with magnetometer
             // and accelerometer readings (once both magnetometer and accelerometer
             // are calibrated).
-            final AngularSpeedTriad initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
-            final Matrix initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
+            final var initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
+            final var initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
 
             if (generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true, initialBa,
-                            initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(),
+                    true, initialBa, initialMa);
 
-            final Matrix initialMg = new Matrix(3, 3);
-            final Matrix initialGg = new Matrix(3, 3);
-            final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+            final var initialMg = new Matrix(3, 3);
+            final var initialGg = new Matrix(3, 3);
+            final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
             gyroscopeCalibrator.setCommonAxisUsed(true);
             gyroscopeCalibrator.setGDependentCrossBiasesEstimated(false);
             gyroscopeCalibrator.setInitialBias(initialBg);
@@ -1065,29 +1035,28 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             gyroscopeCalibrator.setInitialGg(initialGg);
 
             // create optimizer
-            final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource,
-                            accelerometerCalibrator, gyroscopeCalibrator);
+            final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                    dataSource, accelerometerCalibrator, gyroscopeCalibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1103,10 +1072,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -1115,8 +1084,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedAccelerometerBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedAccelerometerBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
-            final Matrix optimalMa = optimizer.getEstimatedAccelerometerMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
+            final var optimalMa = optimizer.getEstimatedAccelerometerMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
@@ -1136,9 +1105,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedGyroscopeBiasZVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedGyroscopeBiases());
 
-            final Matrix optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
-            final Matrix optimalMg = optimizer.getEstimatedGyroscopeMg();
-            final Matrix optimalGg = optimizer.getEstimatedGyroscopeGg();
+            final var optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
+            final var optimalMg = optimizer.getEstimatedGyroscopeMg();
+            final var optimalGg = optimizer.getEstimatedGyroscopeGg();
 
             assertNotNull(optimalBg);
             assertNotNull(optimalMg);
@@ -1157,20 +1126,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(mg.equals(optimalMg, VERY_LARGE_ABSOLUTE_ERROR));
             assertTrue(gg.equals(optimalGg, 0.0));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
             generator.reset();
             generator.setThresholdFactor(thresholdFactor);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            accelerometerCalibrator.setMeasurements(mAccelerometerGeneratorMeasurements);
-            gyroscopeCalibrator.setSequences(mGyroscopeGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            accelerometerCalibrator.setMeasurements(accelerometerGeneratorMeasurements);
+            gyroscopeCalibrator.setSequences(gyroscopeGeneratorMeasurements);
 
             // calibrate
             try {
@@ -1181,12 +1150,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             }
 
             // check calibration result
-            final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
+            final var estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
-            final Matrix estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMg = gyroscopeCalibrator.getEstimatedMg();
-            final Matrix estimatedGg = gyroscopeCalibrator.getEstimatedGg();
+            final var estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMg = gyroscopeCalibrator.getEstimatedMg();
+            final var estimatedGg = gyroscopeCalibrator.getEstimatedGg();
 
             if (!ba.equals(estimatedBa, VERY_LARGE_ABSOLUTE_ERROR)) {
                 continue;
@@ -1218,65 +1187,63 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
+    void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
             IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
 
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix ma = generateMaGeneral();
-        final Matrix mg = generateMg();
-        final Matrix gg = new Matrix(3, 3);
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var ma = generateMaGeneral();
+        final var mg = generateMg();
+        final var gg = new Matrix(3, 3);
 
-        final double gyroNoiseRootPSD = 0.0;
+        final var gyroNoiseRootPSD = 0.0;
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mTimedBodyKinematics.clear();
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            timedBodyKinematics.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
 
             // generate measurements
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
                     numSequences, numMeasurements);
 
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator =
-                    new AccelerometerAndGyroscopeMeasurementsGenerator(mGeneratorListener);
+            final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // as an initial value for gyroscope bias we can use the average
+            // As an initial value for gyroscope bias, we can use the average
             // gyroscope values during initialization. A more accurate initial
             // guess for bias could be obtained by using leveling with magnetometer
             // and accelerometer readings (once both magnetometer and accelerometer
             // are calibrated).
-            final AngularSpeedTriad initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
-            final Matrix initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
+            final var initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
+            final var initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
 
             if (generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), false, initialBa,
-                            initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(),
+                    false, initialBa, initialMa);
 
-            final Matrix initialMg = new Matrix(3, 3);
-            final Matrix initialGg = new Matrix(3, 3);
-            final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+            final var initialMg = new Matrix(3, 3);
+            final var initialGg = new Matrix(3, 3);
+            final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
             gyroscopeCalibrator.setCommonAxisUsed(true);
             gyroscopeCalibrator.setGDependentCrossBiasesEstimated(false);
             gyroscopeCalibrator.setInitialBias(initialBg);
@@ -1284,29 +1251,28 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             gyroscopeCalibrator.setInitialGg(initialGg);
 
             // create optimizer
-            final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource,
-                            accelerometerCalibrator, gyroscopeCalibrator);
+            final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                    dataSource, accelerometerCalibrator, gyroscopeCalibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1322,10 +1288,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -1334,8 +1300,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedAccelerometerBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedAccelerometerBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
-            final Matrix optimalMa = optimizer.getEstimatedAccelerometerMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
+            final var optimalMa = optimizer.getEstimatedAccelerometerMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
@@ -1355,9 +1321,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedGyroscopeBiasZVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedGyroscopeBiases());
 
-            final Matrix optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
-            final Matrix optimalMg = optimizer.getEstimatedGyroscopeMg();
-            final Matrix optimalGg = optimizer.getEstimatedGyroscopeGg();
+            final var optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
+            final var optimalMg = optimizer.getEstimatedGyroscopeMg();
+            final var optimalGg = optimizer.getEstimatedGyroscopeGg();
 
             assertNotNull(optimalBg);
             assertNotNull(optimalMg);
@@ -1376,20 +1342,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(mg.equals(optimalMg, VERY_LARGE_ABSOLUTE_ERROR));
             assertTrue(gg.equals(optimalGg, 0.0));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
             generator.reset();
             generator.setThresholdFactor(thresholdFactor);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            accelerometerCalibrator.setMeasurements(mAccelerometerGeneratorMeasurements);
-            gyroscopeCalibrator.setSequences(mGyroscopeGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            accelerometerCalibrator.setMeasurements(accelerometerGeneratorMeasurements);
+            gyroscopeCalibrator.setSequences(gyroscopeGeneratorMeasurements);
 
             // calibrate
             try {
@@ -1400,12 +1366,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             }
 
             // check calibration result
-            final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
+            final var estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
-            final Matrix estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMg = gyroscopeCalibrator.getEstimatedMg();
-            final Matrix estimatedGg = gyroscopeCalibrator.getEstimatedGg();
+            final var estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMg = gyroscopeCalibrator.getEstimatedMg();
+            final var estimatedGg = gyroscopeCalibrator.getEstimatedGg();
 
             if (!ba.equals(estimatedBa, VERY_LARGE_ABSOLUTE_ERROR)) {
                 continue;
@@ -1437,65 +1403,62 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
+    void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
             IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
 
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix ma = generateMaCommonAxis();
-        final Matrix mg = generateMg();
-        final Matrix gg = new Matrix(3, 3);
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var ma = generateMaCommonAxis();
+        final var mg = generateMg();
+        final var gg = new Matrix(3, 3);
 
-        final double gyroNoiseRootPSD = 0.0;
+        final var gyroNoiseRootPSD = 0.0;
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mTimedBodyKinematics.clear();
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            timedBodyKinematics.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
 
             // generate measurements
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
-
-            final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
                     numSequences, numMeasurements);
 
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator =
-                    new AccelerometerAndGyroscopeMeasurementsGenerator(mGeneratorListener);
+            final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // as an initial value for gyroscope bias we can use the average
+            // As an initial value for gyroscope bias, we can use the average
             // gyroscope values during initialization. A more accurate initial
             // guess for bias could be obtained by using leveling with magnetometer
             // and accelerometer readings (once both magnetometer and accelerometer
             // are calibrated).
-            final AngularSpeedTriad initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
-            final Matrix initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
+            final var initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
+            final var initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
 
             if (generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true, initialBa,
-                            initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(),
+                    true, initialBa, initialMa);
 
-            final Matrix initialMg = new Matrix(3, 3);
-            final Matrix initialGg = new Matrix(3, 3);
-            final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+            final var initialMg = new Matrix(3, 3);
+            final var initialGg = new Matrix(3, 3);
+            final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
             gyroscopeCalibrator.setCommonAxisUsed(true);
             gyroscopeCalibrator.setGDependentCrossBiasesEstimated(false);
             gyroscopeCalibrator.setInitialBias(initialBg);
@@ -1503,29 +1466,28 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             gyroscopeCalibrator.setInitialGg(initialGg);
 
             // create optimizer
-            final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource,
-                            accelerometerCalibrator, gyroscopeCalibrator);
+            final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                    dataSource, accelerometerCalibrator, gyroscopeCalibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1541,10 +1503,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -1553,8 +1515,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedAccelerometerBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedAccelerometerBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
-            final Matrix optimalMa = optimizer.getEstimatedAccelerometerMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
+            final var optimalMa = optimizer.getEstimatedAccelerometerMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
@@ -1574,9 +1536,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedGyroscopeBiasZVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedGyroscopeBiases());
 
-            final Matrix optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
-            final Matrix optimalMg = optimizer.getEstimatedGyroscopeMg();
-            final Matrix optimalGg = optimizer.getEstimatedGyroscopeGg();
+            final var optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
+            final var optimalMg = optimizer.getEstimatedGyroscopeMg();
+            final var optimalGg = optimizer.getEstimatedGyroscopeGg();
 
             assertNotNull(optimalBg);
             assertNotNull(optimalMg);
@@ -1595,20 +1557,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(mg.equals(optimalMg, VERY_LARGE_ABSOLUTE_ERROR));
             assertTrue(gg.equals(optimalGg, 0.0));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
             generator.reset();
             generator.setThresholdFactor(thresholdFactor);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            accelerometerCalibrator.setMeasurements(mAccelerometerGeneratorMeasurements);
-            gyroscopeCalibrator.setSequences(mGyroscopeGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            accelerometerCalibrator.setMeasurements(accelerometerGeneratorMeasurements);
+            gyroscopeCalibrator.setSequences(gyroscopeGeneratorMeasurements);
 
             // calibrate
             try {
@@ -1619,12 +1581,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             }
 
             // check calibration result
-            final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
+            final var estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
-            final Matrix estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMg = gyroscopeCalibrator.getEstimatedMg();
-            final Matrix estimatedGg = gyroscopeCalibrator.getEstimatedGg();
+            final var estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMg = gyroscopeCalibrator.getEstimatedMg();
+            final var estimatedGg = gyroscopeCalibrator.getEstimatedGg();
 
             if (!ba.equals(estimatedBa, VERY_LARGE_ABSOLUTE_ERROR)) {
                 continue;
@@ -1656,65 +1618,63 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testOptimizeGeneralGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
+    void testOptimizeGeneralGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
             IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
 
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix ma = generateMaGeneral();
-        final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var ma = generateMaGeneral();
+        final var mg = generateMg();
+        final var gg = generateGg();
 
-        final double gyroNoiseRootPSD = 0.0;
+        final var gyroNoiseRootPSD = 0.0;
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mTimedBodyKinematics.clear();
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            timedBodyKinematics.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
 
             // generate measurements
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
                     numSequences, numMeasurements);
 
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator =
-                    new AccelerometerAndGyroscopeMeasurementsGenerator(mGeneratorListener);
+            final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // as an initial value for gyroscope bias we can use the average
+            // As an initial value for gyroscope bias, we can use the average
             // gyroscope values during initialization. A more accurate initial
             // guess for bias could be obtained by using leveling with magnetometer
             // and accelerometer readings (once both magnetometer and accelerometer
             // are calibrated).
-            final AngularSpeedTriad initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
-            final Matrix initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
+            final var initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
+            final var initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
 
             if (generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), false, initialBa,
-                            initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(),
+                    false, initialBa, initialMa);
 
-            final Matrix initialMg = new Matrix(3, 3);
-            final Matrix initialGg = new Matrix(3, 3);
-            final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+            final var initialMg = new Matrix(3, 3);
+            final var initialGg = new Matrix(3, 3);
+            final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
             gyroscopeCalibrator.setCommonAxisUsed(true);
             gyroscopeCalibrator.setGDependentCrossBiasesEstimated(true);
             gyroscopeCalibrator.setInitialBias(initialBg);
@@ -1722,29 +1682,28 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             gyroscopeCalibrator.setInitialGg(initialGg);
 
             // create optimizer
-            final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource,
-                            accelerometerCalibrator, gyroscopeCalibrator);
+            final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                    dataSource, accelerometerCalibrator, gyroscopeCalibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1760,10 +1719,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -1772,8 +1731,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedAccelerometerBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedAccelerometerBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
-            final Matrix optimalMa = optimizer.getEstimatedAccelerometerMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
+            final var optimalMa = optimizer.getEstimatedAccelerometerMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
@@ -1793,9 +1752,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedGyroscopeBiasZVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedGyroscopeBiases());
 
-            final Matrix optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
-            final Matrix optimalMg = optimizer.getEstimatedGyroscopeMg();
-            final Matrix optimalGg = optimizer.getEstimatedGyroscopeGg();
+            final var optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
+            final var optimalMg = optimizer.getEstimatedGyroscopeMg();
+            final var optimalGg = optimizer.getEstimatedGyroscopeGg();
 
             assertNotNull(optimalBg);
             assertNotNull(optimalMg);
@@ -1814,20 +1773,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(mg.equals(optimalMg, ABSOLUTE_ERROR));
             assertTrue(gg.equals(optimalGg, SMALL_ABSOLUTE_ERROR));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
             generator.reset();
             generator.setThresholdFactor(thresholdFactor);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            accelerometerCalibrator.setMeasurements(mAccelerometerGeneratorMeasurements);
-            gyroscopeCalibrator.setSequences(mGyroscopeGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            accelerometerCalibrator.setMeasurements(accelerometerGeneratorMeasurements);
+            gyroscopeCalibrator.setSequences(gyroscopeGeneratorMeasurements);
 
             // calibrate
             try {
@@ -1838,12 +1797,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             }
 
             // check calibration result
-            final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
+            final var estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
-            final Matrix estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMg = gyroscopeCalibrator.getEstimatedMg();
-            final Matrix estimatedGg = gyroscopeCalibrator.getEstimatedGg();
+            final var estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMg = gyroscopeCalibrator.getEstimatedMg();
+            final var estimatedGg = gyroscopeCalibrator.getEstimatedGg();
 
             if (!ba.equals(estimatedBa, SMALL_ABSOLUTE_ERROR)) {
                 continue;
@@ -1875,64 +1834,61 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testOptimizeMaCommonAxisGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
+    void testOptimizeMaCommonAxisGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
             IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
 
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix ma = generateMaCommonAxis();
-        final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var ma = generateMaCommonAxis();
+        final var mg = generateMg();
+        final var gg = generateGg();
 
-        final double gyroNoiseRootPSD = 0.0;
+        final var gyroNoiseRootPSD = 0.0;
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mTimedBodyKinematics.clear();
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            timedBodyKinematics.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
 
             // generate measurements
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
-
-            final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
+            final var numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS_AND_CROSS_BIASES;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
                     numSequences, NUM_MEASUREMENTS);
 
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator =
-                    new AccelerometerAndGyroscopeMeasurementsGenerator(mGeneratorListener);
+            final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // as an initial value for gyroscope bias we can use the average
+            // As an initial value for gyroscope bias, we can use the average
             // gyroscope values during initialization. A more accurate initial
             // guess for bias could be obtained by using leveling with magnetometer
             // and accelerometer readings (once both magnetometer and accelerometer
             // are calibrated).
-            final AngularSpeedTriad initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
-            final Matrix initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
+            final var initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
+            final var initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
 
             if (generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true, initialBa,
-                            initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(),
+                    true, initialBa, initialMa);
 
-            final Matrix initialMg = new Matrix(3, 3);
-            final Matrix initialGg = new Matrix(3, 3);
-            final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+            final var initialMg = new Matrix(3, 3);
+            final var initialGg = new Matrix(3, 3);
+            final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
             gyroscopeCalibrator.setCommonAxisUsed(true);
             gyroscopeCalibrator.setGDependentCrossBiasesEstimated(true);
             gyroscopeCalibrator.setInitialBias(initialBg);
@@ -1940,29 +1896,28 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             gyroscopeCalibrator.setInitialGg(initialGg);
 
             // create optimizer
-            final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource,
-                            accelerometerCalibrator, gyroscopeCalibrator);
+            final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                    dataSource, accelerometerCalibrator, gyroscopeCalibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -1978,10 +1933,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -1990,8 +1945,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedAccelerometerBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedAccelerometerBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
-            final Matrix optimalMa = optimizer.getEstimatedAccelerometerMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
+            final var optimalMa = optimizer.getEstimatedAccelerometerMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
@@ -2011,9 +1966,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedGyroscopeBiasZVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedGyroscopeBiases());
 
-            final Matrix optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
-            final Matrix optimalMg = optimizer.getEstimatedGyroscopeMg();
-            final Matrix optimalGg = optimizer.getEstimatedGyroscopeGg();
+            final var optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
+            final var optimalMg = optimizer.getEstimatedGyroscopeMg();
+            final var optimalGg = optimizer.getEstimatedGyroscopeGg();
 
             assertNotNull(optimalBg);
             assertNotNull(optimalMg);
@@ -2032,20 +1987,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(mg.equals(optimalMg, ABSOLUTE_ERROR));
             assertTrue(gg.equals(optimalGg, SMALL_ABSOLUTE_ERROR));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
             generator.reset();
             generator.setThresholdFactor(thresholdFactor);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            accelerometerCalibrator.setMeasurements(mAccelerometerGeneratorMeasurements);
-            gyroscopeCalibrator.setSequences(mGyroscopeGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            accelerometerCalibrator.setMeasurements(accelerometerGeneratorMeasurements);
+            gyroscopeCalibrator.setSequences(gyroscopeGeneratorMeasurements);
 
             // calibrate
             try {
@@ -2056,12 +2011,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             }
 
             // check calibration result
-            final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
+            final var estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
-            final Matrix estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMg = gyroscopeCalibrator.getEstimatedMg();
-            final Matrix estimatedGg = gyroscopeCalibrator.getEstimatedGg();
+            final var estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMg = gyroscopeCalibrator.getEstimatedMg();
+            final var estimatedGg = gyroscopeCalibrator.getEstimatedGg();
 
             if (!ba.equals(estimatedBa, SMALL_ABSOLUTE_ERROR)) {
                 continue;
@@ -2093,66 +2048,63 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange()
+    void testOptimizeMaCommonAxisNoGDependentCrossBiasesWithSmallNoiseRotationAndPositionChange()
             throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException, LockedException,
             NotReadyException, IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException,
             RotationException {
 
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix ma = generateMaCommonAxis();
-        final Matrix mg = generateMg();
-        final Matrix gg = new Matrix(3, 3);
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var ma = generateMaCommonAxis();
+        final var mg = generateMg();
+        final var gg = new Matrix(3, 3);
 
-        final double gyroNoiseRootPSD = 0.0;
+        final var gyroNoiseRootPSD = 0.0;
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mTimedBodyKinematics.clear();
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            timedBodyKinematics.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
 
             // generate measurements
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
-
-            final int numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
             generateBodyKinematics(nedFrame, ecefFrame, true, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
                     numSequences, numMeasurements);
 
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator =
-                    new AccelerometerAndGyroscopeMeasurementsGenerator(mGeneratorListener);
+            final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // as an initial value for gyroscope bias we can use the average
+            // As an initial value for gyroscope bias, we can use the average
             // gyroscope values during initialization. A more accurate initial
             // guess for bias could be obtained by using leveling with magnetometer
             // and accelerometer readings (once both magnetometer and accelerometer
             // are calibrated).
-            final AngularSpeedTriad initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
-            final Matrix initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
+            final var initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
+            final var initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
 
             if (generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final KnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), true, initialBa,
-                            initialMa);
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(),
+                    true, initialBa, initialMa);
 
-            final Matrix initialMg = new Matrix(3, 3);
-            final Matrix initialGg = new Matrix(3, 3);
-            final EasyGyroscopeCalibrator gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+            final var initialMg = new Matrix(3, 3);
+            final var initialGg = new Matrix(3, 3);
+            final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
             gyroscopeCalibrator.setCommonAxisUsed(true);
             gyroscopeCalibrator.setGDependentCrossBiasesEstimated(false);
             gyroscopeCalibrator.setInitialBias(initialBg);
@@ -2160,29 +2112,28 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             gyroscopeCalibrator.setInitialGg(initialGg);
 
             // create optimizer
-            final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource,
-                            accelerometerCalibrator, gyroscopeCalibrator);
+            final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                    dataSource, accelerometerCalibrator, gyroscopeCalibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -2198,10 +2149,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -2210,8 +2161,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedAccelerometerBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedAccelerometerBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
-            final Matrix optimalMa = optimizer.getEstimatedAccelerometerMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
+            final var optimalMa = optimizer.getEstimatedAccelerometerMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
@@ -2231,9 +2182,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedGyroscopeBiasZVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedGyroscopeBiases());
 
-            final Matrix optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
-            final Matrix optimalMg = optimizer.getEstimatedGyroscopeMg();
-            final Matrix optimalGg = optimizer.getEstimatedGyroscopeGg();
+            final var optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
+            final var optimalMg = optimizer.getEstimatedGyroscopeMg();
+            final var optimalGg = optimizer.getEstimatedGyroscopeGg();
 
             assertNotNull(optimalBg);
             assertNotNull(optimalMg);
@@ -2252,20 +2203,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(mg.equals(optimalMg, ABSOLUTE_ERROR));
             assertTrue(gg.equals(optimalGg, 0.0));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
             generator.reset();
             generator.setThresholdFactor(thresholdFactor);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            accelerometerCalibrator.setMeasurements(mAccelerometerGeneratorMeasurements);
-            gyroscopeCalibrator.setSequences(mGyroscopeGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            accelerometerCalibrator.setMeasurements(accelerometerGeneratorMeasurements);
+            gyroscopeCalibrator.setSequences(gyroscopeGeneratorMeasurements);
 
             // calibrate
             try {
@@ -2276,12 +2227,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             }
 
             // check calibration result
-            final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
+            final var estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
-            final Matrix estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMg = gyroscopeCalibrator.getEstimatedMg();
-            final Matrix estimatedGg = gyroscopeCalibrator.getEstimatedGg();
+            final var estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMg = gyroscopeCalibrator.getEstimatedMg();
+            final var estimatedGg = gyroscopeCalibrator.getEstimatedGg();
 
             if (!ba.equals(estimatedBa, VERY_LARGE_ABSOLUTE_ERROR)) {
                 continue;
@@ -2313,69 +2264,65 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     @Test
-    public void testOptimizeRobustCalibrators() throws WrongSizeException,
-            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
-            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
+    void testOptimizeRobustCalibrators() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+            InvalidRotationMatrixException, RotationException {
 
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix ma = generateMaCommonAxis();
-        final Matrix mg = generateMg();
-        final Matrix gg = new Matrix(3, 3);
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var ma = generateMaCommonAxis();
+        final var mg = generateMg();
+        final var gg = new Matrix(3, 3);
 
-        final double gyroNoiseRootPSD = 0.0;
+        final var gyroNoiseRootPSD = 0.0;
 
-        int numValid = 0;
-        for (int t = 0; t < TIMES; t++) {
-            mTimedBodyKinematics.clear();
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            timedBodyKinematics.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
 
             // generate measurements
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
 
-            final NEDFrame nedFrame = generateFrame();
-            final ECEFFrame ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
-
-            final int numSequences = 3 * EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
-            final int numMeasurements = 3 * NUM_MEASUREMENTS;
+            final var numSequences = 3 * EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
+            final var numMeasurements = 3 * NUM_MEASUREMENTS;
             generateBodyKinematics(nedFrame, ecefFrame, false, ma, SMALL_ROOT_PSD, gyroNoiseRootPSD,
                     numSequences, numMeasurements);
 
-            final AccelerometerAndGyroscopeMeasurementsGenerator generator =
-                    new AccelerometerAndGyroscopeMeasurementsGenerator(mGeneratorListener);
+            final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // as an initial value for gyroscope bias we can use the average
+            // As an initial value for gyroscope bias, we can use the average
             // gyroscope values during initialization. A more accurate initial
             // guess for bias could be obtained by using leveling with magnetometer
             // and accelerometer readings (once both magnetometer and accelerometer
             // are calibrated).
-            final AngularSpeedTriad initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
-            final Matrix initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
+            final var initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
+            final var initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
 
             if (generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
                 continue;
             }
 
-            final ECEFGravity gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
 
             // configure calibrators and data source
-            final Matrix initialBa = new Matrix(3, 1);
-            final Matrix initialMa = new Matrix(3, 3);
-            final PROMedSRobustKnownGravityNormAccelerometerCalibrator accelerometerCalibrator =
-                    new PROMedSRobustKnownGravityNormAccelerometerCalibrator();
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var accelerometerCalibrator = new PROMedSRobustKnownGravityNormAccelerometerCalibrator();
             accelerometerCalibrator.setGroundTruthGravityNorm(gravity.getNorm());
             accelerometerCalibrator.setCommonAxisUsed(true);
             accelerometerCalibrator.setInitialBias(initialBa);
             accelerometerCalibrator.setInitialMa(initialMa);
 
-
-            final Matrix initialMg = new Matrix(3, 3);
-            final Matrix initialGg = new Matrix(3, 3);
-            final PROMedSRobustEasyGyroscopeCalibrator gyroscopeCalibrator = new PROMedSRobustEasyGyroscopeCalibrator();
+            final var initialMg = new Matrix(3, 3);
+            final var initialGg = new Matrix(3, 3);
+            final var gyroscopeCalibrator = new PROMedSRobustEasyGyroscopeCalibrator();
             gyroscopeCalibrator.setCommonAxisUsed(true);
             gyroscopeCalibrator.setGDependentCrossBiasesEstimated(false);
             gyroscopeCalibrator.setInitialBias(initialBg);
@@ -2383,29 +2330,28 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             gyroscopeCalibrator.setInitialGg(initialGg);
 
             // create optimizer
-            final ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer =
-                    new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(mDataSource,
-                            accelerometerCalibrator, gyroscopeCalibrator);
+            final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                    dataSource, accelerometerCalibrator, gyroscopeCalibrator);
             optimizer.setListener(this);
 
             reset();
-            assertEquals(0, mStart);
-            assertEquals(0, mEnd);
-            assertEquals(0.0f, mProgress, 0.0f);
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
 
-            final double thresholdFactor = optimizer.optimize();
+            final var thresholdFactor = optimizer.optimize();
 
             // check optimization results
-            assertEquals(1, mStart);
-            assertEquals(1, mEnd);
-            assertTrue(mProgress > 0.0f);
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertTrue(progress > 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
-            final Acceleration accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
+            final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
                     optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
-            final Acceleration accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
+            final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getAccelerometerBaseNoiseLevelAsMeasurement(accelerometerBaseNoiseLevel2);
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
@@ -2421,10 +2367,10 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
-            final Acceleration threshold1 = optimizer.getThresholdAsMeasurement();
+            final var threshold1 = optimizer.getThresholdAsMeasurement();
             assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
-            final Acceleration threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
+            final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
             assertEquals(threshold1, threshold2);
             assertTrue(optimizer.getEstimatedAccelerometerBiasStandardDeviationNorm() > 0.0);
@@ -2433,8 +2379,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedAccelerometerBiasFzVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedAccelerometerBiases());
 
-            final Matrix optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
-            final Matrix optimalMa = optimizer.getEstimatedAccelerometerMa();
+            final var optimalBa = Matrix.newFromArray(optimizer.getEstimatedAccelerometerBiases());
+            final var optimalMa = optimizer.getEstimatedAccelerometerMa();
 
             assertNotNull(optimalBa);
             assertNotNull(optimalMa);
@@ -2454,9 +2400,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(optimizer.getEstimatedGyroscopeBiasZVariance() > 0.0);
             assertNotNull(optimizer.getEstimatedGyroscopeBiases());
 
-            final Matrix optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
-            final Matrix optimalMg = optimizer.getEstimatedGyroscopeMg();
-            final Matrix optimalGg = optimizer.getEstimatedGyroscopeGg();
+            final var optimalBg = Matrix.newFromArray(optimizer.getEstimatedGyroscopeBiases());
+            final var optimalMg = optimizer.getEstimatedGyroscopeMg();
+            final var optimalGg = optimizer.getEstimatedGyroscopeGg();
 
             assertNotNull(optimalBg);
             assertNotNull(optimalMg);
@@ -2475,20 +2421,20 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             assertTrue(mg.equals(optimalMg, ABSOLUTE_ERROR));
             assertTrue(gg.equals(optimalGg, 0.0));
 
-            // generate measurements for calibrator using estimated threshold factor
+            // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
-            mAccelerometerGeneratorMeasurements.clear();
-            mGyroscopeGeneratorMeasurements.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
             generator.reset();
             generator.setThresholdFactor(thresholdFactor);
 
-            for (TimedBodyKinematics timedBodyKinematics : mTimedBodyKinematics) {
-                assertTrue(generator.process(timedBodyKinematics));
+            for (final var kinematics : timedBodyKinematics) {
+                assertTrue(generator.process(kinematics));
             }
 
-            // use generated measurements from generator that used optimal threshold factor
-            accelerometerCalibrator.setMeasurements(mAccelerometerGeneratorMeasurements);
-            gyroscopeCalibrator.setSequences(mGyroscopeGeneratorMeasurements);
+            // use generated measurements from a generator that used the optimal threshold factor
+            accelerometerCalibrator.setMeasurements(accelerometerGeneratorMeasurements);
+            gyroscopeCalibrator.setSequences(gyroscopeGeneratorMeasurements);
 
             // calibrate
             try {
@@ -2499,12 +2445,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             }
 
             // check calibration result
-            final Matrix estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMa = accelerometerCalibrator.getEstimatedMa();
+            final var estimatedBa = accelerometerCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMa = accelerometerCalibrator.getEstimatedMa();
 
-            final Matrix estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
-            final Matrix estimatedMg = gyroscopeCalibrator.getEstimatedMg();
-            final Matrix estimatedGg = gyroscopeCalibrator.getEstimatedGg();
+            final var estimatedBg = gyroscopeCalibrator.getEstimatedBiasesAsMatrix();
+            final var estimatedMg = gyroscopeCalibrator.getEstimatedMg();
+            final var estimatedGg = gyroscopeCalibrator.getEstimatedGg();
 
             if (!ba.equals(estimatedBa, ABSOLUTE_ERROR)) {
                 continue;
@@ -2539,7 +2485,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     public void onOptimizeStart(
             final IntervalDetectorThresholdFactorOptimizer<TimedBodyKinematics,
                     AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource> optimizer) {
-        mStart++;
+        start++;
         checkLocked((ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer) optimizer);
     }
 
@@ -2547,7 +2493,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     public void onOptimizeEnd(
             final IntervalDetectorThresholdFactorOptimizer<TimedBodyKinematics,
                     AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource> optimizer) {
-        mEnd++;
+        end++;
         checkLocked((ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer) optimizer);
     }
 
@@ -2558,11 +2504,11 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             final float progress) {
         assertTrue(progress >= 0.0f);
         assertTrue(progress <= 1.0f);
-        assertTrue(progress > mProgress);
-        if (mProgress == 0.0) {
+        assertTrue(progress > this.progress);
+        if (this.progress == 0.0) {
             checkLocked((ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer) optimizer);
         }
-        mProgress = progress;
+        this.progress = progress;
     }
 
     private static void checkLocked(
@@ -2594,59 +2540,58 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             final int numMeasurements) throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
             InvalidRotationMatrixException, RotationException {
 
-        final Matrix ba = generateBa();
-        final Matrix bg = generateBg();
-        final Matrix mg = generateMg();
-        final Matrix gg = generateGg();
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var mg = generateMg();
+        final var gg = generateGg();
 
-        final double accelQuantLevel = 0.0;
-        final double gyroQuantLevel = 0.0;
+        final var accelQuantLevel = 0.0;
+        final var gyroQuantLevel = 0.0;
 
-        final IMUErrors errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
+        final var errors = new IMUErrors(ba, bg, ma, mg, gg, accelNoiseRootPSD, gyroNoiseRootPSD, accelQuantLevel,
                 gyroQuantLevel);
 
-        final Random random = new Random();
-        final UniformRandomizer randomizer = new UniformRandomizer(random);
+        final var randomizer = new UniformRandomizer();
 
         // compute ground-truth kinematics that should be generated at provided
         // position, velocity and orientation
-        final BodyKinematics trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(
-                TIME_INTERVAL_SECONDS, ecefFrame, ecefFrame);
+        final var trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS,
+                ecefFrame, ecefFrame);
 
         // generate initial static samples
-        final int initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+        final var initialStaticSamples = TriadStaticIntervalDetector.DEFAULT_INITIAL_STATIC_SAMPLES;
+        final var random = new Random();
         generateStaticSamples(initialStaticSamples, trueKinematics, errors, random, 0);
 
-        final int n = Math.max(numSequences + 1, numMeasurements);
+        final var n = Math.max(numSequences + 1, numMeasurements);
 
-        final int staticPeriodLength = 3 * TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
-        final int dynamicPeriodLength = TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
+        final var staticPeriodLength = 3 * TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
+        final var dynamicPeriodLength = TriadStaticIntervalDetector.DEFAULT_WINDOW_SIZE;
 
-        int start = initialStaticSamples;
-        for (int i = 0; i < n; i++) {
+        var startSample = initialStaticSamples;
+        for (var i = 0; i < n; i++) {
             // generate static samples
-            generateStaticSamples(staticPeriodLength, trueKinematics, errors, random, start);
-            start += staticPeriodLength;
+            generateStaticSamples(staticPeriodLength, trueKinematics, errors, random, startSample);
+            startSample += staticPeriodLength;
 
             // generate dynamic samples
             generateDynamicSamples(dynamicPeriodLength, trueKinematics, randomizer, ecefFrame, nedFrame, errors, random,
-                    start, changePosition);
-            start += dynamicPeriodLength;
+                    startSample, changePosition);
+            startSample += dynamicPeriodLength;
         }
     }
 
     private static NEDFrame generateFrame() throws InvalidSourceAndDestinationFrameTypeException {
-        final Random random = new Random();
-        final UniformRandomizer randomizer = new UniformRandomizer(random);
-        final double latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
-        final double longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
-        final double height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
-        final NEDPosition nedPosition = new NEDPosition(latitude, longitude, height);
+        final var randomizer = new UniformRandomizer();
+        final var latitude = Math.toRadians(randomizer.nextDouble(MIN_LATITUDE_DEGREES, MAX_LATITUDE_DEGREES));
+        final var longitude = Math.toRadians(randomizer.nextDouble(MIN_LONGITUDE_DEGREES, MAX_LONGITUDE_DEGREES));
+        final var height = randomizer.nextDouble(MIN_HEIGHT, MAX_HEIGHT);
+        final var nedPosition = new NEDPosition(latitude, longitude, height);
 
-        final double roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final double yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
-        final CoordinateTransformation nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
+        final var roll = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final var pitch = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final var yaw = Math.toRadians(randomizer.nextDouble(MIN_ANGLE_DEGREES, MAX_ANGLE_DEGREES));
+        final var nedC = new CoordinateTransformation(roll, pitch, yaw, FrameType.BODY_FRAME,
                 FrameType.LOCAL_NAVIGATION_FRAME);
 
         return new NEDFrame(nedPosition, nedC);
@@ -2667,7 +2612,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     private static Matrix generateMaCommonAxis() throws WrongSizeException {
-        final Matrix result = new Matrix(3, 3);
+        final var result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
                 0.0, -600e-6, 250e-6,
@@ -2678,7 +2623,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     private static Matrix generateMaGeneral() throws WrongSizeException {
-        final Matrix result = new Matrix(3, 3);
+        final var result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 500e-6, -300e-6, 200e-6,
                 -150e-6, -600e-6, 250e-6,
@@ -2689,7 +2634,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     private Matrix generateMg() throws WrongSizeException {
-        final Matrix result = new Matrix(3, 3);
+        final var result = new Matrix(3, 3);
         result.fromArray(new double[]{
                 400e-6, -300e-6, 250e-6,
                 0.0, -300e-6, -150e-6,
@@ -2700,8 +2645,8 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
     }
 
     private static Matrix generateGg() throws WrongSizeException {
-        final Matrix result = new Matrix(3, 3);
-        final double tmp = DEG_TO_RAD / (3600 * 9.80665);
+        final var result = new Matrix(3, 3);
+        final var tmp = DEG_TO_RAD / (3600 * 9.80665);
         result.fromArray(new double[]{
                 0.9 * tmp, -1.1 * tmp, -0.6 * tmp,
                 -0.5 * tmp, 1.9 * tmp, -1.6 * tmp,
@@ -2725,14 +2670,14 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
 
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
 
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random);
+            final var measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics,
+                    errors, random);
 
-            final TimedBodyKinematics timedMeasuredKinematics = new TimedBodyKinematics();
+            final var timedMeasuredKinematics = new TimedBodyKinematics();
             timedMeasuredKinematics.setKinematics(measuredKinematics);
             timedMeasuredKinematics.setTimestampSeconds(j * TIME_INTERVAL_SECONDS);
 
-            mTimedBodyKinematics.add(timedMeasuredKinematics);
+            timedBodyKinematics.add(timedMeasuredKinematics);
         }
     }
 
@@ -2743,101 +2688,96 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             final int startSample, final boolean changePosition) throws InvalidSourceAndDestinationFrameTypeException,
             InvalidRotationMatrixException, RotationException {
 
-        final double sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
-        final double specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
-        final double angularRateStandardDeviation = getGyroNoiseRootPSD() / sqrtTimeInterval;
+        final var sqrtTimeInterval = Math.sqrt(TIME_INTERVAL_SECONDS);
+        final var specificForceStandardDeviation = getAccelNoiseRootPSD() / sqrtTimeInterval;
+        final var angularRateStandardDeviation = getGyroNoiseRootPSD() / sqrtTimeInterval;
 
-        final double deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
-        final double deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final var deltaX = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final var deltaY = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
+        final var deltaZ = changePosition ? randomizer.nextDouble(MIN_DELTA_POS_METERS, MAX_DELTA_POS_METERS) : 0.0;
 
-        final double deltaRoll = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
-        final double deltaPitch = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
-        final double deltaYaw = Math.toRadians(randomizer.nextDouble(
-                MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final var deltaRoll = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final var deltaPitch = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
+        final var deltaYaw = Math.toRadians(randomizer.nextDouble(MIN_DELTA_ANGLE_DEGREES, MAX_DELTA_ANGLE_DEGREES));
 
-        final double ecefX = ecefFrame.getX();
-        final double ecefY = ecefFrame.getY();
-        final double ecefZ = ecefFrame.getZ();
+        final var ecefX = ecefFrame.getX();
+        final var ecefY = ecefFrame.getY();
+        final var ecefZ = ecefFrame.getZ();
 
-        final CoordinateTransformation nedC = nedFrame.getCoordinateTransformation();
+        final var nedC = nedFrame.getCoordinateTransformation();
 
-        final double roll = nedC.getRollEulerAngle();
-        final double pitch = nedC.getPitchEulerAngle();
-        final double yaw = nedC.getYawEulerAngle();
+        final var roll = nedC.getRollEulerAngle();
+        final var pitch = nedC.getPitchEulerAngle();
+        final var yaw = nedC.getYawEulerAngle();
 
-        final Quaternion beforeQ = new Quaternion();
+        final var beforeQ = new Quaternion();
         nedC.asRotation(beforeQ);
 
-        NEDFrame oldNedFrame = new NEDFrame(nedFrame);
-        NEDFrame newNedFrame = new NEDFrame();
-        ECEFFrame oldEcefFrame = new ECEFFrame(ecefFrame);
-        ECEFFrame newEcefFrame = new ECEFFrame();
+        final var oldNedFrame = new NEDFrame(nedFrame);
+        final var newNedFrame = new NEDFrame();
+        final var oldEcefFrame = new ECEFFrame(ecefFrame);
+        final var newEcefFrame = new ECEFFrame();
 
-        double oldEcefX = ecefX - deltaX;
-        double oldEcefY = ecefY - deltaY;
-        double oldEcefZ = ecefZ - deltaZ;
-        double oldRoll = roll - deltaRoll;
-        double oldPitch = pitch - deltaPitch;
-        double oldYaw = yaw - deltaYaw;
+        var oldEcefX = ecefX - deltaX;
+        var oldEcefY = ecefY - deltaY;
+        var oldEcefZ = ecefZ - deltaZ;
+        var oldRoll = roll - deltaRoll;
+        var oldPitch = pitch - deltaPitch;
+        var oldYaw = yaw - deltaYaw;
 
-        final BodyKinematics measuredBeforeGravityKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
+        final var measuredBeforeGravityKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
                 trueKinematics, errors, random);
-        final double beforeMeanFx = measuredBeforeGravityKinematics.getFx();
-        final double beforeMeanFy = measuredBeforeGravityKinematics.getFy();
-        final double beforeMeanFz = measuredBeforeGravityKinematics.getFz();
+        final var beforeMeanFx = measuredBeforeGravityKinematics.getFx();
+        final var beforeMeanFy = measuredBeforeGravityKinematics.getFy();
+        final var beforeMeanFz = measuredBeforeGravityKinematics.getFz();
 
-        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence = new BodyKinematicsSequence<>();
+        final var sequence = new BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>();
         sequence.setBeforeMeanSpecificForceCoordinates(beforeMeanFx, beforeMeanFy, beforeMeanFz);
 
-        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> trueSequence =
-                new BodyKinematicsSequence<>();
-        final List<StandardDeviationTimedBodyKinematics> trueTimedKinematicsList = new ArrayList<>();
+        final var trueSequence = new BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>();
+        final var trueTimedKinematicsList = new ArrayList<StandardDeviationTimedBodyKinematics>();
 
         for (int i = 0, j = startSample; i < numSamples; i++, j++) {
-            final double progress = (double) i / (double) numSamples;
+            final var sampleProgress = (double) i / (double) numSamples;
 
-            final double newRoll = oldRoll + interpolate(deltaRoll, progress);
-            final double newPitch = oldPitch + interpolate(deltaPitch, progress);
-            final double newYaw = oldYaw + interpolate(deltaYaw, progress);
-            final CoordinateTransformation newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw,
-                    FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
-            final NEDPosition newNedPosition = oldNedFrame.getPosition();
+            final var newRoll = oldRoll + interpolate(deltaRoll, sampleProgress);
+            final var newPitch = oldPitch + interpolate(deltaPitch, sampleProgress);
+            final var newYaw = oldYaw + interpolate(deltaYaw, sampleProgress);
+            final var newNedC = new CoordinateTransformation(newRoll, newPitch, newYaw, FrameType.BODY_FRAME,
+                    FrameType.LOCAL_NAVIGATION_FRAME);
+            final var newNedPosition = oldNedFrame.getPosition();
 
             newNedFrame.setPosition(newNedPosition);
             newNedFrame.setCoordinateTransformation(newNedC);
 
             NEDtoECEFFrameConverter.convertNEDtoECEF(newNedFrame, newEcefFrame);
 
-            final double newEcefX = oldEcefX + interpolate(deltaX, progress);
-            final double newEcefY = oldEcefY + interpolate(deltaY, progress);
-            final double newEcefZ = oldEcefZ + interpolate(deltaZ, progress);
+            final var newEcefX = oldEcefX + interpolate(deltaX, sampleProgress);
+            final var newEcefY = oldEcefY + interpolate(deltaY, sampleProgress);
+            final var newEcefZ = oldEcefZ + interpolate(deltaZ, sampleProgress);
 
             newEcefFrame.setCoordinates(newEcefX, newEcefY, newEcefZ);
 
             ECEFtoNEDFrameConverter.convertECEFtoNED(newEcefFrame, newNedFrame);
 
-            final double timestampSeconds = j * TIME_INTERVAL_SECONDS;
+            final var timestampSeconds = j * TIME_INTERVAL_SECONDS;
 
             // update true kinematics using new position and rotation
             ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, oldEcefFrame,
                     trueKinematics);
 
             // add error to true kinematics
-            final BodyKinematics measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
-                    trueKinematics, errors, random);
+            final var measuredKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics,
+                    errors, random);
 
-            final TimedBodyKinematics timedMeasuredKinematics = new TimedBodyKinematics();
+            final var timedMeasuredKinematics = new TimedBodyKinematics();
             timedMeasuredKinematics.setKinematics(measuredKinematics);
             timedMeasuredKinematics.setTimestampSeconds(timestampSeconds);
 
-            mTimedBodyKinematics.add(timedMeasuredKinematics);
+            timedBodyKinematics.add(timedMeasuredKinematics);
 
-            final StandardDeviationTimedBodyKinematics trueTimedKinematics = new StandardDeviationTimedBodyKinematics(
-                    new BodyKinematics(trueKinematics), timestampSeconds, specificForceStandardDeviation,
-                    angularRateStandardDeviation);
+            final var trueTimedKinematics = new StandardDeviationTimedBodyKinematics(new BodyKinematics(trueKinematics),
+                    timestampSeconds, specificForceStandardDeviation, angularRateStandardDeviation);
             trueTimedKinematicsList.add(trueTimedKinematics);
 
             oldNedFrame.copyFrom(newNedFrame);
@@ -2852,12 +2792,12 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
 
         trueSequence.setItems(trueTimedKinematicsList);
 
-        final Quaternion afterQ = new Quaternion();
+        final var afterQ = new Quaternion();
         QuaternionIntegrator.integrateGyroSequence(trueSequence, beforeQ, QuaternionStepIntegratorType.RUNGE_KUTTA,
                 afterQ);
 
-        final CoordinateTransformation newNedC = new CoordinateTransformation(afterQ.asInhomogeneousMatrix(),
-                FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+        final var newNedC = new CoordinateTransformation(afterQ.asInhomogeneousMatrix(), FrameType.BODY_FRAME,
+                FrameType.LOCAL_NAVIGATION_FRAME);
         newNedFrame.setCoordinateTransformation(newNedC);
 
         NEDtoECEFFrameConverter.convertNEDtoECEF(newNedFrame, newEcefFrame);
@@ -2867,21 +2807,21 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         ecefFrame.copyFrom(newEcefFrame);
         nedFrame.copyFrom(newNedFrame);
 
-        // after dynamic sequence finishes, update true kinematics for a
-        // static sequence at current frame
+        // after the dynamic sequence finishes, update true kinematics for a
+        // static sequence at the current frame
         ECEFKinematicsEstimator.estimateKinematics(TIME_INTERVAL_SECONDS, newEcefFrame, newEcefFrame, trueKinematics);
     }
 
     // This is required to simulate a smooth transition of values during
-    // dynamic period, to avoid a sudden rotation or translation and simulate
-    // a more natural behaviour.
+    // a dynamic period, to avoid a sudden rotation or translation and simulate
+    // a more natural behavior.
     private static double interpolate(final double value, final double progress) {
         return -2.0 * (Math.abs(progress - 0.5) - 0.5) * value;
     }
 
     private void reset() {
-        mStart = 0;
-        mEnd = 0;
-        mProgress = 0.0f;
+        start = 0;
+        end = 0;
+        progress = 0.0f;
     }
 }

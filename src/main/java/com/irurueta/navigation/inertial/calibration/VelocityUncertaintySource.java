@@ -30,7 +30,7 @@ public interface VelocityUncertaintySource {
      * a {@link INSLooselyCoupledKalmanInitializerConfig}.
      * However, to create a {@link INSLooselyCoupledKalmanInitializerConfig},
      * typically position, velocity and attitude are externally measured by other
-     * means introducing a different amount of uncertainty (e.g. GPS).
+     * means introducing a different amount of uncertainty (e.g., GPS).
      *
      * @return velocity uncertainty expressed in meters per second (m/s).
      */
