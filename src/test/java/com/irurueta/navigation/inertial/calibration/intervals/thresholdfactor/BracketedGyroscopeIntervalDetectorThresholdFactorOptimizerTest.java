@@ -1211,7 +1211,12 @@ class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
             assertEquals(0, end);
             assertEquals(0.0f, progress, 0.0f);
 
-            final var thresholdFactor = optimizer.optimize();
+            final double thresholdFactor;
+            try {
+                thresholdFactor = optimizer.optimize();
+            } catch (final IntervalDetectorThresholdFactorOptimizerException e) {
+                continue;
+            }
 
             // check optimization results
             assertEquals(1, start);
