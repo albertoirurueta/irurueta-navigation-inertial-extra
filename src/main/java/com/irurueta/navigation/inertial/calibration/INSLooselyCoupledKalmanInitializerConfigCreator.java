@@ -30,27 +30,27 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
     /**
      * A source of estimated accelerometer bias uncertainty.
      */
-    private AccelerometerBiasUncertaintySource mAccelerometerBiasUncertaintySource;
+    private AccelerometerBiasUncertaintySource accelerometerBiasUncertaintySource;
 
     /**
      * A source of estimated gyroscope bias uncertainty.
      */
-    private GyroscopeBiasUncertaintySource mGyroscopeBiasUncertaintySource;
+    private GyroscopeBiasUncertaintySource gyroscopeBiasUncertaintySource;
 
     /**
      * A source of attitude uncertainty.
      */
-    private AttitudeUncertaintySource mAttitudeUncertaintySource;
+    private AttitudeUncertaintySource attitudeUncertaintySource;
 
     /**
      * A source of velocity uncertainty.
      */
-    private VelocityUncertaintySource mVelocityUncertaintySource;
+    private VelocityUncertaintySource velocityUncertaintySource;
 
     /**
      * A source of position uncertainty.
      */
-    private PositionUncertaintySource mPositionUncertaintySource;
+    private PositionUncertaintySource positionUncertaintySource;
 
     /**
      * Constructor.
@@ -73,11 +73,11 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
             final AttitudeUncertaintySource attitudeUncertaintySource,
             final VelocityUncertaintySource velocityUncertaintySource,
             final PositionUncertaintySource positionUncertaintySource) {
-        mAccelerometerBiasUncertaintySource = accelerometerBiasUncertaintySource;
-        mGyroscopeBiasUncertaintySource = gyroscopeBiasUncertaintySource;
-        mAttitudeUncertaintySource = attitudeUncertaintySource;
-        mVelocityUncertaintySource = velocityUncertaintySource;
-        mPositionUncertaintySource = positionUncertaintySource;
+        this.accelerometerBiasUncertaintySource = accelerometerBiasUncertaintySource;
+        this.gyroscopeBiasUncertaintySource = gyroscopeBiasUncertaintySource;
+        this.attitudeUncertaintySource = attitudeUncertaintySource;
+        this.velocityUncertaintySource = velocityUncertaintySource;
+        this.positionUncertaintySource = positionUncertaintySource;
     }
 
     /**
@@ -91,17 +91,17 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
             final AccelerometerBiasUncertaintySource accelerometerBiasUncertaintySource,
             final GyroscopeBiasUncertaintySource gyroscopeBiasUncertaintySource,
             final RandomWalkEstimator randomWalkEstimator) {
-        this(accelerometerBiasUncertaintySource, gyroscopeBiasUncertaintySource,
-                randomWalkEstimator, randomWalkEstimator, randomWalkEstimator);
+        this(accelerometerBiasUncertaintySource, gyroscopeBiasUncertaintySource, randomWalkEstimator,
+                randomWalkEstimator, randomWalkEstimator);
     }
 
     /**
-     * Gets source of estimated accelerometer bias uncertainty.
+     * Gets the source of estimated accelerometer bias uncertainty.
      *
      * @return source of estimated accelerometer bias uncertainty.
      */
     public AccelerometerBiasUncertaintySource getAccelerometerBiasUncertaintySource() {
-        return mAccelerometerBiasUncertaintySource;
+        return accelerometerBiasUncertaintySource;
     }
 
     /**
@@ -111,16 +111,16 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
      */
     public void setAccelerometerBiasUncertaintySource(
             final AccelerometerBiasUncertaintySource accelerometerBiasUncertaintySource) {
-        mAccelerometerBiasUncertaintySource = accelerometerBiasUncertaintySource;
+        this.accelerometerBiasUncertaintySource = accelerometerBiasUncertaintySource;
     }
 
     /**
-     * Gets source of estimated gyroscope bias uncertainty.
+     * Gets the source of estimated gyroscope bias uncertainty.
      *
      * @return source of estimated gyroscope bias uncertainty.
      */
     public GyroscopeBiasUncertaintySource getGyroscopeBiasUncertaintySource() {
-        return mGyroscopeBiasUncertaintySource;
+        return gyroscopeBiasUncertaintySource;
     }
 
     /**
@@ -128,9 +128,8 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
      *
      * @param gyroscopeBiasUncertaintySource source of estimated gyroscope bias uncertainty.
      */
-    public void setGyroscopeBiasUncertaintySource(
-            final GyroscopeBiasUncertaintySource gyroscopeBiasUncertaintySource) {
-        mGyroscopeBiasUncertaintySource = gyroscopeBiasUncertaintySource;
+    public void setGyroscopeBiasUncertaintySource(final GyroscopeBiasUncertaintySource gyroscopeBiasUncertaintySource) {
+        this.gyroscopeBiasUncertaintySource = gyroscopeBiasUncertaintySource;
     }
 
     /**
@@ -139,7 +138,7 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
      * @return source of attitude uncertainty.
      */
     public AttitudeUncertaintySource getAttitudeUncertaintySource() {
-        return mAttitudeUncertaintySource;
+        return attitudeUncertaintySource;
     }
 
     /**
@@ -147,18 +146,17 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
      *
      * @param attitudeUncertaintySource source of attitude uncertainty.
      */
-    public void setAttitudeUncertaintySource(
-            final AttitudeUncertaintySource attitudeUncertaintySource) {
-        mAttitudeUncertaintySource = attitudeUncertaintySource;
+    public void setAttitudeUncertaintySource(final AttitudeUncertaintySource attitudeUncertaintySource) {
+        this.attitudeUncertaintySource = attitudeUncertaintySource;
     }
 
     /**
-     * Gets source of velocity uncertainty.
+     * Gets the source of velocity uncertainty.
      *
      * @return source of velocity uncertainty.
      */
     public VelocityUncertaintySource getVelocityUncertaintySource() {
-        return mVelocityUncertaintySource;
+        return velocityUncertaintySource;
     }
 
     /**
@@ -166,18 +164,17 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
      *
      * @param velocityUncertaintySource source of velocity uncertainty.
      */
-    public void setVelocityUncertaintySource(
-            final VelocityUncertaintySource velocityUncertaintySource) {
-        mVelocityUncertaintySource = velocityUncertaintySource;
+    public void setVelocityUncertaintySource(final VelocityUncertaintySource velocityUncertaintySource) {
+        this.velocityUncertaintySource = velocityUncertaintySource;
     }
 
     /**
-     * Gets source of position uncertainty.
+     * Gets the source of position uncertainty.
      *
      * @return source of position uncertainty.
      */
     public PositionUncertaintySource getPositionUncertaintySource() {
-        return mPositionUncertaintySource;
+        return positionUncertaintySource;
     }
 
     /**
@@ -185,25 +182,24 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
      *
      * @param positionUncertaintySource source of position uncertainty.
      */
-    public void setPositionUncertaintySource(
-            final PositionUncertaintySource positionUncertaintySource) {
-        mPositionUncertaintySource = positionUncertaintySource;
+    public void setPositionUncertaintySource(final PositionUncertaintySource positionUncertaintySource) {
+        this.positionUncertaintySource = positionUncertaintySource;
     }
 
     /**
-     * Indicates whether all sources have been provided in order to be able to
+     * Indicates whether all sources have been provided to be able to
      * create a {@link INSLooselyCoupledKalmanInitializerConfig} instance.
      *
-     * @return true if creator is ready, false otherwise.
+     * @return true if the creator is ready, false otherwise.
      */
     public boolean isReady() {
-        return mAccelerometerBiasUncertaintySource != null
-                && mAccelerometerBiasUncertaintySource.getEstimatedBiasStandardDeviationNorm() != null
-                && mGyroscopeBiasUncertaintySource != null
-                && mGyroscopeBiasUncertaintySource.getEstimatedBiasStandardDeviationNorm() != null
-                && mAttitudeUncertaintySource != null
-                && mVelocityUncertaintySource != null
-                && mPositionUncertaintySource != null;
+        return accelerometerBiasUncertaintySource != null
+                && accelerometerBiasUncertaintySource.getEstimatedBiasStandardDeviationNorm() != null
+                && gyroscopeBiasUncertaintySource != null
+                && gyroscopeBiasUncertaintySource.getEstimatedBiasStandardDeviationNorm() != null
+                && attitudeUncertaintySource != null
+                && velocityUncertaintySource != null
+                && positionUncertaintySource != null;
     }
 
     /**
@@ -211,26 +207,21 @@ public class INSLooselyCoupledKalmanInitializerConfigCreator {
      * parameters during calibration.
      *
      * @return instance containing initial configuration data.
-     * @throws NotReadyException if creator is not ready.
+     * @throws NotReadyException if the creator is not ready.
      */
     public INSLooselyCoupledKalmanInitializerConfig create() throws NotReadyException {
         if (!isReady()) {
             throw new NotReadyException();
         }
 
-        final double attitudeUncertainty =
-                mAttitudeUncertaintySource.getAttitudeUncertainty();
-        final double velocityUncertainty =
-                mVelocityUncertaintySource.getVelocityUncertainty();
-        final double positionUncertainty =
-                mPositionUncertaintySource.getPositionUncertainty();
-        final double accelerationBiasUncertainty =
-                mAccelerometerBiasUncertaintySource.getEstimatedBiasStandardDeviationNorm();
-        final double gyroBiasUncertainty =
-                mGyroscopeBiasUncertaintySource.getEstimatedBiasStandardDeviationNorm();
+        final var attitudeUncertainty = attitudeUncertaintySource.getAttitudeUncertainty();
+        final var velocityUncertainty = velocityUncertaintySource.getVelocityUncertainty();
+        final var positionUncertainty = positionUncertaintySource.getPositionUncertainty();
+        final var accelerationBiasUncertainty =
+                accelerometerBiasUncertaintySource.getEstimatedBiasStandardDeviationNorm();
+        final var gyroBiasUncertainty = gyroscopeBiasUncertaintySource.getEstimatedBiasStandardDeviationNorm();
 
-        return new INSLooselyCoupledKalmanInitializerConfig(
-                attitudeUncertainty, velocityUncertainty, positionUncertainty,
-                accelerationBiasUncertainty, gyroBiasUncertainty);
+        return new INSLooselyCoupledKalmanInitializerConfig(attitudeUncertainty, velocityUncertainty,
+                positionUncertainty, accelerationBiasUncertainty, gyroBiasUncertainty);
     }
 }

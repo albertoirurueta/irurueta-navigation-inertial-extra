@@ -22,13 +22,13 @@ import com.irurueta.navigation.inertial.calibration.magnetometer.MagnetometerCal
 import com.irurueta.navigation.inertial.calibration.magnetometer.MagnetometerNonLinearCalibrator;
 
 /**
- * Optimizes threshold factor for interval detection of magnetometer data based on
+ * Optimizes the threshold factor for interval detection of magnetometer data based on
  * results of calibration.
- * Only magnetometer calibrators based on unknown orientation are supported (in other terms,
+ * Only magnetometer calibrators based on unknown orientation are supported, in other terms,
  * calibrators must be {@link MagnetometerNonLinearCalibrator} and must support
  * {@link MagnetometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY}.
  * This implementation makes an exhaustive search between minimum and maximum
- * threshold factor values in order to find the threshold value that produces the
+ * threshold factor values to find the threshold value that produces the
  * minimum Mean Square Error (MSE) for calibration parameters.
  */
 public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer extends
@@ -43,7 +43,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
      * Step to make exhaustive search of threshold factor values between
      * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
      */
-    private double mThresholdFactorStep = DEFAULT_STEP;
+    private double thresholdFactorStep = DEFAULT_STEP;
 
     /**
      * Constructor.
@@ -91,13 +91,13 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
     }
 
     /**
-     * Gets step to make exhaustive search of threshold values between
+     * Gets the step to make exhaustive search of threshold values between
      * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
      *
      * @return step to make exhaustive search of threshold values.
      */
     public double getThresholdFactorStep() {
-        return mThresholdFactorStep;
+        return thresholdFactorStep;
     }
 
     /**
@@ -108,21 +108,20 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is zero or negative.
      */
-    public void setThresholdFactorStep(final double thresholdStep)
-            throws LockedException {
-        if (mRunning) {
+    public void setThresholdFactorStep(final double thresholdStep) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
         if (thresholdStep <= 0.0) {
             throw new IllegalArgumentException();
         }
 
-        mThresholdFactorStep = thresholdStep;
+        thresholdFactorStep = thresholdStep;
     }
 
     /**
-     * Optimizes threshold factor for a static interval detector or measurement
-     * generator in order to minimize MSE (Minimum Squared Error) of estimated
+     * Optimizes the threshold factor for a static interval detector or measurement
+     * generator to minimize MSE (Minimum Squared Error) of estimated
      * calibration parameters.
      *
      * @return optimized threshold factor.
@@ -134,7 +133,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
     @Override
     public double optimize() throws NotReadyException, LockedException,
             IntervalDetectorThresholdFactorOptimizerException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
@@ -142,30 +141,30 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
             throw new NotReadyException();
         }
 
-        boolean hasResult = false;
-        mMinMse = Double.MAX_VALUE;
+        var hasResult = false;
+        minMse = Double.MAX_VALUE;
         try {
-            mRunning = true;
+            running = true;
 
             initProgress();
-            final float progressStep = (float) (mThresholdFactorStep
-                    / (mThresholdFactorStep + mMaxThresholdFactor - mMinThresholdFactor));
+            final var progressStep = (float) (thresholdFactorStep
+                    / (thresholdFactorStep + maxThresholdFactor - minThresholdFactor));
 
-            if (mListener != null) {
-                mListener.onOptimizeStart(this);
+            if (listener != null) {
+                listener.onOptimizeStart(this);
             }
 
-            for (double thresholdFactor = mMinThresholdFactor;
-                 thresholdFactor <= mMaxThresholdFactor;
-                 thresholdFactor += mThresholdFactorStep) {
+            for (var thresholdFactor = minThresholdFactor;
+                 thresholdFactor <= maxThresholdFactor;
+                 thresholdFactor += thresholdFactorStep) {
                 try {
                     evaluateForThresholdFactor(thresholdFactor);
                     hasResult = true;
                 } catch (final Exception ignore) {
-                    // when an error occurs, skip to next iteration
+                    // when an error occurs, skip to the next iteration
                 }
 
-                mProgress += progressStep;
+                progress += progressStep;
                 checkAndNotifyProgress();
             }
 
@@ -173,14 +172,14 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
                 throw new IntervalDetectorThresholdFactorOptimizerException();
             }
 
-            if (mListener != null) {
-                mListener.onOptimizeEnd(this);
+            if (listener != null) {
+                listener.onOptimizeEnd(this);
             }
 
         } finally {
-            mRunning = false;
+            running = false;
         }
 
-        return mOptimalThresholdFactor;
+        return optimalThresholdFactor;
     }
 }

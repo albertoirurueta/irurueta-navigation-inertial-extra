@@ -43,12 +43,12 @@ import com.irurueta.units.TimeUnit;
 /**
  * Estimates random walk data by running this estimator while the body of IMU remains static
  * at a given position and orientation when IMU has already been calibrated.
- * Internally this estimator accumulates samples for a given "drift period" to
+ * Internally, this estimator accumulates samples for a given "drift period" to
  * estimate accumulated drift values of position, velocity and attitude, and then
- * repeats the process several times to estimate mean and variance of such values.
- * The duration of the drift period is application dependant and should be set
+ * repeats the process several times to estimate the mean and variance of such values.
+ * The duration of the drift period is application-dependent. It should be set
  * to a value more or less similar to the amount of time the device won't be able
- * to set a position by some other system (e.g. GPS, Wi-Fi, cameras, etc...)
+ * to set a position by some other system (e.g., GPS, Wi-Fi, cameras, etc...)
  */
 public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         GyroscopeBiasRandomWalkSource, PositionUncertaintySource,
@@ -63,106 +63,106 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Listener to handle events raised by this estimator.
      */
-    private RandomWalkEstimatorListener mListener;
+    private RandomWalkEstimatorListener listener;
 
     /**
-     * Fixes body kinematics measurements using accelerometer + gyroscope
+     * Fixes body kinematics measurements using accelerometer and gyroscope
      * calibration data to fix measurements.
      */
-    private final BodyKinematicsFixer mFixer = new BodyKinematicsFixer();
+    private final BodyKinematicsFixer fixer = new BodyKinematicsFixer();
 
     /**
      * Estimates bias for fixed body kinematics measurements to determine further
      * bias variations while the IMU body remains static.
      */
-    private final BodyKinematicsBiasEstimator mBiasEstimator = new BodyKinematicsBiasEstimator();
+    private final BodyKinematicsBiasEstimator biasEstimator = new BodyKinematicsBiasEstimator();
 
     /**
      * Estimates amount of position, velocity and orientation drift.
      */
-    private final DriftEstimator mDriftEstimator = new DriftEstimator();
+    private final DriftEstimator driftEstimator = new DriftEstimator();
 
     /**
-     * Instance containing last fixed body kinematics to be reused.
+     * Instance containing the last fixed body kinematics to be reused.
      */
-    private final BodyKinematics mFixedKinematics = new BodyKinematics();
+    private final BodyKinematics fixedKinematics = new BodyKinematics();
 
     /**
      * Indicates whether measured kinematics must be fixed or not.
-     * When enabled, provided calibration data is used, otherwise it is
+     * When enabled, provided calibration data is used; otherwise it is
      * ignored.
-     * By default this is enabled.
+     * By default, this is enabled.
      */
-    private boolean mFixKinematics = true;
+    private boolean fixKinematics = true;
 
     /**
      * Number of samples to be used on each drift period.
      */
-    private int mDriftPeriodSamples = DEFAULT_DRIFT_PERIOD_SAMPLES;
+    private int driftPeriodSamples = DEFAULT_DRIFT_PERIOD_SAMPLES;
 
     /**
      * Indicates whether this estimator is running or not.
      */
-    private boolean mRunning;
+    private boolean running;
 
     /**
      * Number of drift periods that have been processed.
      */
-    private int mNumberOfProcessedDriftPeriods;
+    private int numberOfProcessedDriftPeriods;
 
     /**
      * Accelerometer bias random walk PSD (Power Spectral Density) expressed
      * in (m^2 * s^-5).
      */
-    private double mAccelerometerBiasPSD;
+    private double accelerometerBiasPSD;
 
     /**
      * Gyro bias random walk PSD (Power Spectral Density) expressed in (rad^2 * s^-3).
      */
-    private double mGyroBiasPSD;
+    private double gyroBiasPSD;
 
     /**
      * Average position drift expressed in meters (m).
-     * This gives an indication of position accuracy.
+     * This gives a sign of position accuracy.
      */
-    private double mAvgPositionDrift;
+    private double avgPositionDrift;
 
     /**
      * Average velocity drift expressed in meters per second (m/s).
      */
-    private double mAvgVelocityDrift;
+    private double avgVelocityDrift;
 
     /**
      * Average attitude drift expressed in radians (rad).
      */
-    private double mAvgAttitudeDrift;
+    private double avgAttitudeDrift;
 
     /**
-     * Position variance expressed in squared meters (m^2).
+     * Position variance expressed in square meters (m^2).
      */
-    private double mVarPositionDrift;
+    private double varPositionDrift;
 
     /**
      * Velocity variance expressed in (m^2/s^2).
      */
-    private double mVarVelocityDrift;
+    private double varVelocityDrift;
 
     /**
      * Attitude variance expressed in squared radians (rad^2).
      */
-    private double mVarAttitudeDrift;
+    private double varAttitudeDrift;
 
     /**
      * Contains acceleration triad to be reused for bias norm estimation.
      * This is reused for efficiency.
      */
-    private final AccelerationTriad mAccelerationTriad = new AccelerationTriad();
+    private final AccelerationTriad accelerationTriad = new AccelerationTriad();
 
     /**
      * Contains angular speed triad to be reused for bias norm estimation.
      * This is reused for efficiency.
      */
-    private final AngularSpeedTriad mAngularSpeedTriad = new AngularSpeedTriad();
+    private final AngularSpeedTriad angularSpeedTriad = new AngularSpeedTriad();
 
     /**
      * Constructor.
@@ -176,19 +176,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param listener listener to handle events.
      */
     public RandomWalkEstimator(final RandomWalkEstimatorListener listener) {
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
      * Constructor.
      *
      * @param ba acceleration bias to be set.
-     * @param ma acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg angular speed bias to be set.
-     * @param mg angular speed cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg angular speed cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final AccelerationTriad ba,
@@ -209,13 +209,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * Constructor.
      *
      * @param ba       acceleration bias to be set.
-     * @param ma       acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma       acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg       angular speed bias to be set.
-     * @param mg       angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg       angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final AccelerationTriad ba,
@@ -225,20 +225,20 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final RandomWalkEstimatorListener listener)
             throws AlgebraException {
         this(ba, ma, bg, mg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
      * Constructor.
      *
      * @param ba acceleration bias to be set.
-     * @param ma acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg angular speed bias to be set.
-     * @param mg angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg angular speed g-dependent cross biases matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg angular speed g-dependent cross-biases matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final AccelerationTriad ba,
@@ -258,14 +258,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * Constructor.
      *
      * @param ba       acceleration bias to be set.
-     * @param ma       acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma       acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg       angular speed bias to be set.
-     * @param mg       angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg       angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg       angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg       angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final AccelerationTriad ba,
@@ -275,7 +275,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix gg,
             final RandomWalkEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg, gg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -283,13 +283,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *
      * @param ba acceleration bias to be set expressed in meters per squared second
      *           (m/s`2). Must be 3x1.
-     * @param ma acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg angular speed bias to be set expressed in radians per second
      *           (rad/s). Must be 3x1.
-     * @param mg angular speed cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg angular speed cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices do not have proper
+     * @throws IllegalArgumentException if any of the provided matrices do not have a proper
      *                                  size.
      */
     public RandomWalkEstimator(
@@ -312,14 +312,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *
      * @param ba       acceleration bias to be set expressed in meters per squared second
      *                 (m/s`2). Must be 3x1.
-     * @param ma       acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma       acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg       angular speed bias to be set expressed in radians per second
      *                 (rad/s). Must be 3x1.
-     * @param mg       angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg       angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices do not have proper
+     * @throws IllegalArgumentException if any of the provided matrices do not have a proper
      *                                  size.
      */
     public RandomWalkEstimator(
@@ -329,7 +329,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix mg,
             final RandomWalkEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -337,14 +337,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *
      * @param ba acceleration bias to be set expressed in meters per squared second
      *           (m/s`2). Must be 3x1.
-     * @param ma acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg angular speed bias to be set expressed in radians per second
      *           (rad/s). Must be 3x1.
-     * @param mg angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg angular speed g-dependent cross biases matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg angular speed g-dependent cross-biases matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices do not have proper
+     * @throws IllegalArgumentException if any of the provided matrices do not have a proper
      *                                  size.
      */
     public RandomWalkEstimator(
@@ -366,15 +366,15 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *
      * @param ba       acceleration bias to be set expressed in meters per squared second
      *                 (m/s`2). Must be 3x1.
-     * @param ma       acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma       acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg       angular speed bias to be set expressed in radians per second
      *                 (rad/s). Must be 3x1.
-     * @param mg       angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg       angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg       angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg       angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices do not have proper
+     * @throws IllegalArgumentException if any of the provided matrices do not have a proper
      *                                  size.
      */
     public RandomWalkEstimator(
@@ -385,7 +385,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix gg,
             final RandomWalkEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg, gg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -400,8 +400,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
-            final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException {
+            final CoordinateTransformation nedC) throws InvalidSourceAndDestinationFrameTypeException {
         try {
             setNedPositionAndNedOrientation(nedPosition, nedC);
         } catch (final LockedException ignore) {
@@ -423,10 +422,9 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
             final CoordinateTransformation nedC,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException {
         this(nedPosition, nedC);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -436,15 +434,15 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC        body to NED coordinate transformation indicating
      *                    body orientation.
      * @param ba          acceleration bias to be set.
-     * @param ma          acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma          acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg          angular speed bias to be set.
-     * @param mg          angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg          angular speed cross-coupling errors matrix. Must be 3x3.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -452,8 +450,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AccelerationTriad ba,
             final Matrix ma,
             final AngularSpeedTriad bg,
-            final Matrix mg)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final Matrix mg) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(nedPosition, nedC);
         try {
             setAccelerationBias(ba);
@@ -472,16 +469,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC        body to NED coordinate transformation indicating
      *                    body orientation.
      * @param ba          acceleration bias to be set.
-     * @param ma          acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma          acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg          angular speed bias to be set.
-     * @param mg          angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg          angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener    listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -490,10 +487,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final AngularSpeedTriad bg,
             final Matrix mg,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -503,16 +500,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC        body to NED coordinate transformation indicating
      *                    body orientation.
      * @param ba          acceleration bias to be set.
-     * @param ma          acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma          acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg          angular speed bias to be set.
-     * @param mg          angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg          angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg          angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg          angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -521,8 +518,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final AngularSpeedTriad bg,
             final Matrix mg,
-            final Matrix gg)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final Matrix gg) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(nedPosition, nedC);
         try {
             setAccelerationBias(ba);
@@ -542,17 +538,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC        body to NED coordinate transformation indicating
      *                    body orientation.
      * @param ba          acceleration bias to be set.
-     * @param ma          acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma          acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg          angular speed bias to be set.
-     * @param mg          angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg          angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg          angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg          angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener    listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -562,10 +558,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AngularSpeedTriad bg,
             final Matrix mg,
             final Matrix gg,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg, gg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -576,16 +572,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *                    body orientation.
      * @param ba          acceleration bias to be set expressed in meters per squared second
      *                    (m/s`2). Must be 3x1.
-     * @param ma          acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma          acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg          angular speed bias to be set expressed in radians per second
      *                    (rad/s). Must be 3x1.
-     * @param mg          angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg          angular speed cross-coupling errors matrix. Must be 3x3.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -593,8 +589,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ba,
             final Matrix ma,
             final Matrix bg,
-            final Matrix mg)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final Matrix mg) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(nedPosition, nedC);
         try {
             setAccelerationBias(ba);
@@ -614,17 +609,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *                    body orientation.
      * @param ba          acceleration bias to be set expressed in meters per squared second
      *                    (m/s`2). Must be 3x1.
-     * @param ma          acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma          acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg          angular speed bias to be set expressed in radians per second
      *                    (rad/s). Must be 3x1.
-     * @param mg          angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg          angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener    listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -633,10 +628,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final Matrix bg,
             final Matrix mg,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -647,17 +642,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *                    body orientation.
      * @param ba          acceleration bias to be set expressed in meters per squared second
      *                    (m/s`2). Must be 3x1.
-     * @param ma          acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma          acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg          angular speed bias to be set expressed in radians per second
      *                    (rad/s). Must be 3x1.
-     * @param mg          angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg          angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg          angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg          angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -666,8 +661,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final Matrix bg,
             final Matrix mg,
-            final Matrix gg)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final Matrix gg) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg);
         try {
             setAngularSpeedGDependantCrossBias(gg);
@@ -684,18 +678,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *                    body orientation.
      * @param ba          acceleration bias to be set expressed in meters per squared second
      *                    (m/s`2). Must be 3x1.
-     * @param ma          acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma          acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg          angular speed bias to be set expressed in radians per second
      *                    (rad/s). Must be 3x1.
-     * @param mg          angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg          angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg          angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg          angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener    listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -705,10 +699,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix bg,
             final Matrix mg,
             final Matrix gg,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg, gg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -723,8 +717,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
-            final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException {
+            final CoordinateTransformation nedC) throws InvalidSourceAndDestinationFrameTypeException {
         try {
             setEcefPositionAndNedOrientation(ecefPosition, nedC);
         } catch (final LockedException ignore) {
@@ -746,10 +739,9 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
             final CoordinateTransformation nedC,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException {
         this(ecefPosition, nedC);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -759,15 +751,15 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -775,8 +767,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AccelerationTriad ba,
             final Matrix ma,
             final AngularSpeedTriad bg,
-            final Matrix mg)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final Matrix mg) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(ecefPosition, nedC);
         try {
             setAccelerationBias(ba);
@@ -795,16 +786,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -813,10 +804,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final AngularSpeedTriad bg,
             final Matrix mg,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -826,16 +817,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -844,8 +835,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final AngularSpeedTriad bg,
             final Matrix mg,
-            final Matrix gg)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final Matrix gg) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(ecefPosition, nedC);
         try {
             setAccelerationBias(ba);
@@ -865,17 +855,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -885,10 +875,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AngularSpeedTriad bg,
             final Matrix mg,
             final Matrix gg,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg, gg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -898,15 +888,15 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -914,8 +904,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ba,
             final Matrix ma,
             final Matrix bg,
-            final Matrix mg)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final Matrix mg) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(ecefPosition, nedC);
         try {
             setAccelerationBias(ba);
@@ -934,16 +923,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -952,10 +941,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final Matrix bg,
             final Matrix mg,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -965,16 +954,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -983,8 +972,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final Matrix bg,
             final Matrix mg,
-            final Matrix gg)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final Matrix gg) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg);
         try {
             setAngularSpeedGDependantCrossBias(gg);
@@ -1000,17 +988,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1020,10 +1008,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix bg,
             final Matrix mg,
             final Matrix gg,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg, gg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1033,17 +1021,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating
      *                     body orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -1052,8 +1040,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final AngularSpeedTriad bg,
             final Matrix mg,
-            final double timeInterval)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final double timeInterval) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg);
         try {
             setTimeInterval(timeInterval);
@@ -1069,18 +1056,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating
      *                     body orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -1090,10 +1077,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AngularSpeedTriad bg,
             final Matrix mg,
             final double timeInterval,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg, timeInterval);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1103,18 +1090,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating
      *                     body orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if provided, matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -1124,8 +1111,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AngularSpeedTriad bg,
             final Matrix mg,
             final Matrix gg,
-            final double timeInterval)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final double timeInterval) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg, gg);
         try {
             setTimeInterval(timeInterval);
@@ -1141,19 +1127,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating
      *                     body orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if provided, matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -1164,10 +1150,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix mg,
             final Matrix gg,
             final double timeInterval,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg, gg, timeInterval);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1178,18 +1164,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *                     body orientation.
      * @param ba           acceleration bias to be set expressed in meters per squared second
      *                     (m/s`2). Must be 3x1.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set expressed in radians per second
      *                     (rad/s). Must be 3x1.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -1198,8 +1184,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final Matrix bg,
             final Matrix mg,
-            final double timeInterval)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final double timeInterval) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg);
         try {
             setTimeInterval(timeInterval);
@@ -1216,19 +1201,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *                     body orientation.
      * @param ba           acceleration bias to be set expressed in meters per squared second
      *                     (m/s`2). Must be 3x1.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set expressed in radians per second
      *                     (rad/s). Must be 3x1.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -1238,10 +1223,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix bg,
             final Matrix mg,
             final double timeInterval,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg, timeInterval);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1252,19 +1237,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *                     body orientation.
      * @param ba           acceleration bias to be set expressed in meters per squared second
      *                     (m/s`2). Must be 3x1.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set expressed in radians per second
      *                     (rad/s). Must be 3x1.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -1274,8 +1259,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix bg,
             final Matrix mg,
             final Matrix gg,
-            final double timeInterval)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final double timeInterval) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg, gg);
         try {
             setTimeInterval(timeInterval);
@@ -1292,20 +1276,20 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *                     body orientation.
      * @param ba           acceleration bias to be set expressed in meters per squared second
      *                     (m/s`2). Must be 3x1.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set expressed in radians per second
      *                     (rad/s). Must be 3x1.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final NEDPosition nedPosition,
@@ -1316,10 +1300,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix mg,
             final Matrix gg,
             final double timeInterval,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(nedPosition, nedC, ba, ma, bg, mg, gg, timeInterval);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1329,17 +1313,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1348,8 +1332,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final AngularSpeedTriad bg,
             final Matrix mg,
-            final double timeInterval)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final double timeInterval) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg);
         try {
             setTimeInterval(timeInterval);
@@ -1365,18 +1348,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1386,10 +1369,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AngularSpeedTriad bg,
             final Matrix mg,
             final double timeInterval,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg, timeInterval);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1399,18 +1382,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1420,8 +1403,8 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AngularSpeedTriad bg,
             final Matrix mg,
             final Matrix gg,
-            final double timeInterval)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final double timeInterval) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg, gg);
         try {
             setTimeInterval(timeInterval);
@@ -1437,19 +1420,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1460,10 +1443,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix mg,
             final Matrix gg,
             final double timeInterval,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg, gg, timeInterval);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1473,17 +1456,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1492,8 +1475,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix ma,
             final Matrix bg,
             final Matrix mg,
-            final double timeInterval)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final double timeInterval) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg);
         try {
             setTimeInterval(timeInterval);
@@ -1509,18 +1491,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1530,10 +1512,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix bg,
             final Matrix mg,
             final double timeInterval,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg, timeInterval);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1543,18 +1525,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1564,8 +1546,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix bg,
             final Matrix mg,
             final Matrix gg,
-            final double timeInterval)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final double timeInterval) throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg, gg);
         try {
             setTimeInterval(timeInterval);
@@ -1581,19 +1562,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param nedC         body to NED coordinate transformation indicating body
      *                     orientation.
      * @param ba           acceleration bias to be set.
-     * @param ma           acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma           acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg           angular speed bias to be set.
-     * @param mg           angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg           angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg           angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg           angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param timeInterval time interval between body kinematics samples expressed
      *                     in seconds (s).
      * @param listener     listener to handle events.
      * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
      *                                                       transformation is not from
      *                                                       body to NED coordinates.
-     * @throws AlgebraException                              if provided cross coupling matrices cannot
+     * @throws AlgebraException                              if provided cross-coupling matrices cannot
      *                                                       be inverted.
-     * @throws IllegalArgumentException                      if provided matrices are not 3x3.
+     * @throws IllegalArgumentException                      if any of the provided matrices are not 3x3.
      */
     public RandomWalkEstimator(
             final ECEFPosition ecefPosition,
@@ -1604,10 +1585,10 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Matrix mg,
             final Matrix gg,
             final double timeInterval,
-            final RandomWalkEstimatorListener listener)
-            throws InvalidSourceAndDestinationFrameTypeException, AlgebraException {
+            final RandomWalkEstimatorListener listener) throws InvalidSourceAndDestinationFrameTypeException,
+            AlgebraException {
         this(ecefPosition, nedC, ba, ma, bg, mg, gg, timeInterval);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1616,7 +1597,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return listener to handle events raised by this estimator.
      */
     public RandomWalkEstimatorListener getListener() {
-        return mListener;
+        return listener;
     }
 
     /**
@@ -1625,13 +1606,12 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param listener listener to handle events raised by this estimator.
      * @throws LockedException if estimator is running.
      */
-    public void setListener(final RandomWalkEstimatorListener listener)
-            throws LockedException {
-        if (mRunning) {
+    public void setListener(final RandomWalkEstimatorListener listener) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -1640,16 +1620,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return bias values expressed in meters per squared second.
      */
     public Matrix getAccelerationBias() {
-        return mFixer.getAccelerationBias();
+        return fixer.getAccelerationBias();
     }
 
     /**
      * Gets acceleration bias values expressed in meters per squared second (m/s^2).
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBias(final Matrix result) {
-        mFixer.getAccelerationBias(result);
+        fixer.getAccelerationBias(result);
     }
 
     /**
@@ -1658,15 +1638,15 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param bias bias values expressed in meters per squared second.
      *             Must be 3x1.
      * @throws LockedException          if estimator is running.
-     * @throws IllegalArgumentException if provided matrix is not 3x1.
+     * @throws IllegalArgumentException if matrix is not 3x1.
      */
     public void setAccelerationBias(final Matrix bias) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(bias);
-        mDriftEstimator.setAccelerationBias(bias);
+        fixer.setAccelerationBias(bias);
+        driftEstimator.setAccelerationBias(bias);
     }
 
     /**
@@ -1675,7 +1655,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return bias values expressed in meters per squared second.
      */
     public double[] getAccelerationBiasArray() {
-        return mFixer.getAccelerationBiasArray();
+        return fixer.getAccelerationBiasArray();
     }
 
     /**
@@ -1685,7 +1665,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws IllegalArgumentException if provided array does not have length 3.
      */
     public void getAccelerationBiasArray(final double[] result) {
-        mFixer.getAccelerationBiasArray(result);
+        fixer.getAccelerationBiasArray(result);
     }
 
     /**
@@ -1697,12 +1677,12 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws LockedException          if estimator is running.
      */
     public void setAccelerationBias(final double[] bias) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(bias);
-        mDriftEstimator.setAccelerationBias(bias);
+        fixer.setAccelerationBias(bias);
+        driftEstimator.setAccelerationBias(bias);
     }
 
     /**
@@ -1711,16 +1691,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return acceleration bias.
      */
     public AccelerationTriad getAccelerationBiasAsTriad() {
-        return mFixer.getAccelerationBiasAsTriad();
+        return fixer.getAccelerationBiasAsTriad();
     }
 
     /**
      * Gets acceleration bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBiasAsTriad(final AccelerationTriad result) {
-        mFixer.getAccelerationBiasAsTriad(result);
+        fixer.getAccelerationBiasAsTriad(result);
     }
 
     /**
@@ -1729,14 +1709,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param bias acceleration bias to be set.
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBias(final AccelerationTriad bias)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBias(final AccelerationTriad bias) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(bias);
-        mDriftEstimator.setAccelerationBias(bias);
+        fixer.setAccelerationBias(bias);
+        driftEstimator.setAccelerationBias(bias);
     }
 
     /**
@@ -1746,7 +1725,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return x-coordinate of bias expressed in meters per squared second (m/s^2).
      */
     public double getAccelerationBiasX() {
-        return mFixer.getAccelerationBiasX();
+        return fixer.getAccelerationBiasX();
     }
 
     /**
@@ -1758,12 +1737,12 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws LockedException if estimator is running.
      */
     public void setAccelerationBiasX(final double biasX) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasX(biasX);
-        mDriftEstimator.setAccelerationBiasX(biasX);
+        fixer.setAccelerationBiasX(biasX);
+        driftEstimator.setAccelerationBiasX(biasX);
     }
 
     /**
@@ -1773,7 +1752,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return y-coordinate of bias expressed in meters per squared second (m/s^2).
      */
     public double getAccelerationBiasY() {
-        return mFixer.getAccelerationBiasY();
+        return fixer.getAccelerationBiasY();
     }
 
     /**
@@ -1784,14 +1763,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *              (m/s^2).
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasY(final double biasY)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasY(final double biasY) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasY(biasY);
-        mDriftEstimator.setAccelerationBiasY(biasY);
+        fixer.setAccelerationBiasY(biasY);
+        driftEstimator.setAccelerationBiasY(biasY);
     }
 
     /**
@@ -1801,7 +1779,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return z-coordinate of bias expressed in meters per squared second (m/s^2).
      */
     public double getAccelerationBiasZ() {
-        return mFixer.getAccelerationBiasZ();
+        return fixer.getAccelerationBiasZ();
     }
 
     /**
@@ -1811,14 +1789,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasZ z-coordinate of bias expressed in meters per squared second (m/s^2).
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasZ(final double biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasZ(final double biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasZ(biasZ);
-        mDriftEstimator.setAccelerationBiasZ(biasZ);
+        fixer.setAccelerationBiasZ(biasZ);
+        driftEstimator.setAccelerationBiasZ(biasZ);
     }
 
     /**
@@ -1831,14 +1808,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws LockedException if estimator is running.
      */
     public void setAccelerationBias(
-            final double biasX, final double biasY, final double biasZ)
-            throws LockedException {
-        if (mRunning) {
+            final double biasX, final double biasY, final double biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(biasX, biasY, biasZ);
-        mDriftEstimator.setAccelerationBias(biasX, biasY, biasZ);
+        fixer.setAccelerationBias(biasX, biasY, biasZ);
+        driftEstimator.setAccelerationBias(biasX, biasY, biasZ);
     }
 
     /**
@@ -1847,16 +1823,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return acceleration x-coordinate of bias.
      */
     public Acceleration getAccelerationBiasXAsAcceleration() {
-        return mFixer.getAccelerationBiasXAsAcceleration();
+        return fixer.getAccelerationBiasXAsAcceleration();
     }
 
     /**
      * Gets acceleration x-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBiasXAsAcceleration(final Acceleration result) {
-        mFixer.getAccelerationBiasXAsAcceleration(result);
+        fixer.getAccelerationBiasXAsAcceleration(result);
     }
 
     /**
@@ -1866,12 +1842,12 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws LockedException if estimator is running.
      */
     public void setAccelerationBiasX(final Acceleration biasX) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasX(biasX);
-        mDriftEstimator.setAccelerationBiasX(biasX);
+        fixer.setAccelerationBiasX(biasX);
+        driftEstimator.setAccelerationBiasX(biasX);
     }
 
     /**
@@ -1880,16 +1856,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return acceleration y-coordinate of bias.
      */
     public Acceleration getAccelerationBiasYAsAcceleration() {
-        return mFixer.getAccelerationBiasYAsAcceleration();
+        return fixer.getAccelerationBiasYAsAcceleration();
     }
 
     /**
      * Gets acceleration y-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBiasYAsAcceleration(final Acceleration result) {
-        mFixer.getAccelerationBiasYAsAcceleration(result);
+        fixer.getAccelerationBiasYAsAcceleration(result);
     }
 
     /**
@@ -1898,14 +1874,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasY acceleration y-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasY(final Acceleration biasY)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasY(final Acceleration biasY) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasY(biasY);
-        mDriftEstimator.setAccelerationBiasY(biasY);
+        fixer.setAccelerationBiasY(biasY);
+        driftEstimator.setAccelerationBiasY(biasY);
     }
 
     /**
@@ -1914,16 +1889,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return acceleration z-coordinate of bias.
      */
     public Acceleration getAccelerationBiasZAsAcceleration() {
-        return mFixer.getAccelerationBiasZAsAcceleration();
+        return fixer.getAccelerationBiasZAsAcceleration();
     }
 
     /**
      * Gets acceleration z-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBiasZAsAcceleration(final Acceleration result) {
-        mFixer.getAccelerationBiasZAsAcceleration(result);
+        fixer.getAccelerationBiasZAsAcceleration(result);
     }
 
     /**
@@ -1932,14 +1907,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasZ z-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasZ(final Acceleration biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasZ(final Acceleration biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasZ(biasZ);
-        mDriftEstimator.setAccelerationBiasZ(biasZ);
+        fixer.setAccelerationBiasZ(biasZ);
+        driftEstimator.setAccelerationBiasZ(biasZ);
     }
 
     /**
@@ -1954,50 +1928,49 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final Acceleration biasX,
             final Acceleration biasY,
             final Acceleration biasZ) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(biasX, biasY, biasZ);
-        mDriftEstimator.setAccelerationBias(biasX, biasY, biasZ);
+        fixer.setAccelerationBias(biasX, biasY, biasZ);
+        driftEstimator.setAccelerationBias(biasX, biasY, biasZ);
     }
 
     /**
-     * Gets acceleration cross coupling errors matrix.
+     * Gets acceleration cross-coupling errors matrix.
      *
-     * @return acceleration cross coupling errors matrix.
+     * @return acceleration cross-coupling errors matrix.
      */
     public Matrix getAccelerationCrossCouplingErrors() {
-        return mFixer.getAccelerationCrossCouplingErrors();
+        return fixer.getAccelerationCrossCouplingErrors();
     }
 
     /**
-     * Gets acceleration cross coupling errors matrix.
+     * Gets acceleration cross-coupling errors matrix.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationCrossCouplingErrors(final Matrix result) {
-        mFixer.getAccelerationCrossCouplingErrors(result);
+        fixer.getAccelerationCrossCouplingErrors(result);
     }
 
     /**
-     * Sets acceleration cross coupling errors matrix.
+     * Sets acceleration cross-coupling errors matrix.
      *
-     * @param crossCouplingErrors acceleration cross coupling errors matrix.
+     * @param crossCouplingErrors acceleration cross-coupling errors matrix.
      *                            Must be 3x3.
      * @throws LockedException          if estimator is running.
-     * @throws AlgebraException         if provided matrix cannot be inverted.
-     * @throws IllegalArgumentException if provided matrix is not 3x3.
+     * @throws AlgebraException         if matrix cannot be inverted.
+     * @throws IllegalArgumentException if matrix is not 3x3.
      */
-    public void setAccelerationCrossCouplingErrors(
-            final Matrix crossCouplingErrors) throws AlgebraException,
+    public void setAccelerationCrossCouplingErrors(final Matrix crossCouplingErrors) throws AlgebraException,
             LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationCrossCouplingErrors(crossCouplingErrors);
-        mDriftEstimator.setAccelerationCrossCouplingErrors(crossCouplingErrors);
+        fixer.setAccelerationCrossCouplingErrors(crossCouplingErrors);
+        driftEstimator.setAccelerationCrossCouplingErrors(crossCouplingErrors);
     }
 
     /**
@@ -2006,7 +1979,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return x scaling factor.
      */
     public double getAccelerationSx() {
-        return mFixer.getAccelerationSx();
+        return fixer.getAccelerationSx();
     }
 
     /**
@@ -2014,17 +1987,15 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *
      * @param sx x scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationSx(final double sx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationSx(final double sx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationSx(sx);
-        mDriftEstimator.setAccelerationSx(sx);
+        fixer.setAccelerationSx(sx);
+        driftEstimator.setAccelerationSx(sx);
     }
 
     /**
@@ -2033,7 +2004,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return y scaling factor.
      */
     public double getAccelerationSy() {
-        return mFixer.getAccelerationSy();
+        return fixer.getAccelerationSy();
     }
 
     /**
@@ -2041,17 +2012,15 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *
      * @param sy y scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationSy(final double sy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationSy(final double sy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationSy(sy);
-        mDriftEstimator.setAccelerationSy(sy);
+        fixer.setAccelerationSy(sy);
+        driftEstimator.setAccelerationSy(sy);
     }
 
     /**
@@ -2060,7 +2029,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return z scaling factor.
      */
     public double getAccelerationSz() {
-        return mFixer.getAccelerationSz();
+        return fixer.getAccelerationSz();
     }
 
     /**
@@ -2068,179 +2037,165 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *
      * @param sz z scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationSz(final double sz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationSz(final double sz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationSz(sz);
-        mDriftEstimator.setAccelerationSz(sz);
+        fixer.setAccelerationSz(sz);
+        driftEstimator.setAccelerationSz(sz);
     }
 
     /**
-     * Gets acceleration x-y cross coupling error.
+     * Gets acceleration x-y cross-coupling error.
      *
-     * @return acceleration x-y cross coupling error.
+     * @return acceleration x-y cross-coupling error.
      */
     public double getAccelerationMxy() {
-        return mFixer.getAccelerationMxy();
+        return fixer.getAccelerationMxy();
     }
 
     /**
-     * Sets acceleration x-y cross coupling error.
+     * Sets acceleration x-y cross-coupling error.
      *
-     * @param mxy acceleration x-y cross coupling error.
+     * @param mxy acceleration x-y cross-coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMxy(final double mxy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMxy(final double mxy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMxy(mxy);
-        mDriftEstimator.setAccelerationMxy(mxy);
+        fixer.setAccelerationMxy(mxy);
+        driftEstimator.setAccelerationMxy(mxy);
     }
 
     /**
-     * Gets acceleration x-z cross coupling error.
+     * Gets acceleration x-z cross-coupling error.
      *
-     * @return acceleration x-z cross coupling error.
+     * @return acceleration x-z cross-coupling error.
      */
     public double getAccelerationMxz() {
-        return mFixer.getAccelerationMxz();
+        return fixer.getAccelerationMxz();
     }
 
     /**
-     * Sets acceleration x-z cross coupling error.
+     * Sets acceleration x-z cross-coupling error.
      *
-     * @param mxz acceleration x-z cross coupling error.
+     * @param mxz acceleration x-z cross-coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMxz(final double mxz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMxz(final double mxz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMxz(mxz);
-        mDriftEstimator.setAccelerationMxz(mxz);
+        fixer.setAccelerationMxz(mxz);
+        driftEstimator.setAccelerationMxz(mxz);
     }
 
     /**
-     * Gets acceleration y-x cross coupling error.
+     * Gets acceleration y-x cross-coupling error.
      *
-     * @return acceleration y-x cross coupling error.
+     * @return acceleration y-x cross-coupling error.
      */
     public double getAccelerationMyx() {
-        return mFixer.getAccelerationMyx();
+        return fixer.getAccelerationMyx();
     }
 
     /**
-     * Sets acceleration y-x cross coupling error.
+     * Sets acceleration y-x cross-coupling error.
      *
-     * @param myx acceleration y-x cross coupling error.
+     * @param myx acceleration y-x cross-coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMyx(final double myx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMyx(final double myx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMyx(myx);
-        mDriftEstimator.setAccelerationMyx(myx);
+        fixer.setAccelerationMyx(myx);
+        driftEstimator.setAccelerationMyx(myx);
     }
 
     /**
-     * Gets acceleration y-z cross coupling error.
+     * Gets acceleration y-z cross-coupling error.
      *
      * @return y-z cross coupling error.
      */
     public double getAccelerationMyz() {
-        return mFixer.getAccelerationMyz();
+        return fixer.getAccelerationMyz();
     }
 
     /**
-     * Sets acceleration y-z cross coupling error.
+     * Sets acceleration y-z cross-coupling error.
      *
      * @param myz y-z cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMyz(final double myz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMyz(final double myz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMyz(myz);
-        mDriftEstimator.setAccelerationMyz(myz);
+        fixer.setAccelerationMyz(myz);
+        driftEstimator.setAccelerationMyz(myz);
     }
 
     /**
-     * Gets acceleration z-x cross coupling error.
+     * Gets acceleration z-x cross-coupling error.
      *
-     * @return acceleration z-x cross coupling error.
+     * @return acceleration z-x cross-coupling error.
      */
     public double getAccelerationMzx() {
-        return mFixer.getAccelerationMzx();
+        return fixer.getAccelerationMzx();
     }
 
     /**
-     * Sets acceleration z-x cross coupling error.
+     * Sets acceleration z-x cross-coupling error.
      *
      * @param mzx acceleration z-x cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMzx(final double mzx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMzx(final double mzx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMzx(mzx);
-        mDriftEstimator.setAccelerationMzx(mzx);
+        fixer.setAccelerationMzx(mzx);
+        driftEstimator.setAccelerationMzx(mzx);
     }
 
     /**
-     * Gets acceleration z-y cross coupling error.
+     * Gets acceleration z-y cross-coupling error.
      *
-     * @return acceleration z-y cross coupling error.
+     * @return acceleration z-y cross-coupling error.
      */
     public double getAccelerationMzy() {
-        return mFixer.getAccelerationMzy();
+        return fixer.getAccelerationMzy();
     }
 
     /**
-     * Sets acceleration z-y cross coupling error.
+     * Sets acceleration z-y cross-coupling error.
      *
      * @param mzy acceleration z-y cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMzy(final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMzy(final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMzy(mzy);
-        mDriftEstimator.setAccelerationMzy(mzy);
+        fixer.setAccelerationMzy(mzy);
+        driftEstimator.setAccelerationMzy(mzy);
     }
 
     /**
@@ -2250,22 +2205,20 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param sy y scaling factor.
      * @param sz z scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided values make acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided values make acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationScalingFactors(
-            final double sx, final double sy, final double sz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationScalingFactors(final double sx, final double sy, final double sz) throws LockedException,
+            AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationScalingFactors(sx, sy, sz);
-        mDriftEstimator.setAccelerationScalingFactors(sx, sy, sz);
+        fixer.setAccelerationScalingFactors(sx, sy, sz);
+        driftEstimator.setAccelerationScalingFactors(sx, sy, sz);
     }
 
     /**
-     * Sets acceleration cross coupling errors.
+     * Sets acceleration cross-coupling errors.
      *
      * @param mxy x-y cross coupling error.
      * @param mxz x-z cross coupling error.
@@ -2274,25 +2227,22 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param mzx z-x cross coupling error.
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided values make acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided values make acceleration cross-coupling matrix non-invertible.
      */
     public void setAccelerationCrossCouplingErrors(
             final double mxy, final double mxz,
             final double myx, final double myz,
-            final double mzx, final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+            final double mzx, final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
-        mDriftEstimator.setAccelerationCrossCouplingErrors(
-                mxy, mxz, myx, myz, mzx, mzy);
+        fixer.setAccelerationCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
+        driftEstimator.setAccelerationCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
     }
 
     /**
-     * Sets acceleration scaling factors and cross coupling errors.
+     * Sets acceleration scaling factors and cross-coupling errors.
      *
      * @param sx  x scaling factor.
      * @param sy  y scaling factor.
@@ -2304,23 +2254,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param mzx z-x cross coupling error.
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided values make acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided values make acceleration cross-coupling matrix non-invertible.
      */
     public void setAccelerationScalingFactorsAndCrossCouplingErrors(
             final double sx, final double sy, final double sz,
             final double mxy, final double mxz,
             final double myx, final double myz,
-            final double mzx, final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+            final double mzx, final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
-        mDriftEstimator.setAccelerationScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        fixer.setAccelerationScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        driftEstimator.setAccelerationScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
     }
 
     /**
@@ -2329,32 +2275,32 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return angular speed bias values expressed in radians per second.
      */
     public Matrix getAngularSpeedBias() {
-        return mFixer.getAngularSpeedBias();
+        return fixer.getAngularSpeedBias();
     }
 
     /**
      * Gets angular speed bias values expressed in radians per second (rad/s).
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedBias(final Matrix result) {
-        mFixer.getAngularSpeedBias(result);
+        fixer.getAngularSpeedBias(result);
     }
 
     /**
      * Sets angular speed bias values expressed in radians per second (rad/s).
      *
      * @param bias bias values expressed in radians per second. Must be 3x1.
-     * @throws IllegalArgumentException if provided matrix is not 3x1.
+     * @throws IllegalArgumentException if matrix is not 3x1.
      * @throws LockedException          if estimator is running.
      */
     public void setAngularSpeedBias(final Matrix bias) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(bias);
-        mDriftEstimator.setAngularSpeedBias(bias);
+        fixer.setAngularSpeedBias(bias);
+        driftEstimator.setAngularSpeedBias(bias);
     }
 
     /**
@@ -2363,7 +2309,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return bias values expressed in radians per second.
      */
     public double[] getAngularSpeedBiasArray() {
-        return mFixer.getAngularSpeedBiasArray();
+        return fixer.getAngularSpeedBiasArray();
     }
 
     /**
@@ -2373,7 +2319,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws IllegalArgumentException if provided array does not have length 3.
      */
     public void getAngularSpeedBiasArray(final double[] result) {
-        mFixer.getAngularSpeedBiasArray(result);
+        fixer.getAngularSpeedBiasArray(result);
     }
 
     /**
@@ -2384,14 +2330,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws IllegalArgumentException if provided array does not have length 3.
      * @throws LockedException          if estimator is running.
      */
-    public void setAngularSpeedBias(final double[] bias)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBias(final double[] bias) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(bias);
-        mDriftEstimator.setAngularSpeedBias(bias);
+        fixer.setAngularSpeedBias(bias);
+        driftEstimator.setAngularSpeedBias(bias);
     }
 
     /**
@@ -2400,16 +2345,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return angular speed bias.
      */
     public AngularSpeedTriad getAngularSpeedBiasAsTriad() {
-        return mFixer.getAngularSpeedBiasAsTriad();
+        return fixer.getAngularSpeedBiasAsTriad();
     }
 
     /**
      * Gets angular speed bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedBiasAsTriad(final AngularSpeedTriad result) {
-        mFixer.getAngularSpeedBiasAsTriad(result);
+        fixer.getAngularSpeedBiasAsTriad(result);
     }
 
     /**
@@ -2418,14 +2363,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param bias angular speed bias to be set.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBias(final AngularSpeedTriad bias)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBias(final AngularSpeedTriad bias) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(bias);
-        mDriftEstimator.setAngularSpeedBias(bias);
+        fixer.setAngularSpeedBias(bias);
+        driftEstimator.setAngularSpeedBias(bias);
     }
 
     /**
@@ -2435,7 +2379,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return x-coordinate of bias expressed in radians per second (rad/s).
      */
     public double getAngularSpeedBiasX() {
-        return mFixer.getAngularSpeedBiasX();
+        return fixer.getAngularSpeedBiasX();
     }
 
     /**
@@ -2445,14 +2389,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasX x-coordinate of bias expressed in radians per second (rad/s).
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasX(final double biasX)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasX(final double biasX) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasX(biasX);
-        mDriftEstimator.setAngularSpeedBiasX(biasX);
+        fixer.setAngularSpeedBiasX(biasX);
+        driftEstimator.setAngularSpeedBiasX(biasX);
     }
 
     /**
@@ -2462,7 +2405,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return y-coordinate of bias expressed in radians per second (rad/s).
      */
     public double getAngularSpeedBiasY() {
-        return mFixer.getAngularSpeedBiasY();
+        return fixer.getAngularSpeedBiasY();
     }
 
     /**
@@ -2472,14 +2415,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasY y-coordinate of bias expressed in radians per second (rad/s).
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasY(final double biasY)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasY(final double biasY) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasY(biasY);
-        mDriftEstimator.setAngularSpeedBiasY(biasY);
+        fixer.setAngularSpeedBiasY(biasY);
+        driftEstimator.setAngularSpeedBiasY(biasY);
     }
 
     /**
@@ -2489,7 +2431,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return z-coordinate of bias expressed in radians per second (rad/s).
      */
     public double getAngularSpeedBiasZ() {
-        return mFixer.getAngularSpeedBiasZ();
+        return fixer.getAngularSpeedBiasZ();
     }
 
     /**
@@ -2499,14 +2441,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasZ z-coordinate of bias expressed in radians per second (rad/s).
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasZ(final double biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasZ(final double biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasZ(biasZ);
-        mDriftEstimator.setAngularSpeedBiasZ(biasZ);
+        fixer.setAngularSpeedBiasZ(biasZ);
+        driftEstimator.setAngularSpeedBiasZ(biasZ);
     }
 
     /**
@@ -2518,15 +2459,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasZ z-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBias(
-            final double biasX, final double biasY, final double biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBias(final double biasX, final double biasY, final double biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(biasX, biasY, biasZ);
-        mDriftEstimator.setAngularSpeedBias(biasX, biasY, biasZ);
+        fixer.setAngularSpeedBias(biasX, biasY, biasZ);
+        driftEstimator.setAngularSpeedBias(biasX, biasY, biasZ);
     }
 
     /**
@@ -2535,17 +2474,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return x-coordinate of bias.
      */
     public AngularSpeed getAngularSpeedBiasXAsAngularSpeed() {
-        return mFixer.getAngularSpeedBiasXAsAngularSpeed();
+        return fixer.getAngularSpeedBiasXAsAngularSpeed();
     }
 
     /**
      * Gets angular speed x-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
-    public void getAngularSpeedBiasXAsAngularSpeed(
-            final AngularSpeed result) {
-        mFixer.getAngularSpeedBiasXAsAngularSpeed(result);
+    public void getAngularSpeedBiasXAsAngularSpeed(final AngularSpeed result) {
+        fixer.getAngularSpeedBiasXAsAngularSpeed(result);
     }
 
     /**
@@ -2554,14 +2492,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasX x-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasX(final AngularSpeed biasX)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasX(final AngularSpeed biasX) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasX(biasX);
-        mDriftEstimator.setAngularSpeedBiasX(biasX);
+        fixer.setAngularSpeedBiasX(biasX);
+        driftEstimator.setAngularSpeedBiasX(biasX);
     }
 
     /**
@@ -2570,16 +2507,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return y-coordinate of bias.
      */
     public AngularSpeed getAngularSpeedBiasYAsAngularSpeed() {
-        return mFixer.getAngularSpeedBiasYAsAngularSpeed();
+        return fixer.getAngularSpeedBiasYAsAngularSpeed();
     }
 
     /**
      * Gets angular speed y-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedBiasYAsAngularSpeed(final AngularSpeed result) {
-        mFixer.getAngularSpeedBiasYAsAngularSpeed(result);
+        fixer.getAngularSpeedBiasYAsAngularSpeed(result);
     }
 
     /**
@@ -2588,14 +2525,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasY y-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasY(final AngularSpeed biasY)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasY(final AngularSpeed biasY) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasY(biasY);
-        mDriftEstimator.setAngularSpeedBiasY(biasY);
+        fixer.setAngularSpeedBiasY(biasY);
+        driftEstimator.setAngularSpeedBiasY(biasY);
     }
 
     /**
@@ -2604,16 +2540,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return z-coordinate of bias.
      */
     public AngularSpeed getAngularSpeedBiasZAsAngularSpeed() {
-        return mFixer.getAngularSpeedBiasZAsAngularSpeed();
+        return fixer.getAngularSpeedBiasZAsAngularSpeed();
     }
 
     /**
      * Gets angular speed z-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedBiasZAsAngularSpeed(final AngularSpeed result) {
-        mFixer.getAngularSpeedBiasZAsAngularSpeed(result);
+        fixer.getAngularSpeedBiasZAsAngularSpeed(result);
     }
 
     /**
@@ -2622,14 +2558,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param biasZ z-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasZ(final AngularSpeed biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasZ(final AngularSpeed biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasZ(biasZ);
-        mDriftEstimator.setAngularSpeedBiasZ(biasZ);
+        fixer.setAngularSpeedBiasZ(biasZ);
+        driftEstimator.setAngularSpeedBiasZ(biasZ);
     }
 
     /**
@@ -2644,48 +2579,48 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             final AngularSpeed biasX,
             final AngularSpeed biasY,
             final AngularSpeed biasZ) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(biasX, biasY, biasZ);
-        mDriftEstimator.setAngularSpeedBias(biasX, biasY, biasZ);
+        fixer.setAngularSpeedBias(biasX, biasY, biasZ);
+        driftEstimator.setAngularSpeedBias(biasX, biasY, biasZ);
     }
 
     /**
-     * Gets angular speed cross coupling errors matrix.
+     * Gets angular speed cross-coupling errors matrix.
      *
      * @return cross coupling errors matrix.
      */
     public Matrix getAngularSpeedCrossCouplingErrors() {
-        return mFixer.getAngularSpeedCrossCouplingErrors();
+        return fixer.getAngularSpeedCrossCouplingErrors();
     }
 
     /**
-     * Gets angular speed cross coupling errors matrix.
+     * Gets angular speed cross-coupling errors matrix.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedCrossCouplingErrors(final Matrix result) {
-        mFixer.getAngularSpeedCrossCouplingErrors(result);
+        fixer.getAngularSpeedCrossCouplingErrors(result);
     }
 
     /**
-     * Sets angular speed cross coupling errors matrix.
+     * Sets angular speed cross-coupling errors matrix.
      *
-     * @param crossCouplingErrors cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided matrix cannot be inverted.
-     * @throws IllegalArgumentException if provided matrix is not 3x3.
+     * @param crossCouplingErrors cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if matrix cannot be inverted.
+     * @throws IllegalArgumentException if matrix is not 3x3.
      * @throws LockedException          if estimator is running.
      */
-    public void setAngularSpeedCrossCouplingErrors(
-            final Matrix crossCouplingErrors) throws AlgebraException, LockedException {
-        if (mRunning) {
+    public void setAngularSpeedCrossCouplingErrors(final Matrix crossCouplingErrors) throws AlgebraException,
+            LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedCrossCouplingErrors(crossCouplingErrors);
-        mDriftEstimator.setAngularSpeedCrossCouplingErrors(crossCouplingErrors);
+        fixer.setAngularSpeedCrossCouplingErrors(crossCouplingErrors);
+        driftEstimator.setAngularSpeedCrossCouplingErrors(crossCouplingErrors);
     }
 
     /**
@@ -2694,7 +2629,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return x scaling factor.
      */
     public double getAngularSpeedSx() {
-        return mFixer.getAngularSpeedSx();
+        return fixer.getAngularSpeedSx();
     }
 
     /**
@@ -2702,17 +2637,15 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *
      * @param sx x scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes angular speed-cross coupling matrix non-invertible.
      */
-    public void setAngularSpeedSx(final double sx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedSx(final double sx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedSx(sx);
-        mDriftEstimator.setAngularSpeedSx(sx);
+        fixer.setAngularSpeedSx(sx);
+        driftEstimator.setAngularSpeedSx(sx);
     }
 
     /**
@@ -2721,25 +2654,24 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return y scaling factor.
      */
     public double getAngularSpeedSy() {
-        return mFixer.getAngularSpeedSy();
+        return fixer.getAngularSpeedSy();
     }
 
     /**
-     * Sets angular speed y scaling factor.
+     * Sets angular speed y-scaling factor.
      *
      * @param sy y scaling factor.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedSy(final double sy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedSy(final double sy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedSy(sy);
-        mDriftEstimator.setAngularSpeedSy(sy);
+        fixer.setAngularSpeedSy(sy);
+        driftEstimator.setAngularSpeedSy(sy);
     }
 
     /**
@@ -2748,7 +2680,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return z scaling factor.
      */
     public double getAngularSpeedSz() {
-        return mFixer.getAngularSpeedSz();
+        return fixer.getAngularSpeedSz();
     }
 
     /**
@@ -2757,178 +2689,171 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param sz z scaling factor.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedSz(final double sz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedSz(final double sz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedSz(sz);
-        mDriftEstimator.setAngularSpeedSz(sz);
+        fixer.setAngularSpeedSz(sz);
+        driftEstimator.setAngularSpeedSz(sz);
     }
 
     /**
-     * Gets angular speed x-y cross coupling error.
+     * Gets angular speed x-y cross-coupling error.
      *
      * @return x-y cross coupling error.
      */
     public double getAngularSpeedMxy() {
-        return mFixer.getAngularSpeedMxy();
+        return fixer.getAngularSpeedMxy();
     }
 
     /**
-     * Sets angular speed x-y cross coupling error.
+     * Sets angular speed x-y cross-coupling error.
      *
      * @param mxy x-y cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMxy(final double mxy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMxy(final double mxy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMxy(mxy);
-        mDriftEstimator.setAngularSpeedMxy(mxy);
+        fixer.setAngularSpeedMxy(mxy);
+        driftEstimator.setAngularSpeedMxy(mxy);
     }
 
     /**
-     * Gets angular speed x-z cross coupling error.
+     * Gets angular speed x-z cross-coupling error.
      *
      * @return x-z cross coupling error.
      */
     public double getAngularSpeedMxz() {
-        return mFixer.getAngularSpeedMxz();
+        return fixer.getAngularSpeedMxz();
     }
 
     /**
-     * Sets angular speed x-z cross coupling error.
+     * Sets angular speed x-z cross-coupling error.
      *
      * @param mxz x-z cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMxz(final double mxz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMxz(final double mxz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMxz(mxz);
-        mDriftEstimator.setAngularSpeedMxz(mxz);
+        fixer.setAngularSpeedMxz(mxz);
+        driftEstimator.setAngularSpeedMxz(mxz);
     }
 
     /**
-     * Gets angular speed y-x cross coupling error.
+     * Gets angular speed y-x cross-coupling error.
      *
      * @return y-x cross coupling error.
      */
     public double getAngularSpeedMyx() {
-        return mFixer.getAngularSpeedMyx();
+        return fixer.getAngularSpeedMyx();
     }
 
     /**
-     * Sets angular speed y-x cross coupling error.
+     * Sets angular speed y-x cross-coupling error.
      *
      * @param myx y-x cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMyx(final double myx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMyx(final double myx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMyx(myx);
-        mDriftEstimator.setAngularSpeedMyx(myx);
+        fixer.setAngularSpeedMyx(myx);
+        driftEstimator.setAngularSpeedMyx(myx);
     }
 
     /**
-     * Gets angular speed y-z cross coupling error.
+     * Gets angular speed y-z cross-coupling error.
      *
      * @return y-z cross coupling error.
      */
     public double getAngularSpeedMyz() {
-        return mFixer.getAngularSpeedMyz();
+        return fixer.getAngularSpeedMyz();
     }
 
     /**
-     * Sets angular speed y-z cross coupling error.
+     * Sets angular speed y-z cross-coupling error.
      *
      * @param myz y-z cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMyz(final double myz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMyz(final double myz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMyz(myz);
-        mDriftEstimator.setAngularSpeedMyz(myz);
+        fixer.setAngularSpeedMyz(myz);
+        driftEstimator.setAngularSpeedMyz(myz);
     }
 
     /**
-     * Gets angular speed z-x cross coupling error.
+     * Gets angular speed z-x cross-coupling error.
      *
      * @return z-x cross coupling error.
      */
     public double getAngularSpeedMzx() {
-        return mFixer.getAngularSpeedMzx();
+        return fixer.getAngularSpeedMzx();
     }
 
     /**
-     * Sets angular speed z-x cross coupling error.
+     * Sets angular speed z-x cross-coupling error.
      *
      * @param mzx z-x cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMzx(final double mzx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMzx(final double mzx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMzx(mzx);
-        mDriftEstimator.setAngularSpeedMzx(mzx);
+        fixer.setAngularSpeedMzx(mzx);
+        driftEstimator.setAngularSpeedMzx(mzx);
     }
 
     /**
-     * Gets angular speed z-y cross coupling error.
+     * Gets angular speed z-y cross-coupling error.
      *
      * @return z-y cross coupling error.
      */
     public double getAngularSpeedMzy() {
-        return mFixer.getAngularSpeedMzy();
+        return fixer.getAngularSpeedMzy();
     }
 
     /**
-     * Sets angular speed z-y cross coupling error.
+     * Sets angular speed z-y cross-coupling error.
      *
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMzy(final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMzy(final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMzy(mzy);
-        mDriftEstimator.setAngularSpeedMzy(mzy);
+        fixer.setAngularSpeedMzy(mzy);
+        driftEstimator.setAngularSpeedMzy(mzy);
     }
 
     /**
@@ -2939,21 +2864,20 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param sz z scaling factor.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided values make angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedScalingFactors(
-            final double sx, final double sy, final double sz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedScalingFactors(final double sx, final double sy, final double sz) throws LockedException,
+            AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedScalingFactors(sx, sy, sz);
-        mDriftEstimator.setAngularSpeedScalingFactors(sx, sy, sz);
+        fixer.setAngularSpeedScalingFactors(sx, sy, sz);
+        driftEstimator.setAngularSpeedScalingFactors(sx, sy, sz);
     }
 
     /**
-     * Sets angular speed cross coupling errors.
+     * Sets angular speed cross-coupling errors.
      *
      * @param mxy x-y cross coupling error.
      * @param mxz x-z cross coupling error.
@@ -2963,25 +2887,22 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided values make angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
     public void setAngularSpeedCrossCouplingErrors(
             final double mxy, final double mxz,
             final double myx, final double myz,
-            final double mzx, final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+            final double mzx, final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedCrossCouplingErrors(
-                mxy, mxz, myx, myz, mzx, mzy);
-        mDriftEstimator.setAngularSpeedCrossCouplingErrors(
-                mxy, mxz, myx, myz, mzx, mzy);
+        fixer.setAngularSpeedCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
+        driftEstimator.setAngularSpeedCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
     }
 
     /**
-     * Sets angular speed scaling factors and cross coupling errors.
+     * Sets angular speed scaling factors and cross-coupling errors.
      *
      * @param sx  x scaling factor.
      * @param sy  y scaling factor.
@@ -2994,22 +2915,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided values make angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
     public void setAngularSpeedScalingFactorsAndCrossCouplingErrors(
             final double sx, final double sy, final double sz,
             final double mxy, final double mxz,
             final double myx, final double myz,
-            final double mzx, final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+            final double mzx, final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
-        mDriftEstimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        fixer.setAngularSpeedScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        driftEstimator.setAngularSpeedScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
     }
 
     /**
@@ -3018,97 +2936,94 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return g-dependant cross biases matrix.
      */
     public Matrix getAngularSpeedGDependantCrossBias() {
-        return mFixer.getAngularSpeedGDependantCrossBias();
+        return fixer.getAngularSpeedGDependantCrossBias();
     }
 
     /**
      * Gets angular speed g-dependant cross biases matrix.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedGDependantCrossBias(final Matrix result) {
-        mFixer.getAngularSpeedGDependantCrossBias(result);
+        fixer.getAngularSpeedGDependantCrossBias(result);
     }
 
     /**
      * Sets angular speed g-dependant cross biases matrix.
      *
      * @param gDependantCrossBias g-dependant cross biases matrix.
-     * @throws IllegalArgumentException if provided matrix is not 3x3.
+     * @throws IllegalArgumentException if provided, matrix is not 3x3.
      * @throws LockedException          if estimator is running.
      */
-    public void setAngularSpeedGDependantCrossBias(final Matrix gDependantCrossBias)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedGDependantCrossBias(final Matrix gDependantCrossBias) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedGDependantCrossBias(gDependantCrossBias);
-        mDriftEstimator.setAngularSpeedGDependantCrossBias(gDependantCrossBias);
+        fixer.setAngularSpeedGDependantCrossBias(gDependantCrossBias);
+        driftEstimator.setAngularSpeedGDependantCrossBias(gDependantCrossBias);
     }
 
     /**
-     * Gets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Gets the time interval between body kinematics (IMU acceleration and gyroscope)
      * samples expressed in seconds (s).
      *
      * @return time interval between body kinematics samples.
      */
     public double getTimeInterval() {
-        return mBiasEstimator.getTimeInterval();
+        return biasEstimator.getTimeInterval();
     }
 
     /**
-     * Sets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Sets a time interval between body kinematics (IMU acceleration and gyroscope)
      * samples expressed in seconds (s).
      *
      * @param timeInterval time interval between body kinematics samples.
      * @throws LockedException if estimator is currently running.
      */
-    public void setTimeInterval(final double timeInterval)
-            throws LockedException {
-        if (mRunning) {
+    public void setTimeInterval(final double timeInterval) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setTimeInterval(timeInterval);
-        mDriftEstimator.setTimeInterval(timeInterval);
+        biasEstimator.setTimeInterval(timeInterval);
+        driftEstimator.setTimeInterval(timeInterval);
     }
 
     /**
-     * Gets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Gets time interval between body kinematics (IMU acceleration and gyroscope)
      * samples.
      *
      * @return time interval between body kinematics samples.
      */
     public Time getTimeIntervalAsTime() {
-        return mBiasEstimator.getTimeIntervalAsTime();
+        return biasEstimator.getTimeIntervalAsTime();
     }
 
     /**
-     * Gets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Gets time interval between body kinematics (IMU acceleration and gyroscope)
      * samples.
      *
-     * @param result instance where time interval will be stored.
+     * @param result instance where the time interval will be stored.
      */
     public void getTimeIntervalAsTime(final Time result) {
-        mBiasEstimator.getTimeIntervalAsTime(result);
+        biasEstimator.getTimeIntervalAsTime(result);
     }
 
     /**
-     * Sets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Sets time interval between body kinematics (IMU acceleration and gyroscope)
      * samples.
      *
      * @param timeInterval time interval between body kinematics samples.
      * @throws LockedException if estimator is currently running.
      */
-    public void setTimeInterval(final Time timeInterval)
-            throws LockedException {
-        if (mRunning) {
+    public void setTimeInterval(final Time timeInterval) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setTimeInterval(timeInterval);
-        mDriftEstimator.setTimeInterval(timeInterval);
+        biasEstimator.setTimeInterval(timeInterval);
+        driftEstimator.setTimeInterval(timeInterval);
     }
 
     /**
@@ -3117,7 +3032,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return current body position expressed in ECEF coordinates.
      */
     public ECEFPosition getEcefPosition() {
-        return mBiasEstimator.getEcefPosition();
+        return biasEstimator.getEcefPosition();
     }
 
     /**
@@ -3126,7 +3041,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param result instance where current body position will be stored.
      */
     public void getEcefPosition(final ECEFPosition result) {
-        mBiasEstimator.getEcefPosition(result);
+        biasEstimator.getEcefPosition(result);
     }
 
     /**
@@ -3135,14 +3050,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param position current body position to be set.
      * @throws LockedException if estimator is currently running.
      */
-    public void setEcefPosition(final ECEFPosition position)
-            throws LockedException {
-        if (mRunning) {
+    public void setEcefPosition(final ECEFPosition position) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPosition(position);
-        mDriftEstimator.setReferenceEcefPosition(position);
+        biasEstimator.setEcefPosition(position);
+        driftEstimator.setReferenceEcefPosition(position);
     }
 
     /**
@@ -3153,15 +3067,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param z z position resolved around ECEF axes and expressed in meters (m).
      * @throws LockedException if estimator is currently running.
      */
-    public void setEcefPosition(final double x, final double y, final double z)
-            throws LockedException {
-        if (mRunning) {
+    public void setEcefPosition(final double x, final double y, final double z) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPosition(x, y, z);
-        mDriftEstimator.setReferenceEcefPosition(
-                mBiasEstimator.getEcefPosition());
+        biasEstimator.setEcefPosition(x, y, z);
+        driftEstimator.setReferenceEcefPosition(biasEstimator.getEcefPosition());
     }
 
     /**
@@ -3172,15 +3084,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param z z position resolved around ECEF axes.
      * @throws LockedException if estimator is currently running.
      */
-    public void setEcefPosition(final Distance x, final Distance y, final Distance z)
-            throws LockedException {
-        if (mRunning) {
+    public void setEcefPosition(final Distance x, final Distance y, final Distance z) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPosition(x, y, z);
-        mDriftEstimator.setReferenceEcefPosition(
-                mBiasEstimator.getEcefPosition());
+        biasEstimator.setEcefPosition(x, y, z);
+        driftEstimator.setReferenceEcefPosition(biasEstimator.getEcefPosition());
     }
 
     /**
@@ -3189,15 +3099,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param position position resolved around ECEF axes and expressed in meters (m).
      * @throws LockedException if estimator is currently running.
      */
-    public void setEcefPosition(final Point3D position)
-            throws LockedException {
-        if (mRunning) {
+    public void setEcefPosition(final Point3D position) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPosition(position);
-        mDriftEstimator.setReferenceEcefPosition(
-                mBiasEstimator.getEcefPosition());
+        biasEstimator.setEcefPosition(position);
+        driftEstimator.setReferenceEcefPosition(biasEstimator.getEcefPosition());
     }
 
     /**
@@ -3209,7 +3117,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * around ECEF axes.
      */
     public ECEFFrame getEcefFrame() {
-        return mBiasEstimator.getEcefFrame();
+        return biasEstimator.getEcefFrame();
     }
 
     /**
@@ -3221,7 +3129,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *               orientation resolved around ECEF axes will be stored.
      */
     public void getEcefFrame(final ECEFFrame result) {
-        mBiasEstimator.getEcefFrame(result);
+        biasEstimator.getEcefFrame(result);
     }
 
     /**
@@ -3233,7 +3141,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * around NED axes.
      */
     public NEDFrame getNedFrame() {
-        return mBiasEstimator.getNedFrame();
+        return biasEstimator.getNedFrame();
     }
 
     /**
@@ -3245,7 +3153,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *               orientation resolved around NED axes will be stored.
      */
     public void getNedFrame(final NEDFrame result) {
-        mBiasEstimator.getNedFrame(result);
+        biasEstimator.getNedFrame(result);
     }
 
     /**
@@ -3254,7 +3162,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return current body position expressed in NED coordinates.
      */
     public NEDPosition getNedPosition() {
-        return mBiasEstimator.getNedPosition();
+        return biasEstimator.getNedPosition();
     }
 
     /**
@@ -3263,7 +3171,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param result instance where current body position will be stored.
      */
     public void getNedPosition(final NEDPosition result) {
-        mBiasEstimator.getNedPosition(result);
+        biasEstimator.getNedPosition(result);
     }
 
     /**
@@ -3272,14 +3180,13 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param position current body position to be set.
      * @throws LockedException if estimator is currently running.
      */
-    public void setNedPosition(final NEDPosition position)
-            throws LockedException {
-        if (mRunning) {
+    public void setNedPosition(final NEDPosition position) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPosition(position);
-        mDriftEstimator.setReferenceNedPosition(position);
+        biasEstimator.setNedPosition(position);
+        driftEstimator.setReferenceNedPosition(position);
     }
 
     /**
@@ -3290,16 +3197,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param height    height NED coordinate expressed in meters (m).
      * @throws LockedException if estimator is currently running.
      */
-    public void setNedPosition(
-            final double latitude, final double longitude, final double height)
+    public void setNedPosition(final double latitude, final double longitude, final double height)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPosition(latitude, longitude, height);
-        mDriftEstimator.setReferenceEcefPosition(
-                mBiasEstimator.getEcefPosition());
+        biasEstimator.setNedPosition(latitude, longitude, height);
+        driftEstimator.setReferenceEcefPosition(biasEstimator.getEcefPosition());
     }
 
     /**
@@ -3310,16 +3215,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param height    height NED coordinate expressed in meters (m).
      * @throws LockedException if estimator is currently running.
      */
-    public void setNedPosition(
-            final Angle latitude, final Angle longitude, final double height)
+    public void setNedPosition(final Angle latitude, final Angle longitude, final double height)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPosition(latitude, longitude, height);
-        mDriftEstimator.setReferenceEcefPosition(
-                mBiasEstimator.getEcefPosition());
+        biasEstimator.setNedPosition(latitude, longitude, height);
+        driftEstimator.setReferenceEcefPosition(biasEstimator.getEcefPosition());
     }
 
     /**
@@ -3330,23 +3233,21 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param height    height NED coordinate.
      * @throws LockedException if estimator is currently running.
      */
-    public void setNedPosition(
-            final Angle latitude, final Angle longitude, final Distance height)
+    public void setNedPosition(final Angle latitude, final Angle longitude, final Distance height)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPosition(latitude, longitude, height);
-        mDriftEstimator.setReferenceEcefPosition(
-                mBiasEstimator.getEcefPosition());
+        biasEstimator.setNedPosition(latitude, longitude, height);
+        driftEstimator.setReferenceEcefPosition(biasEstimator.getEcefPosition());
     }
 
     /**
      * Gets current body orientation as a transformation from body to ECEF coordinates.
      * Notice that returned orientation refers to ECEF Earth axes, which means that
      * orientation is not relative to the ground or horizon at current body position.
-     * Typically it is more convenient to use {@link #getNedC()} to obtain orientation
+     * Typically, it is more convenient to use {@link #getNedC()} to get orientation
      * relative to the ground or horizon at current body position. For instance, on
      * Android devices a NED orientation with Euler angles (roll = 0, pitch = 0,
      * yaw = 0) means that the device is laying flat on a horizontal surface with the
@@ -3355,14 +3256,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return current body orientation resolved on ECEF axes.
      */
     public CoordinateTransformation getEcefC() {
-        return mBiasEstimator.getEcefC();
+        return biasEstimator.getEcefC();
     }
 
     /**
      * Gets current body orientation as a transformation from body to ECEF coordinates.
      * Notice that returned orientation refers to ECEF Earth axes, which means that
      * orientation is not relative to the ground or horizon at current body position.
-     * Typically it is more convenient to use {@link #getNedC()} to obtain orientation
+     * Typically, it is more convenient to use {@link #getNedC()} to get orientation
      * relative to the ground or horizon at current body position. For instance, on
      * Android devices a NED orientation with Euler angles (roll = 0, pitch = 0,
      * yaw = 0) means that the device is laying flat on a horizontal surface with the
@@ -3372,14 +3273,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *               will be stored.
      */
     public void getEcefC(final CoordinateTransformation result) {
-        mBiasEstimator.getEcefC(result);
+        biasEstimator.getEcefC(result);
     }
 
     /**
      * Sets current body orientation as a transformation from body to ECEF coordinates.
      * Notice that ECEF orientation refers to ECEF Earth axes, which means that
      * orientation is not relative to the ground or horizon at current body position.
-     * Typically it is more convenient to use
+     * Typically, it is more convenient to use
      * {@link #setNedC(CoordinateTransformation)} to specify orientation relative to
      * the ground or horizon at current body position.
      * For instance, on Android devices a NED orientation with Euler angles (roll = 0,
@@ -3387,25 +3288,25 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * with the screen facing down towards the ground.
      *
      * @param ecefC body orientation resolved on ECEF axes to be set.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
      *                                                       running.
      */
-    public void setEcefC(final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
-        if (mRunning) {
+    public void setEcefC(final CoordinateTransformation ecefC) throws InvalidSourceAndDestinationFrameTypeException,
+            LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefC(ecefC);
-        mDriftEstimator.setReferenceEcefCoordinateTransformation(ecefC);
+        biasEstimator.setEcefC(ecefC);
+        driftEstimator.setReferenceEcefCoordinateTransformation(ecefC);
     }
 
     /**
      * Gets current body orientation as a transformation from body to NED coordinates.
-     * Notice that returned orientation refers to current local position. This means
+     * Notice that returned orientation refers to the current local position. This means
      * that two equal NED orientations will transform into different ECEF orientations
      * if the body is located at different positions.
      * As a reference, on Android devices a NED orientation with Euler angles
@@ -3415,12 +3316,12 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return current body orientation resolved on NED axes.
      */
     public CoordinateTransformation getNedC() {
-        return mBiasEstimator.getNedC();
+        return biasEstimator.getNedC();
     }
 
     /**
      * Gets current body orientation as a transformation from body to NED coordinates.
-     * Notice that returned orientation refers to current local position. This means
+     * Notice that returned orientation refers to the current local position. This means
      * that two equal NED orientations will transform into different ECEF orientations
      * if the body is located at different positions.
      * As a reference, on Android devices a NED orientation with Euler angles
@@ -3431,12 +3332,12 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      *               will be stored.
      */
     public void getNedC(final CoordinateTransformation result) {
-        mBiasEstimator.getNedC(result);
+        biasEstimator.getNedC(result);
     }
 
     /**
      * Sets current body orientation as a transformation from body to NED coordinates.
-     * Notice that provided orientation refers to current local position. This means
+     * Notice that the provided orientation refers to the current local position. This means
      * that two equal NED orientations will transform into different ECEF orientations
      * if the body is located at different positions.
      * As a reference, on Android devices a NED orientation with Euler angles
@@ -3450,15 +3351,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws LockedException                               if estimator is currently
      *                                                       running.
      */
-    public void setNedC(final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void setNedC(final CoordinateTransformation nedC) throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedC(nedC);
-        mDriftEstimator.setReferenceNedCoordinateTransformation(nedC);
+        biasEstimator.setNedC(nedC);
+        driftEstimator.setReferenceNedCoordinateTransformation(nedC);
     }
 
     /**
@@ -3475,16 +3375,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setNedPosition(NEDPosition)
      * @see #setNedC(CoordinateTransformation)
      */
-    public void setNedPositionAndNedOrientation(
-            final NEDPosition nedPosition, final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+    public void setNedPositionAndNedOrientation(final NEDPosition nedPosition, final CoordinateTransformation nedC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPositionAndNedOrientation(nedPosition, nedC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setNedPositionAndNedOrientation(nedPosition, nedC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
@@ -3504,17 +3402,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setNedC(CoordinateTransformation)
      */
     public void setNedPositionAndNedOrientation(
-            final double latitude, final double longitude, final double height,
-            final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final double latitude, final double longitude, final double height, final CoordinateTransformation nedC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPositionAndNedOrientation(latitude, longitude,
-                height, nedC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setNedPositionAndNedOrientation(latitude, longitude, height, nedC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
@@ -3534,17 +3429,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setNedC(CoordinateTransformation)
      */
     public void setNedPositionAndNedOrientation(
-            final Angle latitude, final Angle longitude, final double height,
-            final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final Angle latitude, final Angle longitude, final double height, final CoordinateTransformation nedC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPositionAndNedOrientation(latitude, longitude,
-                height, nedC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setNedPositionAndNedOrientation(latitude, longitude, height, nedC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
@@ -3564,17 +3456,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setNedC(CoordinateTransformation)
      */
     public void setNedPositionAndNedOrientation(
-            final Angle latitude, final Angle longitude, final Distance height,
-            final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final Angle latitude, final Angle longitude, final Distance height, final CoordinateTransformation nedC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPositionAndNedOrientation(latitude, longitude,
-                height, nedC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setNedPositionAndNedOrientation(latitude, longitude, height, nedC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
@@ -3583,7 +3472,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param ecefPosition position expressed on ECEF coordinates.
      * @param ecefC        body to ECEF coordinate transformation indicating body
      *                     orientation.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
@@ -3592,16 +3481,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setEcefC(CoordinateTransformation)
      */
     public void setEcefPositionAndEcefOrientation(
-            final ECEFPosition ecefPosition,
-            final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final ECEFPosition ecefPosition, final CoordinateTransformation ecefC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPositionAndEcefOrientation(ecefPosition, ecefC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setEcefPositionAndEcefOrientation(ecefPosition, ecefC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
@@ -3612,7 +3499,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param z     z coordinate of ECEF position expressed in meters (m).
      * @param ecefC body to ECEF coordinate transformation indicating body
      *              orientation.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
@@ -3621,16 +3508,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setEcefC(CoordinateTransformation)
      */
     public void setEcefPositionAndEcefOrientation(
-            final double x, final double y, final double z,
-            final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final double x, final double y, final double z, final CoordinateTransformation ecefC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPositionAndEcefOrientation(x, y, z, ecefC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setEcefPositionAndEcefOrientation(x, y, z, ecefC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
@@ -3641,7 +3526,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param z     z coordinate of ECEF position.
      * @param ecefC body to ECEF coordinate transformation indicating body
      *              orientation.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
@@ -3650,16 +3535,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setEcefC(CoordinateTransformation)
      */
     public void setEcefPositionAndEcefOrientation(
-            final Distance x, final Distance y, final Distance z,
-            final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final Distance x, final Distance y, final Distance z, final CoordinateTransformation ecefC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPositionAndEcefOrientation(x, y, z, ecefC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setEcefPositionAndEcefOrientation(x, y, z, ecefC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
@@ -3668,7 +3551,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param position position resolved around ECEF axes and expressed in meters (m).
      * @param ecefC    body to ECEF coordinate transformation indicating body
      *                 orientation.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
@@ -3676,26 +3559,24 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setEcefPosition(Point3D)
      * @see #setEcefC(CoordinateTransformation)
      */
-    public void setEcefPositionAndEcefOrientation(
-            final Point3D position, final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+    public void setEcefPositionAndEcefOrientation(final Point3D position, final CoordinateTransformation ecefC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPositionAndEcefOrientation(position, ecefC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setEcefPositionAndEcefOrientation(position, ecefC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Sets position expressed on NED coordinates and orientation respect to ECEF
+     * Sets position expressed on NED coordinates and orientation with respect to ECEF
      * axes.
      *
      * @param position position expressed on NED coordinates.
      * @param ecefC    body to ECEF coordinate transformation indicating body
      *                 orientation.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
@@ -3704,20 +3585,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setEcefC(CoordinateTransformation)
      */
     public void setNedPositionAndEcefOrientation(
-            final NEDPosition position,
-            final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final NEDPosition position, final CoordinateTransformation ecefC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPositionAndEcefOrientation(position, ecefC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setNedPositionAndEcefOrientation(position, ecefC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Sets position expressed on NED coordinates and orientation respect to ECEF
+     * Sets position expressed on NED coordinates and orientation with respect to ECEF
      * axes.
      *
      * @param latitude  latitude expressed in radians (rad).
@@ -3725,7 +3604,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param height    height expressed in meters (m).
      * @param ecefC     body to ECEF coordinate transformation indicating body
      *                  orientation.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
@@ -3733,22 +3612,19 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setNedPosition(double, double, double)
      * @see #setEcefC(CoordinateTransformation)
      */
-    public void setNedPositionAndEcefOrientation(
-            final double latitude, final double longitude, final double height,
-            final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException,
+    public void setNedPositionAndEcefOrientation(final double latitude, final double longitude, final double height,
+            final CoordinateTransformation ecefC) throws InvalidSourceAndDestinationFrameTypeException,
             LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPositionAndEcefOrientation(latitude, longitude,
-                height, ecefC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setNedPositionAndEcefOrientation(latitude, longitude, height, ecefC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Sets position expressed on NED coordinates and orientation respect to ECEF
+     * Sets position expressed on NED coordinates and orientation with respect to ECEF
      * axes.
      *
      * @param latitude  latitude.
@@ -3756,7 +3632,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param height    height expressed in meters (m).
      * @param ecefC     body to ECEF coordinate transformation indicating body
      *                  orientation.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
@@ -3765,21 +3641,18 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setEcefC(CoordinateTransformation)
      */
     public void setNedPositionAndEcefOrientation(
-            final Angle latitude, final Angle longitude, final double height,
-            final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final Angle latitude, final Angle longitude, final double height, final CoordinateTransformation ecefC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPositionAndEcefOrientation(latitude, longitude,
-                height, ecefC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setNedPositionAndEcefOrientation(latitude, longitude, height, ecefC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Sets position expressed on NED coordinates and orientation respect to ECEF
+     * Sets position expressed on NED coordinates and orientation with respect to ECEF
      * axes.
      *
      * @param latitude  latitude.
@@ -3787,7 +3660,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param height    height.
      * @param ecefC     body to ECEF coordinate transformation indicating body
      *                  orientation.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided coordinate
+     * @throws InvalidSourceAndDestinationFrameTypeException if coordinate
      *                                                       transformation is not from
      *                                                       body to ECEF coordinates.
      * @throws LockedException                               if estimator is currently
@@ -3796,23 +3669,20 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setEcefC(CoordinateTransformation)
      */
     public void setNedPositionAndEcefOrientation(
-            final Angle latitude, final Angle longitude, final Distance height,
-            final CoordinateTransformation ecefC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final Angle latitude, final Angle longitude, final Distance height, final CoordinateTransformation ecefC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setNedPositionAndEcefOrientation(latitude, longitude,
-                height, ecefC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setNedPositionAndEcefOrientation(latitude, longitude, height, ecefC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Sets position expressed on ECEF coordinates and orientation respect to
+     * Sets position expressed on ECEF coordinates and orientation with respect to
      * NED axes.
-     * In order to preserve provided orientation, first position is set and
+     * To preserve the provided orientation, the first position is set and
      * then orientation is applied.
      *
      * @param ecefPosition position expressed on ECEF coordinates.
@@ -3827,22 +3697,20 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setNedC(CoordinateTransformation)
      */
     public void setEcefPositionAndNedOrientation(
-            final ECEFPosition ecefPosition,
-            final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final ECEFPosition ecefPosition, final CoordinateTransformation nedC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPositionAndNedOrientation(ecefPosition, nedC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setEcefPositionAndNedOrientation(ecefPosition, nedC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Sets position expressed on ECEF coordinates and orientation respect to
+     * Sets position expressed on ECEF coordinates and orientation with respect to
      * NED axes.
-     * In order to preserve provided orientation, first position is set and
+     * To preserve the provided orientation, the first position is set and
      * then orientation is applied.
      *
      * @param x    x coordinate of ECEF position expressed in meters (m).
@@ -3859,22 +3727,20 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setNedC(CoordinateTransformation)
      */
     public void setEcefPositionAndNedOrientation(
-            final double x, final double y, final double z,
-            final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final double x, final double y, final double z, final CoordinateTransformation nedC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPositionAndNedOrientation(x, y, z, nedC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setEcefPositionAndNedOrientation(x, y, z, nedC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Sets position expressed on ECEF coordinates and orientation respect to
+     * Sets position expressed on ECEF coordinates and orientation with respect to
      * NED axes.
-     * In order to preserve provided orientation, first position is set and
+     * To preserve the provided orientation, the first position is set and
      * then orientation is applied.
      *
      * @param x    x coordinate of ECEF position.
@@ -3891,22 +3757,20 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setNedC(CoordinateTransformation)
      */
     public void setEcefPositionAndNedOrientation(
-            final Distance x, final Distance y, final Distance z,
-            final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+            final Distance x, final Distance y, final Distance z, final CoordinateTransformation nedC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPositionAndNedOrientation(x, y, z, nedC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setEcefPositionAndNedOrientation(x, y, z, nedC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Sets position expressed on ECEF coordinates and orientation respect to
+     * Sets position expressed on ECEF coordinates and orientation with respect to
      * NED axes.
-     * In order to preserve provided orientation, first position is set and
+     * To preserve the provided orientation, the first position is set and
      * then orientation is applied.
      *
      * @param position position resolved around ECEF axes and expressed in meters (m).
@@ -3920,132 +3784,128 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @see #setEcefPosition(Point3D)
      * @see #setNedC(CoordinateTransformation)
      */
-    public void setEcefPositionAndNedOrientation(
-            final Point3D position, final CoordinateTransformation nedC)
-            throws InvalidSourceAndDestinationFrameTypeException,
-            LockedException {
-        if (mRunning) {
+    public void setEcefPositionAndNedOrientation(final Point3D position, final CoordinateTransformation nedC)
+            throws InvalidSourceAndDestinationFrameTypeException, LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mBiasEstimator.setEcefPositionAndNedOrientation(position, nedC);
-        mDriftEstimator.setReferenceFrame(mBiasEstimator.getEcefFrame());
+        biasEstimator.setEcefPositionAndNedOrientation(position, nedC);
+        driftEstimator.setReferenceFrame(biasEstimator.getEcefFrame());
     }
 
     /**
-     * Gets number of samples that have been processed so far.
+     * Gets the number of samples that have been processed so far.
      *
      * @return number of samples that have been processed so far.
      */
     public int getNumberOfProcessedSamples() {
-        return mBiasEstimator.getNumberOfProcessedSamples();
+        return biasEstimator.getNumberOfProcessedSamples();
     }
 
     /**
-     * Gets number of drift periods that have been processed.
+     * Gets the number of drift periods that have been processed.
      *
      * @return number of drift periods that have been processed.
      */
     public int getNumberOfProcessedDriftPeriods() {
-        return mNumberOfProcessedDriftPeriods;
+        return numberOfProcessedDriftPeriods;
     }
 
     /**
-     * Gets amount of total elapsed time since first processed measurement expressed
+     * Gets amount of total elapsed time since the first processed measurement expressed
      * in seconds (s).
      *
      * @return amount of total elapsed time.
      */
     public double getElapsedTimeSeconds() {
-        return mBiasEstimator.getElapsedTimeSeconds();
+        return biasEstimator.getElapsedTimeSeconds();
     }
 
     /**
-     * Gets amount of total elapsed time since first processed measurement.
+     * Gets the amount of total elapsed time since the first processed measurement.
      *
      * @return amount of total elapsed time.
      */
     public Time getElapsedTime() {
-        return mBiasEstimator.getElapsedTime();
+        return biasEstimator.getElapsedTime();
     }
 
     /**
-     * Gets amount of total elapsed time since first processed measurement.
+     * Gets the amount of total elapsed time since the first processed measurement.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getElapsedTime(final Time result) {
-        mBiasEstimator.getElapsedTime(result);
+        biasEstimator.getElapsedTime(result);
     }
 
     /**
      * Indicates whether measured kinematics must be fixed or not.
-     * When enabled, provided calibration data is used, otherwise it is
+     * When enabled, provided calibration data is used; otherwise it is
      * ignored.
-     * By default this is enabled.
+     * By default, this is enabled.
      *
      * @return indicates whether measured kinematics must be fixed or not.
      */
     public boolean isFixKinematicsEnabled() {
-        return mFixKinematics;
+        return fixKinematics;
     }
 
     /**
      * Specifies whether measured kinematics must be fixed or not.
-     * When enabled, provided calibration data is used, otherwise it is
+     * When enabled, provided calibration data is used; otherwise it is
      * ignored.
      *
      * @param fixKinematics true if measured kinematics must be fixed or not.
      * @throws LockedException if estimator is currently running.
      */
-    public void setFixKinematicsEnabled(final boolean fixKinematics)
-            throws LockedException {
-        if (mRunning) {
+    public void setFixKinematicsEnabled(final boolean fixKinematics) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
-        mFixKinematics = fixKinematics;
-        mDriftEstimator.setFixKinematicsEnabled(fixKinematics);
+        this.fixKinematics = fixKinematics;
+        driftEstimator.setFixKinematicsEnabled(fixKinematics);
     }
 
     /**
-     * Gets number of samples to be used on each drift period.
+     * Gets the number of samples to be used on each drift period.
      *
      * @return number of samples to be used on each drift period.
      */
     public int getDriftPeriodSamples() {
-        return mDriftPeriodSamples;
+        return driftPeriodSamples;
     }
 
     /**
-     * Sets number of samples to be used on each drift period.
+     * Sets the number of samples to be used on each drift period.
      *
      * @param driftPeriodSamples number of samples to be used on each drift period.
      * @throws LockedException          if estimator is currently running.
      * @throws IllegalArgumentException if provided value is negative or zero.
      */
-    public void setDriftPeriodSamples(int driftPeriodSamples)
-            throws LockedException {
-        if (mRunning) {
+    public void setDriftPeriodSamples(int driftPeriodSamples) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
         if (driftPeriodSamples <= 0) {
             throw new IllegalArgumentException();
         }
 
-        mDriftPeriodSamples = driftPeriodSamples;
+        this.driftPeriodSamples = driftPeriodSamples;
     }
 
     /**
-     * Gets duration of each drift period expressed in seconds (s).
+     * Gets the duration of each drift period expressed in seconds (s).
      *
      * @return duration of each drift period.
      */
     public double getDriftPeriodSeconds() {
-        return mDriftPeriodSamples * getTimeInterval();
+        return driftPeriodSamples * getTimeInterval();
     }
 
     /**
-     * Gets duration of each drift period.
+     * Gets the duration of each drift period.
      *
      * @return duration of each drift period.
      */
@@ -4054,9 +3914,9 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     }
 
     /**
-     * Gets duration of each drift period.
+     * Gets the duration of each drift period.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getDriftPeriod(final Time result) {
         result.setValue(getDriftPeriodSeconds());
@@ -4069,7 +3929,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return true if estimator is running, false otherwise.
      */
     public boolean isRunning() {
-        return mRunning;
+        return running;
     }
 
     /**
@@ -4079,11 +3939,11 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return true if ready, false otherwise.
      */
     public boolean isReady() {
-        return mDriftEstimator.isReady();
+        return driftEstimator.isReady();
     }
 
     /**
-     * Adds a sample of measured body kinematics (accelerometer + gyroscope readings)
+     * Adds a sample of measured body kinematics (accelerometer and gyroscope readings)
      * obtained from an IMU, fixes their values and uses fixed values to estimate
      * any additional existing bias or position and velocity variation while the
      * IMU body remains static.
@@ -4093,101 +3953,93 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws RandomWalkEstimationException if estimation fails for some reason.
      * @throws NotReadyException             if estimator is not ready.
      */
-    public void addBodyKinematics(final BodyKinematics kinematics)
-            throws LockedException, RandomWalkEstimationException,
-            NotReadyException {
+    public void addBodyKinematics(final BodyKinematics kinematics) throws LockedException,
+            RandomWalkEstimationException, NotReadyException {
 
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        if (!mDriftEstimator.isReady()) {
+        if (!driftEstimator.isReady()) {
             throw new NotReadyException();
         }
 
         try {
-            mRunning = true;
+            running = true;
 
-            final int numberOfSamples = getNumberOfProcessedSamples();
+            final var numberOfSamples = getNumberOfProcessedSamples();
 
-            if (numberOfSamples == 0 && mListener != null) {
-                mListener.onStart(this);
+            if (numberOfSamples == 0 && listener != null) {
+                listener.onStart(this);
             }
 
-            if (mFixKinematics) {
-                mFixer.fix(kinematics, mFixedKinematics);
+            if (fixKinematics) {
+                fixer.fix(kinematics, fixedKinematics);
             } else {
-                mFixedKinematics.copyFrom(kinematics);
+                fixedKinematics.copyFrom(kinematics);
             }
 
-            mBiasEstimator.addBodyKinematics(mFixedKinematics);
+            biasEstimator.addBodyKinematics(fixedKinematics);
 
-            final double timeInterval = getTimeInterval();
+            final var timeInterval = getTimeInterval();
 
             // update random walk values)
 
-            // obtain accumulated mean of bias values for all processed samples.
-            // If calibration and sensor was perfect, this should be zero
-            final double elapsedTime = getElapsedTimeSeconds();
-            mBiasEstimator.getBiasF(mAccelerationTriad);
-            mBiasEstimator.getBiasAngularRate(mAngularSpeedTriad);
+            // Get accumulated mean of bias values for all processed samples.
+            // If calibration and sensor were perfect, this should be zero
+            final var elapsedTime = getElapsedTimeSeconds();
+            biasEstimator.getBiasF(accelerationTriad);
+            biasEstimator.getBiasAngularRate(angularSpeedTriad);
 
-            final double accelerationBiasNorm = mAccelerationTriad.getNorm();
-            final double angularSpeedBiasNorm = mAngularSpeedTriad.getNorm();
+            final var accelerationBiasNorm = accelerationTriad.getNorm();
+            final var angularSpeedBiasNorm = angularSpeedTriad.getNorm();
 
-            // estimate PSD's of rates of variation of bias values for all processed
+            // estimate rates of variation PSD's of bias values for all processed
             // samples
-            mAccelerometerBiasPSD = Math.pow(accelerationBiasNorm / elapsedTime, 2.0)
-                    * timeInterval;
-            mGyroBiasPSD = Math.pow(angularSpeedBiasNorm / elapsedTime, 2.0)
-                    * timeInterval;
-
+            accelerometerBiasPSD = Math.pow(accelerationBiasNorm / elapsedTime, 2.0) * timeInterval;
+            gyroBiasPSD = Math.pow(angularSpeedBiasNorm / elapsedTime, 2.0) * timeInterval;
 
             // internally drift estimator will fix kinematics if needed
-            mDriftEstimator.addBodyKinematics(kinematics);
+            driftEstimator.addBodyKinematics(kinematics);
 
-            if (numberOfSamples % mDriftPeriodSamples == 0) {
+            if (numberOfSamples % driftPeriodSamples == 0) {
                 // for each drift period, update mean and variance values
                 // of drift and reset drift estimator
-                final double n = mNumberOfProcessedDriftPeriods + 1.0;
-                final double tmp = mNumberOfProcessedDriftPeriods / n;
+                final var n = numberOfProcessedDriftPeriods + 1.0;
+                final var tmp = numberOfProcessedDriftPeriods / n;
 
-                final double positionDrift = mDriftEstimator
-                        .getCurrentPositionDriftNormMeters();
-                final double velocityDrift = mDriftEstimator
-                        .getCurrentVelocityDriftNormMetersPerSecond();
-                final double attitudeDrift = mDriftEstimator
-                        .getCurrentOrientationDriftRadians();
+                final var positionDrift = driftEstimator.getCurrentPositionDriftNormMeters();
+                final var velocityDrift = driftEstimator.getCurrentVelocityDriftNormMetersPerSecond();
+                final var attitudeDrift = driftEstimator.getCurrentOrientationDriftRadians();
 
-                mAvgPositionDrift = mAvgPositionDrift * tmp + positionDrift / n;
-                mAvgVelocityDrift = mAvgVelocityDrift * tmp + velocityDrift / n;
-                mAvgAttitudeDrift = mAvgAttitudeDrift * tmp + attitudeDrift / n;
+                avgPositionDrift = avgPositionDrift * tmp + positionDrift / n;
+                avgVelocityDrift = avgVelocityDrift * tmp + velocityDrift / n;
+                avgAttitudeDrift = avgAttitudeDrift * tmp + attitudeDrift / n;
 
-                final double diffPositionDrift = positionDrift - mAvgPositionDrift;
-                final double diffVelocityDrift = velocityDrift - mAvgVelocityDrift;
-                final double diffAttitudeDrift = attitudeDrift - mAvgAttitudeDrift;
+                final var diffPositionDrift = positionDrift - avgPositionDrift;
+                final var diffVelocityDrift = velocityDrift - avgVelocityDrift;
+                final var diffAttitudeDrift = attitudeDrift - avgAttitudeDrift;
 
-                final double diffPositionDrift2 = diffPositionDrift * diffPositionDrift;
-                final double diffVelocityDrift2 = diffVelocityDrift * diffVelocityDrift;
-                final double diffAttitudeDrift2 = diffAttitudeDrift * diffAttitudeDrift;
+                final var diffPositionDrift2 = diffPositionDrift * diffPositionDrift;
+                final var diffVelocityDrift2 = diffVelocityDrift * diffVelocityDrift;
+                final var diffAttitudeDrift2 = diffAttitudeDrift * diffAttitudeDrift;
 
-                mVarPositionDrift = mVarPositionDrift * tmp + diffPositionDrift2 / n;
-                mVarVelocityDrift = mVarVelocityDrift * tmp + diffVelocityDrift2 / n;
-                mVarAttitudeDrift = mVarAttitudeDrift * tmp + diffAttitudeDrift2 / n;
+                varPositionDrift = varPositionDrift * tmp + diffPositionDrift2 / n;
+                varVelocityDrift = varVelocityDrift * tmp + diffVelocityDrift2 / n;
+                varAttitudeDrift = varAttitudeDrift * tmp + diffAttitudeDrift2 / n;
 
-                mDriftEstimator.reset();
-                mNumberOfProcessedDriftPeriods++;
+                driftEstimator.reset();
+                numberOfProcessedDriftPeriods++;
             }
 
-            if (mListener != null) {
-                mListener.onBodyKinematicsAdded(this, kinematics,
-                        mFixedKinematics);
+            if (listener != null) {
+                listener.onBodyKinematicsAdded(this, kinematics, fixedKinematics);
             }
 
         } catch (AlgebraException | DriftEstimationException e) {
             throw new RandomWalkEstimationException(e);
         } finally {
-            mRunning = false;
+            running = false;
         }
     }
 
@@ -4198,30 +4050,30 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @throws LockedException if estimator is currently running.
      */
     public boolean reset() throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mRunning = true;
-        if (mBiasEstimator.reset()) {
-            mAccelerometerBiasPSD = 0.0;
-            mGyroBiasPSD = 0.0;
-            mNumberOfProcessedDriftPeriods = 0;
-            mAvgPositionDrift = 0.0;
-            mAvgVelocityDrift = 0.0;
-            mAvgAttitudeDrift = 0.0;
-            mVarPositionDrift = 0.0;
-            mVarVelocityDrift = 0.0;
-            mVarAttitudeDrift = 0.0;
+        running = true;
+        if (biasEstimator.reset()) {
+            accelerometerBiasPSD = 0.0;
+            gyroBiasPSD = 0.0;
+            numberOfProcessedDriftPeriods = 0;
+            avgPositionDrift = 0.0;
+            avgVelocityDrift = 0.0;
+            avgAttitudeDrift = 0.0;
+            varPositionDrift = 0.0;
+            varVelocityDrift = 0.0;
+            varAttitudeDrift = 0.0;
 
-            if (mListener != null) {
-                mListener.onReset(this);
+            if (listener != null) {
+                listener.onReset(this);
             }
 
-            mRunning = false;
+            running = false;
             return true;
         } else {
-            mRunning = false;
+            running = false;
             return false;
         }
     }
@@ -4235,7 +4087,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     @Override
     public double getAccelerometerBiasPSD() {
-        return mAccelerometerBiasPSD;
+        return accelerometerBiasPSD;
     }
 
     /**
@@ -4247,17 +4099,17 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     @Override
     public double getGyroBiasPSD() {
-        return mGyroBiasPSD;
+        return gyroBiasPSD;
     }
 
     /**
-     * Gets estimated position noise variance expressed in squared meters (m^2).
+     * Gets estimated position noise variance expressed in square meters (m^2).
      * This can be used by {@link INSLooselyCoupledKalmanConfig}.
      *
      * @return position variance.
      */
     public double getPositionNoiseVariance() {
-        return mVarPositionDrift;
+        return varPositionDrift;
     }
 
     /**
@@ -4267,7 +4119,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return velocity variance.
      */
     public double getVelocityNoiseVariance() {
-        return mVarVelocityDrift;
+        return varVelocityDrift;
     }
 
     /**
@@ -4276,7 +4128,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return attitude variance.
      */
     public double getAttitudeNoiseVariance() {
-        return mVarAttitudeDrift;
+        return varAttitudeDrift;
     }
 
     /**
@@ -4287,7 +4139,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     @Override
     public double getPositionNoiseStandardDeviation() {
-        return Math.sqrt(mVarPositionDrift);
+        return Math.sqrt(varPositionDrift);
     }
 
     /**
@@ -4297,18 +4149,16 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return standard deviation of position noise.
      */
     public Distance getPositionNoiseStandardDeviationAsDistance() {
-        return new Distance(getPositionNoiseStandardDeviation(),
-                DistanceUnit.METER);
+        return new Distance(getPositionNoiseStandardDeviation(), DistanceUnit.METER);
     }
 
     /**
      * Gets standard deviation of position noise.
      * This can be used by {@link INSLooselyCoupledKalmanConfig}.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
-    public void getPositionNoiseStandardDeviationAsDistance(
-            final Distance result) {
+    public void getPositionNoiseStandardDeviationAsDistance(final Distance result) {
         result.setValue(getPositionNoiseStandardDeviation());
         result.setUnit(DistanceUnit.METER);
     }
@@ -4322,7 +4172,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     @Override
     public double getVelocityNoiseStandardDeviation() {
-        return Math.sqrt(mVarVelocityDrift);
+        return Math.sqrt(varVelocityDrift);
     }
 
     /**
@@ -4332,15 +4182,14 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return standard deviation of velocity noise.
      */
     public Speed getVelocityNoiseStandardDeviationAsSpeed() {
-        return new Speed(getVelocityNoiseStandardDeviation(),
-                SpeedUnit.METERS_PER_SECOND);
+        return new Speed(getVelocityNoiseStandardDeviation(), SpeedUnit.METERS_PER_SECOND);
     }
 
     /**
      * Gets standard deviation of velocity noise.
      * This can be used by {@link INSLooselyCoupledKalmanConfig}.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getVelocityNoiseStandardDeviationAsSpeed(final Speed result) {
         result.setValue(getVelocityNoiseStandardDeviation());
@@ -4353,7 +4202,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return standard deviation of attitude noise.
      */
     public double getAttitudeNoiseStandardDeviation() {
-        return Math.sqrt(mVarAttitudeDrift);
+        return Math.sqrt(varAttitudeDrift);
     }
 
     /**
@@ -4368,7 +4217,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Gets standard deviation of attitude noise.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAttitudeNoiseStandardDeviationAsAngle(final Angle result) {
         result.setValue(getAttitudeNoiseStandardDeviation());
@@ -4382,7 +4231,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     @Override
     public double getPositionUncertainty() {
-        return mAvgPositionDrift;
+        return avgPositionDrift;
     }
 
     /**
@@ -4397,7 +4246,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Gets position uncertainty.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getPositionUncertaintyAsDistance(final Distance result) {
         result.setValue(getPositionUncertainty());
@@ -4411,7 +4260,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     @Override
     public double getVelocityUncertainty() {
-        return mAvgVelocityDrift;
+        return avgVelocityDrift;
     }
 
     /**
@@ -4426,7 +4275,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Gets velocity uncertainty.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getVelocityUncertaintyAsSpeed(final Speed result) {
         result.setValue(getVelocityUncertainty());
@@ -4440,7 +4289,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      */
     @Override
     public double getAttitudeUncertainty() {
-        return mAvgAttitudeDrift;
+        return avgAttitudeDrift;
     }
 
     /**
@@ -4455,7 +4304,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Gets attitude uncertainty.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAttitudeUncertaintyAsAngle(final Angle result) {
         result.setValue(getAttitudeUncertainty());
@@ -4471,7 +4320,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @return last fixed body kinematics.
      */
     public BodyKinematics getFixedKinematics() {
-        return mFixedKinematics;
+        return fixedKinematics;
     }
 
     /**
@@ -4483,6 +4332,6 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * @param result last fixed body kinematics.
      */
     public void getFixedKinematics(final BodyKinematics result) {
-        result.copyFrom(mFixedKinematics);
+        result.copyFrom(fixedKinematics);
     }
 }

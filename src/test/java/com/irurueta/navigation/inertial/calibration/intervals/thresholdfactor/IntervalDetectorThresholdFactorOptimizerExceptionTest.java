@@ -15,15 +15,15 @@
  */
 package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class IntervalDetectorThresholdFactorOptimizerExceptionTest {
+class IntervalDetectorThresholdFactorOptimizerExceptionTest {
 
     @Test
-    public void testConstructor() {
-        IntervalDetectorThresholdFactorOptimizerException ex = new IntervalDetectorThresholdFactorOptimizerException();
+    void testConstructor() {
+        var ex = new IntervalDetectorThresholdFactorOptimizerException();
         assertNotNull(ex);
 
         ex = new IntervalDetectorThresholdFactorOptimizerException("message");

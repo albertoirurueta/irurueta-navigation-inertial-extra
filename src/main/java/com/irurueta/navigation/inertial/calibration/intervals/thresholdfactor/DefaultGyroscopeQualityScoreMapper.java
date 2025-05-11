@@ -17,7 +17,6 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
 
 import com.irurueta.navigation.inertial.calibration.BodyKinematicsSequence;
 import com.irurueta.navigation.inertial.calibration.StandardDeviationTimedBodyKinematics;
-import java.util.List;
 
 /**
  * Default implementation to map a given measurement into a given quality score to be
@@ -34,12 +33,12 @@ public class DefaultGyroscopeQualityScoreMapper implements
      */
     @Override
     public double map(final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> value) {
-        final List<StandardDeviationTimedBodyKinematics> items = value.getSortedItems();
+        final var items = value.getSortedItems();
         if (items != null) {
-            final int count = value.getItemsCount();
+            final var count = value.getItemsCount();
 
-            double avg = 0.0;
-            for (StandardDeviationTimedBodyKinematics item : items) {
+            var avg = 0.0;
+            for (var item : items) {
                 avg += (item.getSpecificForceStandardDeviation() + item.getAngularRateStandardDeviation()) / count;
             }
 

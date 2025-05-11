@@ -20,8 +20,8 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
  * Mean Square Error (MSE), estimated gyroscope calibration Mean Square Error
  * (MSE) and estimated magnetometer calibrator Mean Square Error (MSE) into a
  * single MSE value.
- * Typical implementation simply sums all three MSE values, however, custom
- * implementations can be made to make one error more prevalent than other, etc.
+ * Typical implementation simply sums all three MSE values; however, custom
+ * implementations can be made to make one error more prevalent than the other, etc.
  */
 public interface AccelerometerGyroscopeAndMagnetometerMseRule {
 

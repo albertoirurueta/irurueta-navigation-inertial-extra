@@ -18,15 +18,13 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
 import com.irurueta.navigation.inertial.calibration.BodyKinematicsSequence;
 import com.irurueta.navigation.inertial.calibration.StandardDeviationTimedBodyKinematics;
 import com.irurueta.statistics.UniformRandomizer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DefaultGyroscopeQualityScoreMapperTest {
+class DefaultGyroscopeQualityScoreMapperTest {
 
     private static final double MAX_SPECIFIC_FORCE = 9.81;
     private static final double MAX_ANGULAR_RATE_VALUE = 1.0;
@@ -36,27 +34,26 @@ public class DefaultGyroscopeQualityScoreMapperTest {
     private static final int NUM_ITEMS = 100;
 
     @Test
-    public void testMap() {
-        final UniformRandomizer randomizer = new UniformRandomizer(new Random());
+    void testMap() {
+        final var randomizer = new UniformRandomizer();
 
-        double avg = 0.0;
-        final List<StandardDeviationTimedBodyKinematics> items = new ArrayList<>();
-        for (int i = 0; i < NUM_ITEMS; i++) {
-            final double specificForceStandardDeviation = randomizer.nextDouble(0.0, MAX_SPECIFIC_FORCE);
-            final double angularRateStandardDeviation = randomizer.nextDouble(0.0, MAX_ANGULAR_RATE_VALUE);
-            final StandardDeviationTimedBodyKinematics item = new StandardDeviationTimedBodyKinematics(
-                    TIME_INTERVAL * i, specificForceStandardDeviation, angularRateStandardDeviation);
+        var avg = 0.0;
+        final var items = new ArrayList<StandardDeviationTimedBodyKinematics>();
+        for (var i = 0; i < NUM_ITEMS; i++) {
+            final var specificForceStandardDeviation = randomizer.nextDouble(0.0, MAX_SPECIFIC_FORCE);
+            final var angularRateStandardDeviation = randomizer.nextDouble(0.0, MAX_ANGULAR_RATE_VALUE);
+            final var item = new StandardDeviationTimedBodyKinematics(TIME_INTERVAL * i,
+                    specificForceStandardDeviation, angularRateStandardDeviation);
             items.add(item);
 
             avg += (specificForceStandardDeviation + angularRateStandardDeviation) / NUM_ITEMS;
         }
 
-        final double expected = 1.0 / (1.0 + avg);
+        final var expected = 1.0 / (1.0 + avg);
 
-        final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence = new BodyKinematicsSequence<>(
-                items);
+        final var sequence = new BodyKinematicsSequence<>(items);
 
-        final DefaultGyroscopeQualityScoreMapper mapper = new DefaultGyroscopeQualityScoreMapper();
+        final var mapper = new DefaultGyroscopeQualityScoreMapper();
         assertEquals(expected, mapper.map(sequence), 0.0);
     }
 }

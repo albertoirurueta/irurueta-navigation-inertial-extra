@@ -54,21 +54,22 @@ import com.irurueta.navigation.inertial.calibration.magnetometer.UnorderedStanda
 import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Optimizes threshold factor for interval detection of accelerometer + gyroscope
+ * Optimizes the threshold factor for interval detection of accelerometer and gyroscope
  * data based on results of calibration.
- * Implementations of this class will attempt to find best threshold factor
- * between provided range of values.
+ * Implementations of this class will attempt to find the best threshold factor
+ * between the provided range of values.
  * Only accelerometer calibrators based on unknown orientation are supported (in other terms,
  * calibrators must be {@link AccelerometerNonLinearCalibrator} and must support
  * {@link AccelerometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_KINEMATICS}).
  * Only gyroscope calibrators based on unknown orientation are supported (in other terms,
  * calibrators must be {@link GyroscopeNonLinearCalibrator} and must support
  * {@link GyroscopeCalibratorMeasurementOrSequenceType#BODY_KINEMATICS_SEQUENCE}).
- * Only magnetometer calibrators based on unknown orientation are supported (in other terms,
+ * Only magnetometer calibrators based on unknown orientation are supported, in other terms,
  * calibrators must be {@link MagnetometerNonLinearCalibrator} and must support
  * {@link MagnetometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY}.
  */
@@ -90,53 +91,53 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
     /**
      * Minimum threshold factor.
      */
-    protected double mMinThresholdFactor = DEFAULT_MIN_THRESHOLD_FACTOR;
+    protected double minThresholdFactor = DEFAULT_MIN_THRESHOLD_FACTOR;
 
     /**
      * Maximum threshold factor.
      */
-    protected double mMaxThresholdFactor = DEFAULT_MAX_THRESHOLD_FACTOR;
+    protected double maxThresholdFactor = DEFAULT_MAX_THRESHOLD_FACTOR;
 
     /**
      * Accelerometer calibrator.
      */
-    private AccelerometerNonLinearCalibrator mAccelerometerCalibrator;
+    private AccelerometerNonLinearCalibrator accelerometerCalibrator;
 
     /**
      * Gyroscope calibrator.
      */
-    private GyroscopeNonLinearCalibrator mGyroscopeCalibrator;
+    private GyroscopeNonLinearCalibrator gyroscopeCalibrator;
 
     /**
      * Magnetometer calibrator.
      */
-    private MagnetometerNonLinearCalibrator mMagnetometerCalibrator;
+    private MagnetometerNonLinearCalibrator magnetometerCalibrator;
 
     /**
      * A measurement generator for accelerometer, gyroscope and magnetometer calibrators.
      */
-    private AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator mGenerator;
+    private AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator;
 
     /**
      * Generated measurements to be used for accelerometer calibration.
      */
-    private List<StandardDeviationBodyKinematics> mAccelerometerMeasurements;
+    private List<StandardDeviationBodyKinematics> accelerometerMeasurements;
 
     /**
      * Generated sequences to be used for gyroscope calibration.
      */
-    private List<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>> mGyroscopeSequences;
+    private List<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>> gyroscopeSequences;
 
     /**
      * Generated measurements to be used for magnetometer calibration.
      */
-    private List<StandardDeviationBodyMagneticFluxDensity> mMagnetometerMeasurements;
+    private List<StandardDeviationBodyMagneticFluxDensity> magnetometerMeasurements;
 
     /**
      * Mapper to convert {@link StandardDeviationBodyKinematics} measurements into
      * quality scores.
      */
-    private QualityScoreMapper<StandardDeviationBodyKinematics> mAccelerometerQualityScoreMapper =
+    private QualityScoreMapper<StandardDeviationBodyKinematics> accelerometerQualityScoreMapper =
             new DefaultAccelerometerQualityScoreMapper();
 
     /**
@@ -144,54 +145,54 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * into quality scores.
      */
     private QualityScoreMapper<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>>
-            mGyroscopeQualityScoreMapper = new DefaultGyroscopeQualityScoreMapper();
+            gyroscopeQualityScoreMapper = new DefaultGyroscopeQualityScoreMapper();
 
     /**
      * Mapper to convert {@link StandardDeviationBodyMagneticFluxDensity} measurements
      * into quality scores.
      */
-    private QualityScoreMapper<StandardDeviationBodyMagneticFluxDensity> mMagnetometerQualityScoreMapper =
+    private QualityScoreMapper<StandardDeviationBodyMagneticFluxDensity> magnetometerQualityScoreMapper =
             new DefaultMagnetometerQualityScoreMapper();
 
     /**
      * Rule to convert accelerometer, gyroscope and magnetometer MSE
      * values into a single global MSE value.
      */
-    private AccelerometerGyroscopeAndMagnetometerMseRule mMseRule =
+    private AccelerometerGyroscopeAndMagnetometerMseRule mseRule =
             new DefaultAccelerometerGyroscopeAndMagnetometerMseRule();
 
     /**
      * Estimated norm of gyroscope noise root PSD (Power Spectral Density)
      * expressed as (rad * s^-0.5).
      */
-    private double mAngularSpeedNoiseRootPsd;
+    private double angularSpeedNoiseRootPsd;
 
     /**
      * Accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found expressed in
      * meters per squared second (m/s^2).
      * This is equal to the standard deviation of the accelerometer measurements
-     * during initialization phase.
+     * during the initialization phase.
      */
-    private double mBaseNoiseLevel;
+    private double baseNoiseLevel;
 
     /**
      * Threshold to determine static/dynamic period changes expressed in
      * meters per squared second (m/s^2) for the best calibration solution that
      * has been found.
      */
-    private double mThreshold;
+    private double threshold;
 
     /**
      * Estimated covariance matrix for estimated accelerometer parameters.
      */
-    private Matrix mEstimatedAccelerometerCovariance;
+    private Matrix estimatedAccelerometerCovariance;
 
     /**
-     * Estimated accelerometer scale factors and cross coupling errors.
-     * This is the product of matrix Ta containing cross coupling errors and Ka
+     * Estimated accelerometer scale factors and cross-coupling errors.
+     * This is the product of matrix Ta containing cross-coupling errors and Ka
      * containing scaling factors.
-     * So tat:
+     * So that:
      * <pre>
      *     Ma = [sx    mxy  mxz] = Ta*Ka
      *          [myx   sy   myz]
@@ -215,7 +216,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
      *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
      * </pre>
-     * This instance allows any 3x3 matrix however, typically alphaYx, alphaZx and alphaZy
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
      * are considered to be zero if the accelerometer z-axis is assumed to be the same
      * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Ma matrix
      * becomes upper diagonal:
@@ -226,28 +227,28 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * </pre>
      * Values of this matrix are unit-less.
      */
-    private Matrix mEstimatedAccelerometerMa;
+    private Matrix estimatedAccelerometerMa;
 
     /**
      * Estimated accelerometer biases for each IMU axis expressed in meter per squared
      * second (m/s^2).
      */
-    private double[] mEstimatedAccelerometerBiases;
+    private double[] estimatedAccelerometerBiases;
 
     /**
      * Estimated covariance matrix for estimated gyroscope parameters.
      */
-    private Matrix mEstimatedGyroscopeCovariance;
+    private Matrix estimatedGyroscopeCovariance;
 
     /**
      * Estimated angular rate biases for each IMU axis expressed in radians per
      * second (rad/s).
      */
-    private double[] mEstimatedGyroscopeBiases;
+    private double[] estimatedGyroscopeBiases;
 
     /**
-     * Estimated gyroscope scale factors and cross coupling errors.
-     * This is the product of matrix Tg containing cross coupling errors and Kg
+     * Estimated gyroscope scale factors and cross-coupling errors.
+     * This is the product of matrix Tg containing cross-coupling errors and Kg
      * containing scaling factors.
      * So that:
      * <pre>
@@ -273,7 +274,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
      *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
      * </pre>
-     * This instance allows any 3x3 matrix however, typically alphaYx, alphaZx and alphaZy
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
      * are considered to be zero if the gyroscope z-axis is assumed to be the same
      * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Mg matrix
      * becomes upper diagonal:
@@ -284,26 +285,26 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * </pre>
      * Values of this matrix are unit-less.
      */
-    private Matrix mEstimatedGyroscopeMg;
+    private Matrix estimatedGyroscopeMg;
 
     /**
-     * Estimated G-dependent cross biases introduced on the gyroscope by the
+     * Estimated G-dependent cross-biases introduced on the gyroscope by the
      * specific forces sensed by the accelerometer.
      * This instance allows any 3x3 matrix.
      */
-    private Matrix mEstimatedGyroscopeGg;
+    private Matrix estimatedGyroscopeGg;
 
     /**
      * Estimated covariance matrix for estimated magnetometer parameters.
      */
-    private Matrix mEstimatedMagnetometerCovariance;
+    private Matrix estimatedMagnetometerCovariance;
 
     /**
      * Estimated magnetometer soft-iron matrix containing scale factors
-     * and cross coupling errors.
-     * This is the product of matrix Tm containing cross coupling errors and Km
+     * and cross-coupling errors.
+     * This is the product of matrix Tm containing cross-coupling errors and Km
      * containing scaling factors.
-     * So tat:
+     * So that:
      * <pre>
      *     Mm = [sx    mxy  mxz] = Tm*Km
      *          [myx   sy   myz]
@@ -327,7 +328,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
      *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
      * </pre>
-     * This instance allows any 3x3 matrix however, typically alphaYx, alphaZx and alphaZy
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
      * are considered to be zero if the accelerometer z-axis is assumed to be the same
      * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Mm matrix
      * becomes upper diagonal:
@@ -338,13 +339,13 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * </pre>
      * Values of this matrix are unit-less.
      */
-    private Matrix mEstimatedMagnetometerMm;
+    private Matrix estimatedMagnetometerMm;
 
     /**
      * Estimated magnetometer hard-iron biases for each magnetometer axis
      * expressed in Teslas (T).
      */
-    private double[] mEstimatedMagnetometerHardIron;
+    private double[] estimatedMagnetometerHardIron;
 
     /**
      * Constructor.
@@ -435,7 +436,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return accelerometer calibrator to be used to optimize its MSE.
      */
     public AccelerometerNonLinearCalibrator getAccelerometerCalibrator() {
-        return mAccelerometerCalibrator;
+        return accelerometerCalibrator;
     }
 
     /**
@@ -447,18 +448,17 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *                                  {@link StandardDeviationBodyKinematics} measurements.
      */
     public void setAccelerometerCalibrator(
-            final AccelerometerNonLinearCalibrator accelerometerCalibrator)
-            throws LockedException {
-        if (mRunning) {
+            final AccelerometerNonLinearCalibrator accelerometerCalibrator) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        if (accelerometerCalibrator != null && accelerometerCalibrator.getMeasurementType() !=
-                AccelerometerCalibratorMeasurementType.STANDARD_DEVIATION_BODY_KINEMATICS) {
+        if (accelerometerCalibrator != null && accelerometerCalibrator.getMeasurementType()
+                != AccelerometerCalibratorMeasurementType.STANDARD_DEVIATION_BODY_KINEMATICS) {
             throw new IllegalArgumentException();
         }
 
-        mAccelerometerCalibrator = accelerometerCalibrator;
+        this.accelerometerCalibrator = accelerometerCalibrator;
     }
 
     /**
@@ -467,7 +467,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return gyroscope calibrator to be used to optimize its MSE.
      */
     public GyroscopeNonLinearCalibrator getGyroscopeCalibrator() {
-        return mGyroscopeCalibrator;
+        return gyroscopeCalibrator;
     }
 
     /**
@@ -479,19 +479,17 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *                                  {@link BodyKinematicsSequence} sequences of
      *                                  {@link StandardDeviationTimedBodyKinematics}.
      */
-    public void setGyroscopeCalibrator(
-            final GyroscopeNonLinearCalibrator gyroscopeCalibrator)
-            throws LockedException {
-        if (mRunning) {
+    public void setGyroscopeCalibrator(final GyroscopeNonLinearCalibrator gyroscopeCalibrator) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        if (gyroscopeCalibrator != null && gyroscopeCalibrator.getMeasurementOrSequenceType() !=
-                GyroscopeCalibratorMeasurementOrSequenceType.BODY_KINEMATICS_SEQUENCE) {
+        if (gyroscopeCalibrator != null && gyroscopeCalibrator.getMeasurementOrSequenceType()
+                != GyroscopeCalibratorMeasurementOrSequenceType.BODY_KINEMATICS_SEQUENCE) {
             throw new IllegalArgumentException();
         }
 
-        mGyroscopeCalibrator = gyroscopeCalibrator;
+        this.gyroscopeCalibrator = gyroscopeCalibrator;
     }
 
     /**
@@ -500,30 +498,29 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return magnetometer calibrator to be used to optimize its MSE.
      */
     public MagnetometerNonLinearCalibrator getMagnetometerCalibrator() {
-        return mMagnetometerCalibrator;
+        return magnetometerCalibrator;
     }
 
     /**
-     * Sets magnetometer calibrator to be used to optimize its Mean Square Error.
+     * Sets a magnetometer calibrator to be used to optimize its Mean Square Error.
      *
      * @param magnetometerCalibrator magnetometer calibrator to be used to optimize its MSE.
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if magnetometer calibrator does not use
      *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
      */
-    public void setMagnetometerCalibrator(
-            final MagnetometerNonLinearCalibrator magnetometerCalibrator)
+    public void setMagnetometerCalibrator(final MagnetometerNonLinearCalibrator magnetometerCalibrator)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        if (magnetometerCalibrator != null && magnetometerCalibrator.getMeasurementType() !=
-                MagnetometerCalibratorMeasurementType.STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY) {
+        if (magnetometerCalibrator != null && magnetometerCalibrator.getMeasurementType()
+                != MagnetometerCalibratorMeasurementType.STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY) {
             throw new IllegalArgumentException();
         }
 
-        mMagnetometerCalibrator = magnetometerCalibrator;
+        this.magnetometerCalibrator = magnetometerCalibrator;
     }
 
     /**
@@ -533,7 +530,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return mapper to convert accelerometer measurements into quality scores.
      */
     public QualityScoreMapper<StandardDeviationBodyKinematics> getAccelerometerQualityScoreMapper() {
-        return mAccelerometerQualityScoreMapper;
+        return accelerometerQualityScoreMapper;
     }
 
     /**
@@ -547,11 +544,11 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
     public void setAccelerometerQualityScoreMapper(
             final QualityScoreMapper<StandardDeviationBodyKinematics> accelerometerQualityScoreMapper)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mAccelerometerQualityScoreMapper = accelerometerQualityScoreMapper;
+        this.accelerometerQualityScoreMapper = accelerometerQualityScoreMapper;
     }
 
     /**
@@ -562,7 +559,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      */
     public QualityScoreMapper<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>>
     getGyroscopeQualityScoreMapper() {
-        return mGyroscopeQualityScoreMapper;
+        return gyroscopeQualityScoreMapper;
     }
 
     /**
@@ -575,13 +572,12 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      */
     public void setGyroscopeQualityScoreMapper(
             final QualityScoreMapper<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>>
-                    gyroscopeQualityScoreMapper)
-            throws LockedException {
-        if (mRunning) {
+                    gyroscopeQualityScoreMapper) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGyroscopeQualityScoreMapper = gyroscopeQualityScoreMapper;
+        this.gyroscopeQualityScoreMapper = gyroscopeQualityScoreMapper;
     }
 
     /**
@@ -591,7 +587,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return mapper to convert magnetometer measurements into quality scores.
      */
     public QualityScoreMapper<StandardDeviationBodyMagneticFluxDensity> getMagnetometerQualityScoreMapper() {
-        return mMagnetometerQualityScoreMapper;
+        return magnetometerQualityScoreMapper;
     }
 
     /**
@@ -605,11 +601,11 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
     public void setMagnetometerQualityScoreMapper(
             final QualityScoreMapper<StandardDeviationBodyMagneticFluxDensity> magnetometerQualityScoreMapper)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mMagnetometerQualityScoreMapper = magnetometerQualityScoreMapper;
+        this.magnetometerQualityScoreMapper = magnetometerQualityScoreMapper;
     }
 
     /**
@@ -620,7 +616,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * magnetometer MSE values into a single global MSE value.
      */
     public AccelerometerGyroscopeAndMagnetometerMseRule getMseRule() {
-        return mMseRule;
+        return mseRule;
     }
 
     /**
@@ -632,58 +628,54 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *                MSE value.
      * @throws LockedException if optimizer is already running.
      */
-    public void setMseRule(
-            final AccelerometerGyroscopeAndMagnetometerMseRule mseRule)
-            throws LockedException {
-        if (mRunning) {
+    public void setMseRule(final AccelerometerGyroscopeAndMagnetometerMseRule mseRule) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mMseRule = mseRule;
+        this.mseRule = mseRule;
     }
 
     /**
-     * Gets minimum threshold factor.
+     * Gets the minimum threshold factor.
      *
      * @return minimum threshold factor.
      */
     public double getMinThresholdFactor() {
-        return mMinThresholdFactor;
+        return minThresholdFactor;
     }
 
     /**
-     * Gets maximum threshold factor.
+     * Gets the maximum threshold factor.
      *
      * @return maximum threshold factor.
      */
     public double getMaxThresholdFactor() {
-        return mMaxThresholdFactor;
+        return maxThresholdFactor;
     }
 
     /**
-     * Sets range of threshold factor values to obtain an optimized
+     * Sets a range of threshold factor values to get an optimized
      * threshold factor value.
      *
      * @param minThresholdFactor minimum threshold.
      * @param maxThresholdFactor maximum threshold.
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if either minimum or maximum values are
-     *                                  negative or if minimum value is larger
-     *                                  than maximum one.
+     *                                  negative, or if the minimum value is larger
+     *                                  than the maximum one.
      */
-    public void setThresholdFactorRange(
-            final double minThresholdFactor, final double maxThresholdFactor)
+    public void setThresholdFactorRange(final double minThresholdFactor, final double maxThresholdFactor)
             throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
-        if (minThresholdFactor < 0.0 || maxThresholdFactor < 0.0
-                || minThresholdFactor >= maxThresholdFactor) {
+        if (minThresholdFactor < 0.0 || maxThresholdFactor < 0.0 || minThresholdFactor >= maxThresholdFactor) {
             throw new IllegalArgumentException();
         }
 
-        mMinThresholdFactor = minThresholdFactor;
-        mMaxThresholdFactor = maxThresholdFactor;
+        this.minThresholdFactor = minThresholdFactor;
+        this.maxThresholdFactor = maxThresholdFactor;
     }
 
     /**
@@ -693,23 +685,23 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      */
     @Override
     public boolean isReady() {
-        return super.isReady() && mAccelerometerCalibrator != null
-                && mGyroscopeCalibrator != null
-                && mMagnetometerCalibrator != null
-                && mAccelerometerQualityScoreMapper != null
-                && mGyroscopeQualityScoreMapper != null
-                && mMagnetometerQualityScoreMapper != null
-                && mMseRule != null;
+        return super.isReady() && accelerometerCalibrator != null
+                && gyroscopeCalibrator != null
+                && magnetometerCalibrator != null
+                && accelerometerQualityScoreMapper != null
+                && gyroscopeQualityScoreMapper != null
+                && magnetometerQualityScoreMapper != null
+                && mseRule != null;
     }
 
     /**
-     * Gets time interval between input measurements provided to the
+     * Gets the time interval between input measurements provided to the
      * {@link #getDataSource()} expressed in seconds (s).
      *
      * @return time interval between input measurements.
      */
     public double getTimeInterval() {
-        return mGenerator.getTimeInterval();
+        return generator.getTimeInterval();
     }
 
     /**
@@ -721,31 +713,31 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @throws IllegalArgumentException if provided value is negative.
      */
     public void setTimeInterval(final double timeInterval) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setTimeInterval(timeInterval);
+        generator.setTimeInterval(timeInterval);
     }
 
     /**
-     * Gets time interval between input measurements provided to the
+     * Gets the time interval between input measurements provided to the
      * {@link #getDataSource()}.
      *
      * @return time interval between input measurements.
      */
     public Time getTimeIntervalAsTime() {
-        return mGenerator.getTimeIntervalAsTime();
+        return generator.getTimeIntervalAsTime();
     }
 
     /**
-     * Gets time interval between input measurements provided to the
+     * Gets the time interval between input measurements provided to the
      * {@link #getDataSource()}.
      *
-     * @param result instance where time interval will be stored.
+     * @param result instance where the time interval will be stored.
      */
     public void getTimeIntervalAsTime(final Time result) {
-        mGenerator.getTimeIntervalAsTime(result);
+        generator.getTimeIntervalAsTime(result);
     }
 
     /**
@@ -757,11 +749,11 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @throws IllegalArgumentException if provided value is negative.
      */
     public void setTimeInterval(final Time timeInterval) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setTimeInterval(timeInterval);
+        generator.setTimeInterval(timeInterval);
     }
 
     /**
@@ -770,11 +762,11 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * into account.
      * Smaller static intervals will be discarded.
      *
-     * @return minimum number of input measurements required in a static interval
+     * @return a minimum number of input measurements required in a static interval
      * to be taken into account.
      */
     public int getMinStaticSamples() {
-        return mGenerator.getMinStaticSamples();
+        return generator.getMinStaticSamples();
     }
 
     /**
@@ -783,18 +775,17 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * into account.
      * Smaller static intervals will be discarded.
      *
-     * @param minStaticSamples minimum number of input measurements required in
+     * @param minStaticSamples a minimum number of input measurements required in
      *                         a static interval to be taken into account.
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is less than 2.
      */
-    public void setMinStaticSamples(final int minStaticSamples)
-            throws LockedException {
-        if (mRunning) {
+    public void setMinStaticSamples(final int minStaticSamples) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setMinStaticSamples(minStaticSamples);
+        generator.setMinStaticSamples(minStaticSamples);
     }
 
     /**
@@ -804,7 +795,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return maximum number of input measurements allowed in dynamic intervals.
      */
     public int getMaxDynamicSamples() {
-        return mGenerator.getMaxDynamicSamples();
+        return generator.getMaxDynamicSamples();
     }
 
     /**
@@ -816,13 +807,12 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is less than 2.
      */
-    public void setMaxDynamicSamples(final int maxDynamicSamples)
-            throws LockedException {
-        if (mRunning) {
+    public void setMaxDynamicSamples(final int maxDynamicSamples) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setMaxDynamicSamples(maxDynamicSamples);
+        generator.setMaxDynamicSamples(maxDynamicSamples);
     }
 
     /**
@@ -833,14 +823,14 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return length of input measurements to keep within the window.
      */
     public int getWindowSize() {
-        return mGenerator.getWindowSize();
+        return generator.getWindowSize();
     }
 
     /**
      * Sets length of number of input measurements provided to the
      * {@link #getDataSource()} to keep within the window being processed
      * to determine instantaneous noise level.
-     * Window size must always be larger than allowed minimum value, which is 2
+     * Window size must always be larger than the allowed minimum value, which is 2
      * and must have an odd value.
      *
      * @param windowSize length of number of samples to keep within the window.
@@ -848,41 +838,40 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @throws IllegalArgumentException if provided value is not valid.
      */
     public void setWindowSize(final int windowSize) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setWindowSize(windowSize);
+        generator.setWindowSize(windowSize);
     }
 
     /**
      * Gets number of input measurements provided to the
-     * {@link #getDataSource()} to be processed initially while keeping he sensor
-     * static in order to find the base noise level when device is static.
+     * {@link #getDataSource()} to be processed initially while keeping the sensor
+     * static to find the base noise level when the device is static.
      *
      * @return number of samples to be processed initially.
      */
     public int getInitialStaticSamples() {
-        return mGenerator.getInitialStaticSamples();
+        return generator.getInitialStaticSamples();
     }
 
     /**
      * Sets number of input parameters provided to the {@link #getDataSource()}
-     * to be processed initially while keeping the sensor static in order to
-     * find the base noise level when device is static.
+     * to be processed initially while keeping the sensor static to
+     * find the base noise level when the device is static.
      *
      * @param initialStaticSamples number of samples ot be processed initially.
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is less than
      *                                  {@link TriadStaticIntervalDetector#MINIMUM_INITIAL_STATIC_SAMPLES}.
      */
-    public void setInitialStaticSamples(final int initialStaticSamples)
-            throws LockedException {
-        if (mRunning) {
+    public void setInitialStaticSamples(final int initialStaticSamples) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setInitialStaticSamples(initialStaticSamples);
+        generator.setInitialStaticSamples(initialStaticSamples);
     }
 
     /**
@@ -894,7 +883,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return factor to determine that a sudden movement has occurred.
      */
     public double getInstantaneousNoiseLevelFactor() {
-        return mGenerator.getInstantaneousNoiseLevelFactor();
+        return generator.getInstantaneousNoiseLevelFactor();
     }
 
     /**
@@ -909,18 +898,16 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is zero or negative.
      */
-    public void setInstantaneousNoiseLevelFactor(
-            final double instantaneousNoiseLevelFactor) throws LockedException {
-        if (mRunning) {
+    public void setInstantaneousNoiseLevelFactor(final double instantaneousNoiseLevelFactor) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setInstantaneousNoiseLevelFactor(
-                instantaneousNoiseLevelFactor);
+        generator.setInstantaneousNoiseLevelFactor(instantaneousNoiseLevelFactor);
     }
 
     /**
-     * Gets overall absolute threshold to determine whether there has been
+     * Gets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      * This threshold is expressed in meters per squared second (m/s^2).
      *
@@ -928,11 +915,11 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * excessive motion.
      */
     public double getBaseNoiseLevelAbsoluteThreshold() {
-        return mGenerator.getBaseNoiseLevelAbsoluteThreshold();
+        return generator.getBaseNoiseLevelAbsoluteThreshold();
     }
 
     /**
-     * Sets overall absolute threshold to determine whether there has been
+     * Sets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      * This threshold is expressed in meters per squared second (m/s^2).
      *
@@ -942,40 +929,38 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is zero or negative.
      */
-    public void setBaseNoiseLevelAbsoluteThreshold(
-            final double baseNoiseLevelAbsoluteThreshold) throws LockedException {
-        if (mRunning) {
+    public void setBaseNoiseLevelAbsoluteThreshold(final double baseNoiseLevelAbsoluteThreshold)
+            throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setBaseNoiseLevelAbsoluteThreshold(
-                baseNoiseLevelAbsoluteThreshold);
+        generator.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
     }
 
     /**
-     * Gets overall absolute threshold to determine whether there has been
+     * Gets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      *
      * @return overall absolute threshold to determine whether there has been
      * excessive motion.
      */
     public Acceleration getBaseNoiseLevelAbsoluteThresholdAsMeasurement() {
-        return mGenerator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
+        return generator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
     }
 
     /**
-     * Gets overall absolute threshold to determine whether there has been
+     * Gets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
-    public void getBaseNoiseLevelAbsoluteThresholdAsMeasurement(
-            final Acceleration result) {
-        mGenerator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(result);
+    public void getBaseNoiseLevelAbsoluteThresholdAsMeasurement(final Acceleration result) {
+        generator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(result);
     }
 
     /**
-     * Sets overall absolute threshold to determine whether there has been
+     * Sets the overall absolute threshold to determine whether there has been
      * excessive motion during the whole initialization phase.
      *
      * @param baseNoiseLevelAbsoluteThreshold overall absolute threshold to
@@ -984,14 +969,13 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @throws LockedException          if optimizer is already running.
      * @throws IllegalArgumentException if provided value is zero or negative.
      */
-    public void setBaseNoiseLevelAbsoluteThreshold(
-            final Acceleration baseNoiseLevelAbsoluteThreshold) throws LockedException {
-        if (mRunning) {
+    public void setBaseNoiseLevelAbsoluteThreshold(final Acceleration baseNoiseLevelAbsoluteThreshold)
+            throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mGenerator.setBaseNoiseLevelAbsoluteThreshold(
-                baseNoiseLevelAbsoluteThreshold);
+        generator.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);
     }
 
     /**
@@ -999,39 +983,38 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * initialization of the best solution that has been found expressed in
      * meters per squared second (m/s^2).
      * This is equal to the standard deviation of the accelerometer measurements
-     * during initialization phase.
+     * during the initialization phase.
      *
-     * @return accelerometer base noise level of best solution that has been
+     * @return accelerometer base noise level of the best solution that has been
      * found.
      */
     public double getAccelerometerBaseNoiseLevel() {
-        return mBaseNoiseLevel;
+        return baseNoiseLevel;
     }
 
     /**
      * Gets accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found.
      * This is equal to the standard deviation of the accelerometer measurements
-     * during initialization phase.
+     * during the initialization phase.
      *
-     * @return accelerometer base noise level of best solution that has been
+     * @return accelerometer base noise level of the best solution that has been
      * found.
      */
     public Acceleration getAccelerometerBaseNoiseLevelAsMeasurement() {
-        return createMeasurement(mBaseNoiseLevel, getDefaultUnit());
+        return createMeasurement(baseNoiseLevel, getDefaultUnit());
     }
 
     /**
      * Gets accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found.
      * This is equal to the standard deviation of the accelerometer measurements
-     * during initialization phase.
+     * during the initialization phase.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
-    public void getAccelerometerBaseNoiseLevelAsMeasurement(
-            final Acceleration result) {
-        result.setValue(mBaseNoiseLevel);
+    public void getAccelerometerBaseNoiseLevelAsMeasurement(final Acceleration result) {
+        result.setValue(baseNoiseLevel);
         result.setUnit(getDefaultUnit());
     }
 
@@ -1042,7 +1025,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return gyroscope base noise level PSD.
      */
     public double getGyroscopeBaseNoiseLevelPsd() {
-        return mAngularSpeedNoiseRootPsd * mAngularSpeedNoiseRootPsd;
+        return angularSpeedNoiseRootPsd * angularSpeedNoiseRootPsd;
     }
 
     /**
@@ -1053,7 +1036,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      */
     @Override
     public double getGyroscopeBaseNoiseLevelRootPsd() {
-        return mAngularSpeedNoiseRootPsd;
+        return angularSpeedNoiseRootPsd;
     }
 
     /**
@@ -1063,7 +1046,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * @return accelerometer base noise level PSD.
      */
     public double getAccelerometerBaseNoiseLevelPsd() {
-        return mBaseNoiseLevel * mBaseNoiseLevel * getTimeInterval();
+        return baseNoiseLevel * baseNoiseLevel * getTimeInterval();
     }
 
     /**
@@ -1074,105 +1057,105 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      */
     @Override
     public double getAccelerometerBaseNoiseLevelRootPsd() {
-        return mBaseNoiseLevel * Math.sqrt(getTimeInterval());
+        return baseNoiseLevel * Math.sqrt(getTimeInterval());
     }
 
     /**
-     * Gets threshold to determine static/dynamic period changes expressed in
+     * Gets the threshold to determine static/dynamic period changes expressed in
      * meters per squared second (m/s^2) for the best calibration solution that
      * has been found.
      *
-     * @return threshold to determine static/dynamic period changes for best
+     * @return threshold to determine static/dynamic period changes for the best
      * solution.
      */
     public double getThreshold() {
-        return mThreshold;
+        return threshold;
     }
 
     /**
-     * Gets threshold to determine static/dynamic period changes for the best
+     * Gets the threshold to determine static/dynamic period changes for the best
      * calibration solution that has been found.
      *
-     * @return threshold to determine static/dynamic period changes for best
+     * @return threshold to determine static/dynamic period changes for the best
      * solution.
      */
     public Acceleration getThresholdAsMeasurement() {
-        return createMeasurement(mThreshold, getDefaultUnit());
+        return createMeasurement(threshold, getDefaultUnit());
     }
 
     /**
-     * Get threshold to determine static/dynamic period changes for the best
+     * Get the threshold to determine static/dynamic period changes for the best
      * calibration solution that has been found.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getThresholdAsMeasurement(final Acceleration result) {
-        result.setValue(mThreshold);
+        result.setValue(threshold);
         result.setUnit(getDefaultUnit());
     }
 
     /**
-     * Gets norm of estimated standard deviation of accelerometer bias expressed in
+     * Gets estimated standard deviation norm of accelerometer bias expressed in
      * meters per squared second (m/s^2).
      * This can be used as the initial accelerometer bias uncertainty for
      * {@link INSLooselyCoupledKalmanInitializerConfig} or {@link INSTightlyCoupledKalmanInitializerConfig}.
      *
-     * @return norm of estimated standard deviation of accelerometer bias or null
+     * @return estimated standard deviation norm of accelerometer bias or null
      * if not available.
      */
     public Double getEstimatedAccelerometerBiasStandardDeviationNorm() {
-        return mEstimatedAccelerometerCovariance != null ?
-                Math.sqrt(getEstimatedAccelerometerBiasFxVariance()
-                        + getEstimatedAccelerometerBiasFyVariance()
-                        + getEstimatedAccelerometerBiasFzVariance()) :
-                null;
+        return estimatedAccelerometerCovariance != null
+                ? Math.sqrt(getEstimatedAccelerometerBiasFxVariance()
+                + getEstimatedAccelerometerBiasFyVariance()
+                + getEstimatedAccelerometerBiasFzVariance())
+                : null;
     }
 
     /**
-     * Gets variance of estimated x coordinate of accelerometer bias expressed in (m^2/s^4).
+     * Gets estimated x coordinate variance of accelerometer bias expressed in (m^2/s^4).
      *
-     * @return variance of estimated x coordinate of accelerometer bias or null if not available.
+     * @return estimated x coordinate variance of accelerometer bias or null if not available.
      */
     public Double getEstimatedAccelerometerBiasFxVariance() {
-        return mEstimatedAccelerometerCovariance != null
-                ? mEstimatedAccelerometerCovariance.getElementAt(0, 0) : null;
+        return estimatedAccelerometerCovariance != null
+                ? estimatedAccelerometerCovariance.getElementAt(0, 0) : null;
     }
 
     /**
-     * Gets variance of estimated y coordinate of accelerometer bias expressed in (m^2/s^4).
+     * Gets estimated y coordinate variance of accelerometer bias expressed in (m^2/s^4).
      *
-     * @return variance of estimated y coordinate of accelerometer bias or null if not available.
+     * @return estimated y coordinate variance of accelerometer bias or null if not available.
      */
     public Double getEstimatedAccelerometerBiasFyVariance() {
-        return mEstimatedAccelerometerCovariance != null
-                ? mEstimatedAccelerometerCovariance.getElementAt(1, 1) : null;
+        return estimatedAccelerometerCovariance != null
+                ? estimatedAccelerometerCovariance.getElementAt(1, 1) : null;
     }
 
     /**
-     * Gets variance of estimated z coordinate of accelerometer bias expressed in (m^2/s^4).
+     * Gets estimated z coordinate variance of accelerometer bias expressed in (m^2/s^4).
      *
-     * @return variance of estimated z coordinate of accelerometer bias or null if not available.
+     * @return estimated z coordinate variance of accelerometer bias or null if not available.
      */
     public Double getEstimatedAccelerometerBiasFzVariance() {
-        return mEstimatedAccelerometerCovariance != null
-                ? mEstimatedAccelerometerCovariance.getElementAt(2, 2) : null;
+        return estimatedAccelerometerCovariance != null
+                ? estimatedAccelerometerCovariance.getElementAt(2, 2) : null;
     }
 
     /**
-     * Gets array containing x,y,z components of estimated accelerometer biases
+     * Gets the array containing x,y,z components of estimated accelerometer biases
      * expressed in meters per squared second (m/s^2).
      *
      * @return array containing x,y,z components of estimated accelerometer biases.
      */
     public double[] getEstimatedAccelerometerBiases() {
-        return mEstimatedAccelerometerBiases;
+        return estimatedAccelerometerBiases;
     }
 
     /**
-     * Gets estimated accelerometer scale factors and cross coupling errors.
-     * This is the product of matrix Ta containing cross coupling errors and Ka
+     * Gets estimated accelerometer scale factors and cross-coupling errors.
+     * This is the product of matrix Ta containing cross-coupling errors and Ka
      * containing scaling factors.
-     * So tat:
+     * So that:
      * <pre>
      *     Ma = [sx    mxy  mxz] = Ta*Ka
      *          [myx   sy   myz]
@@ -1196,7 +1179,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
      *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
      * </pre>
-     * This instance allows any 3x3 matrix however, typically alphaYx, alphaZx and alphaZy
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
      * are considered to be zero if the accelerometer z-axis is assumed to be the same
      * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Ma matrix
      * becomes upper diagonal:
@@ -1207,73 +1190,73 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * </pre>
      * Values of this matrix are unit-less.
      *
-     * @return estimated accelerometer scale factors and cross coupling errors, or null
+     * @return estimated accelerometer scale factors and cross-coupling errors, or null
      * if not available.
      */
     public Matrix getEstimatedAccelerometerMa() {
-        return mEstimatedAccelerometerMa;
+        return estimatedAccelerometerMa;
     }
 
     /**
-     * Gets norm of estimated standard deviation of gyroscope bias expressed in
+     * Gets estimated standard deviation norm of gyroscope bias expressed in
      * radians per second (rad/s).
      * This can be used as the initial gyroscope bias uncertainty for
      * {@link INSLooselyCoupledKalmanInitializerConfig} or {@link INSTightlyCoupledKalmanInitializerConfig}.
      *
-     * @return norm of estimated standard deviation of gyroscope bias or null
+     * @return estimated standard deviation norm of gyroscope bias or null
      * if not available.
      */
     public Double getEstimatedGyroscopeBiasStandardDeviationNorm() {
-        return mEstimatedGyroscopeCovariance != null ?
-                Math.sqrt(getEstimatedGyroscopeBiasXVariance()
-                        + getEstimatedGyroscopeBiasYVariance()
-                        + getEstimatedGyroscopeBiasZVariance()) :
-                null;
+        return estimatedGyroscopeCovariance != null
+                ? Math.sqrt(getEstimatedGyroscopeBiasXVariance()
+                + getEstimatedGyroscopeBiasYVariance()
+                + getEstimatedGyroscopeBiasZVariance())
+                : null;
     }
 
     /**
-     * Gets variance of estimated x coordinate of gyroscope bias expressed in (rad^2/s^2).
+     * Gets estimated x coordinate variance of gyroscope bias expressed in (rad^2/s^2).
      *
-     * @return variance of estimated x coordinate of gyroscope bias or null if not available.
+     * @return estimated x coordinate variance of gyroscope bias or null if not available.
      */
     public Double getEstimatedGyroscopeBiasXVariance() {
-        return mEstimatedGyroscopeCovariance != null
-                ? mEstimatedGyroscopeCovariance.getElementAt(0, 0) : null;
+        return estimatedGyroscopeCovariance != null
+                ? estimatedGyroscopeCovariance.getElementAt(0, 0) : null;
     }
 
     /**
-     * Gets variance of estimated y coordinate of gyroscope bias expressed in (rad^2/s^2).
+     * Gets estimated y coordinate variance of gyroscope bias expressed in (rad^2/s^2).
      *
-     * @return variance of estimated y coordinate of gyroscope bias or null if not available.
+     * @return estimated y coordinate variance of gyroscope bias or null if not available.
      */
     public Double getEstimatedGyroscopeBiasYVariance() {
-        return mEstimatedGyroscopeCovariance != null
-                ? mEstimatedGyroscopeCovariance.getElementAt(1, 1) : null;
+        return estimatedGyroscopeCovariance != null
+                ? estimatedGyroscopeCovariance.getElementAt(1, 1) : null;
     }
 
     /**
-     * Gets variance of estimated z coordinate of gyroscope bias expressed in (rad^2/s^2).
+     * Gets estimated z coordinate variance of gyroscope bias expressed in (rad^2/s^2).
      *
-     * @return variance of estimated z coordinate of gyroscope bias or null if not available.
+     * @return estimated z coordinate variance of gyroscope bias or null if not available.
      */
     public Double getEstimatedGyroscopeBiasZVariance() {
-        return mEstimatedGyroscopeCovariance != null
-                ? mEstimatedGyroscopeCovariance.getElementAt(2, 2) : null;
+        return estimatedGyroscopeCovariance != null
+                ? estimatedGyroscopeCovariance.getElementAt(2, 2) : null;
     }
 
     /**
-     * Gets array containing x,y,z components of estimated gyroscope biases
+     * Gets the array containing x,y,z components of estimated gyroscope biases
      * expressed in radians per second (rad/s).
      *
      * @return array containing x,y,z components of estimated gyroscope biases.
      */
     public double[] getEstimatedGyroscopeBiases() {
-        return mEstimatedGyroscopeBiases;
+        return estimatedGyroscopeBiases;
     }
 
     /**
-     * Gets estimated gyroscope scale factors and cross coupling errors.
-     * This is the product of matrix Tg containing cross coupling errors and Kg
+     * Gets estimated gyroscope scale factors and cross-coupling errors.
+     * This is the product of matrix Tg containing cross-coupling errors and Kg
      * containing scaling factors.
      * So that:
      * <pre>
@@ -1299,7 +1282,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
      *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
      * </pre>
-     * This instance allows any 3x3 matrix however, typically alphaYx, alphaZx and alphaZy
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
      * are considered to be zero if the gyroscope z-axis is assumed to be the same
      * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Mg matrix
      * becomes upper diagonal:
@@ -1310,39 +1293,39 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * </pre>
      * Values of this matrix are unit-less.
      *
-     * @return estimated gyroscope scale factors and cross coupling errors.
+     * @return estimated gyroscope scale factors and cross-coupling errors.
      */
     public Matrix getEstimatedGyroscopeMg() {
-        return mEstimatedGyroscopeMg;
+        return estimatedGyroscopeMg;
     }
 
     /**
-     * Gets estimated G-dependent cross biases introduced on the gyroscope by the
+     * Gets estimated G-dependent cross-biases introduced on the gyroscope by the
      * specific forces sensed by the accelerometer.
      *
      * @return a 3x3 matrix containing g-dependent cross biases.
      */
     public Matrix getEstimatedGyroscopeGg() {
-        return mEstimatedGyroscopeGg;
+        return estimatedGyroscopeGg;
     }
 
     /**
-     * Gets array containing x,y,z components of estimated magnetometer
+     * Gets the array containing x,y,z components of estimated magnetometer
      * hard-iron biases expressed in Teslas (T).
      *
      * @return array containing x,y,z components of estimated magnetometer
      * hard-iron biases.
      */
     public double[] getEstimatedMagnetometerHardIron() {
-        return mEstimatedMagnetometerHardIron;
+        return estimatedMagnetometerHardIron;
     }
 
     /**
      * Gets estimated magnetometer soft-iron matrix containing scale factors
-     * and cross coupling errors.
-     * This is the product of matrix Tm containing cross coupling errors and Km
+     * and cross-coupling errors.
+     * This is the product of matrix Tm containing cross-coupling errors and Km
      * containing scaling factors.
-     * So tat:
+     * So that:
      * <pre>
      *     Mm = [sx    mxy  mxz] = Tm*Km
      *          [myx   sy   myz]
@@ -1366,7 +1349,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
      *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
      * </pre>
-     * This instance allows any 3x3 matrix however, typically alphaYx, alphaZx and alphaZy
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
      * are considered to be zero if the accelerometer z-axis is assumed to be the same
      * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Mm matrix
      * becomes upper diagonal:
@@ -1377,175 +1360,165 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * </pre>
      * Values of this matrix are unit-less.
      *
-     * @return estimated magnetometer soft-iron scale factors and cross coupling errors,
+     * @return estimated magnetometer soft-iron scale factors and cross-coupling errors,
      * or null if not available.
      */
     public Matrix getEstimatedMagnetometerMm() {
-        return mEstimatedMagnetometerMm;
+        return estimatedMagnetometerMm;
     }
 
     /**
-     * Evaluates calibration Mean Square Error (MSE) for provided threshold factor.
+     * Evaluates calibration Mean Square Error (MSE) for the provided threshold factor.
      *
      * @param thresholdFactor threshold factor to be used for interval detection
-     *                        and measurements generation to be used for
+     *                        and measurement generation to be used for
      *                        calibration.
      * @return calibration MSE.
-     * @throws LockedException                                   if generator is busy.
+     * @throws LockedException                                   if the generator is busy.
      * @throws CalibrationException                              if calibration fails.
-     * @throws NotReadyException                                 if calibrator is not ready.
+     * @throws NotReadyException                                 if the calibrator is not ready.
      * @throws IntervalDetectorThresholdFactorOptimizerException interval detection failed.
      */
-    protected double evaluateForThresholdFactor(final double thresholdFactor)
-            throws LockedException, CalibrationException, NotReadyException,
-            IntervalDetectorThresholdFactorOptimizerException {
-        if (mAccelerometerMeasurements == null) {
-            mAccelerometerMeasurements = new ArrayList<>();
+    protected double evaluateForThresholdFactor(final double thresholdFactor) throws LockedException,
+            CalibrationException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException {
+        if (accelerometerMeasurements == null) {
+            accelerometerMeasurements = new ArrayList<>();
         } else {
-            mAccelerometerMeasurements.clear();
+            accelerometerMeasurements.clear();
         }
 
-        if (mGyroscopeSequences == null) {
-            mGyroscopeSequences = new ArrayList<>();
+        if (gyroscopeSequences == null) {
+            gyroscopeSequences = new ArrayList<>();
         } else {
-            mGyroscopeSequences.clear();
+            gyroscopeSequences.clear();
         }
 
-        if (mMagnetometerMeasurements == null) {
-            mMagnetometerMeasurements = new ArrayList<>();
+        if (magnetometerMeasurements == null) {
+            magnetometerMeasurements = new ArrayList<>();
         } else {
-            mMagnetometerMeasurements.clear();
+            magnetometerMeasurements.clear();
         }
 
-        mGenerator.reset();
-        mGenerator.setThresholdFactor(thresholdFactor);
+        generator.reset();
+        generator.setThresholdFactor(thresholdFactor);
 
-        int count = mDataSource.count();
-        boolean failed = false;
-        for (int i = 0; i < count; i++) {
-            final TimedBodyKinematicsAndMagneticFluxDensity timedBodyKinematics = mDataSource.getAt(i);
-            if (!mGenerator.process(timedBodyKinematics)) {
+        var count = dataSource.count();
+        var failed = false;
+        for (var i = 0; i < count; i++) {
+            final var timedBodyKinematics = dataSource.getAt(i);
+            if (!generator.process(timedBodyKinematics)) {
                 failed = true;
                 break;
             }
         }
 
-        if (failed || mGenerator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
+        if (failed || generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
             // interval detection failed
             return Double.MAX_VALUE;
         }
 
         // check that enough measurements have been obtained
-        if (mAccelerometerMeasurements.size() < mAccelerometerCalibrator.getMinimumRequiredMeasurements()
-                || mGyroscopeSequences.size() < mGyroscopeCalibrator.getMinimumRequiredMeasurementsOrSequences()
-                || mMagnetometerMeasurements.size() < mMagnetometerCalibrator.getMinimumRequiredMeasurements()) {
+        if (accelerometerMeasurements.size() < accelerometerCalibrator.getMinimumRequiredMeasurements()
+                || gyroscopeSequences.size() < gyroscopeCalibrator.getMinimumRequiredMeasurementsOrSequences()
+                || magnetometerMeasurements.size() < magnetometerCalibrator.getMinimumRequiredMeasurements()) {
             return Double.MAX_VALUE;
         }
 
         // set calibrator measurements
-        switch (mAccelerometerCalibrator.getMeasurementType()) {
+        switch (accelerometerCalibrator.getMeasurementType()) {
             case STANDARD_DEVIATION_BODY_KINEMATICS:
-                if (mAccelerometerCalibrator.isOrderedMeasurementsRequired()) {
-                    final OrderedStandardDeviationBodyKinematicsAccelerometerCalibrator calibrator =
-                            (OrderedStandardDeviationBodyKinematicsAccelerometerCalibrator) mAccelerometerCalibrator;
+                if (accelerometerCalibrator.isOrderedMeasurementsRequired()) {
+                    final var calibrator =
+                            (OrderedStandardDeviationBodyKinematicsAccelerometerCalibrator) accelerometerCalibrator;
 
-                    calibrator.setMeasurements(mAccelerometerMeasurements);
+                    calibrator.setMeasurements(accelerometerMeasurements);
 
                 } else {
-                    final UnorderedStandardDeviationBodyKinematicsAccelerometerCalibrator calibrator =
-                            (UnorderedStandardDeviationBodyKinematicsAccelerometerCalibrator) mAccelerometerCalibrator;
+                    final var calibrator =
+                            (UnorderedStandardDeviationBodyKinematicsAccelerometerCalibrator) accelerometerCalibrator;
 
-                    calibrator.setMeasurements(mAccelerometerMeasurements);
+                    calibrator.setMeasurements(accelerometerMeasurements);
                 }
 
-                if (mAccelerometerCalibrator.isQualityScoresRequired()) {
-                    final QualityScoredAccelerometerCalibrator calibrator =
-                            (QualityScoredAccelerometerCalibrator) mAccelerometerCalibrator;
+                if (accelerometerCalibrator.isQualityScoresRequired()) {
+                    final var calibrator = (QualityScoredAccelerometerCalibrator) accelerometerCalibrator;
 
-                    final int size = mAccelerometerMeasurements.size();
-                    final double[] qualityScores = new double[size];
-                    for (int i = 0; i < size; i++) {
-                        qualityScores[i] = mAccelerometerQualityScoreMapper.map(
-                                mAccelerometerMeasurements.get(i));
+                    final var size = accelerometerMeasurements.size();
+                    final var qualityScores = new double[size];
+                    for (var i = 0; i < size; i++) {
+                        qualityScores[i] = accelerometerQualityScoreMapper.map(accelerometerMeasurements.get(i));
                     }
                     calibrator.setQualityScores(qualityScores);
                 }
                 break;
             case FRAME_BODY_KINEMATICS, STANDARD_DEVIATION_FRAME_BODY_KINEMATICS:
-                // throw exception. Cannot use frames
+                // Throw exception. Cannot use frames
             default:
                 throw new IntervalDetectorThresholdFactorOptimizerException();
         }
 
-        if (mGyroscopeCalibrator.getMeasurementOrSequenceType() ==
-                GyroscopeCalibratorMeasurementOrSequenceType.BODY_KINEMATICS_SEQUENCE) {
-            final OrderedBodyKinematicsSequenceGyroscopeCalibrator calibrator =
-                    (OrderedBodyKinematicsSequenceGyroscopeCalibrator) mGyroscopeCalibrator;
+        if (gyroscopeCalibrator.getMeasurementOrSequenceType()
+                == GyroscopeCalibratorMeasurementOrSequenceType.BODY_KINEMATICS_SEQUENCE) {
+            final var calibrator = (OrderedBodyKinematicsSequenceGyroscopeCalibrator) gyroscopeCalibrator;
 
-            calibrator.setSequences(mGyroscopeSequences);
+            calibrator.setSequences(gyroscopeSequences);
         } else {
             throw new IntervalDetectorThresholdFactorOptimizerException();
         }
 
-        if (mGyroscopeCalibrator.isQualityScoresRequired()) {
-            final QualityScoredGyroscopeCalibrator calibrator =
-                    (QualityScoredGyroscopeCalibrator) mGyroscopeCalibrator;
+        if (gyroscopeCalibrator.isQualityScoresRequired()) {
+            final var calibrator = (QualityScoredGyroscopeCalibrator) gyroscopeCalibrator;
 
-            final int size = mGyroscopeSequences.size();
-            final double[] qualityScores = new double[size];
-            for (int i = 0; i < size; i++) {
-                qualityScores[i] = mGyroscopeQualityScoreMapper.map(
-                        mGyroscopeSequences.get(i));
+            final var size = gyroscopeSequences.size();
+            final var qualityScores = new double[size];
+            for (var i = 0; i < size; i++) {
+                qualityScores[i] = gyroscopeQualityScoreMapper.map(gyroscopeSequences.get(i));
             }
             calibrator.setQualityScores(qualityScores);
         }
 
-        switch (mMagnetometerCalibrator.getMeasurementType()) {
+        switch (magnetometerCalibrator.getMeasurementType()) {
             case STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY:
-                if (mMagnetometerCalibrator.isOrderedMeasurementsRequired()) {
-                    final OrderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator calibrator =
-                            (OrderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator)
-                                    mMagnetometerCalibrator;
+                if (magnetometerCalibrator.isOrderedMeasurementsRequired()) {
+                    final var calibrator = (OrderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator)
+                            magnetometerCalibrator;
 
-                    calibrator.setMeasurements(mMagnetometerMeasurements);
+                    calibrator.setMeasurements(magnetometerMeasurements);
                 } else {
-                    final UnorderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator calibrator =
-                            (UnorderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator)
-                                    mMagnetometerCalibrator;
+                    final var calibrator = (UnorderedStandardDeviationBodyMagneticFluxDensityMagnetometerCalibrator)
+                            magnetometerCalibrator;
 
-                    calibrator.setMeasurements(mMagnetometerMeasurements);
+                    calibrator.setMeasurements(magnetometerMeasurements);
                 }
 
-                if (mMagnetometerCalibrator.isQualityScoresRequired()) {
-                    final QualityScoredMagnetometerCalibrator calibrator =
-                            (QualityScoredMagnetometerCalibrator) mMagnetometerCalibrator;
+                if (magnetometerCalibrator.isQualityScoresRequired()) {
+                    final var calibrator = (QualityScoredMagnetometerCalibrator) magnetometerCalibrator;
 
-                    final int size = mMagnetometerMeasurements.size();
-                    final double[] qualityScores = new double[size];
-                    for (int i = 0; i < size; i++) {
-                        qualityScores[i] = mMagnetometerQualityScoreMapper.map(
-                                mMagnetometerMeasurements.get(i));
+                    final var size = magnetometerMeasurements.size();
+                    final var qualityScores = new double[size];
+                    for (var i = 0; i < size; i++) {
+                        qualityScores[i] = magnetometerQualityScoreMapper.map(magnetometerMeasurements.get(i));
                     }
                     calibrator.setQualityScores(qualityScores);
                 }
                 break;
             case FRAME_BODY_MAGNETIC_FLUX_DENSITY, STANDARD_DEVIATION_FRAME_BODY_MAGNETIC_FLUX_DENSITY:
-                // throw exception. Cannot use frames
+                // Throw exception. Cannot use frames
             default:
                 throw new IntervalDetectorThresholdFactorOptimizerException();
         }
 
-        mAccelerometerCalibrator.calibrate();
+        accelerometerCalibrator.calibrate();
 
         // once we have accelerometer estimations, we can set known
-        // accelerometer bias and cross-coupling errors to gyroscope calibrator
-        if (mGyroscopeCalibrator instanceof AccelerometerDependentGyroscopeCalibrator accelGyroCalibrator) {
+        // accelerometer bias and cross-coupling errors to the gyroscope calibrator
+        if (gyroscopeCalibrator instanceof AccelerometerDependentGyroscopeCalibrator accelGyroCalibrator) {
 
             final double[] bias;
-            if (mAccelerometerCalibrator instanceof UnknownBiasAccelerometerCalibrator unknownBiasAccelerometerCalibrator) {
+            if (accelerometerCalibrator instanceof UnknownBiasAccelerometerCalibrator unknownBiasAccelerometerCalibrator) {
                 bias = unknownBiasAccelerometerCalibrator.getEstimatedBiases();
 
-            } else if (mAccelerometerCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
+            } else if (accelerometerCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
                 bias = knownBiasAccelerometerCalibrator.getBias();
             } else {
                 bias = null;
@@ -1553,20 +1526,20 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
 
             if (bias != null) {
                 accelGyroCalibrator.setAccelerometerBias(bias);
-                accelGyroCalibrator.setAccelerometerMa(mAccelerometerCalibrator.getEstimatedMa());
+                accelGyroCalibrator.setAccelerometerMa(accelerometerCalibrator.getEstimatedMa());
             }
         }
 
-        mGyroscopeCalibrator.calibrate();
-        mMagnetometerCalibrator.calibrate();
+        gyroscopeCalibrator.calibrate();
+        magnetometerCalibrator.calibrate();
 
-        final double accelerometerMse = mAccelerometerCalibrator.getEstimatedMse();
-        final double gyroscopeMse = mGyroscopeCalibrator.getEstimatedMse();
-        final double magnetometerMse = mMagnetometerCalibrator.getEstimatedMse();
+        final var accelerometerMse = accelerometerCalibrator.getEstimatedMse();
+        final var gyroscopeMse = gyroscopeCalibrator.getEstimatedMse();
+        final var magnetometerMse = magnetometerCalibrator.getEstimatedMse();
 
         // convert accelerometer and gyroscope mse to global mse
-        final double mse = mMseRule.evaluate(accelerometerMse, gyroscopeMse, magnetometerMse);
-        if (mse < mMinMse) {
+        final var mse = mseRule.evaluate(accelerometerMse, gyroscopeMse, magnetometerMse);
+        if (mse < minMse) {
             keepBestResult(mse, thresholdFactor);
         }
         return mse;
@@ -1579,165 +1552,162 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
      * gyroscope and magnetometer calibration.
      */
     private void initialize() {
-        final AccelerometerGyroscopeAndMagnetometerMeasurementsGeneratorListener generatorListener =
-                new AccelerometerGyroscopeAndMagnetometerMeasurementsGeneratorListener() {
-                    @Override
-                    public void onInitializationStarted(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+        final var generatorListener = new AccelerometerGyroscopeAndMagnetometerMeasurementsGeneratorListener() {
+            @Override
+            public void onInitializationStarted(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onInitializationCompleted(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
-                            final double accelerometerBaseNoiseLevel) {
-                        // not needed
-                    }
+            @Override
+            public void onInitializationCompleted(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
+                    final double accelerometerBaseNoiseLevel) {
+                // not needed
+            }
 
-                    @Override
-                    public void onError(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
-                            final TriadStaticIntervalDetector.ErrorReason reason) {
-                        // not needed
-                    }
+            @Override
+            public void onError(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
+                    final TriadStaticIntervalDetector.ErrorReason reason) {
+                // not needed
+            }
 
-                    @Override
-                    public void onStaticIntervalDetected(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+            @Override
+            public void onStaticIntervalDetected(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onDynamicIntervalDetected(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+            @Override
+            public void onDynamicIntervalDetected(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onStaticIntervalSkipped(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+            @Override
+            public void onStaticIntervalSkipped(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onDynamicIntervalSkipped(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
+            @Override
+            public void onDynamicIntervalSkipped(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
 
-                    @Override
-                    public void onGeneratedAccelerometerMeasurement(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
-                            final StandardDeviationBodyKinematics measurement) {
-                        mAccelerometerMeasurements.add(measurement);
-                    }
+            @Override
+            public void onGeneratedAccelerometerMeasurement(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
+                    final StandardDeviationBodyKinematics measurement) {
+                accelerometerMeasurements.add(measurement);
+            }
 
-                    @Override
-                    public void onGeneratedGyroscopeMeasurement(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
-                            final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence) {
-                        mGyroscopeSequences.add(sequence);
-                    }
+            @Override
+            public void onGeneratedGyroscopeMeasurement(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
+                    final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> sequence) {
+                gyroscopeSequences.add(sequence);
+            }
 
-                    @Override
-                    public void onGeneratedMagnetometerMeasurement(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
-                            final StandardDeviationBodyMagneticFluxDensity measurement) {
-                        mMagnetometerMeasurements.add(measurement);
-                    }
+            @Override
+            public void onGeneratedMagnetometerMeasurement(
+                    final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
+                    final StandardDeviationBodyMagneticFluxDensity measurement) {
+                magnetometerMeasurements.add(measurement);
+            }
 
-                    @Override
-                    public void onReset(
-                            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
-                        // not needed
-                    }
-                };
+            @Override
+            public void onReset(final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator) {
+                // not needed
+            }
+        };
 
-        mGenerator = new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(generatorListener);
+        generator = new AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator(generatorListener);
     }
 
     /**
-     * Keeps best calibration solution found so far.
+     * Keeps the best calibration solution found so far.
      *
      * @param mse             Estimated Mean Square Error during calibration.
      * @param thresholdFactor threshold factor to be kept.
      */
     private void keepBestResult(final double mse, final double thresholdFactor) {
-        mMinMse = mse;
-        mOptimalThresholdFactor = thresholdFactor;
+        minMse = mse;
+        optimalThresholdFactor = thresholdFactor;
 
-        mAngularSpeedNoiseRootPsd = mGenerator.getGyroscopeBaseNoiseLevelRootPsd();
-        mBaseNoiseLevel = mGenerator.getAccelerometerBaseNoiseLevel();
-        mThreshold = mGenerator.getThreshold();
+        angularSpeedNoiseRootPsd = generator.getGyroscopeBaseNoiseLevelRootPsd();
+        baseNoiseLevel = generator.getAccelerometerBaseNoiseLevel();
+        threshold = generator.getThreshold();
 
-        if (mEstimatedAccelerometerCovariance == null) {
-            mEstimatedAccelerometerCovariance = new Matrix(mAccelerometerCalibrator.getEstimatedCovariance());
+        if (estimatedAccelerometerCovariance == null) {
+            estimatedAccelerometerCovariance = new Matrix(accelerometerCalibrator.getEstimatedCovariance());
         } else {
-            mEstimatedAccelerometerCovariance.copyFrom(mAccelerometerCalibrator.getEstimatedCovariance());
+            estimatedAccelerometerCovariance.copyFrom(accelerometerCalibrator.getEstimatedCovariance());
         }
-        if (mEstimatedAccelerometerMa == null) {
-            mEstimatedAccelerometerMa = new Matrix(mAccelerometerCalibrator.getEstimatedMa());
+        if (estimatedAccelerometerMa == null) {
+            estimatedAccelerometerMa = new Matrix(accelerometerCalibrator.getEstimatedMa());
         } else {
-            mEstimatedAccelerometerMa.copyFrom(mAccelerometerCalibrator.getEstimatedMa());
+            estimatedAccelerometerMa.copyFrom(accelerometerCalibrator.getEstimatedMa());
         }
-        if (mAccelerometerCalibrator instanceof UnknownBiasAccelerometerCalibrator unknownBiasAccelerometerCalibrator) {
-            mEstimatedAccelerometerBiases = unknownBiasAccelerometerCalibrator.getEstimatedBiases();
-        } else if (mAccelerometerCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
-            mEstimatedAccelerometerBiases = knownBiasAccelerometerCalibrator.getBias();
-        }
-
-        if (mEstimatedGyroscopeCovariance == null) {
-            mEstimatedGyroscopeCovariance = new Matrix(mGyroscopeCalibrator.getEstimatedCovariance());
-        } else {
-            mEstimatedGyroscopeCovariance.copyFrom(mGyroscopeCalibrator.getEstimatedCovariance());
-        }
-        if (mEstimatedGyroscopeMg == null) {
-            mEstimatedGyroscopeMg = new Matrix(mGyroscopeCalibrator.getEstimatedMg());
-        } else {
-            mEstimatedGyroscopeMg.copyFrom(mGyroscopeCalibrator.getEstimatedMg());
-        }
-        if (mEstimatedGyroscopeGg == null) {
-            mEstimatedGyroscopeGg = new Matrix(mGyroscopeCalibrator.getEstimatedGg());
-        } else {
-            mEstimatedGyroscopeGg.copyFrom(mGyroscopeCalibrator.getEstimatedGg());
-        }
-        if (mGyroscopeCalibrator instanceof UnknownBiasGyroscopeCalibrator unknownBiasGyroscopeCalibrator) {
-            mEstimatedGyroscopeBiases = unknownBiasGyroscopeCalibrator.getEstimatedBiases();
-        } else if (mGyroscopeCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
-            mEstimatedGyroscopeBiases = knownBiasAccelerometerCalibrator.getBias();
+        if (accelerometerCalibrator instanceof UnknownBiasAccelerometerCalibrator unknownBiasAccelerometerCalibrator) {
+            estimatedAccelerometerBiases = unknownBiasAccelerometerCalibrator.getEstimatedBiases();
+        } else if (accelerometerCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
+            estimatedAccelerometerBiases = knownBiasAccelerometerCalibrator.getBias();
         }
 
-        if (mEstimatedMagnetometerCovariance == null) {
-            mEstimatedMagnetometerCovariance = new Matrix(mMagnetometerCalibrator.getEstimatedCovariance());
+        if (estimatedGyroscopeCovariance == null) {
+            estimatedGyroscopeCovariance = new Matrix(gyroscopeCalibrator.getEstimatedCovariance());
         } else {
-            mEstimatedMagnetometerCovariance.copyFrom(mMagnetometerCalibrator.getEstimatedCovariance());
+            estimatedGyroscopeCovariance.copyFrom(gyroscopeCalibrator.getEstimatedCovariance());
         }
-        if (mEstimatedMagnetometerMm == null) {
-            mEstimatedMagnetometerMm = new Matrix(mMagnetometerCalibrator.getEstimatedMm());
+        if (estimatedGyroscopeMg == null) {
+            estimatedGyroscopeMg = new Matrix(gyroscopeCalibrator.getEstimatedMg());
         } else {
-            mEstimatedMagnetometerMm.copyFrom(mMagnetometerCalibrator.getEstimatedMm());
+            estimatedGyroscopeMg.copyFrom(gyroscopeCalibrator.getEstimatedMg());
         }
-        if (mMagnetometerCalibrator instanceof UnknownHardIronMagnetometerCalibrator unknownHardIronMagnetometerCalibrator) {
-            mEstimatedMagnetometerHardIron = unknownHardIronMagnetometerCalibrator.getEstimatedHardIron();
-        } else if (mMagnetometerCalibrator instanceof KnownHardIronMagnetometerCalibrator knownHardIronMagnetometerCalibrator) {
-            mEstimatedMagnetometerHardIron = knownHardIronMagnetometerCalibrator.getHardIron();
+        if (estimatedGyroscopeGg == null) {
+            estimatedGyroscopeGg = new Matrix(gyroscopeCalibrator.getEstimatedGg());
+        } else {
+            estimatedGyroscopeGg.copyFrom(gyroscopeCalibrator.getEstimatedGg());
+        }
+        if (gyroscopeCalibrator instanceof UnknownBiasGyroscopeCalibrator unknownBiasGyroscopeCalibrator) {
+            estimatedGyroscopeBiases = unknownBiasGyroscopeCalibrator.getEstimatedBiases();
+        } else if (gyroscopeCalibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
+            estimatedGyroscopeBiases = knownBiasAccelerometerCalibrator.getBias();
+        }
+
+        if (estimatedMagnetometerCovariance == null) {
+            estimatedMagnetometerCovariance = new Matrix(magnetometerCalibrator.getEstimatedCovariance());
+        } else {
+            estimatedMagnetometerCovariance.copyFrom(magnetometerCalibrator.getEstimatedCovariance());
+        }
+        if (estimatedMagnetometerMm == null) {
+            estimatedMagnetometerMm = new Matrix(magnetometerCalibrator.getEstimatedMm());
+        } else {
+            estimatedMagnetometerMm.copyFrom(magnetometerCalibrator.getEstimatedMm());
+        }
+        if (magnetometerCalibrator instanceof UnknownHardIronMagnetometerCalibrator unknownHardIronMagnetometerCalibrator) {
+            estimatedMagnetometerHardIron = unknownHardIronMagnetometerCalibrator.getEstimatedHardIron();
+        } else if (magnetometerCalibrator instanceof KnownHardIronMagnetometerCalibrator knownHardIronMagnetometerCalibrator) {
+            estimatedMagnetometerHardIron = knownHardIronMagnetometerCalibrator.getHardIron();
         }
     }
 
     /**
-     * Creates an acceleration instance using provided value and unit.
+     * Creates an acceleration instance using the provided value and unit.
      *
      * @param value value of measurement.
      * @param unit  unit of value.
      * @return created acceleration.
      */
-    private Acceleration createMeasurement(
-            final double value, final AccelerationUnit unit) {
+    private Acceleration createMeasurement(final double value, final AccelerationUnit unit) {
         return new Acceleration(value, unit);
     }
 
     /**
-     * Gets default unit for acceleration, which is meters per
+     * Gets the default unit for acceleration, which is meters per
      * squared second (m/s^2).
      *
      * @return default unit for acceleration.

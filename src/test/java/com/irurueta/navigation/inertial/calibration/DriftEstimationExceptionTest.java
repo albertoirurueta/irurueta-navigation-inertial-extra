@@ -15,15 +15,15 @@
  */
 package com.irurueta.navigation.inertial.calibration;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DriftEstimationExceptionTest {
+class DriftEstimationExceptionTest {
 
     @Test
-    public void testConstructor() {
-        DriftEstimationException ex = new DriftEstimationException();
+    void testConstructor() {
+        var ex = new DriftEstimationException();
         assertNotNull(ex);
 
         ex = new DriftEstimationException("message");

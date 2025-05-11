@@ -28,7 +28,7 @@ public class DriftEstimationException extends CalibrationException {
     }
 
     /**
-     * Constructor with String containing message.
+     * Constructor with String containing a message.
      *
      * @param message message indicating the cause of the exception.
      */

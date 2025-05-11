@@ -15,15 +15,15 @@
  */
 package com.irurueta.navigation.inertial.calibration;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class RandomWalkEstimationExceptionTest {
+class RandomWalkEstimationExceptionTest {
 
     @Test
-    public void testConstructor() {
-        RandomWalkEstimationException ex = new RandomWalkEstimationException();
+    void testConstructor() {
+        var ex = new RandomWalkEstimationException();
         assertNotNull(ex);
 
         ex = new RandomWalkEstimationException("message");

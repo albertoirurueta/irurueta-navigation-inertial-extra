@@ -21,12 +21,11 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
  * (MSE) into a single MSE value.
  * This implementation simply sums both MSE values.
  */
-public class DefaultAccelerometerAndGyroscopeMseRule implements
-        AccelerometerAndGyroscopeMseRule {
+public class DefaultAccelerometerAndGyroscopeMseRule implements AccelerometerAndGyroscopeMseRule {
 
     /**
      * Evaluates provided accelerometer calibration MSE and gyroscope calibration
-     * MSE in order to obtain a single MSE value representing both.
+     * MSE to get a single MSE value representing both.
      *
      * @param accelerometerMse accelerometer calibration MSE.
      * @param gyroscopeMse     gyroscope calibration MSE.

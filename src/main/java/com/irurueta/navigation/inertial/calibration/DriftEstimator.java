@@ -65,101 +65,101 @@ public class DriftEstimator {
     /**
      * Indicates whether this estimator is running.
      */
-    protected boolean mRunning;
+    protected boolean running;
 
     /**
      * Number of processed body kinematics samples.
      */
-    protected int mNumberOfProcessedSamples;
+    protected int numberOfProcessedSamples;
 
     /**
      * Time interval expressed in seconds (s) between body kinematics samples.
      */
-    protected double mTimeInterval = DEFAULT_TIME_INTERVAL_SECONDS;
+    protected double timeInterval = DEFAULT_TIME_INTERVAL_SECONDS;
 
     /**
-     * Fixes body kinematics measurements using accelerometer + gyroscope
+     * Fixes body kinematics measurements using accelerometer and gyroscope
      * calibration data to fix measurements.
      */
-    protected final BodyKinematicsFixer mFixer = new BodyKinematicsFixer();
+    protected final BodyKinematicsFixer fixer = new BodyKinematicsFixer();
 
     /**
-     * Instance containing last fixed body kinematics to be reused.
+     * Instance containing the last fixed body kinematics to be reused.
      */
-    protected final BodyKinematics mFixedKinematics = new BodyKinematics();
+    protected final BodyKinematics fixedKinematics = new BodyKinematics();
 
     /**
      * Indicates whether measured kinematics must be fixed or not.
-     * When enabled, provided calibration data is used, otherwise it is
+     * When enabled, provided calibration data is used; otherwise it is
      * ignored.
-     * By default this is enabled.
+     * By default, this is enabled.
      */
-    protected boolean mFixKinematics = true;
+    protected boolean fixKinematics = true;
 
     /**
      * Listener to handle events raised by this estimator.
      */
-    protected DriftEstimatorListener mListener;
+    protected DriftEstimatorListener listener;
 
     /**
      * Initial frame containing body position, velocity and orientation expressed
      * in ECEF coordinates before starting drift estimation.
      */
-    protected ECEFFrame mReferenceFrame;
+    protected ECEFFrame referenceFrame;
 
     /**
-     * Contains current frame after one navigation step.
+     * Contains the current frame after one navigation step.
      * This is reused for efficiency.
      */
-    protected final ECEFFrame mFrame = new ECEFFrame();
+    protected final ECEFFrame frame = new ECEFFrame();
 
     /**
-     * Contains orientation of reference frame.
+     * Contains orientation of a reference frame.
      * This is reused for efficiency.
      */
-    protected final Quaternion mRefQ = new Quaternion();
+    protected final Quaternion refQ = new Quaternion();
 
     /**
-     * Contains inverse of orientation of reference frame.
+     * Contains orientation inverse of the reference frame.
      * This is reused for efficiency.
      */
-    protected final Quaternion mInvRefQ = new Quaternion();
+    protected final Quaternion invRefQ = new Quaternion();
 
     /**
      * Contains current frame orientation drift.
      * This is reused for efficiency.
      */
-    protected final Quaternion mQ = new Quaternion();
+    protected final Quaternion q = new Quaternion();
 
     /**
      * Contains current position drift.
      */
-    protected final ECEFPosition mCurrentPositionDrift = new ECEFPosition();
+    protected final ECEFPosition currentPositionDrift = new ECEFPosition();
 
     /**
      * Contains current velocity drift.
      */
-    protected final ECEFVelocity mCurrentVelocityDrift = new ECEFVelocity();
+    protected final ECEFVelocity currentVelocityDrift = new ECEFVelocity();
 
     /**
      * Contains current orientation expressed as a 3D rotation matrix.
      */
-    protected Matrix mCurrentC;
+    protected Matrix currentC;
 
     /**
      * Current position drift expressed in meters (m).
      */
-    protected double mCurrentPositionDriftMeters;
+    protected double currentPositionDriftMeters;
 
     /**
      * Current velocity drift expressed in meters per second (m/s).
      */
-    protected double mCurrentVelocityDriftMetersPerSecond;
+    protected double currentVelocityDriftMetersPerSecond;
 
     /**
      * Current orientation drift expressed in radians (rad).
      */
-    protected double mCurrentOrientationDriftRadians;
+    protected double currentOrientationDriftRadians;
 
     /**
      * Constructor.
@@ -173,7 +173,7 @@ public class DriftEstimator {
      * @param listener listener to handle events.
      */
     public DriftEstimator(final DriftEstimatorListener listener) {
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -183,7 +183,7 @@ public class DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      */
     public DriftEstimator(final ECEFFrame referenceFrame) {
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -195,8 +195,8 @@ public class DriftEstimator {
      */
     public DriftEstimator(final ECEFFrame referenceFrame,
                           final DriftEstimatorListener listener) {
-        mReferenceFrame = referenceFrame;
-        mListener = listener;
+        this.referenceFrame = referenceFrame;
+        this.listener = listener;
     }
 
     /**
@@ -223,19 +223,19 @@ public class DriftEstimator {
     public DriftEstimator(final NEDFrame referenceFrame,
                           final DriftEstimatorListener listener) {
         this(referenceFrame);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
      * Constructor.
      *
      * @param ba acceleration bias to be set.
-     * @param ma acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg angular speed bias to be set.
-     * @param mg angular speed cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg angular speed cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(final AccelerationTriad ba,
                           final Matrix ma,
@@ -255,13 +255,13 @@ public class DriftEstimator {
      * Constructor.
      *
      * @param ba       acceleration bias to be set.
-     * @param ma       acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma       acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg       angular speed bias to be set.
-     * @param mg       angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg       angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final AccelerationTriad ba,
@@ -270,20 +270,20 @@ public class DriftEstimator {
             final Matrix mg,
             final DriftEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
      * Constructor.
      *
      * @param ba acceleration bias to be set.
-     * @param ma acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg angular speed bias to be set.
-     * @param mg angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg angular speed g-dependent cross biases matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg angular speed g-dependent cross-biases matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final AccelerationTriad ba,
@@ -303,14 +303,14 @@ public class DriftEstimator {
      * Constructor.
      *
      * @param ba       acceleration bias to be set.
-     * @param ma       acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma       acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg       angular speed bias to be set.
-     * @param mg       angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg       angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg       angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg       angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final AccelerationTriad ba,
@@ -320,7 +320,7 @@ public class DriftEstimator {
             final Matrix gg,
             final DriftEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg, gg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -328,13 +328,13 @@ public class DriftEstimator {
      *
      * @param ba acceleration bias to be set expressed in meters per squared second
      *           (m/s`2). Must be 3x1.
-     * @param ma acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg angular speed bias to be set expressed in radians per second
      *           (rad/s). Must be 3x1.
-     * @param mg angular speed cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg angular speed cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final Matrix ba,
@@ -356,14 +356,14 @@ public class DriftEstimator {
      *
      * @param ba       acceleration bias to be set expressed in meters per squared second
      *                 (m/s`2). Must be 3x1.
-     * @param ma       acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma       acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg       angular speed bias to be set expressed in radians per second
      *                 (rad/s). Must be 3x1.
-     * @param mg       angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg       angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final Matrix ba,
@@ -372,7 +372,7 @@ public class DriftEstimator {
             final Matrix mg,
             final DriftEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -380,14 +380,14 @@ public class DriftEstimator {
      *
      * @param ba acceleration bias to be set expressed in meters per squared second
      *           (m/s`2). Must be 3x1.
-     * @param ma acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg angular speed bias to be set expressed in radians per second
      *           (rad/s). Must be 3x1.
-     * @param mg angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg angular speed g-dependent cross biases matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg angular speed g-dependent cross-biases matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final Matrix ba,
@@ -408,15 +408,15 @@ public class DriftEstimator {
      *
      * @param ba       acceleration bias to be set expressed in meters per squared second
      *                 (m/s`2). Must be 3x1.
-     * @param ma       acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma       acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg       angular speed bias to be set expressed in radians per second
      *                 (rad/s). Must be 3x1.
-     * @param mg       angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg       angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg       angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg       angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final Matrix ba,
@@ -426,7 +426,7 @@ public class DriftEstimator {
             final Matrix gg,
             final DriftEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg, gg);
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -435,12 +435,12 @@ public class DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(final ECEFFrame referenceFrame,
                           final AccelerationTriad ba,
@@ -448,7 +448,7 @@ public class DriftEstimator {
                           final AngularSpeedTriad bg,
                           final Matrix mg) throws AlgebraException {
         this(ba, ma, bg, mg);
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -457,13 +457,13 @@ public class DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final ECEFFrame referenceFrame,
@@ -473,7 +473,7 @@ public class DriftEstimator {
             final Matrix mg,
             final DriftEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg, listener);
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -482,13 +482,13 @@ public class DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final ECEFFrame referenceFrame,
@@ -498,7 +498,7 @@ public class DriftEstimator {
             final Matrix mg,
             final Matrix gg) throws AlgebraException {
         this(ba, ma, bg, mg, gg);
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -507,14 +507,14 @@ public class DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final ECEFFrame referenceFrame,
@@ -525,7 +525,7 @@ public class DriftEstimator {
             final Matrix gg,
             final DriftEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg, gg, listener);
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -535,13 +535,13 @@ public class DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final ECEFFrame referenceFrame,
@@ -550,7 +550,7 @@ public class DriftEstimator {
             final Matrix bg,
             final Matrix mg) throws AlgebraException {
         this(ba, ma, bg, mg);
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -560,14 +560,14 @@ public class DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final ECEFFrame referenceFrame,
@@ -577,7 +577,7 @@ public class DriftEstimator {
             final Matrix mg,
             final DriftEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg, listener);
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -587,14 +587,14 @@ public class DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final ECEFFrame referenceFrame,
@@ -604,7 +604,7 @@ public class DriftEstimator {
             final Matrix mg,
             final Matrix gg) throws AlgebraException {
         this(ba, ma, bg, mg, gg);
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -614,15 +614,15 @@ public class DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final ECEFFrame referenceFrame,
@@ -633,7 +633,7 @@ public class DriftEstimator {
             final Matrix gg,
             final DriftEstimatorListener listener) throws AlgebraException {
         this(ba, ma, bg, mg, gg, listener);
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -642,20 +642,19 @@ public class DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(final NEDFrame referenceFrame,
                           final AccelerationTriad ba,
                           final Matrix ma,
                           final AngularSpeedTriad bg,
                           final Matrix mg) throws AlgebraException {
-        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame),
-                ba, ma, bg, mg);
+        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame), ba, ma, bg, mg);
     }
 
     /**
@@ -664,13 +663,13 @@ public class DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final NEDFrame referenceFrame,
@@ -679,8 +678,7 @@ public class DriftEstimator {
             final AngularSpeedTriad bg,
             final Matrix mg,
             final DriftEstimatorListener listener) throws AlgebraException {
-        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame),
-                ba, ma, bg, mg, listener);
+        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame), ba, ma, bg, mg, listener);
     }
 
     /**
@@ -689,13 +687,13 @@ public class DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final NEDFrame referenceFrame,
@@ -704,8 +702,7 @@ public class DriftEstimator {
             final AngularSpeedTriad bg,
             final Matrix mg,
             final Matrix gg) throws AlgebraException {
-        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame),
-                ba, ma, bg, mg, gg);
+        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame), ba, ma, bg, mg, gg);
     }
 
     /**
@@ -714,14 +711,14 @@ public class DriftEstimator {
      * @param referenceFrame initial frame containing body position, velocity and
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final NEDFrame referenceFrame,
@@ -731,8 +728,7 @@ public class DriftEstimator {
             final Matrix mg,
             final Matrix gg,
             final DriftEstimatorListener listener) throws AlgebraException {
-        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame),
-                ba, ma, bg, mg, gg, listener);
+        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame), ba, ma, bg, mg, gg, listener);
     }
 
     /**
@@ -742,13 +738,13 @@ public class DriftEstimator {
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final NEDFrame referenceFrame,
@@ -756,8 +752,7 @@ public class DriftEstimator {
             final Matrix ma,
             final Matrix bg,
             final Matrix mg) throws AlgebraException {
-        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame),
-                ba, ma, bg, mg);
+        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame), ba, ma, bg, mg);
     }
 
     /**
@@ -767,14 +762,14 @@ public class DriftEstimator {
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final NEDFrame referenceFrame,
@@ -783,8 +778,7 @@ public class DriftEstimator {
             final Matrix bg,
             final Matrix mg,
             final DriftEstimatorListener listener) throws AlgebraException {
-        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame),
-                ba, ma, bg, mg, listener);
+        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame), ba, ma, bg, mg, listener);
     }
 
     /**
@@ -794,14 +788,14 @@ public class DriftEstimator {
      *                       orientation expressed in NED coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final NEDFrame referenceFrame,
@@ -810,8 +804,7 @@ public class DriftEstimator {
             final Matrix bg,
             final Matrix mg,
             final Matrix gg) throws AlgebraException {
-        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame),
-                ba, ma, bg, mg, gg);
+        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame), ba, ma, bg, mg, gg);
     }
 
     /**
@@ -821,15 +814,15 @@ public class DriftEstimator {
      *                       orientation expressed in ECEF coordinates.
      * @param ba             acceleration bias to be set expressed in meters per squared second
      *                       (m/s`2). Must be 3x1.
-     * @param ma             acceleration cross coupling errors matrix. Must be 3x3.
+     * @param ma             acceleration cross-coupling errors matrix. Must be 3x3.
      * @param bg             angular speed bias to be set expressed in radians per second
      *                       (rad/s). Must be 3x1.
-     * @param mg             angular speed cross coupling errors matrix. Must be 3x3.
-     * @param gg             angular speed g-dependent cross biases matrix. Must be 3x3.
+     * @param mg             angular speed cross-coupling errors matrix. Must be 3x3.
+     * @param gg             angular speed g-dependent cross-biases matrix. Must be 3x3.
      * @param listener       listener to handle events.
-     * @throws AlgebraException         if provided cross coupling matrices cannot
+     * @throws AlgebraException         if provided cross-coupling matrices cannot
      *                                  be inverted.
-     * @throws IllegalArgumentException if provided matrices are not 3x3.
+     * @throws IllegalArgumentException if any provided matrices are not 3x3.
      */
     public DriftEstimator(
             final NEDFrame referenceFrame,
@@ -839,8 +832,7 @@ public class DriftEstimator {
             final Matrix mg,
             final Matrix gg,
             final DriftEstimatorListener listener) throws AlgebraException {
-        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame),
-                ba, ma, bg, mg, gg, listener);
+        this(NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceFrame), ba, ma, bg, mg, gg, listener);
     }
 
     /**
@@ -849,7 +841,7 @@ public class DriftEstimator {
      * @return listener to handle events raised by this estimator.
      */
     public DriftEstimatorListener getListener() {
-        return mListener;
+        return listener;
     }
 
     /**
@@ -858,13 +850,12 @@ public class DriftEstimator {
      * @param listener listener to handle events raised by this estimator.
      * @throws LockedException if estimator is running.
      */
-    public void setListener(final DriftEstimatorListener listener)
-            throws LockedException {
-        if (mRunning) {
+    public void setListener(final DriftEstimatorListener listener) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mListener = listener;
+        this.listener = listener;
     }
 
     /**
@@ -874,7 +865,7 @@ public class DriftEstimator {
      * @return initial body frame or null.
      */
     public ECEFFrame getReferenceFrame() {
-        return mReferenceFrame;
+        return referenceFrame;
     }
 
     /**
@@ -884,12 +875,11 @@ public class DriftEstimator {
      * @param referenceFrame initial frame or null.
      * @throws LockedException if estimator is already running.
      */
-    public void setReferenceFrame(final ECEFFrame referenceFrame)
-            throws LockedException {
-        if (mRunning) {
+    public void setReferenceFrame(final ECEFFrame referenceFrame) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
-        mReferenceFrame = referenceFrame;
+        this.referenceFrame = referenceFrame;
     }
 
     /**
@@ -899,8 +889,8 @@ public class DriftEstimator {
      * @return initial body frame or null.
      */
     public NEDFrame getReferenceNedFrame() {
-        return mReferenceFrame != null ?
-                ECEFtoNEDFrameConverter.convertECEFtoNEDAndReturnNew(mReferenceFrame)
+        return referenceFrame != null
+                ? ECEFtoNEDFrameConverter.convertECEFtoNEDAndReturnNew(referenceFrame)
                 : null;
     }
 
@@ -908,14 +898,14 @@ public class DriftEstimator {
      * Gets initial frame containing body position, velocity and orientation
      * expressed in NED coordinates before starting drift estimation.
      *
-     * @param result instance where result will be stored.
-     * @return true if initial frame was available and result was updated, false
+     * @param result instance where the result will be stored.
+     * @return true if the initial frame was available and the result was updated, false
      * otherwise.
      * @throws NullPointerException if provided result instance is null.
      */
     public boolean getReferenceNedFrame(final NEDFrame result) {
-        if (mReferenceFrame != null) {
-            ECEFtoNEDFrameConverter.convertECEFtoNED(mReferenceFrame, result);
+        if (referenceFrame != null) {
+            ECEFtoNEDFrameConverter.convertECEFtoNED(referenceFrame, result);
             return true;
         } else {
             return false;
@@ -923,27 +913,25 @@ public class DriftEstimator {
     }
 
     /**
-     * Sets initial frame containing body position, velocity and orientation
+     * Sets an initial frame containing body position, velocity and orientation
      * expressed in NED coordinates before starting drift estimation.
      *
      * @param referenceNedFrame initial body frame or null.
      * @throws LockedException if estimator is already running.
      */
-    public void setReferenceNedFrame(final NEDFrame referenceNedFrame)
-            throws LockedException {
-        if (mRunning) {
+    public void setReferenceNedFrame(final NEDFrame referenceNedFrame) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
         if (referenceNedFrame != null) {
-            if (mReferenceFrame != null) {
-                NEDtoECEFFrameConverter.convertNEDtoECEF(referenceNedFrame, mReferenceFrame);
+            if (referenceFrame != null) {
+                NEDtoECEFFrameConverter.convertNEDtoECEF(referenceNedFrame, referenceFrame);
             } else {
-                mReferenceFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(
-                        referenceNedFrame);
+                referenceFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(referenceNedFrame);
             }
         } else {
-            mReferenceFrame = null;
+            referenceFrame = null;
         }
     }
 
@@ -954,21 +942,21 @@ public class DriftEstimator {
      * @return initial body position or null.
      */
     public ECEFPosition getReferenceEcefPosition() {
-        return mReferenceFrame != null ? mReferenceFrame.getECEFPosition() : null;
+        return referenceFrame != null ? referenceFrame.getECEFPosition() : null;
     }
 
     /**
      * Gets initial body position, expressed in ECEF coordinates, before starting
      * drift estimation.
      *
-     * @param result instance where result will be stored.
-     * @return true if initial body position was available and result was updated,
+     * @param result instance where the result will be stored.
+     * @return true if the initial body position was available and the result was updated,
      * false otherwise.
      * @throws NullPointerException if provided result instance is null.
      */
     public boolean getReferenceEcefPosition(final ECEFPosition result) {
-        if (mReferenceFrame != null) {
-            mReferenceFrame.getECEFPosition(result);
+        if (referenceFrame != null) {
+            referenceFrame.getECEFPosition(result);
             return true;
         } else {
             return false;
@@ -983,16 +971,15 @@ public class DriftEstimator {
      * @throws LockedException      if estimator is already running.
      * @throws NullPointerException if provided position is null.
      */
-    public void setReferenceEcefPosition(final ECEFPosition referenceEcefPosition)
-            throws LockedException {
-        if (mRunning) {
+    public void setReferenceEcefPosition(final ECEFPosition referenceEcefPosition) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        if (mReferenceFrame != null) {
-            mReferenceFrame.setPosition(referenceEcefPosition);
+        if (referenceFrame != null) {
+            referenceFrame.setPosition(referenceEcefPosition);
         } else {
-            mReferenceFrame = new ECEFFrame(referenceEcefPosition);
+            referenceFrame = new ECEFFrame(referenceEcefPosition);
         }
     }
 
@@ -1003,21 +990,21 @@ public class DriftEstimator {
      * @return initial body velocity or null.
      */
     public ECEFVelocity getReferenceEcefVelocity() {
-        return mReferenceFrame != null ? mReferenceFrame.getECEFVelocity() : null;
+        return referenceFrame != null ? referenceFrame.getECEFVelocity() : null;
     }
 
     /**
      * Gets initial body velocity, expressed in ECEF coordinates, before starting
      * drift estimation.
      *
-     * @param result instance where result will be stored.
-     * @return true if initial body velocity was available and result was updated,
+     * @param result instance where the result will be stored.
+     * @return true if initial body velocity was available and the result was updated,
      * false otherwise.
      * @throws NullPointerException if provided result instance is null.
      */
     public boolean getReferenceEcefVelocity(final ECEFVelocity result) {
-        if (mReferenceFrame != null) {
-            mReferenceFrame.getECEFVelocity(result);
+        if (referenceFrame != null) {
+            referenceFrame.getECEFVelocity(result);
             return true;
         } else {
             return false;
@@ -1030,19 +1017,18 @@ public class DriftEstimator {
      *
      * @param referenceEcefVelocity initial body velocity.
      * @throws LockedException      if estimator is already running.
-     * @throws NullPointerException if provided velocity is null.
+     * @throws NullPointerException if velocity is null.
      */
-    public void setReferenceEcefVelocity(final ECEFVelocity referenceEcefVelocity)
-            throws LockedException {
-        if (mRunning) {
+    public void setReferenceEcefVelocity(final ECEFVelocity referenceEcefVelocity) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        if (mReferenceFrame == null) {
-            mReferenceFrame = new ECEFFrame();
+        if (referenceFrame == null) {
+            referenceFrame = new ECEFFrame();
         }
 
-        mReferenceFrame.setVelocity(referenceEcefVelocity);
+        referenceFrame.setVelocity(referenceEcefVelocity);
     }
 
     /**
@@ -1052,23 +1038,22 @@ public class DriftEstimator {
      * @return initial body orientation or null.
      */
     public CoordinateTransformation getReferenceEcefCoordinateTransformation() {
-        return mReferenceFrame != null ?
-                mReferenceFrame.getCoordinateTransformation() : null;
+        return referenceFrame != null ?
+                referenceFrame.getCoordinateTransformation() : null;
     }
 
     /**
      * Gets initial body coordinate transformation, containing body orientation
      * expressed in ECEF coordinates, before starting estimation.
      *
-     * @param result instance where result will be stored.
-     * @return true if initial body orientation was available and result was
+     * @param result instance where the result will be stored.
+     * @return true if initial body orientation was available and a result was
      * updated, false otherwise.
      * @throws NullPointerException if provided result instance is null.
      */
-    public boolean getReferenceEcefCoordinateTransformation(
-            final CoordinateTransformation result) {
-        if (mReferenceFrame != null) {
-            mReferenceFrame.getCoordinateTransformation(result);
+    public boolean getReferenceEcefCoordinateTransformation(final CoordinateTransformation result) {
+        if (referenceFrame != null) {
+            referenceFrame.getCoordinateTransformation(result);
             return true;
         } else {
             return false;
@@ -1081,25 +1066,24 @@ public class DriftEstimator {
      *
      * @param referenceEcefCoordinateTransformation initial body orientation.
      * @throws LockedException                               if estimator is already running.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided source and
+     * @throws InvalidSourceAndDestinationFrameTypeException if source and
      *                                                       destination types are invalid. Source type must be
-     *                                                       {@link com.irurueta.navigation.frames.FrameType#BODY_FRAME} and destination
+     *                                                       {@link com.irurueta.navigation.frames.FrameType#BODY_FRAME} and the destination
      *                                                       type must be {@link com.irurueta.navigation.frames.FrameType#EARTH_CENTERED_EARTH_FIXED_FRAME}
      *                                                       indicating that body orientation is expressed respect ECEF coordinates.
-     * @throws NullPointerException                          if provided orientation is null.
+     * @throws NullPointerException                          if orientation is null.
      */
     public void setReferenceEcefCoordinateTransformation(
-            final CoordinateTransformation referenceEcefCoordinateTransformation)
-            throws LockedException, InvalidSourceAndDestinationFrameTypeException {
-        if (mRunning) {
+            final CoordinateTransformation referenceEcefCoordinateTransformation) throws LockedException,
+            InvalidSourceAndDestinationFrameTypeException {
+        if (running) {
             throw new LockedException();
         }
 
-        if (mReferenceFrame == null) {
-            mReferenceFrame = new ECEFFrame(referenceEcefCoordinateTransformation);
+        if (referenceFrame == null) {
+            referenceFrame = new ECEFFrame(referenceEcefCoordinateTransformation);
         } else {
-            mReferenceFrame.setCoordinateTransformation(
-                    referenceEcefCoordinateTransformation);
+            referenceFrame.setCoordinateTransformation(referenceEcefCoordinateTransformation);
         }
     }
 
@@ -1110,7 +1094,7 @@ public class DriftEstimator {
      * @return initial body position or null.
      */
     public NEDPosition getReferenceNedPosition() {
-        final NEDFrame nedFrame = getReferenceNedFrame();
+        final var nedFrame = getReferenceNedFrame();
         return nedFrame != null ? nedFrame.getPosition() : null;
     }
 
@@ -1118,14 +1102,14 @@ public class DriftEstimator {
      * Gets initial body position, expressed in NED coordinates, before starting
      * drift estimation.
      *
-     * @param result instance where result will be stored.
-     * @return true if initial body position was available and result was updated,
+     * @param result instance where the result will be stored.
+     * @return true if the initial body position was available and the result was updated,
      * false otherwise.
      * @throws NullPointerException if provided result instance is null.
      */
     public boolean getReferenceNedPosition(final NEDPosition result) {
-        if (mReferenceFrame != null) {
-            final NEDFrame nedFrame = getReferenceNedFrame();
+        if (referenceFrame != null) {
+            final var nedFrame = getReferenceNedFrame();
             nedFrame.getPosition(result);
             return true;
         } else {
@@ -1141,14 +1125,13 @@ public class DriftEstimator {
      * @throws LockedException      if estimator is already running.
      * @throws NullPointerException if provided position is null.
      */
-    public void setReferenceNedPosition(final NEDPosition referenceNedPosition)
-            throws LockedException {
-        if (mRunning) {
+    public void setReferenceNedPosition(final NEDPosition referenceNedPosition) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        if (mReferenceFrame != null) {
-            final NEDFrame nedFrame = getReferenceNedFrame();
+        if (referenceFrame != null) {
+            final var nedFrame = getReferenceNedFrame();
             nedFrame.setPosition(referenceNedPosition);
             setReferenceNedFrame(nedFrame);
         } else {
@@ -1163,7 +1146,7 @@ public class DriftEstimator {
      * @return initial body velocity or null.
      */
     public NEDVelocity getReferenceNedVelocity() {
-        final NEDFrame nedFrame = getReferenceNedFrame();
+        final var nedFrame = getReferenceNedFrame();
         return nedFrame != null ? nedFrame.getVelocity() : null;
     }
 
@@ -1171,14 +1154,14 @@ public class DriftEstimator {
      * Gets initial body velocity, expressed in NED coordinates, before starting
      * drift estimation.
      *
-     * @param result instance where result will be stored.
-     * @return true if initial body velocity was available and result was updated,
+     * @param result instance where the result will be stored.
+     * @return true if initial body velocity was available and the result was updated,
      * false otherwise.
      * @throws NullPointerException if provided result instance is null.
      */
     public boolean getReferenceNedVelocity(final NEDVelocity result) {
-        if (mReferenceFrame != null) {
-            final NEDFrame nedFrame = getReferenceNedFrame();
+        if (referenceFrame != null) {
+            final var nedFrame = getReferenceNedFrame();
             nedFrame.getVelocity(result);
             return true;
         } else {
@@ -1192,16 +1175,15 @@ public class DriftEstimator {
      *
      * @param referenceNedVelocity initial body velocity.
      * @throws LockedException      if estimator is already running.
-     * @throws NullPointerException if provided velocity is null.
+     * @throws NullPointerException if velocity is null.
      */
-    public void setReferenceNedVelocity(final NEDVelocity referenceNedVelocity)
-            throws LockedException {
-        if (mRunning) {
+    public void setReferenceNedVelocity(final NEDVelocity referenceNedVelocity) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
         final NEDFrame nedFrame;
-        if (mReferenceFrame != null) {
+        if (referenceFrame != null) {
             nedFrame = getReferenceNedFrame();
         } else {
             nedFrame = new NEDFrame();
@@ -1218,7 +1200,7 @@ public class DriftEstimator {
      * @return initial body orientation or null.
      */
     public CoordinateTransformation getReferenceNedCoordinateTransformation() {
-        final NEDFrame nedFrame = getReferenceNedFrame();
+        final var nedFrame = getReferenceNedFrame();
         return nedFrame != null ? nedFrame.getCoordinateTransformation() : null;
     }
 
@@ -1226,15 +1208,14 @@ public class DriftEstimator {
      * Gets initial body coordinate transformation, containing body orientation
      * expressed in NED coordinates, before starting estimation.
      *
-     * @param result instance where result will be stored.
-     * @return true if initial body orientation was available and result was
+     * @param result instance where the result will be stored.
+     * @return true if initial body orientation was available and the result was
      * updated, false otherwise.
      * @throws NullPointerException if provided result instance is null.
      */
-    public boolean getReferenceNedCoordinateTransformation(
-            final CoordinateTransformation result) {
-        if (mReferenceFrame != null) {
-            final NEDFrame nedFrame = getReferenceNedFrame();
+    public boolean getReferenceNedCoordinateTransformation(final CoordinateTransformation result) {
+        if (referenceFrame != null) {
+            final var nedFrame = getReferenceNedFrame();
             nedFrame.getCoordinateTransformation(result);
             return true;
         } else {
@@ -1248,28 +1229,27 @@ public class DriftEstimator {
      *
      * @param referenceNedCoordinateTransformation initial body orientation.
      * @throws LockedException                               if estimator is already running.
-     * @throws InvalidSourceAndDestinationFrameTypeException if provided source and
+     * @throws InvalidSourceAndDestinationFrameTypeException if source and
      *                                                       destination types are invalid. Source type must be
-     *                                                       {@link com.irurueta.navigation.frames.FrameType#BODY_FRAME} and destination
+     *                                                       {@link com.irurueta.navigation.frames.FrameType#BODY_FRAME} and the destination
      *                                                       type must be {@link com.irurueta.navigation.frames.FrameType#LOCAL_NAVIGATION_FRAME}
      *                                                       indicating that body orientation is expressed respect NED coordinates.
-     * @throws NullPointerException                          if provided orientation is null.
+     * @throws NullPointerException                          if orientation is null.
      */
     public void setReferenceNedCoordinateTransformation(
-            final CoordinateTransformation referenceNedCoordinateTransformation)
-            throws LockedException, InvalidSourceAndDestinationFrameTypeException {
-        if (mRunning) {
+            final CoordinateTransformation referenceNedCoordinateTransformation) throws LockedException,
+            InvalidSourceAndDestinationFrameTypeException {
+        if (running) {
             throw new LockedException();
         }
 
         final NEDFrame nedFrame;
-        if (mReferenceFrame == null) {
+        if (referenceFrame == null) {
             nedFrame = new NEDFrame(referenceNedCoordinateTransformation);
             setReferenceNedFrame(nedFrame);
         } else {
             nedFrame = getReferenceNedFrame();
-            nedFrame.setCoordinateTransformation(
-                    referenceNedCoordinateTransformation);
+            nedFrame.setCoordinateTransformation(referenceNedCoordinateTransformation);
         }
     }
 
@@ -1279,16 +1259,16 @@ public class DriftEstimator {
      * @return bias values expressed in meters per squared second.
      */
     public Matrix getAccelerationBias() {
-        return mFixer.getAccelerationBias();
+        return fixer.getAccelerationBias();
     }
 
     /**
      * Gets acceleration bias values expressed in meters per squared second (m/s^2).
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBias(final Matrix result) {
-        mFixer.getAccelerationBias(result);
+        fixer.getAccelerationBias(result);
     }
 
     /**
@@ -1297,14 +1277,14 @@ public class DriftEstimator {
      * @param bias bias values expressed in meters per squared second.
      *             Must be 3x1.
      * @throws LockedException          if estimator is running.
-     * @throws IllegalArgumentException if provided matrix is not 3x1.
+     * @throws IllegalArgumentException if any provided matrix is not 3x1.
      */
     public void setAccelerationBias(final Matrix bias) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(bias);
+        fixer.setAccelerationBias(bias);
     }
 
     /**
@@ -1313,7 +1293,7 @@ public class DriftEstimator {
      * @return bias values expressed in meters per squared second.
      */
     public double[] getAccelerationBiasArray() {
-        return mFixer.getAccelerationBiasArray();
+        return fixer.getAccelerationBiasArray();
     }
 
     /**
@@ -1323,7 +1303,7 @@ public class DriftEstimator {
      * @throws IllegalArgumentException if provided array does not have length 3.
      */
     public void getAccelerationBiasArray(final double[] result) {
-        mFixer.getAccelerationBiasArray(result);
+        fixer.getAccelerationBiasArray(result);
     }
 
     /**
@@ -1335,11 +1315,11 @@ public class DriftEstimator {
      * @throws LockedException          if estimator is running.
      */
     public void setAccelerationBias(final double[] bias) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(bias);
+        fixer.setAccelerationBias(bias);
     }
 
     /**
@@ -1348,16 +1328,16 @@ public class DriftEstimator {
      * @return acceleration bias.
      */
     public AccelerationTriad getAccelerationBiasAsTriad() {
-        return mFixer.getAccelerationBiasAsTriad();
+        return fixer.getAccelerationBiasAsTriad();
     }
 
     /**
      * Gets acceleration bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBiasAsTriad(final AccelerationTriad result) {
-        mFixer.getAccelerationBiasAsTriad(result);
+        fixer.getAccelerationBiasAsTriad(result);
     }
 
     /**
@@ -1366,13 +1346,12 @@ public class DriftEstimator {
      * @param bias acceleration bias to be set.
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBias(final AccelerationTriad bias)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBias(final AccelerationTriad bias) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(bias);
+        fixer.setAccelerationBias(bias);
     }
 
     /**
@@ -1382,7 +1361,7 @@ public class DriftEstimator {
      * @return x-coordinate of bias expressed in meters per squared second (m/s^2).
      */
     public double getAccelerationBiasX() {
-        return mFixer.getAccelerationBiasX();
+        return fixer.getAccelerationBiasX();
     }
 
     /**
@@ -1394,11 +1373,11 @@ public class DriftEstimator {
      * @throws LockedException if estimator is running.
      */
     public void setAccelerationBiasX(final double biasX) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasX(biasX);
+        fixer.setAccelerationBiasX(biasX);
     }
 
     /**
@@ -1408,7 +1387,7 @@ public class DriftEstimator {
      * @return y-coordinate of bias expressed in meters per squared second (m/s^2).
      */
     public double getAccelerationBiasY() {
-        return mFixer.getAccelerationBiasY();
+        return fixer.getAccelerationBiasY();
     }
 
     /**
@@ -1419,13 +1398,12 @@ public class DriftEstimator {
      *              (m/s^2).
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasY(final double biasY)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasY(final double biasY) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasY(biasY);
+        fixer.setAccelerationBiasY(biasY);
     }
 
     /**
@@ -1435,7 +1413,7 @@ public class DriftEstimator {
      * @return z-coordinate of bias expressed in meters per squared second (m/s^2).
      */
     public double getAccelerationBiasZ() {
-        return mFixer.getAccelerationBiasZ();
+        return fixer.getAccelerationBiasZ();
     }
 
     /**
@@ -1445,13 +1423,12 @@ public class DriftEstimator {
      * @param biasZ z-coordinate of bias expressed in meters per squared second (m/s^2).
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasZ(final double biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasZ(final double biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasZ(biasZ);
+        fixer.setAccelerationBiasZ(biasZ);
     }
 
     /**
@@ -1463,14 +1440,12 @@ public class DriftEstimator {
      * @param biasZ z-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBias(
-            final double biasX, final double biasY, final double biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBias(final double biasX, final double biasY, final double biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(biasX, biasY, biasZ);
+        fixer.setAccelerationBias(biasX, biasY, biasZ);
     }
 
     /**
@@ -1479,16 +1454,16 @@ public class DriftEstimator {
      * @return acceleration x-coordinate of bias.
      */
     public Acceleration getAccelerationBiasXAsAcceleration() {
-        return mFixer.getAccelerationBiasXAsAcceleration();
+        return fixer.getAccelerationBiasXAsAcceleration();
     }
 
     /**
      * Gets acceleration x-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBiasXAsAcceleration(final Acceleration result) {
-        mFixer.getAccelerationBiasXAsAcceleration(result);
+        fixer.getAccelerationBiasXAsAcceleration(result);
     }
 
     /**
@@ -1497,13 +1472,12 @@ public class DriftEstimator {
      * @param biasX acceleration x-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasX(final Acceleration biasX)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasX(final Acceleration biasX) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasX(biasX);
+        fixer.setAccelerationBiasX(biasX);
     }
 
     /**
@@ -1512,16 +1486,16 @@ public class DriftEstimator {
      * @return acceleration y-coordinate of bias.
      */
     public Acceleration getAccelerationBiasYAsAcceleration() {
-        return mFixer.getAccelerationBiasYAsAcceleration();
+        return fixer.getAccelerationBiasYAsAcceleration();
     }
 
     /**
      * Gets acceleration y-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBiasYAsAcceleration(final Acceleration result) {
-        mFixer.getAccelerationBiasYAsAcceleration(result);
+        fixer.getAccelerationBiasYAsAcceleration(result);
     }
 
     /**
@@ -1530,13 +1504,12 @@ public class DriftEstimator {
      * @param biasY acceleration y-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasY(final Acceleration biasY)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasY(final Acceleration biasY) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasY(biasY);
+        fixer.setAccelerationBiasY(biasY);
     }
 
     /**
@@ -1545,16 +1518,16 @@ public class DriftEstimator {
      * @return acceleration z-coordinate of bias.
      */
     public Acceleration getAccelerationBiasZAsAcceleration() {
-        return mFixer.getAccelerationBiasZAsAcceleration();
+        return fixer.getAccelerationBiasZAsAcceleration();
     }
 
     /**
      * Gets acceleration z-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationBiasZAsAcceleration(final Acceleration result) {
-        mFixer.getAccelerationBiasZAsAcceleration(result);
+        fixer.getAccelerationBiasZAsAcceleration(result);
     }
 
     /**
@@ -1563,13 +1536,12 @@ public class DriftEstimator {
      * @param biasZ z-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAccelerationBiasZ(final Acceleration biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAccelerationBiasZ(final Acceleration biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBiasZ(biasZ);
+        fixer.setAccelerationBiasZ(biasZ);
     }
 
     /**
@@ -1584,48 +1556,47 @@ public class DriftEstimator {
             final Acceleration biasX,
             final Acceleration biasY,
             final Acceleration biasZ) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationBias(biasX, biasY, biasZ);
+        fixer.setAccelerationBias(biasX, biasY, biasZ);
     }
 
     /**
-     * Gets acceleration cross coupling errors matrix.
+     * Gets acceleration cross-coupling errors matrix.
      *
-     * @return acceleration cross coupling errors matrix.
+     * @return acceleration cross-coupling errors matrix.
      */
     public Matrix getAccelerationCrossCouplingErrors() {
-        return mFixer.getAccelerationCrossCouplingErrors();
+        return fixer.getAccelerationCrossCouplingErrors();
     }
 
     /**
-     * Gets acceleration cross coupling errors matrix.
+     * Gets acceleration cross-coupling errors matrix.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAccelerationCrossCouplingErrors(final Matrix result) {
-        mFixer.getAccelerationCrossCouplingErrors(result);
+        fixer.getAccelerationCrossCouplingErrors(result);
     }
 
     /**
-     * Sets acceleration cross coupling errors matrix.
+     * Sets acceleration cross-coupling errors matrix.
      *
-     * @param crossCouplingErrors acceleration cross coupling errors matrix.
+     * @param crossCouplingErrors acceleration cross-coupling errors matrix.
      *                            Must be 3x3.
      * @throws LockedException          if estimator is running.
-     * @throws AlgebraException         if provided matrix cannot be inverted.
-     * @throws IllegalArgumentException if provided matrix is not 3x3.
+     * @throws AlgebraException         if matrix cannot be inverted.
+     * @throws IllegalArgumentException if matrix is not 3x3.
      */
-    public void setAccelerationCrossCouplingErrors(
-            final Matrix crossCouplingErrors) throws AlgebraException,
+    public void setAccelerationCrossCouplingErrors(final Matrix crossCouplingErrors) throws AlgebraException,
             LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationCrossCouplingErrors(crossCouplingErrors);
+        fixer.setAccelerationCrossCouplingErrors(crossCouplingErrors);
     }
 
     /**
@@ -1634,7 +1605,7 @@ public class DriftEstimator {
      * @return x scaling factor.
      */
     public double getAccelerationSx() {
-        return mFixer.getAccelerationSx();
+        return fixer.getAccelerationSx();
     }
 
     /**
@@ -1642,16 +1613,14 @@ public class DriftEstimator {
      *
      * @param sx x scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationSx(final double sx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationSx(final double sx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationSx(sx);
+        fixer.setAccelerationSx(sx);
     }
 
     /**
@@ -1660,7 +1629,7 @@ public class DriftEstimator {
      * @return y scaling factor.
      */
     public double getAccelerationSy() {
-        return mFixer.getAccelerationSy();
+        return fixer.getAccelerationSy();
     }
 
     /**
@@ -1668,16 +1637,14 @@ public class DriftEstimator {
      *
      * @param sy y scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationSy(final double sy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationSy(final double sy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationSy(sy);
+        fixer.setAccelerationSy(sy);
     }
 
     /**
@@ -1686,7 +1653,7 @@ public class DriftEstimator {
      * @return z scaling factor.
      */
     public double getAccelerationSz() {
-        return mFixer.getAccelerationSz();
+        return fixer.getAccelerationSz();
     }
 
     /**
@@ -1694,129 +1661,119 @@ public class DriftEstimator {
      *
      * @param sz z scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationSz(final double sz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationSz(final double sz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationSz(sz);
+        fixer.setAccelerationSz(sz);
     }
 
     /**
-     * Gets acceleration x-y cross coupling error.
+     * Gets acceleration x-y cross-coupling error.
      *
-     * @return acceleration x-y cross coupling error.
+     * @return acceleration x-y cross-coupling error.
      */
     public double getAccelerationMxy() {
-        return mFixer.getAccelerationMxy();
+        return fixer.getAccelerationMxy();
     }
 
     /**
-     * Sets acceleration x-y cross coupling error.
+     * Sets acceleration x-y cross-coupling error.
      *
-     * @param mxy acceleration x-y cross coupling error.
+     * @param mxy acceleration x-y cross-coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMxy(final double mxy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMxy(final double mxy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMxy(mxy);
+        fixer.setAccelerationMxy(mxy);
     }
 
     /**
-     * Gets acceleration x-z cross coupling error.
+     * Gets acceleration x-z cross-coupling error.
      *
-     * @return acceleration x-z cross coupling error.
+     * @return acceleration x-z cross-coupling error.
      */
     public double getAccelerationMxz() {
-        return mFixer.getAccelerationMxz();
+        return fixer.getAccelerationMxz();
     }
 
     /**
-     * Sets acceleration x-z cross coupling error.
+     * Sets acceleration x-z cross-coupling error.
      *
-     * @param mxz acceleration x-z cross coupling error.
+     * @param mxz acceleration x-z cross-coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMxz(final double mxz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMxz(final double mxz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMxz(mxz);
+        fixer.setAccelerationMxz(mxz);
     }
 
     /**
-     * Gets acceleration y-x cross coupling error.
+     * Gets acceleration y-x cross-coupling error.
      *
-     * @return acceleration y-x cross coupling error.
+     * @return acceleration y-x cross-coupling error.
      */
     public double getAccelerationMyx() {
-        return mFixer.getAccelerationMyx();
+        return fixer.getAccelerationMyx();
     }
 
     /**
-     * Sets acceleration y-x cross coupling error.
+     * Sets acceleration y-x cross-coupling error.
      *
-     * @param myx acceleration y-x cross coupling error.
+     * @param myx acceleration y-x cross-coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMyx(final double myx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMyx(final double myx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMyx(myx);
+        fixer.setAccelerationMyx(myx);
     }
 
     /**
-     * Gets acceleration y-z cross coupling error.
+     * Gets acceleration y-z cross-coupling error.
      *
      * @return y-z cross coupling error.
      */
     public double getAccelerationMyz() {
-        return mFixer.getAccelerationMyz();
+        return fixer.getAccelerationMyz();
     }
 
     /**
-     * Sets acceleration y-z cross coupling error.
+     * Sets acceleration y-z cross-coupling error.
      *
      * @param myz y-z cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMyz(final double myz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMyz(final double myz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMyz(myz);
+        fixer.setAccelerationMyz(myz);
     }
 
     /**
-     * Gets acceleration z-x cross coupling error.
+     * Gets acceleration z-x cross-coupling error.
      *
-     * @return acceleration z-x cross coupling error.
+     * @return acceleration z-x cross-coupling error.
      */
     public double getAccelerationMzx() {
-        return mFixer.getAccelerationMzx();
+        return fixer.getAccelerationMzx();
     }
 
     /**
@@ -1824,42 +1781,38 @@ public class DriftEstimator {
      *
      * @param mzx acceleration z-x cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMzx(final double mzx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMzx(final double mzx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMzx(mzx);
+        fixer.setAccelerationMzx(mzx);
     }
 
     /**
-     * Gets acceleration z-y cross coupling error.
+     * Gets acceleration z-y cross-coupling error.
      *
-     * @return acceleration z-y cross coupling error.
+     * @return acceleration z-y cross-coupling error.
      */
     public double getAccelerationMzy() {
-        return mFixer.getAccelerationMzy();
+        return fixer.getAccelerationMzy();
     }
 
     /**
-     * Sets acceleration z-y cross coupling error.
+     * Sets acceleration z-y cross-coupling error.
      *
      * @param mzy acceleration z-y cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided value makes acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided value makes acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationMzy(final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAccelerationMzy(final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationMzy(mzy);
+        fixer.setAccelerationMzy(mzy);
     }
 
     /**
@@ -1869,21 +1822,19 @@ public class DriftEstimator {
      * @param sy y scaling factor.
      * @param sz z scaling factor.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided values make acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided values make acceleration cross-coupling matrix non-invertible.
      */
-    public void setAccelerationScalingFactors(
-            final double sx, final double sy, final double sz)
+    public void setAccelerationScalingFactors(final double sx, final double sy, final double sz)
             throws LockedException, AlgebraException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationScalingFactors(sx, sy, sz);
+        fixer.setAccelerationScalingFactors(sx, sy, sz);
     }
 
     /**
-     * Sets acceleration cross coupling errors.
+     * Sets acceleration cross-coupling errors.
      *
      * @param mxy x-y cross coupling error.
      * @param mxz x-z cross coupling error.
@@ -1892,23 +1843,21 @@ public class DriftEstimator {
      * @param mzx z-x cross coupling error.
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided values make acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided values make acceleration cross-coupling matrix non-invertible.
      */
     public void setAccelerationCrossCouplingErrors(
             final double mxy, final double mxz,
             final double myx, final double myz,
-            final double mzx, final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+            final double mzx, final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
+        fixer.setAccelerationCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
     }
 
     /**
-     * Sets acceleration scaling factors and cross coupling errors.
+     * Sets acceleration scaling factors and cross-coupling errors.
      *
      * @param sx  x scaling factor.
      * @param sy  y scaling factor.
@@ -1920,21 +1869,18 @@ public class DriftEstimator {
      * @param mzx z-x cross coupling error.
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
-     * @throws AlgebraException if provided values make acceleration cross
-     *                          coupling matrix non invertible.
+     * @throws AlgebraException if provided values make acceleration cross-coupling matrix non-invertible.
      */
     public void setAccelerationScalingFactorsAndCrossCouplingErrors(
             final double sx, final double sy, final double sz,
             final double mxy, final double mxz,
             final double myx, final double myz,
-            final double mzx, final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+            final double mzx, final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAccelerationScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        fixer.setAccelerationScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
     }
 
     /**
@@ -1943,31 +1889,31 @@ public class DriftEstimator {
      * @return angular speed bias values expressed in radians per second.
      */
     public Matrix getAngularSpeedBias() {
-        return mFixer.getAngularSpeedBias();
+        return fixer.getAngularSpeedBias();
     }
 
     /**
      * Gets angular speed bias values expressed in radians per second (rad/s).
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedBias(final Matrix result) {
-        mFixer.getAngularSpeedBias(result);
+        fixer.getAngularSpeedBias(result);
     }
 
     /**
      * Sets angular speed bias values expressed in radians per second (rad/s).
      *
      * @param bias bias values expressed in radians per second. Must be 3x1.
-     * @throws IllegalArgumentException if provided matrix is not 3x1.
+     * @throws IllegalArgumentException if matrix is not 3x1.
      * @throws LockedException          if estimator is running.
      */
     public void setAngularSpeedBias(final Matrix bias) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(bias);
+        fixer.setAngularSpeedBias(bias);
     }
 
     /**
@@ -1976,7 +1922,7 @@ public class DriftEstimator {
      * @return bias values expressed in radians per second.
      */
     public double[] getAngularSpeedBiasArray() {
-        return mFixer.getAngularSpeedBiasArray();
+        return fixer.getAngularSpeedBiasArray();
     }
 
     /**
@@ -1986,7 +1932,7 @@ public class DriftEstimator {
      * @throws IllegalArgumentException if provided array does not have length 3.
      */
     public void getAngularSpeedBiasArray(final double[] result) {
-        mFixer.getAngularSpeedBiasArray(result);
+        fixer.getAngularSpeedBiasArray(result);
     }
 
     /**
@@ -1997,13 +1943,12 @@ public class DriftEstimator {
      * @throws IllegalArgumentException if provided array does not have length 3.
      * @throws LockedException          if estimator is running.
      */
-    public void setAngularSpeedBias(final double[] bias)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBias(final double[] bias) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(bias);
+        fixer.setAngularSpeedBias(bias);
     }
 
     /**
@@ -2012,16 +1957,16 @@ public class DriftEstimator {
      * @return angular speed bias.
      */
     public AngularSpeedTriad getAngularSpeedBiasAsTriad() {
-        return mFixer.getAngularSpeedBiasAsTriad();
+        return fixer.getAngularSpeedBiasAsTriad();
     }
 
     /**
      * Gets angular speed bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedBiasAsTriad(final AngularSpeedTriad result) {
-        mFixer.getAngularSpeedBiasAsTriad(result);
+        fixer.getAngularSpeedBiasAsTriad(result);
     }
 
     /**
@@ -2030,13 +1975,12 @@ public class DriftEstimator {
      * @param bias angular speed bias to be set.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBias(final AngularSpeedTriad bias)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBias(final AngularSpeedTriad bias) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(bias);
+        fixer.setAngularSpeedBias(bias);
     }
 
     /**
@@ -2046,7 +1990,7 @@ public class DriftEstimator {
      * @return x-coordinate of bias expressed in radians per second (rad/s).
      */
     public double getAngularSpeedBiasX() {
-        return mFixer.getAngularSpeedBiasX();
+        return fixer.getAngularSpeedBiasX();
     }
 
     /**
@@ -2056,13 +2000,12 @@ public class DriftEstimator {
      * @param biasX x-coordinate of bias expressed in radians per second (rad/s).
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasX(final double biasX)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasX(final double biasX) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasX(biasX);
+        fixer.setAngularSpeedBiasX(biasX);
     }
 
     /**
@@ -2072,7 +2015,7 @@ public class DriftEstimator {
      * @return y-coordinate of bias expressed in radians per second (rad/s).
      */
     public double getAngularSpeedBiasY() {
-        return mFixer.getAngularSpeedBiasY();
+        return fixer.getAngularSpeedBiasY();
     }
 
     /**
@@ -2082,13 +2025,12 @@ public class DriftEstimator {
      * @param biasY y-coordinate of bias expressed in radians per second (rad/s).
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasY(final double biasY)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasY(final double biasY) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasY(biasY);
+        fixer.setAngularSpeedBiasY(biasY);
     }
 
     /**
@@ -2098,7 +2040,7 @@ public class DriftEstimator {
      * @return z-coordinate of bias expressed in radians per second (rad/s).
      */
     public double getAngularSpeedBiasZ() {
-        return mFixer.getAngularSpeedBiasZ();
+        return fixer.getAngularSpeedBiasZ();
     }
 
     /**
@@ -2108,13 +2050,12 @@ public class DriftEstimator {
      * @param biasZ z-coordinate of bias expressed in radians per second (rad/s).
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasZ(final double biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasZ(final double biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasZ(biasZ);
+        fixer.setAngularSpeedBiasZ(biasZ);
     }
 
     /**
@@ -2126,14 +2067,12 @@ public class DriftEstimator {
      * @param biasZ z-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBias(
-            final double biasX, final double biasY, final double biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBias(final double biasX, final double biasY, final double biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(biasX, biasY, biasZ);
+        fixer.setAngularSpeedBias(biasX, biasY, biasZ);
     }
 
     /**
@@ -2142,17 +2081,16 @@ public class DriftEstimator {
      * @return x-coordinate of bias.
      */
     public AngularSpeed getAngularSpeedBiasXAsAngularSpeed() {
-        return mFixer.getAngularSpeedBiasXAsAngularSpeed();
+        return fixer.getAngularSpeedBiasXAsAngularSpeed();
     }
 
     /**
      * Gets angular speed x-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
-    public void getAngularSpeedBiasXAsAngularSpeed(
-            final AngularSpeed result) {
-        mFixer.getAngularSpeedBiasXAsAngularSpeed(result);
+    public void getAngularSpeedBiasXAsAngularSpeed(final AngularSpeed result) {
+        fixer.getAngularSpeedBiasXAsAngularSpeed(result);
     }
 
     /**
@@ -2161,13 +2099,12 @@ public class DriftEstimator {
      * @param biasX x-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasX(final AngularSpeed biasX)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasX(final AngularSpeed biasX) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasX(biasX);
+        fixer.setAngularSpeedBiasX(biasX);
     }
 
     /**
@@ -2176,16 +2113,16 @@ public class DriftEstimator {
      * @return y-coordinate of bias.
      */
     public AngularSpeed getAngularSpeedBiasYAsAngularSpeed() {
-        return mFixer.getAngularSpeedBiasYAsAngularSpeed();
+        return fixer.getAngularSpeedBiasYAsAngularSpeed();
     }
 
     /**
      * Gets angular speed y-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedBiasYAsAngularSpeed(final AngularSpeed result) {
-        mFixer.getAngularSpeedBiasYAsAngularSpeed(result);
+        fixer.getAngularSpeedBiasYAsAngularSpeed(result);
     }
 
     /**
@@ -2194,13 +2131,12 @@ public class DriftEstimator {
      * @param biasY y-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasY(final AngularSpeed biasY)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasY(final AngularSpeed biasY) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasY(biasY);
+        fixer.setAngularSpeedBiasY(biasY);
     }
 
     /**
@@ -2209,16 +2145,16 @@ public class DriftEstimator {
      * @return z-coordinate of bias.
      */
     public AngularSpeed getAngularSpeedBiasZAsAngularSpeed() {
-        return mFixer.getAngularSpeedBiasZAsAngularSpeed();
+        return fixer.getAngularSpeedBiasZAsAngularSpeed();
     }
 
     /**
      * Gets angular speed z-coordinate of bias.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedBiasZAsAngularSpeed(final AngularSpeed result) {
-        mFixer.getAngularSpeedBiasZAsAngularSpeed(result);
+        fixer.getAngularSpeedBiasZAsAngularSpeed(result);
     }
 
     /**
@@ -2227,13 +2163,12 @@ public class DriftEstimator {
      * @param biasZ z-coordinate of bias.
      * @throws LockedException if estimator is running.
      */
-    public void setAngularSpeedBiasZ(final AngularSpeed biasZ)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedBiasZ(final AngularSpeed biasZ) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBiasZ(biasZ);
+        fixer.setAngularSpeedBiasZ(biasZ);
     }
 
     /**
@@ -2248,46 +2183,46 @@ public class DriftEstimator {
             final AngularSpeed biasX,
             final AngularSpeed biasY,
             final AngularSpeed biasZ) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedBias(biasX, biasY, biasZ);
+        fixer.setAngularSpeedBias(biasX, biasY, biasZ);
     }
 
     /**
-     * Gets angular speed cross coupling errors matrix.
+     * Gets angular speed cross-coupling errors matrix.
      *
      * @return cross coupling errors matrix.
      */
     public Matrix getAngularSpeedCrossCouplingErrors() {
-        return mFixer.getAngularSpeedCrossCouplingErrors();
+        return fixer.getAngularSpeedCrossCouplingErrors();
     }
 
     /**
-     * Gets angular speed cross coupling errors matrix.
+     * Gets angular speed cross-coupling errors matrix.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedCrossCouplingErrors(final Matrix result) {
-        mFixer.getAngularSpeedCrossCouplingErrors(result);
+        fixer.getAngularSpeedCrossCouplingErrors(result);
     }
 
     /**
-     * Sets angular speed cross coupling errors matrix.
+     * Sets angular speed cross-coupling errors matrix.
      *
-     * @param crossCouplingErrors cross coupling errors matrix. Must be 3x3.
-     * @throws AlgebraException         if provided matrix cannot be inverted.
-     * @throws IllegalArgumentException if provided matrix is not 3x3.
+     * @param crossCouplingErrors cross-coupling errors matrix. Must be 3x3.
+     * @throws AlgebraException         if matrix cannot be inverted.
+     * @throws IllegalArgumentException if matrix is not 3x3.
      * @throws LockedException          if estimator is running.
      */
-    public void setAngularSpeedCrossCouplingErrors(
-            final Matrix crossCouplingErrors) throws AlgebraException, LockedException {
-        if (mRunning) {
+    public void setAngularSpeedCrossCouplingErrors(final Matrix crossCouplingErrors) throws AlgebraException,
+            LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedCrossCouplingErrors(crossCouplingErrors);
+        fixer.setAngularSpeedCrossCouplingErrors(crossCouplingErrors);
     }
 
     /**
@@ -2296,7 +2231,7 @@ public class DriftEstimator {
      * @return x scaling factor.
      */
     public double getAngularSpeedSx() {
-        return mFixer.getAngularSpeedSx();
+        return fixer.getAngularSpeedSx();
     }
 
     /**
@@ -2305,15 +2240,14 @@ public class DriftEstimator {
      * @param sx x scaling factor.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedSx(final double sx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedSx(final double sx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedSx(sx);
+        fixer.setAngularSpeedSx(sx);
     }
 
     /**
@@ -2322,24 +2256,23 @@ public class DriftEstimator {
      * @return y scaling factor.
      */
     public double getAngularSpeedSy() {
-        return mFixer.getAngularSpeedSy();
+        return fixer.getAngularSpeedSy();
     }
 
     /**
-     * Sets angular speed y scaling factor.
+     * Sets angular speed y-scaling factor.
      *
      * @param sy y scaling factor.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedSy(final double sy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedSy(final double sy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedSy(sy);
+        fixer.setAngularSpeedSy(sy);
     }
 
     /**
@@ -2348,7 +2281,7 @@ public class DriftEstimator {
      * @return z scaling factor.
      */
     public double getAngularSpeedSz() {
-        return mFixer.getAngularSpeedSz();
+        return fixer.getAngularSpeedSz();
     }
 
     /**
@@ -2357,171 +2290,164 @@ public class DriftEstimator {
      * @param sz z scaling factor.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedSz(final double sz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedSz(final double sz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedSz(sz);
+        fixer.setAngularSpeedSz(sz);
     }
 
     /**
-     * Gets angular speed x-y cross coupling error.
+     * Gets angular speed x-y cross-coupling error.
      *
      * @return x-y cross coupling error.
      */
     public double getAngularSpeedMxy() {
-        return mFixer.getAngularSpeedMxy();
+        return fixer.getAngularSpeedMxy();
     }
 
     /**
-     * Sets angular speed x-y cross coupling error.
+     * Sets angular speed x-y cross-coupling error.
      *
      * @param mxy x-y cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMxy(final double mxy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMxy(final double mxy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMxy(mxy);
+        fixer.setAngularSpeedMxy(mxy);
     }
 
     /**
-     * Gets angular speed x-z cross coupling error.
+     * Gets angular speed x-z cross-coupling error.
      *
      * @return x-z cross coupling error.
      */
     public double getAngularSpeedMxz() {
-        return mFixer.getAngularSpeedMxz();
+        return fixer.getAngularSpeedMxz();
     }
 
     /**
-     * Sets angular speed x-z cross coupling error.
+     * Sets angular speed x-z cross-coupling error.
      *
      * @param mxz x-z cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMxz(final double mxz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMxz(final double mxz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMxz(mxz);
+        fixer.setAngularSpeedMxz(mxz);
     }
 
     /**
-     * Gets angular speed y-x cross coupling error.
+     * Gets angular speed y-x cross-coupling error.
      *
      * @return y-x cross coupling error.
      */
     public double getAngularSpeedMyx() {
-        return mFixer.getAngularSpeedMyx();
+        return fixer.getAngularSpeedMyx();
     }
 
     /**
-     * Sets angular speed y-x cross coupling error.
+     * Sets angular speed y-x cross-coupling error.
      *
      * @param myx y-x cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMyx(final double myx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMyx(final double myx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMyx(myx);
+        fixer.setAngularSpeedMyx(myx);
     }
 
     /**
-     * Gets angular speed y-z cross coupling error.
+     * Gets angular speed y-z cross-coupling error.
      *
      * @return y-z cross coupling error.
      */
     public double getAngularSpeedMyz() {
-        return mFixer.getAngularSpeedMyz();
+        return fixer.getAngularSpeedMyz();
     }
 
     /**
-     * Sets angular speed y-z cross coupling error.
+     * Sets angular speed y-z cross-coupling error.
      *
      * @param myz y-z cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMyz(final double myz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMyz(final double myz) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMyz(myz);
+        fixer.setAngularSpeedMyz(myz);
     }
 
     /**
-     * Gets angular speed z-x cross coupling error.
+     * Gets angular speed z-x cross-coupling error.
      *
      * @return z-x cross coupling error.
      */
     public double getAngularSpeedMzx() {
-        return mFixer.getAngularSpeedMzx();
+        return fixer.getAngularSpeedMzx();
     }
 
     /**
-     * Sets angular speed z-x cross coupling error.
+     * Sets angular speed z-x cross-coupling error.
      *
      * @param mzx z-x cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMzx(final double mzx)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMzx(final double mzx) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMzx(mzx);
+        fixer.setAngularSpeedMzx(mzx);
     }
 
     /**
-     * Gets angular speed z-y cross coupling error.
+     * Gets angular speed z-y cross-coupling error.
      *
      * @return z-y cross coupling error.
      */
     public double getAngularSpeedMzy() {
-        return mFixer.getAngularSpeedMzy();
+        return fixer.getAngularSpeedMzy();
     }
 
     /**
-     * Sets angular speed z-y cross coupling error.
+     * Sets angular speed z-y cross-coupling error.
      *
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided value makes angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedMzy(final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedMzy(final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedMzy(mzy);
+        fixer.setAngularSpeedMzy(mzy);
     }
 
     /**
@@ -2532,20 +2458,19 @@ public class DriftEstimator {
      * @param sz z scaling factor.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided values make angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
-    public void setAngularSpeedScalingFactors(
-            final double sx, final double sy, final double sz)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+    public void setAngularSpeedScalingFactors(final double sx, final double sy, final double sz) throws LockedException,
+            AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedScalingFactors(sx, sy, sz);
+        fixer.setAngularSpeedScalingFactors(sx, sy, sz);
     }
 
     /**
-     * Sets angular speed cross coupling errors.
+     * Sets angular speed cross-coupling errors.
      *
      * @param mxy x-y cross coupling error.
      * @param mxz x-z cross coupling error.
@@ -2555,23 +2480,21 @@ public class DriftEstimator {
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided values make angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
     public void setAngularSpeedCrossCouplingErrors(
             final double mxy, final double mxz,
             final double myx, final double myz,
-            final double mzx, final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+            final double mzx, final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedCrossCouplingErrors(
-                mxy, mxz, myx, myz, mzx, mzy);
+        fixer.setAngularSpeedCrossCouplingErrors(mxy, mxz, myx, myz, mzx, mzy);
     }
 
     /**
-     * Sets angular speed scaling factors and cross coupling errors.
+     * Sets angular speed scaling factors and cross-coupling errors.
      *
      * @param sx  x scaling factor.
      * @param sy  y scaling factor.
@@ -2584,20 +2507,18 @@ public class DriftEstimator {
      * @param mzy z-y cross coupling error.
      * @throws LockedException  if estimator is running.
      * @throws AlgebraException if provided values make angular speed
-     *                          cross coupling matrix non invertible.
+     *                          cross-coupling matrix non-invertible.
      */
     public void setAngularSpeedScalingFactorsAndCrossCouplingErrors(
             final double sx, final double sy, final double sz,
             final double mxy, final double mxz,
             final double myx, final double myz,
-            final double mzx, final double mzy)
-            throws LockedException, AlgebraException {
-        if (mRunning) {
+            final double mzx, final double mzy) throws LockedException, AlgebraException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedScalingFactorsAndCrossCouplingErrors(
-                sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
+        fixer.setAngularSpeedScalingFactorsAndCrossCouplingErrors(sx, sy, sz, mxy, mxz, myx, myz, mzx, mzy);
     }
 
     /**
@@ -2606,81 +2527,79 @@ public class DriftEstimator {
      * @return g-dependant cross biases matrix.
      */
     public Matrix getAngularSpeedGDependantCrossBias() {
-        return mFixer.getAngularSpeedGDependantCrossBias();
+        return fixer.getAngularSpeedGDependantCrossBias();
     }
 
     /**
      * Gets angular speed g-dependant cross biases matrix.
      *
-     * @param result instance where result will be stored.
+     * @param result instance where the result will be stored.
      */
     public void getAngularSpeedGDependantCrossBias(final Matrix result) {
-        mFixer.getAngularSpeedGDependantCrossBias(result);
+        fixer.getAngularSpeedGDependantCrossBias(result);
     }
 
     /**
      * Sets angular speed g-dependant cross biases matrix.
      *
      * @param gDependantCrossBias g-dependant cross biases matrix.
-     * @throws IllegalArgumentException if provided matrix is not 3x3.
+     * @throws IllegalArgumentException if matrix is not 3x3.
      * @throws LockedException          if estimator is running.
      */
-    public void setAngularSpeedGDependantCrossBias(final Matrix gDependantCrossBias)
-            throws LockedException {
-        if (mRunning) {
+    public void setAngularSpeedGDependantCrossBias(final Matrix gDependantCrossBias) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
 
-        mFixer.setAngularSpeedGDependantCrossBias(gDependantCrossBias);
+        fixer.setAngularSpeedGDependantCrossBias(gDependantCrossBias);
     }
 
     /**
      * Indicates whether measured kinematics must be fixed or not.
-     * When enabled, provided calibration data is used, otherwise it is
+     * When enabled, provided calibration data is used; otherwise it is
      * ignored.
-     * By default this is enabled.
+     * By default, this is enabled.
      *
      * @return indicates whether measured kinematics must be fixed or not.
      */
     public boolean isFixKinematicsEnabled() {
-        return mFixKinematics;
+        return fixKinematics;
     }
 
     /**
      * Specifies whether measured kinematics must be fixed or not.
-     * When enabled, provided calibration data is used, otherwise it is
+     * When enabled, provided calibration data is used; otherwise it is
      * ignored.
      *
      * @param fixKinematics true if measured kinematics must be fixed or not.
      * @throws LockedException if estimator is currently running.
      */
-    public void setFixKinematicsEnabled(final boolean fixKinematics)
-            throws LockedException {
-        if (mRunning) {
+    public void setFixKinematicsEnabled(final boolean fixKinematics) throws LockedException {
+        if (running) {
             throw new LockedException();
         }
-        mFixKinematics = fixKinematics;
+        this.fixKinematics = fixKinematics;
     }
 
     /**
-     * Gets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Gets the time interval between body kinematics (IMU acceleration and gyroscope)
      * samples expressed in seconds (s).
      *
      * @return time interval between body kinematics samples.
      */
     public double getTimeInterval() {
-        return mTimeInterval;
+        return timeInterval;
     }
 
     /**
-     * Sets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Sets a time interval between body kinematics (IMU acceleration and gyroscope)
      * samples expressed in seconds (s).
      *
      * @param timeInterval time interval between body kinematics samples.
      * @throws LockedException if estimator is currently running.
      */
     public void setTimeInterval(final double timeInterval) throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
@@ -2688,32 +2607,32 @@ public class DriftEstimator {
             throw new IllegalArgumentException();
         }
 
-        mTimeInterval = timeInterval;
+        this.timeInterval = timeInterval;
     }
 
     /**
-     * Gets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Gets time interval between body kinematics (IMU acceleration and gyroscope)
      * samples.
      *
      * @return time interval between body kinematics samples.
      */
     public Time getTimeIntervalAsTime() {
-        return new Time(mTimeInterval, TimeUnit.SECOND);
+        return new Time(timeInterval, TimeUnit.SECOND);
     }
 
     /**
-     * Gets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Gets time interval between body kinematics (IMU acceleration and gyroscope)
      * samples.
      *
-     * @param result instance where time interval will be stored.
+     * @param result instance where the time interval will be stored.
      */
     public void getTimeIntervalAsTime(final Time result) {
-        result.setValue(mTimeInterval);
+        result.setValue(timeInterval);
         result.setUnit(TimeUnit.SECOND);
     }
 
     /**
-     * Sets time interval between body kinematics (IMU acceleration + gyroscope)
+     * Sets time interval between body kinematics (IMU acceleration and gyroscope)
      * samples.
      *
      * @param timeInterval time interval between body kinematics samples.
@@ -2730,7 +2649,7 @@ public class DriftEstimator {
      * @return true if ready, false otherwise.
      */
     public boolean isReady() {
-        return mReferenceFrame != null;
+        return referenceFrame != null;
     }
 
     /**
@@ -2739,11 +2658,11 @@ public class DriftEstimator {
      * @return true if this estimator is running, false otherwise.
      */
     public boolean isRunning() {
-        return mRunning;
+        return running;
     }
 
     /**
-     * Adds a sample of measured body kinematics (accelerometer + gyroscope readings)
+     * Adds a sample of measured body kinematics (accelerometer and gyroscope readings)
      * obtained from an IMU, fixes their values and uses fixed values to estimate
      * current drift and their average values.
      *
@@ -2752,9 +2671,9 @@ public class DriftEstimator {
      * @throws NotReadyException        if estimator is not ready.
      * @throws DriftEstimationException if estimation fails for some reason.
      */
-    public void addBodyKinematics(final BodyKinematics kinematics)
-            throws LockedException, NotReadyException, DriftEstimationException {
-        if (mRunning) {
+    public void addBodyKinematics(final BodyKinematics kinematics) throws LockedException, NotReadyException,
+            DriftEstimationException {
+        if (running) {
             throw new LockedException();
         }
 
@@ -2763,48 +2682,44 @@ public class DriftEstimator {
         }
 
         try {
-            mRunning = true;
+            running = true;
 
-            if (mNumberOfProcessedSamples == 0) {
-                if (mListener != null) {
-                    mListener.onStart(this);
+            if (numberOfProcessedSamples == 0) {
+                if (listener != null) {
+                    listener.onStart(this);
                 }
 
-                final CoordinateTransformation c = mReferenceFrame
-                        .getCoordinateTransformation();
-                c.asRotation(mRefQ);
-                mRefQ.inverse(mInvRefQ);
+                final var c = referenceFrame.getCoordinateTransformation();
+                c.asRotation(refQ);
+                refQ.inverse(invRefQ);
 
-                mFrame.copyFrom(mReferenceFrame);
+                frame.copyFrom(referenceFrame);
             }
 
-            if (mFixKinematics) {
-                mFixer.fix(kinematics, mFixedKinematics);
+            if (fixKinematics) {
+                fixer.fix(kinematics, fixedKinematics);
             } else {
-                mFixedKinematics.copyFrom(kinematics);
+                fixedKinematics.copyFrom(kinematics);
             }
 
             // estimate navigation variation respect to previous frame
-            ECEFInertialNavigator.navigateECEF(mTimeInterval, mFrame,
-                    mFixedKinematics, mFrame);
+            ECEFInertialNavigator.navigateECEF(timeInterval, frame, fixedKinematics, frame);
 
             // estimate drift values
             computeCurrentPositionDrift();
             computeCurrentVelocityDrift();
             computeCurrentOrientationDrift();
 
-            mNumberOfProcessedSamples++;
+            numberOfProcessedSamples++;
 
-            if (mListener != null) {
-                mListener.onBodyKinematicsAdded(this, kinematics,
-                        mFixedKinematics);
+            if (listener != null) {
+                listener.onBodyKinematicsAdded(this, kinematics, fixedKinematics);
             }
 
-        } catch (final AlgebraException | InertialNavigatorException |
-                InvalidRotationMatrixException e) {
+        } catch (final AlgebraException | InertialNavigatorException | InvalidRotationMatrixException e) {
             throw new DriftEstimationException(e);
         } finally {
-            mRunning = false;
+            running = false;
         }
     }
 
@@ -2814,61 +2729,60 @@ public class DriftEstimator {
      * @throws LockedException if estimator is currently running.
      */
     public void reset() throws LockedException {
-        if (mRunning) {
+        if (running) {
             throw new LockedException();
         }
 
-        mRunning = true;
-        mNumberOfProcessedSamples = 0;
+        running = true;
+        numberOfProcessedSamples = 0;
 
-        mCurrentPositionDriftMeters = 0.0;
-        mCurrentVelocityDriftMetersPerSecond = 0.0;
-        mCurrentOrientationDriftRadians = 0.0;
+        currentPositionDriftMeters = 0.0;
+        currentVelocityDriftMetersPerSecond = 0.0;
+        currentOrientationDriftRadians = 0.0;
 
-        if (mListener != null) {
-            mListener.onReset(this);
+        if (listener != null) {
+            listener.onReset(this);
         }
 
-        mRunning = false;
+        running = false;
     }
 
     /**
-     * Gets number of samples that have been processed so far.
+     * Gets the number of samples that have been processed so far.
      *
      * @return number of samples that have been processed so far.
      */
     public int getNumberOfProcessedSamples() {
-        return mNumberOfProcessedSamples;
+        return numberOfProcessedSamples;
     }
 
     /**
-     * Gets elapsed time since first processed measurement expressed in seconds.
+     * Gets elapsed time since the first processed measurement expressed in seconds.
      *
      * @return elapsed time.
      */
     public double getElapsedTimeSeconds() {
-        return mNumberOfProcessedSamples * mTimeInterval;
+        return numberOfProcessedSamples * timeInterval;
     }
 
     /**
-     * Gets elapsed time since first processed measurement.
+     * Gets elapsed time since the first processed measurement.
      *
      * @return elapsed time.
      */
     public Time getElapsedTime() {
-        return mNumberOfProcessedSamples > 0 ?
-                new Time(getElapsedTimeSeconds(), TimeUnit.SECOND) : null;
+        return numberOfProcessedSamples > 0 ? new Time(getElapsedTimeSeconds(), TimeUnit.SECOND) : null;
     }
 
     /**
-     * Gets elapsed time since first processed measurement.
+     * Gets elapsed time since the first processed measurement.
      *
-     * @param result instance where result will be stored.
-     * @return true if elapsed time is available and result is updated,
+     * @param result instance where the result will be stored.
+     * @return true if elapsed time is available and the result is updated,
      * false otherwise.
      */
     public boolean getElapsedTime(final Time result) {
-        if (mNumberOfProcessedSamples > 0) {
+        if (numberOfProcessedSamples > 0) {
             result.setValue(getElapsedTimeSeconds());
             result.setUnit(TimeUnit.SECOND);
             return true;
@@ -2884,21 +2798,20 @@ public class DriftEstimator {
      * @return current position drift or null.
      */
     public ECEFPosition getCurrentPositionDrift() {
-        return mNumberOfProcessedSamples > 0 ?
-                new ECEFPosition(mCurrentPositionDrift) : null;
+        return numberOfProcessedSamples > 0 ? new ECEFPosition(currentPositionDrift) : null;
     }
 
     /**
      * Gets current position drift for last processed body kinematics
      * measurement expressed in meters (m) respect ECEF coordinates.
      *
-     * @param result instance where result will be stored.
-     * @return true if current position drift is available and result is updated,
+     * @param result instance where the result will be stored.
+     * @return true if the current position drift is available and the result is updated,
      * false otherwise.
      */
     public boolean getCurrentPositionDrift(final ECEFPosition result) {
-        if (mNumberOfProcessedSamples > 0) {
-            result.copyFrom(mCurrentPositionDrift);
+        if (numberOfProcessedSamples > 0) {
+            result.copyFrom(currentPositionDrift);
             return true;
         } else {
             return false;
@@ -2906,27 +2819,26 @@ public class DriftEstimator {
     }
 
     /**
-     * Gets current velocity drift for last processed body kinematics
+     * Gets current velocity drift for the last processed body kinematics
      * measurement expressed in meters per second (m/s) respect ECEF coordinates.
      *
      * @return current velocity drift or null.
      */
     public ECEFVelocity getCurrentVelocityDrift() {
-        return mNumberOfProcessedSamples > 0 ?
-                new ECEFVelocity(mCurrentVelocityDrift) : null;
+        return numberOfProcessedSamples > 0 ? new ECEFVelocity(currentVelocityDrift) : null;
     }
 
     /**
-     * Gets current velocity drift for last processed body kinematics
+     * Gets current velocity drift for the last processed body kinematics
      * measurement expressed in meters per second (m/s) respect ECEF coordinates.
      *
-     * @param result instance where result will be stored.
-     * @return true if current velocity drift is available and result is updated,
+     * @param result instance where the result will be stored.
+     * @return true if the current velocity drift is available and the result is updated,
      * false otherwise.
      */
     public boolean getCurrentVelocityDrift(final ECEFVelocity result) {
-        if (mNumberOfProcessedSamples > 0) {
-            result.copyFrom(mCurrentVelocityDrift);
+        if (numberOfProcessedSamples > 0) {
+            result.copyFrom(currentVelocityDrift);
             return true;
         } else {
             return false;
@@ -2934,27 +2846,26 @@ public class DriftEstimator {
     }
 
     /**
-     * Gets current orientation drift as a 3D rotation for last processed body
+     * Gets current orientation drift as a 3D rotation for the last processed body
      * kinematics measurement respect ECEF coordinates.
      *
      * @return current orientation drift or null.
      */
     public Rotation3D getCurrentOrientationDrift() {
-        return mNumberOfProcessedSamples > 0 ?
-                new Quaternion(mQ) : null;
+        return numberOfProcessedSamples > 0 ? new Quaternion(q) : null;
     }
 
     /**
-     * Gets current orientation drift as a 3D rotation for last processed body
+     * Gets current orientation drift as a 3D rotation for the last processed body
      * kinematics measurement respect ECEF coordinates.
      *
-     * @param result instance where result will be stored.
-     * @return true if current orientation drift is available and result is
+     * @param result instance where the result will be stored.
+     * @return true if the current orientation drift is available and the result is
      * updated, false otherwise.
      */
     public boolean getCurrentOrientationDrift(final Rotation3D result) {
-        if (mNumberOfProcessedSamples > 0) {
-            result.fromRotation(mQ);
+        if (numberOfProcessedSamples > 0) {
+            result.fromRotation(q);
             return true;
         } else {
             return false;
@@ -2965,35 +2876,33 @@ public class DriftEstimator {
      * Gets current amount of position drift for last processed body kinematics
      * measurement expressed in meters (m).
      *
-     * @return current amount of position drift or null.
+     * @return the current amount of position drift or null.
      */
     public Double getCurrentPositionDriftNormMeters() {
-        return mNumberOfProcessedSamples > 0 ?
-                mCurrentPositionDriftMeters : null;
+        return numberOfProcessedSamples > 0 ? currentPositionDriftMeters : null;
     }
 
     /**
      * Gets current amount of position drift for last processed body kinematics
      * measurement.
      *
-     * @return current amount of position drift or null.
+     * @return the current amount of position drift or null.
      */
     public Distance getCurrentPositionDriftNorm() {
-        final Double positionDrift = getCurrentPositionDriftNormMeters();
-        return positionDrift != null ?
-                new Distance(positionDrift, DistanceUnit.METER) : null;
+        final var positionDrift = getCurrentPositionDriftNormMeters();
+        return positionDrift != null ? new Distance(positionDrift, DistanceUnit.METER) : null;
     }
 
     /**
      * Gets current amount of position drift for last processed body kinematics
      * measurement.
      *
-     * @param result instance where result will be stored.
-     * @return true if current position drift is available and result is updated,
+     * @param result instance where the result will be stored.
+     * @return true if the current position drift is available and the result is updated,
      * false otherwise.
      */
     public boolean getCurrentPositionDriftNorm(final Distance result) {
-        final Double positionDrift = getCurrentPositionDriftNormMeters();
+        final var positionDrift = getCurrentPositionDriftNormMeters();
         if (positionDrift != null) {
             result.setValue(positionDrift);
             result.setUnit(DistanceUnit.METER);
@@ -3004,14 +2913,13 @@ public class DriftEstimator {
     }
 
     /**
-     * Gets current amount of velocity drift for last processed body kinematics
+     * Gets current amount of velocity drift for the last processed body kinematics
      * measurement expressed in meters per second (m/s).
      *
      * @return current amount of velocity drift or null.
      */
     public Double getCurrentVelocityDriftNormMetersPerSecond() {
-        return mNumberOfProcessedSamples > 0 ?
-                mCurrentVelocityDriftMetersPerSecond : null;
+        return numberOfProcessedSamples > 0 ? currentVelocityDriftMetersPerSecond : null;
     }
 
     /**
@@ -3021,21 +2929,20 @@ public class DriftEstimator {
      * @return current amount of velocity drift or null.
      */
     public Speed getCurrentVelocityDriftNorm() {
-        final Double velocityDrift = getCurrentVelocityDriftNormMetersPerSecond();
-        return velocityDrift != null ?
-                new Speed(velocityDrift, SpeedUnit.METERS_PER_SECOND) : null;
+        final var velocityDrift = getCurrentVelocityDriftNormMetersPerSecond();
+        return velocityDrift != null ? new Speed(velocityDrift, SpeedUnit.METERS_PER_SECOND) : null;
     }
 
     /**
      * Gets current amount of velocity drift for last processed body kinematics
      * measurement.
      *
-     * @param result instance where result will be stored.
-     * @return true if current velocity drift is available and result is updated,
+     * @param result instance where the result will be stored.
+     * @return true if the current velocity drift is available and the result is updated,
      * false otherwise.
      */
     public boolean getCurrentVelocityDriftNorm(final Speed result) {
-        final Double velocityDrift = getCurrentVelocityDriftNormMetersPerSecond();
+        final var velocityDrift = getCurrentVelocityDriftNormMetersPerSecond();
         if (velocityDrift != null) {
             result.setValue(velocityDrift);
             result.setUnit(SpeedUnit.METERS_PER_SECOND);
@@ -3052,8 +2959,7 @@ public class DriftEstimator {
      * @return current amount of orientation drift or null.
      */
     public Double getCurrentOrientationDriftRadians() {
-        return mNumberOfProcessedSamples > 0 ?
-                mCurrentOrientationDriftRadians : null;
+        return numberOfProcessedSamples > 0 ? currentOrientationDriftRadians : null;
     }
 
     /**
@@ -3063,21 +2969,20 @@ public class DriftEstimator {
      * @return current amount of orientation drift or null.
      */
     public Angle getCurrentOrientationDriftAngle() {
-        final Double orientationDrift = getCurrentOrientationDriftRadians();
-        return orientationDrift != null ?
-                new Angle(orientationDrift, AngleUnit.RADIANS) : null;
+        final var orientationDrift = getCurrentOrientationDriftRadians();
+        return orientationDrift != null ? new Angle(orientationDrift, AngleUnit.RADIANS) : null;
     }
 
     /**
      * Gets current amount of orientation drift for last processed body kinematics
      * measurement.
      *
-     * @param result instance where result will be stored.
-     * @return true if current orientation drift is available and result is
+     * @param result instance where the result will be stored.
+     * @return true if the current orientation drift is available and the result is
      * updated, false otherwise.
      */
     public boolean getCurrentOrientationDriftAngle(final Angle result) {
-        final Double orientationDrift = getCurrentOrientationDriftRadians();
+        final var orientationDrift = getCurrentOrientationDriftRadians();
         if (orientationDrift != null) {
             result.setValue(orientationDrift);
             result.setUnit(AngleUnit.RADIANS);
@@ -3088,38 +2993,37 @@ public class DriftEstimator {
     }
 
     /**
-     * Gets current amount of position drift per time unit expressed in meters
+     * Gets the current amount of position drift per time unit expressed in meters
      * per second (m/s).
      *
      * @return current amount of position drift per time unit or null.
      */
     public Double getCurrentPositionDriftPerTimeUnit() {
-        final Double positionDrift = getCurrentPositionDriftNormMeters();
-        final double elapsedTime = getElapsedTimeSeconds();
+        final var positionDrift = getCurrentPositionDriftNormMeters();
+        final var elapsedTime = getElapsedTimeSeconds();
         return positionDrift != null ? positionDrift / elapsedTime : null;
     }
 
     /**
-     * Gets current amount of position drift per time unit.
+     * Gets the current amount of position drift per time unit.
      *
      * @return current amount of position drift per time unit or null.
      */
     public Speed getCurrentPositionDriftPerTimeUnitAsSpeed() {
-        final Double positionDriftPerTimeUnit = getCurrentPositionDriftPerTimeUnit();
-        return positionDriftPerTimeUnit != null
-                ? new Speed(positionDriftPerTimeUnit, SpeedUnit.METERS_PER_SECOND)
+        final var positionDriftPerTimeUnit = getCurrentPositionDriftPerTimeUnit();
+        return positionDriftPerTimeUnit != null ? new Speed(positionDriftPerTimeUnit, SpeedUnit.METERS_PER_SECOND)
                 : null;
     }
 
     /**
-     * Gets current amount of position drift per time unit.
+     * Gets the current amount of position drift per time unit.
      *
-     * @param result instance where result will be stored.
-     * @return true if current amount of position drift per time unit is
-     * available and result is updated, false otherwise.
+     * @param result instance where the result will be stored.
+     * @return true if the current amount of position drift per time unit is
+     * available and the result is updated, false otherwise.
      */
     public boolean getCurrentPositionDriftPerTimeUnitAsSpeed(final Speed result) {
-        final Double positionDriftPerTimeUnit = getCurrentPositionDriftPerTimeUnit();
+        final var positionDriftPerTimeUnit = getCurrentPositionDriftPerTimeUnit();
         if (positionDriftPerTimeUnit != null) {
             result.setValue(positionDriftPerTimeUnit);
             result.setUnit(SpeedUnit.METERS_PER_SECOND);
@@ -3130,39 +3034,37 @@ public class DriftEstimator {
     }
 
     /**
-     * Gets current amount of velocity drift per time unit expressed in meters
+     * Gets the current amount of velocity drift per time unit expressed in meters
      * per squared second (m/s^2).
      *
-     * @return current amount of velocity drift per time unit or null.
+     * @return the current amount of velocity drift per time unit or null.
      */
     public Double getCurrentVelocityDriftPerTimeUnit() {
-        final Double velocityDrift = getCurrentVelocityDriftNormMetersPerSecond();
-        final double elapsedTime = getElapsedTimeSeconds();
+        final var velocityDrift = getCurrentVelocityDriftNormMetersPerSecond();
+        final var elapsedTime = getElapsedTimeSeconds();
         return velocityDrift != null ? velocityDrift / elapsedTime : null;
     }
 
     /**
-     * Gets current amount of velocity drift per time unit.
+     * Gets the current amount of velocity drift per time unit.
      *
-     * @return current amount of velocity drift per time unit or null.
+     * @return the current amount of velocity drift per time unit or null.
      */
     public Acceleration getCurrentVelocityDriftPerTimeUnitAsAcceleration() {
-        final Double velocityDriftPerTimeUnit = getCurrentVelocityDriftPerTimeUnit();
+        final var velocityDriftPerTimeUnit = getCurrentVelocityDriftPerTimeUnit();
         return velocityDriftPerTimeUnit != null
-                ? new Acceleration(velocityDriftPerTimeUnit,
-                AccelerationUnit.METERS_PER_SQUARED_SECOND) : null;
+                ? new Acceleration(velocityDriftPerTimeUnit, AccelerationUnit.METERS_PER_SQUARED_SECOND) : null;
     }
 
     /**
-     * Gets current amount of velocity drift per time unit.
+     * Gets the current amount of velocity drift per time unit.
      *
-     * @param result instance where result will be stored.
-     * @return true if current amount of velocity drift per time unit is available
-     * and result is updated, false otherwise.
+     * @param result instance where the result will be stored.
+     * @return true if the current amount of velocity drift per time unit is available
+     * and the result is updated, false otherwise.
      */
-    public boolean getCurrentVelocityDriftPerTimeUnitAsAcceleration(
-            final Acceleration result) {
-        final Double velocityDriftPerTimeUnit = getCurrentVelocityDriftPerTimeUnit();
+    public boolean getCurrentVelocityDriftPerTimeUnitAsAcceleration(final Acceleration result) {
+        final var velocityDriftPerTimeUnit = getCurrentVelocityDriftPerTimeUnit();
         if (velocityDriftPerTimeUnit != null) {
             result.setValue(velocityDriftPerTimeUnit);
             result.setUnit(AccelerationUnit.METERS_PER_SQUARED_SECOND);
@@ -3173,39 +3075,37 @@ public class DriftEstimator {
     }
 
     /**
-     * Gets current amount of orientation drift per time unit expressed in radians
+     * Gets the current amount of orientation drift per time unit expressed in radians
      * per second (rad/s).
      *
      * @return amount of orientation drift per time unit or null.
      */
     public Double getCurrentOrientationDriftPerTimeUnit() {
-        final Double orientationDrift = getCurrentOrientationDriftRadians();
-        final double elapsedTime = getElapsedTimeSeconds();
+        final var orientationDrift = getCurrentOrientationDriftRadians();
+        final var elapsedTime = getElapsedTimeSeconds();
         return orientationDrift != null ? orientationDrift / elapsedTime : null;
     }
 
     /**
-     * Gets current amount of orientation drift per time unit.
+     * Gets the current amount of orientation drift per time unit.
      *
      * @return amount of orientation drift per time unit or null.
      */
     public AngularSpeed getCurrentOrientationDriftPerTimeUnitAsAngularSpeed() {
-        final Double orientationDriftPerTimeUnit = getCurrentOrientationDriftPerTimeUnit();
+        final var orientationDriftPerTimeUnit = getCurrentOrientationDriftPerTimeUnit();
         return orientationDriftPerTimeUnit != null ?
-                new AngularSpeed(orientationDriftPerTimeUnit,
-                        AngularSpeedUnit.RADIANS_PER_SECOND) : null;
+                new AngularSpeed(orientationDriftPerTimeUnit, AngularSpeedUnit.RADIANS_PER_SECOND) : null;
     }
 
     /**
-     * Gets current amount of orientation drift per time unit.
+     * Gets the current amount of orientation drift per time unit.
      *
-     * @param result instance where result will be stored.
-     * @return true if current amount of orientation drift is available and result
+     * @param result instance where the result will be stored.
+     * @return true if the current amount of orientation drift is available and the result
      * is updated, false otherwise.
      */
-    public boolean getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(
-            final AngularSpeed result) {
-        final Double orientationDriftPerTimeUnit = getCurrentOrientationDriftPerTimeUnit();
+    public boolean getCurrentOrientationDriftPerTimeUnitAsAngularSpeed(final AngularSpeed result) {
+        final var orientationDriftPerTimeUnit = getCurrentOrientationDriftPerTimeUnit();
         if (orientationDriftPerTimeUnit != null) {
             result.setValue(orientationDriftPerTimeUnit);
             result.setUnit(AngularSpeedUnit.RADIANS_PER_SECOND);
@@ -3218,43 +3118,43 @@ public class DriftEstimator {
     /**
      * Computes current position drift.
      */
-    private void computeCurrentPositionDrift() {
-        final double initX = mReferenceFrame.getX();
-        final double initY = mReferenceFrame.getY();
-        final double initZ = mReferenceFrame.getZ();
+    protected void computeCurrentPositionDrift() {
+        final var initX = referenceFrame.getX();
+        final var initY = referenceFrame.getY();
+        final var initZ = referenceFrame.getZ();
 
-        final double currentX = mFrame.getX();
-        final double currentY = mFrame.getY();
-        final double currentZ = mFrame.getZ();
+        final var currentX = frame.getX();
+        final var currentY = frame.getY();
+        final var currentZ = frame.getZ();
 
-        final double diffX = currentX - initX;
-        final double diffY = currentY - initY;
-        final double diffZ = currentZ - initZ;
+        final var diffX = currentX - initX;
+        final var diffY = currentY - initY;
+        final var diffZ = currentZ - initZ;
 
-        mCurrentPositionDrift.setCoordinates(diffX, diffY, diffZ);
+        currentPositionDrift.setCoordinates(diffX, diffY, diffZ);
 
-        mCurrentPositionDriftMeters = mCurrentPositionDrift.getNorm();
+        currentPositionDriftMeters = currentPositionDrift.getNorm();
     }
 
     /**
      * Computes current velocity drift.
      */
-    private void computeCurrentVelocityDrift() {
-        final double initVx = mReferenceFrame.getVx();
-        final double initVy = mReferenceFrame.getVy();
-        final double initVz = mReferenceFrame.getVz();
+    protected void computeCurrentVelocityDrift() {
+        final var initVx = referenceFrame.getVx();
+        final var initVy = referenceFrame.getVy();
+        final var initVz = referenceFrame.getVz();
 
-        final double currentVx = mFrame.getVx();
-        final double currentVy = mFrame.getVy();
-        final double currentVz = mFrame.getVz();
+        final var currentVx = frame.getVx();
+        final var currentVy = frame.getVy();
+        final var currentVz = frame.getVz();
 
-        final double diffVx = currentVx - initVx;
-        final double diffVy = currentVy - initVy;
-        final double diffVz = currentVz - initVz;
+        final var diffVx = currentVx - initVx;
+        final var diffVy = currentVy - initVy;
+        final var diffVz = currentVz - initVz;
 
-        mCurrentVelocityDrift.setCoordinates(diffVx, diffVy, diffVz);
+        currentVelocityDrift.setCoordinates(diffVx, diffVy, diffVz);
 
-        mCurrentVelocityDriftMetersPerSecond = mCurrentVelocityDrift.getNorm();
+        currentVelocityDriftMetersPerSecond = currentVelocityDrift.getNorm();
     }
 
     /**
@@ -3264,27 +3164,25 @@ public class DriftEstimator {
      * @throws InvalidRotationMatrixException if rotation cannot be accurately
      *                                        estimated.
      */
-    private void computeCurrentOrientationDrift() throws AlgebraException,
-            InvalidRotationMatrixException {
-        if (mCurrentC == null) {
-            mCurrentC = new Matrix(Rotation3D.INHOM_COORDS, Rotation3D.INHOM_COORDS);
+    protected void computeCurrentOrientationDrift() throws AlgebraException, InvalidRotationMatrixException {
+        if (currentC == null) {
+            currentC = new Matrix(Rotation3D.INHOM_COORDS, Rotation3D.INHOM_COORDS);
         }
-        mFrame.getCoordinateTransformationMatrix(mCurrentC);
+        frame.getCoordinateTransformationMatrix(currentC);
 
-        mQ.fromMatrix(mCurrentC);
-        mQ.combine(mInvRefQ);
+        q.fromMatrix(currentC);
+        q.combine(invRefQ);
 
-        mCurrentOrientationDriftRadians = mQ.getRotationAngle();
+        currentOrientationDriftRadians = q.getRotationAngle();
     }
 
     /**
-     * Converts provided time instance to seconds.
+     * Converts the provided time instance to seconds.
      *
      * @param time instance to be converted.
-     * @return obtained conversion in seconds.
+     * @return conversion in seconds.
      */
     private static double convertTime(final Time time) {
-        return TimeConverter.convert(time.getValue().doubleValue(),
-                time.getUnit(), TimeUnit.SECOND);
+        return TimeConverter.convert(time.getValue().doubleValue(), time.getUnit(), TimeUnit.SECOND);
     }
 }

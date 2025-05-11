@@ -26,7 +26,7 @@ public interface AttitudeUncertaintySource {
      * Attitude uncertainty can be measured using a RandomWalkEstimator,
      * although typically to create a {@link INSLooselyCoupledKalmanInitializerConfig},
      * position, velocity and attitude are externally measured by other means
-     * introducing a different amount of uncertainty (e.g. GPS).
+     * introducing a different amount of uncertainty (e.g., GPS).
      *
      * @return attitude uncertainty expressed in radians (rad).
      */

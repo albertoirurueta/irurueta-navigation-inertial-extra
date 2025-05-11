@@ -15,22 +15,23 @@
  */
 package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DefaultAccelerometerAndGyroscopeMseRuleTest {
+class DefaultAccelerometerAndGyroscopeMseRuleTest {
 
     @Test
-    public void testEvaluate() {
-        final DefaultAccelerometerAndGyroscopeMseRule rule = new DefaultAccelerometerAndGyroscopeMseRule();
+    void testEvaluate() {
+        final var rule = new DefaultAccelerometerAndGyroscopeMseRule();
 
-        final Random random = new Random();
-        final double accelerometerMse = random.nextDouble();
-        final double gyroscopeMse = random.nextDouble();
+        final var random = new Random();
+        final var accelerometerMse = random.nextDouble();
+        final var gyroscopeMse = random.nextDouble();
 
-        assertEquals(accelerometerMse + gyroscopeMse, rule.evaluate(accelerometerMse, gyroscopeMse), 0.0);
+        assertEquals(accelerometerMse + gyroscopeMse, rule.evaluate(accelerometerMse, gyroscopeMse),
+                0.0);
     }
 }
