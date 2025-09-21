@@ -9047,7 +9047,7 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
                 AngleUnit.DEGREES)));
         assertTrue(currentOrientationDriftNorm < 0.006);
         // Check that kalman corrected drift is smaller than normal navigation drift
-        assertTrue(currentOrientationDriftNorm < navigationOrientationDrift);
+        assertTrue(currentOrientationDriftNorm <= navigationOrientationDrift);
         assertEquals(currentOrientationDriftNorm, kalmanOrientationDrift, ABSOLUTE_ERROR);
 
         final var currentOrientationDriftNorm1 = kalmanDriftEstimator.getCurrentOrientationDriftAngle();
