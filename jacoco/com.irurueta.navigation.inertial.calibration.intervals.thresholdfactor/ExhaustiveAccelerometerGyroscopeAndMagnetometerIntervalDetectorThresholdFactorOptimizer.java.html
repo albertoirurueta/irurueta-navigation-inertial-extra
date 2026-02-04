@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.irurueta:irurueta-navigation-inertial-extra</a> &gt; <a href="index.source.html" class="el_package">com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor</a> &gt; <span class="el_source">ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java</span></div><h1>ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2021 Alberto Irurueta Carro (alberto@irurueta.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
+
+import com.irurueta.navigation.LockedException;
+import com.irurueta.navigation.NotReadyException;
+import com.irurueta.navigation.inertial.calibration.BodyKinematicsSequence;
+import com.irurueta.navigation.inertial.calibration.StandardDeviationBodyKinematics;
+import com.irurueta.navigation.inertial.calibration.StandardDeviationBodyMagneticFluxDensity;
+import com.irurueta.navigation.inertial.calibration.StandardDeviationTimedBodyKinematics;
+import com.irurueta.navigation.inertial.calibration.accelerometer.AccelerometerCalibratorMeasurementType;
+import com.irurueta.navigation.inertial.calibration.accelerometer.AccelerometerNonLinearCalibrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeCalibratorMeasurementOrSequenceType;
+import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeNonLinearCalibrator;
+import com.irurueta.navigation.inertial.calibration.magnetometer.MagnetometerCalibratorMeasurementType;
+import com.irurueta.navigation.inertial.calibration.magnetometer.MagnetometerNonLinearCalibrator;
+
+/**
+ * Optimizes the threshold factor for interval detection of accelerometer and gyroscope
+ * data based on results of calibration.
+ * Only accelerometer calibrators based on unknown orientation are supported (in other terms,
+ * calibrators must be {@link AccelerometerNonLinearCalibrator} and must support
+ * {@link AccelerometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_KINEMATICS}).
+ * Only gyroscope calibrators based on unknown orientation are supported (in other terms,
+ * calibrators must be {@link GyroscopeNonLinearCalibrator} and must support
+ * {@link GyroscopeCalibratorMeasurementOrSequenceType#BODY_KINEMATICS_SEQUENCE}).
+ * Only magnetometer calibrators based on unknown orientation are supported, in other terms,
+ * calibrators must be {@link MagnetometerNonLinearCalibrator} and must support
+ * {@link MagnetometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY}.
+ * This implementation makes an exhaustive search between minimum and maximum
+ * threshold factor values to find the threshold value that produces the
+ * minimum Mean Square Error (MSE) for calibration parameters.
+ */
+public class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer extends
+        AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer {
+
+    /**
+     * Default step value to make exhaustive search of threshold factor values.
+     */
+    public static final double DEFAULT_STEP = 1.0;
+
+    /**
+     * Step to make exhaustive search of threshold factor values between
+     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     */
+<span class="fc" id="L59">    private double thresholdFactorStep = DEFAULT_STEP;</span>
+
+    /**
+     * Constructor.
+     */
+    public ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer() {
+<span class="fc" id="L65">        super();</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource instance in charge of retrieving data for this optimizer.
+     */
+    public ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
+<span class="fc" id="L75">        super(dataSource);</span>
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param accelerometerCalibrator an accelerometer calibrator to be used to
+     *                                optimize its Mean Square Error (MSE).
+     * @param gyroscopeCalibrator     a gyroscope calibrator to be used to optimize
+     *                                its Mean Square Error (MSE).
+     * @param magnetometerCalibrator  a magnetometer calibrator to be used to
+     *                                optimize its Mean Square Error (MSE).
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements,
+     *                                  if gyroscope calibrator does not use
+     *                                  {@link BodyKinematicsSequence} sequences of
+     *                                  {@link StandardDeviationTimedBodyKinematics} or
+     *                                  if magnetometer calibrator does not use
+     *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
+     */
+    public ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerNonLinearCalibrator accelerometerCalibrator,
+            final GyroscopeNonLinearCalibrator gyroscopeCalibrator,
+            final MagnetometerNonLinearCalibrator magnetometerCalibrator) {
+<span class="fc" id="L99">        super(accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);</span>
+<span class="fc" id="L100">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource              instance in charge of retrieving data for this optimizer.
+     * @param accelerometerCalibrator an accelerometer calibrator to be used to
+     *                                optimize its Mean Square Error (MSE).
+     * @param gyroscopeCalibrator     a gyroscope calibrator to be used to optimize
+     *                                its Mean Square Error (MSE).
+     * @param magnetometerCalibrator  a magnetometer calibrator to be used to
+     *                                optimize its Mean Square Error (MSE).
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements,
+     *                                  if gyroscope calibrator does not use
+     *                                  {@link BodyKinematicsSequence} sequences of
+     *                                  {@link StandardDeviationTimedBodyKinematics} or
+     *                                  if magnetometer calibrator does not use
+     *                                  {@link StandardDeviationBodyMagneticFluxDensity} measurements.
+     */
+    public ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
+            final AccelerometerNonLinearCalibrator accelerometerCalibrator,
+            final GyroscopeNonLinearCalibrator gyroscopeCalibrator,
+            final MagnetometerNonLinearCalibrator magnetometerCalibrator) {
+<span class="fc" id="L125">        super(dataSource, accelerometerCalibrator, gyroscopeCalibrator, magnetometerCalibrator);</span>
+<span class="fc" id="L126">    }</span>
+
+    /**
+     * Gets the step to make exhaustive search of threshold values between
+     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     *
+     * @return step to make exhaustive search of threshold values.
+     */
+    public double getThresholdFactorStep() {
+<span class="fc" id="L135">        return thresholdFactorStep;</span>
+    }
+
+    /**
+     * Sets step to make exhaustive search of threshold values between
+     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     *
+     * @param thresholdStep step to make exhaustive search of threshold values.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is zero or negative.
+     */
+    public void setThresholdFactorStep(final double thresholdStep) throws LockedException {
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L148">            throw new LockedException();</span>
+        }
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (thresholdStep &lt;= 0.0) {</span>
+<span class="fc" id="L151">            throw new IllegalArgumentException();</span>
+        }
+
+<span class="fc" id="L154">        thresholdFactorStep = thresholdStep;</span>
+<span class="fc" id="L155">    }</span>
+
+    /**
+     * Optimizes the threshold factor for a static interval detector or measurement
+     * generator to minimize MSE (Minimum Squared Error) of estimated
+     * calibration parameters.
+     *
+     * @return optimized threshold factor.
+     * @throws NotReadyException                                 if this optimizer is not ready to start optimization.
+     * @throws LockedException                                   if optimizer is already running.
+     * @throws IntervalDetectorThresholdFactorOptimizerException if optimization fails for
+     *                                                           some reason.
+     */
+    @Override
+    public double optimize() throws NotReadyException, LockedException,
+            IntervalDetectorThresholdFactorOptimizerException {
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L172">            throw new LockedException();</span>
+        }
+
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        if (!isReady()) {</span>
+<span class="nc" id="L176">            throw new NotReadyException();</span>
+        }
+
+<span class="fc" id="L179">        var hasResult = false;</span>
+<span class="fc" id="L180">        minMse = Double.MAX_VALUE;</span>
+        try {
+<span class="fc" id="L182">            running = true;</span>
+
+<span class="fc" id="L184">            initProgress();</span>
+<span class="fc" id="L185">            final var progressStep = (float) (thresholdFactorStep</span>
+                    / (thresholdFactorStep + maxThresholdFactor - minThresholdFactor));
+
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">            if (listener != null) {</span>
+<span class="fc" id="L189">                listener.onOptimizeStart(this);</span>
+            }
+
+<span class="fc" id="L192">            for (var thresholdFactor = minThresholdFactor;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">                 thresholdFactor &lt;= maxThresholdFactor;</span>
+<span class="fc" id="L194">                 thresholdFactor += thresholdFactorStep) {</span>
+                try {
+<span class="fc" id="L196">                    evaluateForThresholdFactor(thresholdFactor);</span>
+<span class="fc" id="L197">                    hasResult = true;</span>
+<span class="fc" id="L198">                } catch (final Exception ignore) {</span>
+                    // when an error occurs, skip to the next iteration
+<span class="fc" id="L200">                }</span>
+
+<span class="fc" id="L202">                progress += progressStep;</span>
+<span class="fc" id="L203">                checkAndNotifyProgress();</span>
+            }
+
+<span class="fc bfc" id="L206" title="All 2 branches covered.">            if (!hasResult) {</span>
+<span class="fc" id="L207">                throw new IntervalDetectorThresholdFactorOptimizerException();</span>
+            }
+
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">            if (listener != null) {</span>
+<span class="fc" id="L211">                listener.onOptimizeEnd(this);</span>
+            }
+
+        } finally {
+<span class="fc" id="L215">            running = false;</span>
+        }
+
+<span class="fc" id="L218">        return optimalThresholdFactor;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
