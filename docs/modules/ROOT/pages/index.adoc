@@ -1,0 +1,103 @@
+= Irurueta Navigation Inertial Extra
+
+NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
+
+[WARNING]
+====
+This library is **experimental**. Its estimators and optimizers implement research-grade techniques —
+in particular the static/dynamic interval detection and threshold-factor search used to validate and tune a
+calibration — that have not been hardened through large-scale production use. APIs may still change between
+minor releases, and results should be validated against a trusted reference before being relied upon in a
+production navigation pipeline.
+====
+
+`irurueta-navigation-inertial-extra` is a Java library that provides additional calibration estimators for
+GNSS/INS navigation, built on top of https://github.com/albertoirurueta/irurueta-navigation-inertial[irurueta-navigation-inertial].
+Where the base library provides the core navigators, estimators and calibrators, this library adds the
+higher-level tools needed to validate a calibration and to automatically tune it: drift estimation, sensor
+random-walk (Allan-variance-style) estimation, and threshold-factor optimizers for the static/dynamic interval
+detectors used during calibration data collection.
+
+The library is organized around two packages:
+
+[cols="1,3",options="header"]
+|===
+|Package
+|Responsibility
+
+|`com.irurueta.navigation.inertial.calibration`
+|`DriftEstimator` and `KalmanDriftEstimator` to measure how much a calibrated IMU solution drifts while static;
+`RandomWalkEstimator` to estimate accelerometer/gyroscope bias random walk and position/velocity/attitude
+uncertainty; and `INSLooselyCoupledKalmanConfigCreator`/`INSLooselyCoupledKalmanInitializerConfigCreator` to build
+Kalman filter configuration objects from previously estimated noise and bias sources.
+
+|`com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor`
+|A family of `IntervalDetectorThresholdFactorOptimizer` implementations (accelerometer, gyroscope, magnetometer,
+and combined variants, each with an exhaustive and a bracketed/golden-section search strategy) that search for the
+threshold factor minimizing calibration mean squared error for the static/dynamic interval detectors used to
+segment calibration data.
+|===
+
+== Core concept: drift estimation
+
+Once accelerometer and gyroscope measurements have been fixed using a calibration model, `DriftEstimator` (and its
+Kalman-filter-based subclass `KalmanDriftEstimator`) lets you quantify how much residual error still accumulates
+while the body carrying the IMU remains static:
+
+[mermaid]
+....
+flowchart TD
+    A[Calibrated body kinematics samples] --> B[Fix measurements\nwith accelerometer/gyroscope calibration]
+    B --> C[Feed fixed samples to\nDriftEstimator / KalmanDriftEstimator]
+    C --> D[Integrate over the static interval]
+    D --> E[Drift in position, velocity\nand orientation, plus time-normalized rates]
+....
+
+`KalmanDriftEstimator` uses an internal `INSLooselyCoupledKalmanFilteredEstimator` to propagate the same static
+interval and reports drift from the resulting Kalman state, which is typically more representative of a real
+INS/GNSS deployment than plain kinematics integration.
+
+== Core concept: random walk and Kalman configuration
+
+`RandomWalkEstimator` repeats the drift-estimation process over many consecutive "drift periods" while the IMU
+remains static, and reports the mean and variance of the observed drift as accelerometer/gyroscope bias random
+walk and position/velocity/attitude uncertainty. Those outputs implement source interfaces
+(`AccelerometerBiasRandomWalkSource`, `GyroscopeBiasRandomWalkSource`, `PositionUncertaintySource`,
+`VelocityUncertaintySource`, `AttitudeUncertaintySource`) that `INSLooselyCoupledKalmanConfigCreator` and
+`INSLooselyCoupledKalmanInitializerConfigCreator` consume directly to assemble ready-to-use Kalman filter
+configuration objects, closing the loop between "estimate sensor noise" and "configure the filter that uses it."
+
+== Core concept: threshold factor optimization
+
+Static/dynamic interval detection (used to segment raw calibration recordings into static and moving periods)
+depends on a threshold factor that trades off false positives against missed transitions. The
+`IntervalDetectorThresholdFactorOptimizer` hierarchy searches for the threshold factor that minimizes calibration
+mean squared error, for accelerometer-only, gyroscope-only, magnetometer-only, and combined
+(accelerometer+gyroscope, accelerometer+gyroscope+magnetometer) calibration scenarios. Each scenario is offered in
+two search strategies: an exhaustive grid search (`Exhaustive*Optimizer`) and a bracketed golden-section search
+(`Bracketed*Optimizer`) that converges faster once a rough bracket is known.
+
+== Background and references
+
+The static/dynamic interval detection that the threshold-factor optimizers tune, and the drift/random-walk
+concepts used to validate a calibration, follow the multi-position calibration approach described in:
+
+* David Tedaldi, Alberto Pretto, Emanuele Menegatti,
+https://albertopretto.altervista.org/papers/tpm_icra2014.pdf[_A Robust and Easy to Implement Method for IMU
+Calibration without External Equipments_], IEEE International Conference on Robotics and Automation (ICRA), 2014.
+That paper proposes calibrating an IMU using only a sequence of static positions reached by hand — no
+mechanical rig or external reference — by using a variance-based static detector to segment the recording into
+static and dynamic intervals, fitting the accelerometer triad against the local gravity magnitude over the
+static intervals, and then calibrating the gyroscope triad by integrating angular velocity between consecutive
+static intervals and comparing it against the calibrated accelerometer's gravity reference.
+* The paper's reference implementation, https://github.com/Kyle-ak/imu_tk[imu_tk] (C++, BSD licensed).
+
+`irurueta-navigation-inertial-extra` does not port that implementation; it builds complementary tooling —
+threshold-factor search and drift/random-walk estimation — on top of the static/dynamic interval detectors and
+calibrators already present in
+https://github.com/albertoirurueta/irurueta-navigation-inertial[irurueta-navigation-inertial].
+
+== Where to go next
+
+* xref:installation.adoc[] — add this library as a dependency to your project.
+* xref:reference.adoc[] — links to generated reports (Javadoc, coverage, quality) and external dashboards.
