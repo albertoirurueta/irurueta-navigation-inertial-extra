@@ -1,6 +1,15 @@
-= irurueta-navigation-inertial-extra
+= Irurueta Navigation Inertial Extra
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
+
+[WARNING]
+====
+This library is **experimental**. Its estimators and optimizers implement research-grade techniques —
+in particular the static/dynamic interval detection and threshold-factor search used to validate and tune a
+calibration — that have not been hardened through large-scale production use. APIs may still change between
+minor releases, and results should be validated against a trusted reference before being relied upon in a
+production navigation pipeline.
+====
 
 `irurueta-navigation-inertial-extra` is a Java library that provides additional calibration estimators for
 GNSS/INS navigation, built on top of https://github.com/albertoirurueta/irurueta-navigation-inertial[irurueta-navigation-inertial].
@@ -67,6 +76,26 @@ mean squared error, for accelerometer-only, gyroscope-only, magnetometer-only, a
 (accelerometer+gyroscope, accelerometer+gyroscope+magnetometer) calibration scenarios. Each scenario is offered in
 two search strategies: an exhaustive grid search (`Exhaustive*Optimizer`) and a bracketed golden-section search
 (`Bracketed*Optimizer`) that converges faster once a rough bracket is known.
+
+== Background and references
+
+The static/dynamic interval detection that the threshold-factor optimizers tune, and the drift/random-walk
+concepts used to validate a calibration, follow the multi-position calibration approach described in:
+
+* David Tedaldi, Alberto Pretto, Emanuele Menegatti,
+https://albertopretto.altervista.org/papers/tpm_icra2014.pdf[_A Robust and Easy to Implement Method for IMU
+Calibration without External Equipments_], IEEE International Conference on Robotics and Automation (ICRA), 2014.
+That paper proposes calibrating an IMU using only a sequence of static positions reached by hand — no
+mechanical rig or external reference — by using a variance-based static detector to segment the recording into
+static and dynamic intervals, fitting the accelerometer triad against the local gravity magnitude over the
+static intervals, and then calibrating the gyroscope triad by integrating angular velocity between consecutive
+static intervals and comparing it against the calibrated accelerometer's gravity reference.
+* The paper's reference implementation, https://github.com/Kyle-ak/imu_tk[imu_tk] (C++, BSD licensed).
+
+`irurueta-navigation-inertial-extra` does not port that implementation; it builds complementary tooling —
+threshold-factor search and drift/random-walk estimation — on top of the static/dynamic interval detectors and
+calibrators already present in
+https://github.com/albertoirurueta/irurueta-navigation-inertial[irurueta-navigation-inertial].
 
 == Where to go next
 

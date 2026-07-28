@@ -27,6 +27,13 @@ higher-level tools needed to validate an IMU calibration and to automatically tu
 random-walk (Allan-variance-style) estimation, and threshold-factor optimizers for the static/dynamic interval
 detectors used during calibration data collection.
 
+> **⚠️ Experimental.** This library implements research-grade calibration-validation and tuning techniques —
+> notably the static/dynamic interval detection and threshold-factor search inspired by David Tedaldi, Alberto
+> Pretto, Emanuele Menegatti,
+> ["A Robust and Easy to Implement Method for IMU Calibration without External Equipments"](https://albertopretto.altervista.org/papers/tpm_icra2014.pdf)
+> (ICRA 2014; reference implementation: [imu_tk](https://github.com/Kyle-ak/imu_tk)) — that have not been
+> hardened through large-scale production use. APIs may still change between minor releases.
+
 ## Project Status
 
 | | |

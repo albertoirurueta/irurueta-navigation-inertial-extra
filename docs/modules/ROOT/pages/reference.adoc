@@ -2,6 +2,9 @@
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
 
+WARNING: This library is **experimental** — see xref:index.adoc#_background_and_references[Background and
+references] for details. APIs may still change between minor releases.
+
 These reports are generated during the build.
 
 == Generated Reports

@@ -2,6 +2,9 @@
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
 
+WARNING: This library is **experimental** — see xref:index.adoc#_background_and_references[Background and
+references] for details. APIs may still change between minor releases.
+
 `irurueta-navigation-inertial-extra` is published to Maven Central as a standard Java library and can be added as
 a Maven dependency.
 
