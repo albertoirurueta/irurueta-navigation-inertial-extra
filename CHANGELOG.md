@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-07-28
+
+### Changed
+
+- Raised the minimum/target Java version from 17 to 21; consumers must build/run against JDK 21 or later.
+- Updated internal dependency versions. No changes to this library's own source code in this release.
+
 ## [1.7.0] - 2026-03-05
 
 ### Changed
@@ -122,7 +129,8 @@ Initial release. This library provides additional GNSS/INS calibration estimator
 - Listener interfaces (`DriftEstimatorListener`, `RandomWalkEstimatorListener`,
   `IntervalDetectorThresholdFactorOptimizerListener`) for progress/result callbacks.
 
-[Unreleased]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.7.0...HEAD
+[Unreleased]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.8.0...HEAD
+[1.8.0]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.7.0...1.8.0
 [1.7.0]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.6.0...1.7.0
 [1.6.0]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.4.2...1.5.0
