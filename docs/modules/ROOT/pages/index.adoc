@@ -1,4 +1,6 @@
 = Overview
+:description: Overview of irurueta-navigation-inertial-extra, a Java library adding drift estimation, random-walk estimation, and threshold-factor optimizers for GNSS/INS IMU calibration on top of irurueta-navigation-inertial.
+:keywords: IMU calibration, GNSS INS navigation, drift estimation, Kalman filter, random walk estimation, threshold factor optimizer, static interval detection, Java library, irurueta-navigation-inertial-extra
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
 

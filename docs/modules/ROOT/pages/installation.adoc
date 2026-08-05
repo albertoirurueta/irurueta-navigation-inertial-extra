@@ -1,4 +1,6 @@
 = Installation
+:description: How to add irurueta-navigation-inertial-extra to a Java project via Maven, including release and snapshot dependency coordinates, requirements, and building from source.
+:keywords: Maven dependency, Java 21, Java library installation, Maven Central, snapshot repository, build from source, irurueta-navigation-inertial-extra
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
 

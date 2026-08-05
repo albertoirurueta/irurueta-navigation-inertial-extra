@@ -1,4 +1,6 @@
 = Reference
+:description: Links to generated reference reports for irurueta-navigation-inertial-extra: Javadoc API docs, JaCoCo coverage, Surefire test results, the aggregated Maven site, and the SonarCloud code quality dashboard.
+:keywords: Javadoc, JaCoCo coverage, Surefire test report, Maven site, SonarCloud, code quality, API reference, irurueta-navigation-inertial-extra
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
 

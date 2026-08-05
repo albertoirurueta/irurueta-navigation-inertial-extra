@@ -1,4 +1,6 @@
 = What's New
+:description: Release notes and version history for irurueta-navigation-inertial-extra, including the 1.8.0 update raising the minimum Java version to 21, with a link to the full CHANGELOG.
+:keywords: changelog, release notes, version history, what's new, Java 21, irurueta-navigation-inertial-extra
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
 
