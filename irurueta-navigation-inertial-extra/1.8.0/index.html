@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Overview :: Irurueta Inertial Navigation Extra</title>
+    <meta name="description" content="Overview of irurueta-navigation-inertial-extra, a Java library adding drift estimation, random-walk estimation, and threshold-factor optimizers for GNSS/INS IMU calibration on top of irurueta-navigation-inertial.">
+    <meta name="keywords" content="IMU calibration, GNSS INS navigation, drift estimation, Kalman filter, random walk estimation, threshold factor optimizer, static interval detection, Java library, irurueta-navigation-inertial-extra">
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" type="image/svg+xml" href="../../_/img/logo.svg">
+  </head>
+  <body class="article">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'; mermaid.initialize({"startOnLoad":true}); </script><header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../.."><img src="../../_/img/logo.svg" alt="Irurueta Inertial Navigation Extra" class="navbar-brand-logo">Irurueta Inertial Navigation Extra</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu" style="display: none;">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="irurueta-navigation-inertial-extra" data-version="1.8.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Irurueta Inertial Navigation Extra</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="whats-new.html">What&#8217;s New</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="installation.html">Installation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="reference.html">Reference</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Irurueta Inertial Navigation Extra</span>
+    <span class="version">1.8.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Irurueta Inertial Navigation Extra</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.8.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link is-current"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Irurueta Inertial Navigation Extra</a></li>
+    <li><a href="index.html">Overview</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/edit/develop/docs/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Overview</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This documentation was generated with the assistance of AI. Please report any inaccuracies.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This library is <strong>experimental</strong>. Its estimators and optimizers implement research-grade techniques —
+in particular the static/dynamic interval detection and threshold-factor search used to validate and tune a
+calibration — that have not been hardened through large-scale production use. APIs may still change between
+minor releases, and results should be validated against a trusted reference before being relied upon in a
+production navigation pipeline.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>irurueta-navigation-inertial-extra</code> is a Java library that provides additional calibration estimators for
+GNSS/INS navigation, built on top of <a href="https://github.com/albertoirurueta/irurueta-navigation-inertial">irurueta-navigation-inertial</a>.
+Where the base library provides the core navigators, estimators and calibrators, this library adds the
+higher-level tools needed to validate a calibration and to automatically tune it: drift estimation, sensor
+random-walk (Allan-variance-style) estimation, and threshold-factor optimizers for the static/dynamic interval
+detectors used during calibration data collection.</p>
+</div>
+<div class="paragraph">
+<p>The library is organized around two packages:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Package</th>
+<th class="tableblock halign-left valign-top">Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>com.irurueta.navigation.inertial.calibration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DriftEstimator</code> and <code>KalmanDriftEstimator</code> to measure how much a calibrated IMU solution drifts while static;
+<code>RandomWalkEstimator</code> to estimate accelerometer/gyroscope bias random walk and position/velocity/attitude
+uncertainty; and <code>INSLooselyCoupledKalmanConfigCreator</code>/<code>INSLooselyCoupledKalmanInitializerConfigCreator</code> to build
+Kalman filter configuration objects from previously estimated noise and bias sources.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A family of <code>IntervalDetectorThresholdFactorOptimizer</code> implementations (accelerometer, gyroscope, magnetometer,
+and combined variants, each with an exhaustive and a bracketed/golden-section search strategy) that search for the
+threshold factor minimizing calibration mean squared error for the static/dynamic interval detectors used to
+segment calibration data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_core_concept_drift_estimation"><a class="anchor" href="#_core_concept_drift_estimation"></a>Core concept: drift estimation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once accelerometer and gyroscope measurements have been fixed using a calibration model, <code>DriftEstimator</code> (and its
+Kalman-filter-based subclass <code>KalmanDriftEstimator</code>) lets you quantify how much residual error still accumulates
+while the body carrying the IMU remains static:</p>
+</div>
+<div class="imageblock"><div class="mermaid content" style=" ">flowchart TD
+    A[Calibrated body kinematics samples] --> B[Fix measurements\nwith accelerometer/gyroscope calibration]
+    B --> C[Feed fixed samples to\nDriftEstimator / KalmanDriftEstimator]
+    C --> D[Integrate over the static interval]
+    D --> E[Drift in position, velocity\nand orientation, plus time-normalized rates]</div></div>
+<div class="paragraph">
+<p><code>KalmanDriftEstimator</code> uses an internal <code>INSLooselyCoupledKalmanFilteredEstimator</code> to propagate the same static
+interval and reports drift from the resulting Kalman state, which is typically more representative of a real
+INS/GNSS deployment than plain kinematics integration.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_core_concept_random_walk_and_kalman_configuration"><a class="anchor" href="#_core_concept_random_walk_and_kalman_configuration"></a>Core concept: random walk and Kalman configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>RandomWalkEstimator</code> repeats the drift-estimation process over many consecutive "drift periods" while the IMU
+remains static, and reports the mean and variance of the observed drift as accelerometer/gyroscope bias random
+walk and position/velocity/attitude uncertainty. Those outputs implement source interfaces
+(<code>AccelerometerBiasRandomWalkSource</code>, <code>GyroscopeBiasRandomWalkSource</code>, <code>PositionUncertaintySource</code>,
+<code>VelocityUncertaintySource</code>, <code>AttitudeUncertaintySource</code>) that <code>INSLooselyCoupledKalmanConfigCreator</code> and
+<code>INSLooselyCoupledKalmanInitializerConfigCreator</code> consume directly to assemble ready-to-use Kalman filter
+configuration objects, closing the loop between "estimate sensor noise" and "configure the filter that uses it."</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_core_concept_threshold_factor_optimization"><a class="anchor" href="#_core_concept_threshold_factor_optimization"></a>Core concept: threshold factor optimization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Static/dynamic interval detection (used to segment raw calibration recordings into static and moving periods)
+depends on a threshold factor that trades off false positives against missed transitions. The
+<code>IntervalDetectorThresholdFactorOptimizer</code> hierarchy searches for the threshold factor that minimizes calibration
+mean squared error, for accelerometer-only, gyroscope-only, magnetometer-only, and combined
+(accelerometer+gyroscope, accelerometer+gyroscope+magnetometer) calibration scenarios. Each scenario is offered in
+two search strategies: an exhaustive grid search (<code>Exhaustive*Optimizer</code>) and a bracketed golden-section search
+(<code>Bracketed*Optimizer</code>) that converges faster once a rough bracket is known.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_background_and_references"><a class="anchor" href="#_background_and_references"></a>Background and references</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The static/dynamic interval detection that the threshold-factor optimizers tune, and the drift/random-walk
+concepts used to validate a calibration, follow the multi-position calibration approach described in:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>David Tedaldi, Alberto Pretto, Emanuele Menegatti,
+<a href="https://albertopretto.altervista.org/papers/tpm_icra2014.pdf"><em>A Robust and Easy to Implement Method for IMU
+Calibration without External Equipments</em></a>, IEEE International Conference on Robotics and Automation (ICRA), 2014.
+That paper proposes calibrating an IMU using only a sequence of static positions reached by hand — no
+mechanical rig or external reference — by using a variance-based static detector to segment the recording into
+static and dynamic intervals, fitting the accelerometer triad against the local gravity magnitude over the
+static intervals, and then calibrating the gyroscope triad by integrating angular velocity between consecutive
+static intervals and comparing it against the calibrated accelerometer&#8217;s gravity reference.</p>
+</li>
+<li>
+<p>The paper&#8217;s reference implementation, <a href="https://github.com/Kyle-ak/imu_tk">imu_tk</a> (C++, BSD licensed).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>irurueta-navigation-inertial-extra</code> does not port that implementation; it builds complementary tooling —
+threshold-factor search and drift/random-walk estimation — on top of the static/dynamic interval detectors and
+calibrators already present in
+<a href="https://github.com/albertoirurueta/irurueta-navigation-inertial">irurueta-navigation-inertial</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_where_to_go_next"><a class="anchor" href="#_where_to_go_next"></a>Where to go next</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="installation.html" class="xref page">Installation</a> — add this library as a dependency to your project.</p>
+</li>
+<li>
+<p><a href="reference.html" class="xref page">Reference</a> — links to generated reports (Javadoc, coverage, quality) and external dashboards.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Made with ♥ from <strong>BCN</strong></p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

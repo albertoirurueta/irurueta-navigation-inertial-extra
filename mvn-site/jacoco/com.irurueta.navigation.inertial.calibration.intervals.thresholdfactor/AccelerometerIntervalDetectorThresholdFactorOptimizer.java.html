@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccelerometerIntervalDetectorThresholdFactorOptimizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.irurueta:irurueta-navigation-inertial-extra</a> &gt; <a href="index.source.html" class="el_package">com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor</a> &gt; <span class="el_source">AccelerometerIntervalDetectorThresholdFactorOptimizer.java</span></div><h1>AccelerometerIntervalDetectorThresholdFactorOptimizer.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2021 Alberto Irurueta Carro (alberto@irurueta.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
+
+import com.irurueta.algebra.Matrix;
+import com.irurueta.navigation.LockedException;
+import com.irurueta.navigation.NotReadyException;
+import com.irurueta.navigation.inertial.BodyKinematics;
+import com.irurueta.navigation.inertial.INSLooselyCoupledKalmanInitializerConfig;
+import com.irurueta.navigation.inertial.INSTightlyCoupledKalmanInitializerConfig;
+import com.irurueta.navigation.inertial.calibration.AccelerometerBiasUncertaintySource;
+import com.irurueta.navigation.inertial.calibration.AccelerometerCalibrationSource;
+import com.irurueta.navigation.inertial.calibration.AccelerometerNoiseRootPsdSource;
+import com.irurueta.navigation.inertial.calibration.CalibrationException;
+import com.irurueta.navigation.inertial.calibration.StandardDeviationBodyKinematics;
+import com.irurueta.navigation.inertial.calibration.accelerometer.AccelerometerCalibratorMeasurementType;
+import com.irurueta.navigation.inertial.calibration.accelerometer.AccelerometerNonLinearCalibrator;
+import com.irurueta.navigation.inertial.calibration.accelerometer.KnownBiasAccelerometerCalibrator;
+import com.irurueta.navigation.inertial.calibration.accelerometer.OrderedStandardDeviationBodyKinematicsAccelerometerCalibrator;
+import com.irurueta.navigation.inertial.calibration.accelerometer.QualityScoredAccelerometerCalibrator;
+import com.irurueta.navigation.inertial.calibration.accelerometer.UnknownBiasAccelerometerCalibrator;
+import com.irurueta.navigation.inertial.calibration.accelerometer.UnorderedStandardDeviationBodyKinematicsAccelerometerCalibrator;
+import com.irurueta.navigation.inertial.calibration.generators.AccelerometerMeasurementsGenerator;
+import com.irurueta.navigation.inertial.calibration.generators.AccelerometerMeasurementsGeneratorListener;
+import com.irurueta.navigation.inertial.calibration.intervals.TriadStaticIntervalDetector;
+import com.irurueta.units.Acceleration;
+import com.irurueta.units.AccelerationUnit;
+import com.irurueta.units.Time;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Optimizes the threshold factor for interval detection of accelerometer data based
+ * on results of calibration.
+ * Implementations of this class will attempt to find the best threshold factor
+ * between the provided range of values.
+ * Only accelerometer calibrators based on unknown orientation are supported (in other terms,
+ * calibrators must be {@link AccelerometerNonLinearCalibrator} and must support
+ * {@link AccelerometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_KINEMATICS}).
+ */
+public abstract class AccelerometerIntervalDetectorThresholdFactorOptimizer extends
+        IntervalDetectorThresholdFactorOptimizer&lt;BodyKinematics,
+                AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource&gt;
+        implements AccelerometerNoiseRootPsdSource, AccelerometerBiasUncertaintySource,
+        AccelerometerCalibrationSource {
+
+    /**
+     * Default minimum threshold factor.
+     */
+    public static final double DEFAULT_MIN_THRESHOLD_FACTOR = 2.0;
+
+    /**
+     * Default maximum threshold factor.
+     */
+    public static final double DEFAULT_MAX_THRESHOLD_FACTOR = 10.0;
+
+    /**
+     * Minimum threshold factor.
+     */
+<span class="fc" id="L74">    protected double minThresholdFactor = DEFAULT_MIN_THRESHOLD_FACTOR;</span>
+
+    /**
+     * Maximum threshold factor.
+     */
+<span class="fc" id="L79">    protected double maxThresholdFactor = DEFAULT_MAX_THRESHOLD_FACTOR;</span>
+
+    /**
+     * Accelerometer calibrator.
+     */
+    private AccelerometerNonLinearCalibrator calibrator;
+
+    /**
+     * A measurement generator for accelerometer calibrators.
+     */
+    private AccelerometerMeasurementsGenerator generator;
+
+    /**
+     * Generated measurements to be used for accelerometer calibration.
+     */
+    private List&lt;StandardDeviationBodyKinematics&gt; measurements;
+
+    /**
+     * Mapper to convert {@link StandardDeviationBodyKinematics} measurements into
+     * quality scores.
+     */
+<span class="fc" id="L100">    private QualityScoreMapper&lt;StandardDeviationBodyKinematics&gt; qualityScoreMapper =</span>
+            new DefaultAccelerometerQualityScoreMapper();
+
+    /**
+     * Accelerometer base noise level that has been detected during
+     * initialization of the best solution that has been found expressed in
+     * meters per squared second (m/s^2).
+     * This is equal to the standard deviation of the accelerometer measurements
+     * during the initialization phase.
+     */
+    private double baseNoiseLevel;
+
+    /**
+     * Threshold to determine static/dynamic period changes expressed in
+     * meters per squared second (m/s^2) for the best calibration solution that
+     * has been found.
+     */
+    private double threshold;
+
+    /**
+     * Estimated covariance matrix for estimated parameters.
+     */
+    private Matrix estimatedCovariance;
+
+    /**
+     * Estimated accelerometer scale factors and cross-coupling errors.
+     * This is the product of matrix Ta containing cross-coupling errors and Ka
+     * containing scaling factors.
+     * So that:
+     * &lt;pre&gt;
+     *     Ma = [sx    mxy  mxz] = Ta*Ka
+     *          [myx   sy   myz]
+     *          [mzx   mzy  sz ]
+     * &lt;/pre&gt;
+     * Where:
+     * &lt;pre&gt;
+     *     Ka = [sx 0   0 ]
+     *          [0  sy  0 ]
+     *          [0  0   sz]
+     * &lt;/pre&gt;
+     * and
+     * &lt;pre&gt;
+     *     Ta = [1          -alphaXy    alphaXz ]
+     *          [alphaYx    1           -alphaYz]
+     *          [-alphaZx   alphaZy     1       ]
+     * &lt;/pre&gt;
+     * Hence:
+     * &lt;pre&gt;
+     *     Ma = [sx    mxy  mxz] = Ta*Ka =  [sx             -sy * alphaXy   sz * alphaXz ]
+     *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
+     *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
+     * &lt;/pre&gt;
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
+     * are considered to be zero if the accelerometer z-axis is assumed to be the same
+     * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Ma matrix
+     * becomes upper diagonal:
+     * &lt;pre&gt;
+     *     Ma = [sx    mxy  mxz]
+     *          [0     sy   myz]
+     *          [0     0    sz ]
+     * &lt;/pre&gt;
+     * Values of this matrix are unit-less.
+     */
+    private Matrix estimatedMa;
+
+    /**
+     * Estimated accelerometer biases for each IMU axis expressed in meter per squared
+     * second (m/s^2).
+     */
+    private double[] estimatedBiases;
+
+    /**
+     * Constructor.
+     */
+<span class="fc" id="L174">    protected AccelerometerIntervalDetectorThresholdFactorOptimizer() {</span>
+<span class="fc" id="L175">        initialize();</span>
+<span class="fc" id="L176">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource instance in charge of retrieving data for this optimizer.
+     */
+    protected AccelerometerIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
+<span class="fc" id="L185">        super(dataSource);</span>
+<span class="fc" id="L186">        initialize();</span>
+<span class="fc" id="L187">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param calibrator an accelerometer calibrator to be used to optimize its
+     *                   Mean Square Error (MSE).
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements.
+     */
+<span class="fc" id="L197">    protected AccelerometerIntervalDetectorThresholdFactorOptimizer(final AccelerometerNonLinearCalibrator calibrator) {</span>
+        try {
+<span class="fc" id="L199">            setCalibrator(calibrator);</span>
+<span class="nc" id="L200">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L202">        }</span>
+<span class="fc" id="L203">        initialize();</span>
+<span class="fc" id="L204">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource instance in charge of retrieving data for this optimizer.
+     * @param calibrator an accelerometer calibrator to be used to optimize its
+     *                   Mean Square Error (MSE).
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements.
+     */
+    protected AccelerometerIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
+            final AccelerometerNonLinearCalibrator calibrator) {
+<span class="fc" id="L218">        super(dataSource);</span>
+        try {
+<span class="fc" id="L220">            setCalibrator(calibrator);</span>
+<span class="nc" id="L221">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L223">        }</span>
+<span class="fc" id="L224">        initialize();</span>
+<span class="fc" id="L225">    }</span>
+
+    /**
+     * Gets provided accelerometer calibrator to be used to optimize its Mean Square Error (MSE).
+     *
+     * @return accelerometer calibrator to be used to optimize its MSE.
+     */
+    public AccelerometerNonLinearCalibrator getCalibrator() {
+<span class="fc" id="L233">        return calibrator;</span>
+    }
+
+    /**
+     * Sets accelerometer calibrator to be used to optimize its Mean Square Error (MSE).
+     *
+     * @param calibrator accelerometer calibrator to be used to optimize its MSE.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements.
+     */
+    public void setCalibrator(final AccelerometerNonLinearCalibrator calibrator) throws LockedException {
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L246">            throw new LockedException();</span>
+        }
+
+<span class="pc bpc" id="L249" title="1 of 4 branches missed.">        if (calibrator != null &amp;&amp; calibrator.getMeasurementType()</span>
+                != AccelerometerCalibratorMeasurementType.STANDARD_DEVIATION_BODY_KINEMATICS) {
+<span class="fc" id="L251">            throw new IllegalArgumentException();</span>
+        }
+
+<span class="fc" id="L254">        this.calibrator = calibrator;</span>
+<span class="fc" id="L255">    }</span>
+
+    /**
+     * Gets mapper to convert {@link StandardDeviationBodyKinematics} measurements into
+     * quality scores.
+     *
+     * @return mapper to convert measurements into quality scores.
+     */
+    public QualityScoreMapper&lt;StandardDeviationBodyKinematics&gt; getQualityScoreMapper() {
+<span class="fc" id="L264">        return qualityScoreMapper;</span>
+    }
+
+    /**
+     * Sets mapper to convert {@link StandardDeviationBodyKinematics} measurements into
+     * quality scores.
+     *
+     * @param qualityScoreMapper mapper to convert measurements into quality scores.
+     * @throws LockedException if optimizer is already running.
+     */
+    public void setQualityScoreMapper(
+            final QualityScoreMapper&lt;StandardDeviationBodyKinematics&gt; qualityScoreMapper) throws LockedException {
+<span class="fc bfc" id="L276" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L277">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L280">        this.qualityScoreMapper = qualityScoreMapper;</span>
+<span class="fc" id="L281">    }</span>
+
+    /**
+     * Gets the minimum threshold factor.
+     *
+     * @return minimum threshold factor.
+     */
+    public double getMinThresholdFactor() {
+<span class="fc" id="L289">        return minThresholdFactor;</span>
+    }
+
+    /**
+     * Gets the maximum threshold factor.
+     *
+     * @return maximum threshold factor.
+     */
+    public double getMaxThresholdFactor() {
+<span class="fc" id="L298">        return maxThresholdFactor;</span>
+    }
+
+    /**
+     * Sets a range of threshold factor values to get an optimized
+     * threshold factor value.
+     *
+     * @param minThresholdFactor minimum threshold.
+     * @param maxThresholdFactor maximum threshold.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if either minimum or maximum values are
+     *                                  negative, or if the minimum value is larger
+     *                                  than the maximum one.
+     */
+    public void setThresholdFactorRange(final double minThresholdFactor, final double maxThresholdFactor)
+            throws LockedException {
+<span class="fc bfc" id="L314" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L315">            throw new LockedException();</span>
+        }
+<span class="fc bfc" id="L317" title="All 6 branches covered.">        if (minThresholdFactor &lt; 0.0 || maxThresholdFactor &lt; 0.0 || minThresholdFactor &gt;= maxThresholdFactor) {</span>
+<span class="fc" id="L318">            throw new IllegalArgumentException();</span>
+        }
+
+<span class="fc" id="L321">        this.minThresholdFactor = minThresholdFactor;</span>
+<span class="fc" id="L322">        this.maxThresholdFactor = maxThresholdFactor;</span>
+<span class="fc" id="L323">    }</span>
+
+    /**
+     * Indicates whether this optimizer is ready to start optimization.
+     *
+     * @return true if this optimizer is ready, false otherwise.
+     */
+    @Override
+    public boolean isReady() {
+<span class="fc bfc" id="L332" title="All 6 branches covered.">        return super.isReady() &amp;&amp; calibrator != null &amp;&amp; qualityScoreMapper != null;</span>
+    }
+
+    /**
+     * Gets the time interval between input measurements provided to the
+     * {@link #getDataSource()} expressed in seconds (s).
+     *
+     * @return time interval between input measurements.
+     */
+    public double getTimeInterval() {
+<span class="fc" id="L342">        return generator.getTimeInterval();</span>
+    }
+
+    /**
+     * Sets time interval between input measurements provided to the
+     * {@link #getDataSource()} expressed in seconds (s).
+     *
+     * @param timeInterval time interval between input measurements.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is negative.
+     */
+    public void setTimeInterval(final double timeInterval) throws LockedException {
+<span class="fc bfc" id="L354" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L355">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L358">        generator.setTimeInterval(timeInterval);</span>
+<span class="fc" id="L359">    }</span>
+
+    /**
+     * Gets the time interval between input measurements provided to the
+     * {@link #getDataSource()}.
+     *
+     * @return time interval between input measurements.
+     */
+    public Time getTimeIntervalAsTime() {
+<span class="fc" id="L368">        return generator.getTimeIntervalAsTime();</span>
+    }
+
+    /**
+     * Gets the time interval between input measurements provided to the
+     * {@link #getDataSource()}.
+     *
+     * @param result instance where the time interval will be stored.
+     */
+    public void getTimeIntervalAsTime(final Time result) {
+<span class="fc" id="L378">        generator.getTimeIntervalAsTime(result);</span>
+<span class="fc" id="L379">    }</span>
+
+    /**
+     * Sets time interval between input measurements provided to the
+     * {@link #getDataSource()}.
+     *
+     * @param timeInterval time interval between input measurements.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is negative.
+     */
+    public void setTimeInterval(final Time timeInterval) throws LockedException {
+<span class="fc bfc" id="L390" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L391">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L394">        generator.setTimeInterval(timeInterval);</span>
+<span class="fc" id="L395">    }</span>
+
+    /**
+     * Gets minimum number of input measurements provided to the
+     * {@link #getDataSource()} required in a static interval to be taken
+     * into account.
+     * Smaller static intervals will be discarded.
+     *
+     * @return a minimum number of input measurements required in a static interval
+     * to be taken into account.
+     */
+    public int getMinStaticSamples() {
+<span class="fc" id="L407">        return generator.getMinStaticSamples();</span>
+    }
+
+    /**
+     * Sets minimum number of input measurements provided to the
+     * {@link #getDataSource()} required in a static interval to be taken
+     * into account.
+     * Smaller static intervals will be discarded.
+     *
+     * @param minStaticSamples a minimum number of input measurements required in
+     *                         a static interval to be taken into account.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is less than 2.
+     */
+    public void setMinStaticSamples(final int minStaticSamples) throws LockedException {
+<span class="fc bfc" id="L422" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L423">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L426">        generator.setMinStaticSamples(minStaticSamples);</span>
+<span class="fc" id="L427">    }</span>
+
+    /**
+     * Gets maximum number of input measurements provided to the
+     * {@link #getDataSource()} allowed in dynamic intervals.
+     *
+     * @return maximum number of input measurements allowed in dynamic intervals.
+     */
+    public int getMaxDynamicSamples() {
+<span class="fc" id="L436">        return generator.getMaxDynamicSamples();</span>
+    }
+
+    /**
+     * Sets maximum number of input measurements provided to the
+     * {@link #getDataSource()} allowed in dynamic intervals.
+     *
+     * @param maxDynamicSamples maximum number of input measurements allowed in
+     *                          dynamic intervals.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is less than 2.
+     */
+    public void setMaxDynamicSamples(final int maxDynamicSamples) throws LockedException {
+<span class="fc bfc" id="L449" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L450">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L453">        generator.setMaxDynamicSamples(maxDynamicSamples);</span>
+<span class="fc" id="L454">    }</span>
+
+    /**
+     * Gets length of number of input measurements provided to the
+     * {@link #getDataSource()} to keep within the window being processed
+     * to determine instantaneous accelerometer noise level.
+     *
+     * @return length of input measurements to keep within the window.
+     */
+    public int getWindowSize() {
+<span class="fc" id="L464">        return generator.getWindowSize();</span>
+    }
+
+    /**
+     * Sets length of number of input measurements provided to the
+     * {@link #getDataSource()} to keep within the window being processed
+     * to determine instantaneous noise level.
+     * Window size must always be larger than the allowed minimum value, which is 2
+     * and must have an odd value.
+     *
+     * @param windowSize length of number of samples to keep within the window.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is not valid.
+     */
+    public void setWindowSize(final int windowSize) throws LockedException {
+<span class="fc bfc" id="L479" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L480">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L483">        generator.setWindowSize(windowSize);</span>
+<span class="fc" id="L484">    }</span>
+
+    /**
+     * Gets number of input measurements provided to the
+     * {@link #getDataSource()} to be processed initially while keeping the sensor
+     * static to find the base noise level when the device is static.
+     *
+     * @return number of samples to be processed initially.
+     */
+    public int getInitialStaticSamples() {
+<span class="fc" id="L494">        return generator.getInitialStaticSamples();</span>
+    }
+
+    /**
+     * Sets number of input parameters provided to the {@link #getDataSource()}
+     * to be processed initially while keeping the sensor static to
+     * find the base noise level when the device is static.
+     *
+     * @param initialStaticSamples number of samples ot be processed initially.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is less than
+     *                                  {@link TriadStaticIntervalDetector#MINIMUM_INITIAL_STATIC_SAMPLES}.
+     */
+    public void setInitialStaticSamples(final int initialStaticSamples) throws LockedException {
+<span class="fc bfc" id="L508" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L509">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L512">        generator.setInitialStaticSamples(initialStaticSamples);</span>
+<span class="fc" id="L513">    }</span>
+
+    /**
+     * Gets factor to determine that a sudden movement has occurred during
+     * initialization if instantaneous noise level exceeds accumulated noise
+     * level by this factor amount.
+     * This factor is unit-less.
+     *
+     * @return factor to determine that a sudden movement has occurred.
+     */
+    public double getInstantaneousNoiseLevelFactor() {
+<span class="fc" id="L524">        return generator.getInstantaneousNoiseLevelFactor();</span>
+    }
+
+    /**
+     * Sets factor to determine that a sudden movement has occurred during
+     * initialization if instantaneous noise level exceeds accumulated noise
+     * level by this factor amount.
+     * This factor is unit-less.
+     *
+     * @param instantaneousNoiseLevelFactor factor to determine that a sudden
+     *                                      movement has occurred during
+     *                                      initialization.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is zero or negative.
+     */
+    public void setInstantaneousNoiseLevelFactor(final double instantaneousNoiseLevelFactor) throws LockedException {
+<span class="fc bfc" id="L540" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L541">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L544">        generator.setInstantaneousNoiseLevelFactor(instantaneousNoiseLevelFactor);</span>
+<span class="fc" id="L545">    }</span>
+
+    /**
+     * Gets the overall absolute threshold to determine whether there has been
+     * excessive motion during the whole initialization phase.
+     * This threshold is expressed in meters per squared second (m/s^2).
+     *
+     * @return overall absolute threshold to determine whether there has been
+     * excessive motion.
+     */
+    public double getBaseNoiseLevelAbsoluteThreshold() {
+<span class="fc" id="L556">        return generator.getBaseNoiseLevelAbsoluteThreshold();</span>
+    }
+
+    /**
+     * Sets the overall absolute threshold to determine whether there has been
+     * excessive motion during the whole initialization phase.
+     * This threshold is expressed in meters per squared second (m/s^2).
+     *
+     * @param baseNoiseLevelAbsoluteThreshold overall absolute threshold to
+     *                                        determine whether there has been
+     *                                        excessive motion.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is zero or negative.
+     */
+    public void setBaseNoiseLevelAbsoluteThreshold(final double baseNoiseLevelAbsoluteThreshold)
+            throws LockedException {
+<span class="fc bfc" id="L572" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L573">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L576">        generator.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);</span>
+<span class="fc" id="L577">    }</span>
+
+    /**
+     * Gets the overall absolute threshold to determine whether there has been
+     * excessive motion during the whole initialization phase.
+     *
+     * @return overall absolute threshold to determine whether there has been
+     * excessive motion.
+     */
+    public Acceleration getBaseNoiseLevelAbsoluteThresholdAsMeasurement() {
+<span class="fc" id="L587">        return generator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();</span>
+    }
+
+    /**
+     * Gets the overall absolute threshold to determine whether there has been
+     * excessive motion during the whole initialization phase.
+     *
+     * @param result instance where the result will be stored.
+     */
+    public void getBaseNoiseLevelAbsoluteThresholdAsMeasurement(final Acceleration result) {
+<span class="fc" id="L597">        generator.getBaseNoiseLevelAbsoluteThresholdAsMeasurement(result);</span>
+<span class="fc" id="L598">    }</span>
+
+    /**
+     * Sets the overall absolute threshold to determine whether there has been
+     * excessive motion during the whole initialization phase.
+     *
+     * @param baseNoiseLevelAbsoluteThreshold overall absolute threshold to
+     *                                        determine whether there has been
+     *                                        excessive motion.
+     * @throws LockedException          if optimizer is already running.
+     * @throws IllegalArgumentException if provided value is zero or negative.
+     */
+    public void setBaseNoiseLevelAbsoluteThreshold(final Acceleration baseNoiseLevelAbsoluteThreshold)
+            throws LockedException {
+<span class="fc bfc" id="L612" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L613">            throw new LockedException();</span>
+        }
+
+<span class="fc" id="L616">        generator.setBaseNoiseLevelAbsoluteThreshold(baseNoiseLevelAbsoluteThreshold);</span>
+<span class="fc" id="L617">    }</span>
+
+    /**
+     * Gets accelerometer base noise level that has been detected during
+     * initialization of the best solution that has been found expressed in
+     * meters per squared second (m/s^2).
+     * This is equal to the standard deviation of the accelerometer measurements
+     * during the initialization phase.
+     *
+     * @return accelerometer base noise level of the best solution that has been
+     * found.
+     */
+    public double getAccelerometerBaseNoiseLevel() {
+<span class="fc" id="L630">        return baseNoiseLevel;</span>
+    }
+
+    /**
+     * Gets accelerometer base noise level that has been detected during
+     * initialization of the best solution that has been found.
+     * This is equal to the standard deviation of the accelerometer measurements
+     * during the initialization phase.
+     *
+     * @return accelerometer base noise level of the best solution that has been
+     * found.
+     */
+    public Acceleration getAccelerometerBaseNoiseLevelAsMeasurement() {
+<span class="fc" id="L643">        return createMeasurement(baseNoiseLevel, getDefaultUnit());</span>
+    }
+
+    /**
+     * Gets accelerometer base noise level that has been detected during
+     * initialization of the best solution that has been found.
+     * This is equal to the standard deviation of the accelerometer measurements
+     * during the initialization phase.
+     *
+     * @param result instance where the result will be stored.
+     */
+    public void getAccelerometerBaseNoiseLevelAsMeasurement(final Acceleration result) {
+<span class="fc" id="L655">        result.setValue(baseNoiseLevel);</span>
+<span class="fc" id="L656">        result.setUnit(getDefaultUnit());</span>
+<span class="fc" id="L657">    }</span>
+
+    /**
+     * Gets accelerometer base noise level PSD (Power Spectral Density)
+     * expressed in (m^2 * s^-3) of the best solution that has been found.
+     *
+     * @return accelerometer base noise level PSD of the best solution that has
+     * been found.
+     */
+    public double getAccelerometerBaseNoiseLevelPsd() {
+<span class="fc" id="L667">        return baseNoiseLevel * baseNoiseLevel * getTimeInterval();</span>
+    }
+
+    /**
+     * Gets accelerometer base noise level root PSD (Power Spectral Density)
+     * expressed in (m * s^-1.5) of the best solution that has been found.
+     *
+     * @return accelerometer base noise level root PSD of the best solution that has
+     * been found.
+     */
+    @Override
+    public double getAccelerometerBaseNoiseLevelRootPsd() {
+<span class="fc" id="L679">        return baseNoiseLevel * Math.sqrt(getTimeInterval());</span>
+    }
+
+    /**
+     * Gets the threshold to determine static/dynamic period changes expressed in
+     * meters per squared second (m/s^2) for the best calibration solution that
+     * has been found.
+     *
+     * @return threshold to determine static/dynamic period changes for the best
+     * solution.
+     */
+    public double getThreshold() {
+<span class="fc" id="L691">        return threshold;</span>
+    }
+
+    /**
+     * Gets the threshold to determine static/dynamic period changes for the best
+     * calibration solution that has been found.
+     *
+     * @return threshold to determine static/dynamic period changes for the best
+     * solution.
+     */
+    public Acceleration getThresholdAsMeasurement() {
+<span class="fc" id="L702">        return createMeasurement(threshold, getDefaultUnit());</span>
+    }
+
+    /**
+     * Get the threshold to determine static/dynamic period changes for the best
+     * calibration solution that has been found.
+     *
+     * @param result instance where the result will be stored.
+     */
+    public void getThresholdAsMeasurement(final Acceleration result) {
+<span class="fc" id="L712">        result.setValue(threshold);</span>
+<span class="fc" id="L713">        result.setUnit(getDefaultUnit());</span>
+<span class="fc" id="L714">    }</span>
+
+    /**
+     * Gets estimated standard deviation norm of accelerometer bias expressed in
+     * meters per squared second (m/s^2).
+     * This can be used as the initial accelerometer bias uncertainty for
+     * {@link INSLooselyCoupledKalmanInitializerConfig} or {@link INSTightlyCoupledKalmanInitializerConfig}.
+     *
+     * @return estimated standard deviation norm of accelerometer bias or null
+     * if not available.
+     */
+    @Override
+    public Double getEstimatedBiasStandardDeviationNorm() {
+<span class="fc bfc" id="L727" title="All 2 branches covered.">        return estimatedCovariance != null</span>
+<span class="fc" id="L728">                ? Math.sqrt(getEstimatedBiasFxVariance() + getEstimatedBiasFyVariance() + getEstimatedBiasFzVariance())</span>
+<span class="fc" id="L729">                : null;</span>
+    }
+
+    /**
+     * Gets estimated x coordinate variance of accelerometer bias expressed in (m^2/s^4).
+     *
+     * @return estimated x coordinate variance of accelerometer bias or null if not available.
+     */
+    public Double getEstimatedBiasFxVariance() {
+<span class="fc bfc" id="L738" title="All 2 branches covered.">        return estimatedCovariance != null ? estimatedCovariance.getElementAt(0, 0) : null;</span>
+    }
+
+    /**
+     * Gets estimated y coordinate variance of accelerometer bias expressed in (m^2/s^4).
+     *
+     * @return estimated y coordinate variance of accelerometer bias or null if not available.
+     */
+    public Double getEstimatedBiasFyVariance() {
+<span class="fc bfc" id="L747" title="All 2 branches covered.">        return estimatedCovariance != null ? estimatedCovariance.getElementAt(1, 1) : null;</span>
+    }
+
+    /**
+     * Gets estimated z coordinate variance of accelerometer bias expressed in (m^2/s^4).
+     *
+     * @return estimated z coordinate variance of accelerometer bias or null if not available.
+     */
+    public Double getEstimatedBiasFzVariance() {
+<span class="fc bfc" id="L756" title="All 2 branches covered.">        return estimatedCovariance != null ? estimatedCovariance.getElementAt(2, 2) : null;</span>
+    }
+
+    /**
+     * Gets the array containing x,y,z components of estimated accelerometer biases
+     * expressed in meters per squared second (m/s^2).
+     *
+     * @return array containing x,y,z components of estimated accelerometer biases.
+     */
+    @Override
+    public double[] getEstimatedBiases() {
+<span class="fc" id="L767">        return estimatedBiases;</span>
+    }
+
+    /**
+     * Gets estimated accelerometer scale factors and cross-coupling errors.
+     * This is the product of matrix Ta containing cross-coupling errors and Ka
+     * containing scaling factors.
+     * So that:
+     * &lt;pre&gt;
+     *     Ma = [sx    mxy  mxz] = Ta*Ka
+     *          [myx   sy   myz]
+     *          [mzx   mzy  sz ]
+     * &lt;/pre&gt;
+     * Where:
+     * &lt;pre&gt;
+     *     Ka = [sx 0   0 ]
+     *          [0  sy  0 ]
+     *          [0  0   sz]
+     * &lt;/pre&gt;
+     * and
+     * &lt;pre&gt;
+     *     Ta = [1          -alphaXy    alphaXz ]
+     *          [alphaYx    1           -alphaYz]
+     *          [-alphaZx   alphaZy     1       ]
+     * &lt;/pre&gt;
+     * Hence:
+     * &lt;pre&gt;
+     *     Ma = [sx    mxy  mxz] = Ta*Ka =  [sx             -sy * alphaXy   sz * alphaXz ]
+     *          [myx   sy   myz]            [sx * alphaYx   sy              -sz * alphaYz]
+     *          [mzx   mzy  sz ]            [-sx * alphaZx  sy * alphaZy    sz           ]
+     * &lt;/pre&gt;
+     * This instance allows any 3x3 matrix. However, typically alphaYx, alphaZx and alphaZy
+     * are considered to be zero if the accelerometer z-axis is assumed to be the same
+     * as the body z-axis. When this is assumed, myx = mzx = mzy = 0 and the Ma matrix
+     * becomes upper diagonal:
+     * &lt;pre&gt;
+     *     Ma = [sx    mxy  mxz]
+     *          [0     sy   myz]
+     *          [0     0    sz ]
+     * &lt;/pre&gt;
+     * Values of this matrix are unit-less.
+     *
+     * @return estimated accelerometer scale factors and cross-coupling errors, or null
+     * if not available.
+     */
+    @Override
+    public Matrix getEstimatedMa() {
+<span class="fc" id="L814">        return estimatedMa;</span>
+    }
+
+    /**
+     * Evaluates calibration Mean Square Error (MSE) for the provided threshold factor.
+     *
+     * @param thresholdFactor threshold factor to be used for interval detection
+     *                        and measurement generation to be used for
+     *                        calibration.
+     * @return calibration MSE.
+     * @throws LockedException                                   if the generator is busy.
+     * @throws CalibrationException                              if calibration fails.
+     * @throws NotReadyException                                 if the calibrator is not ready.
+     * @throws IntervalDetectorThresholdFactorOptimizerException interval detection failed.
+     */
+    protected double evaluateForThresholdFactor(final double thresholdFactor) throws LockedException,
+            CalibrationException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException {
+<span class="fc bfc" id="L831" title="All 2 branches covered.">        if (measurements == null) {</span>
+<span class="fc" id="L832">            measurements = new ArrayList&lt;&gt;();</span>
+        } else {
+<span class="fc" id="L834">            measurements.clear();</span>
+        }
+
+<span class="fc" id="L837">        generator.reset();</span>
+<span class="fc" id="L838">        generator.setThresholdFactor(thresholdFactor);</span>
+
+<span class="fc" id="L840">        var count = dataSource.count();</span>
+<span class="fc" id="L841">        var failed = false;</span>
+<span class="fc bfc" id="L842" title="All 2 branches covered.">        for (var i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L843">            final var bodyKinematics = dataSource.getAt(i);</span>
+<span class="pc bpc" id="L844" title="1 of 2 branches missed.">            if (!generator.process(bodyKinematics)) {</span>
+<span class="nc" id="L845">                failed = true;</span>
+<span class="nc" id="L846">                break;</span>
+            }
+        }
+
+<span class="pc bpc" id="L850" title="2 of 4 branches missed.">        if (failed || generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {</span>
+            // interval detection failed
+<span class="nc" id="L852">            return Double.MAX_VALUE;</span>
+        }
+
+        // check that enough measurements have been obtained
+<span class="pc bpc" id="L856" title="1 of 2 branches missed.">        if (measurements.size() &lt; calibrator.getMinimumRequiredMeasurements()) {</span>
+<span class="nc" id="L857">            return Double.MAX_VALUE;</span>
+        }
+
+        // set calibrator measurements
+<span class="pc bpc" id="L861" title="1 of 2 branches missed.">        switch (calibrator.getMeasurementType()) {</span>
+            case STANDARD_DEVIATION_BODY_KINEMATICS:
+<span class="fc bfc" id="L863" title="All 2 branches covered.">                if (calibrator.isOrderedMeasurementsRequired()) {</span>
+<span class="fc" id="L864">                    final var calibrator = (OrderedStandardDeviationBodyKinematicsAccelerometerCalibrator)</span>
+                            this.calibrator;
+
+<span class="fc" id="L867">                    calibrator.setMeasurements(measurements);</span>
+
+<span class="fc" id="L869">                } else {</span>
+<span class="fc" id="L870">                    final var calibrator = (UnorderedStandardDeviationBodyKinematicsAccelerometerCalibrator)</span>
+                            this.calibrator;
+
+<span class="fc" id="L873">                    calibrator.setMeasurements(measurements);</span>
+                }
+
+<span class="fc bfc" id="L876" title="All 2 branches covered.">                if (calibrator.isQualityScoresRequired()) {</span>
+<span class="fc" id="L877">                    final var calibrator = (QualityScoredAccelerometerCalibrator) this.calibrator;</span>
+
+<span class="fc" id="L879">                    final var size = measurements.size();</span>
+<span class="fc" id="L880">                    final var qualityScores = new double[size];</span>
+<span class="fc bfc" id="L881" title="All 2 branches covered.">                    for (var i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L882">                        qualityScores[i] = qualityScoreMapper.map(measurements.get(i));</span>
+                    }
+<span class="fc" id="L884">                    calibrator.setQualityScores(qualityScores);</span>
+<span class="fc" id="L885">                }</span>
+                break;
+            case FRAME_BODY_KINEMATICS, STANDARD_DEVIATION_FRAME_BODY_KINEMATICS:
+                // Throw exception. Cannot use frames
+            default:
+<span class="nc" id="L890">                throw new IntervalDetectorThresholdFactorOptimizerException();</span>
+        }
+
+<span class="fc" id="L893">        calibrator.calibrate();</span>
+
+<span class="fc" id="L895">        final var mse = calibrator.getEstimatedMse();</span>
+<span class="fc bfc" id="L896" title="All 2 branches covered.">        if (mse &lt; minMse) {</span>
+<span class="fc" id="L897">            keepBestResult(mse, thresholdFactor);</span>
+        }
+<span class="fc" id="L899">        return mse;</span>
+    }
+
+    /**
+     * Initializes accelerometer measurement generator to convert body kinematics
+     * measurements after interval detection into measurements used for
+     * accelerometer calibration.
+     */
+    private void initialize() {
+<span class="fc" id="L908">        final var generatorListener = new AccelerometerMeasurementsGeneratorListener() {</span>
+            @Override
+            public void onInitializationStarted(final AccelerometerMeasurementsGenerator generator) {
+                // not needed
+<span class="fc" id="L912">            }</span>
+
+            @Override
+            public void onInitializationCompleted(
+                    final AccelerometerMeasurementsGenerator generator,
+                    final double baseNoiseLevel) {
+                // not needed
+<span class="fc" id="L919">            }</span>
+
+            @Override
+            public void onError(
+                    final AccelerometerMeasurementsGenerator generator,
+                    final TriadStaticIntervalDetector.ErrorReason reason) {
+                // not needed
+<span class="nc" id="L926">            }</span>
+
+            @Override
+            public void onStaticIntervalDetected(final AccelerometerMeasurementsGenerator generator) {
+                // not needed
+<span class="fc" id="L931">            }</span>
+
+            @Override
+            public void onDynamicIntervalDetected(final AccelerometerMeasurementsGenerator generator) {
+                // not needed
+<span class="fc" id="L936">            }</span>
+
+            @Override
+            public void onStaticIntervalSkipped(final AccelerometerMeasurementsGenerator generator) {
+                // not needed
+<span class="nc" id="L941">            }</span>
+
+            @Override
+            public void onDynamicIntervalSkipped(final AccelerometerMeasurementsGenerator generator) {
+                // not needed
+<span class="nc" id="L946">            }</span>
+
+            @Override
+            public void onGeneratedMeasurement(
+                    final AccelerometerMeasurementsGenerator generator,
+                    final StandardDeviationBodyKinematics measurement) {
+<span class="fc" id="L952">                measurements.add(measurement);</span>
+<span class="fc" id="L953">            }</span>
+
+            @Override
+            public void onReset(final AccelerometerMeasurementsGenerator generator) {
+                // not needed
+<span class="fc" id="L958">            }</span>
+        };
+
+<span class="fc" id="L961">        generator = new AccelerometerMeasurementsGenerator(generatorListener);</span>
+<span class="fc" id="L962">    }</span>
+
+    /**
+     * Keeps the best calibration solution found so far.
+     *
+     * @param mse             Estimated Mean Square Error during calibration.
+     * @param thresholdFactor threshold factor to be kept.
+     */
+    private void keepBestResult(final double mse, final double thresholdFactor) {
+<span class="fc" id="L971">        minMse = mse;</span>
+<span class="fc" id="L972">        optimalThresholdFactor = thresholdFactor;</span>
+
+<span class="fc" id="L974">        baseNoiseLevel = generator.getAccelerometerBaseNoiseLevel();</span>
+<span class="fc" id="L975">        threshold = generator.getThreshold();</span>
+
+<span class="fc bfc" id="L977" title="All 2 branches covered.">        if (estimatedCovariance == null) {</span>
+<span class="fc" id="L978">            estimatedCovariance = new Matrix(calibrator.getEstimatedCovariance());</span>
+        } else {
+<span class="fc" id="L980">            estimatedCovariance.copyFrom(calibrator.getEstimatedCovariance());</span>
+        }
+<span class="fc bfc" id="L982" title="All 2 branches covered.">        if (estimatedMa == null) {</span>
+<span class="fc" id="L983">            estimatedMa = new Matrix(calibrator.getEstimatedMa());</span>
+        } else {
+<span class="fc" id="L985">            estimatedMa.copyFrom(calibrator.getEstimatedMa());</span>
+        }
+<span class="pc bpc" id="L987" title="1 of 2 branches missed.">        if (calibrator instanceof UnknownBiasAccelerometerCalibrator unknownBiasAccelerometerCalibrator) {</span>
+<span class="fc" id="L988">            estimatedBiases = unknownBiasAccelerometerCalibrator.getEstimatedBiases();</span>
+<span class="nc bnc" id="L989" title="All 2 branches missed.">        } else if (calibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {</span>
+<span class="nc" id="L990">            estimatedBiases = knownBiasAccelerometerCalibrator.getBias();</span>
+        }
+<span class="fc" id="L992">    }</span>
+
+    /**
+     * Creates an acceleration instance using the provided value and unit.
+     *
+     * @param value value of measurement.
+     * @param unit  unit of value.
+     * @return created acceleration.
+     */
+    private Acceleration createMeasurement(final double value, final AccelerationUnit unit) {
+<span class="fc" id="L1002">        return new Acceleration(value, unit);</span>
+    }
+
+    /**
+     * Gets the default unit for acceleration, which is meters per
+     * squared second (m/s^2).
+     *
+     * @return default unit for acceleration.
+     */
+    private AccelerationUnit getDefaultUnit() {
+<span class="fc" id="L1012">        return AccelerationUnit.METERS_PER_SQUARED_SECOND;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
