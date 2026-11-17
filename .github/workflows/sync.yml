@@ -37,7 +37,10 @@ jobs:
 
           NEXT_MINOR=$((MINOR + 1))
           NEXT_SNAPSHOT="${MAJOR}.${NEXT_MINOR}.0-SNAPSHOT"
-          SYNC_BRANCH="sync_${MAJOR}.${NEXT_MINOR}.0"
+          # Name the sync branch after the release itself, not the next snapshot: a patch release
+          # (e.g. 1.8.1) computes the same next snapshot as the minor release before it (1.8.0 ->
+          # 1.9.0-SNAPSHOT), so a snapshot-based name would collide with that earlier sync branch.
+          SYNC_BRANCH="sync_${RELEASE_VERSION}"
 
           echo "release_version=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
           echo "next_snapshot=$NEXT_SNAPSHOT" >> "$GITHUB_OUTPUT"
@@ -47,7 +50,11 @@ jobs:
         id: guard
         run: |
           set -euo pipefail
-          if git ls-remote --exit-code --heads origin "${{ steps.versions.outputs.sync_branch }}" >/dev/null 2>&1; then
+          git fetch origin develop main
+          if git merge-base --is-ancestor origin/main origin/develop; then
+            echo "::notice::main is already merged into develop; nothing to sync."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          elif git ls-remote --exit-code --heads origin "${{ steps.versions.outputs.sync_branch }}" >/dev/null 2>&1; then
             echo "::notice::${{ steps.versions.outputs.sync_branch }} already exists on origin; skipping."
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
