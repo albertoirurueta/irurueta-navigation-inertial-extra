@@ -1,4 +1,6 @@
 = Reference
+:description: Links to generated reference reports for irurueta-navigation-inertial-extra: Javadoc API docs, JaCoCo coverage, Surefire test results, the aggregated Maven site, and the SonarCloud code quality dashboard.
+:keywords: Javadoc, JaCoCo coverage, Surefire test report, Maven site, SonarCloud, code quality, API reference, irurueta-navigation-inertial-extra
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
 
@@ -14,6 +16,15 @@ These reports are generated during the build.
 |Report
 |Description
 
+| https://albertoirurueta.github.io/irurueta-navigation-inertial-extra/mvn-site/apidocs[Javadoc]
+| API reference generated as part of Maven site execution.
+
+| https://albertoirurueta.github.io/irurueta-navigation-inertial-extra/mvn-site/jacoco/index.html[JaCoCo]
+| Code coverage report generated during the Maven build.
+
+| https://albertoirurueta.github.io/irurueta-navigation-inertial-extra/mvn-site/surefire.html[Surefire]
+| Unit test execution report.
+
 |https://albertoirurueta.github.io/irurueta-navigation-inertial-extra[Maven Site Report]
 |Aggregated Maven site published to GitHub Pages: Javadoc API documentation, JaCoCo code coverage, Surefire test
 results, Checkstyle, SpotBugs, PMD and JXR cross-referenced source.
@@ -21,4 +32,7 @@ results, Checkstyle, SpotBugs, PMD and JXR cross-referenced source.
 |https://sonarcloud.io/dashboard?id=albertoirurueta_irurueta-navigation-inertial-extra[SonarCloud Dashboard]
 |Continuous code quality analysis: bugs, code smells, coverage, duplications, maintainability, reliability,
 security and technical debt ratings.
+
+|https://github.com/albertoirurueta/irurueta-navigation-inertial-extra[Repository]
+|Github repository
 |===
