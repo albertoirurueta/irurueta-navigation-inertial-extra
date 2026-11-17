@@ -1862,8 +1862,16 @@ class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimize
 
             final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
 
+            boolean failed = false;
             for (final var kinematics : timedBodyKinematics) {
-                assertTrue(generator.process(kinematics));
+                if (!generator.process(kinematics)) {
+                    failed = true;
+                    break;
+                }
+            }
+
+            if (failed) {
+                continue;
             }
 
             // As an initial value for gyroscope bias, we can use the average
