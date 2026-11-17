@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-11-17
+
 ### Changed
 
 - Updated dependency versions: `irurueta-numerical` to 1.6.1, `irurueta-geometry` to 1.6.1, `irurueta-units` to
@@ -135,7 +137,8 @@ Initial release. This library provides additional GNSS/INS calibration estimator
 - Listener interfaces (`DriftEstimatorListener`, `RandomWalkEstimatorListener`,
   `IntervalDetectorThresholdFactorOptimizerListener`) for progress/result callbacks.
 
-[Unreleased]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.8.0...HEAD
+[Unreleased]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.8.1...HEAD
+[1.8.1]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.8.0...1.8.1
 [1.8.0]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.7.0...1.8.0
 [1.7.0]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.6.0...1.7.0
 [1.6.0]: https://github.com/albertoirurueta/irurueta-navigation-inertial-extra/compare/1.5.0...1.6.0
