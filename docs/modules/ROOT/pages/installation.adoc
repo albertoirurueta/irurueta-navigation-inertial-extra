@@ -17,7 +17,7 @@ a Maven dependency.
 <dependency>
     <groupId>com.irurueta</groupId>
     <artifactId>irurueta-navigation-inertial-extra</artifactId>
-    <version>1.8.0</version>
+    <version>1.8.1</version>
     <scope>compile</scope>
 </dependency>
 ----

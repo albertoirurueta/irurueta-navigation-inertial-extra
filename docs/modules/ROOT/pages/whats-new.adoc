@@ -1,8 +1,13 @@
 = What's New
-:description: Release notes and version history for irurueta-navigation-inertial-extra, including the 1.8.0 update raising the minimum Java version to 21, with a link to the full CHANGELOG.
+:description: Release notes and version history for irurueta-navigation-inertial-extra, including the 1.8.1 dependency patch update and the 1.8.0 update raising the minimum Java version to 21, with a link to the full CHANGELOG.
 :keywords: changelog, release notes, version history, what's new, Java 21, irurueta-navigation-inertial-extra
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
+
+== 1.8.1 - 2026-11-17
+
+* ♻️ Updated dependency versions: `irurueta-numerical` 1.6.1, `irurueta-geometry` 1.6.1, `irurueta-units` 1.4.1, `irurueta-algebra` 1.4.1, `irurueta-navigation` 1.8.2 and `irurueta-navigation-inertial` 1.10.2.
+* No changes to this library's own source code (`src/main/java`) in this release.
 
 == 1.8.0 - 2026-07-28
 

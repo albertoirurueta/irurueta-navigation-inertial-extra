@@ -1,5 +1,5 @@
 name: irurueta-navigation-inertial-extra
-version: 1.8.0
+version: 1.8.1
 title: Irurueta Inertial Navigation Extra
 nav:
   - modules/ROOT/nav.adoc
