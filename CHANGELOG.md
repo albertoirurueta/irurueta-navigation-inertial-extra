@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- Updated dependency versions: `irurueta-numerical` to 1.6.1, `irurueta-geometry` to 1.6.1, `irurueta-units` to
+  1.4.1, `irurueta-algebra` to 1.4.1, `irurueta-navigation` to 1.8.2, and `irurueta-navigation-inertial` to
+  1.10.2. No changes to this library's own source code.
+
 ## [1.8.0] - 2026-07-28
 
 ### Changed
