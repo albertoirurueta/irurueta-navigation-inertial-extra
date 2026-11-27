@@ -936,6 +936,109 @@ class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizerTest impleme
     }
 
     @Test
+    void testOptimizeWhenNoThresholdFactorIsValidThrows() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, CalibrationException,
+            IOException {
+
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematicsAndMagneticFluxDensities.clear();
+            generatorMeasurements.clear();
+
+            // generate measurements
+            final var randomizer = new UniformRandomizer();
+
+            final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+            final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+            final var numMeasurements = KnownPositionAndInstantMagnetometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var hardIron = Matrix.newFromArray(generateHardIron(randomizer));
+            final var mm = generateSoftIronGeneral();
+            assertNotNull(mm);
+            final var timestamp = new Date(createTimestamp(randomizer));
+            final var nedPosition = createPosition(randomizer);
+            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(false, hardIron, mm, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition, MAGNETOMETER_NOISE_STD));
+
+            // configure calibrator and data source
+            final var calibrator = new KnownPositionAndInstantMagnetometerCalibrator();
+            calibrator.setPosition(nedPosition);
+            calibrator.setCommonAxisUsed(false);
+            calibrator.setTime(timestamp);
+
+            // create optimizer
+            final var optimizer = new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
+            optimizer.setListener(this);
+
+            reset();
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
+
+            // too little data makes interval detection fail for every threshold factor
+            bodyKinematicsAndMagneticFluxDensities.clear();
+            assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+            assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+            assertEquals(0.0, optimizer.getThreshold(), 0.0);
+            assertFalse(optimizer.isRunning());
+            return;
+        }
+    }
+
+    @Test
+    void testOptimizeAfterSuccessfulRunWithFailingDataThrowsAndResetsResults() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, CalibrationException,
+            IOException {
+
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematicsAndMagneticFluxDensities.clear();
+            generatorMeasurements.clear();
+
+            // generate measurements
+            final var randomizer = new UniformRandomizer();
+
+            final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+            final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+            final var numMeasurements = KnownPositionAndInstantMagnetometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var hardIron = Matrix.newFromArray(generateHardIron(randomizer));
+            final var mm = generateSoftIronGeneral();
+            assertNotNull(mm);
+            final var timestamp = new Date(createTimestamp(randomizer));
+            final var nedPosition = createPosition(randomizer);
+            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(false, hardIron, mm, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition, MAGNETOMETER_NOISE_STD));
+
+            // configure calibrator and data source
+            final var calibrator = new KnownPositionAndInstantMagnetometerCalibrator();
+            calibrator.setPosition(nedPosition);
+            calibrator.setCommonAxisUsed(false);
+            calibrator.setTime(timestamp);
+
+            // create optimizer
+            final var optimizer = new ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
+            optimizer.setListener(this);
+
+            reset();
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
+
+            optimizer.optimize();
+            assertTrue(optimizer.getThreshold() > 0.0);
+
+            // progress listener of this test only supports a single run
+            optimizer.setListener(null);
+
+            // too little data makes interval detection fail for every threshold factor
+            bodyKinematicsAndMagneticFluxDensities.clear();
+            assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+            assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+            assertEquals(0.0, optimizer.getThreshold(), 0.0);
+            return;
+        }
+    }
+
+    @Test
     void testOptimizeCommonAxisSmallNoiseOnlyRotation() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
             IntervalDetectorThresholdFactorOptimizerException, CalibrationException, IOException {

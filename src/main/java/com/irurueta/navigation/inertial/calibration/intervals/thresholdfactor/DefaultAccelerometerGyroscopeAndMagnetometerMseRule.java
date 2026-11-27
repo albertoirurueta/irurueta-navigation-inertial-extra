@@ -20,7 +20,21 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
  * Mean Square Error (MSE), estimated gyroscope calibration Mean Square Error
  * (MSE) and estimated magnetometer calibrator Mean Square Error (MSE) into a
  * single MSE value.
- * This implementation simply sums all three MSE values.
+ * This implementation returns the accelerometer MSE and ignores the gyroscope
+ * and magnetometer MSE values.
+ * <p>
+ * Units reasoning: the accelerometer MSE is expressed in (m/s^2)^4, the
+ * gyroscope MSE is related to a unit-vector distance and the magnetometer MSE
+ * is expressed in T^4. Those magnitudes are not commensurable, so adding them
+ * makes the term with the largest numeric scale dominate the result in an
+ * arbitrary way.
+ * <p>
+ * This implementation follows the behaviour of imu_tk, where the threshold
+ * factor is selected using the accelerometer calibration error only, and
+ * returns the accelerometer MSE ignoring the remaining terms.
+ * <p>
+ * Custom rules can be provided to the optimizers if a different weighting of
+ * the terms is desired.
  */
 public class DefaultAccelerometerGyroscopeAndMagnetometerMseRule implements
         AccelerometerGyroscopeAndMagnetometerMseRule {
@@ -28,15 +42,17 @@ public class DefaultAccelerometerGyroscopeAndMagnetometerMseRule implements
     /**
      * Evaluates provided accelerometer calibration MSE, gyroscope calibration
      * MSE and magnetometer calibration MSE in order to obtain a single MSE
-     * value representing all three of them.
+     * value.
+     * This implementation returns the accelerometer MSE and ignores the gyroscope
+     * and magnetometer MSEs.
      *
      * @param accelerometerMse accelerometer calibration MSE.
      * @param gyroscopeMse     gyroscope calibration MSE.
      * @param magnetometerMse  magnetometer calibration MSE.
-     * @return single MSE value.
+     * @return single MSE value, equal to the accelerometer MSE.
      */
     @Override
     public double evaluate(double accelerometerMse, double gyroscopeMse, double magnetometerMse) {
-        return accelerometerMse + gyroscopeMse + magnetometerMse;
+        return accelerometerMse;
     }
 }

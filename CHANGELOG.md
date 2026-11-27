@@ -16,9 +16,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   (m/s^2)^2), and their measurement-typed getters (`getAccelerometerBaseNoiseLevelAsMeasurement()`,
   `getThresholdAsMeasurement()`, `getBaseNoiseLevelAbsoluteThresholdAsMeasurement()`) return the square root of that
   value so they stay in sensor units.
+- The initial gyroscope bias is now applied by default when calibrating gyroscopes in the threshold factor
+  optimizers. A new `isInitialGyroscopeBiasUsed()` / `setInitialGyroscopeBiasUsed(boolean)` option (default `true`)
+  allows opting out.
+- The default combined MSE rules (`DefaultAccelerometerAndGyroscopeMseRule` and
+  `DefaultAccelerometerGyroscopeAndMagnetometerMseRule`) now use the accelerometer MSE only.
+- `DefaultGyroscopeQualityScoreMapper` now scores sequences depending on their duration (`1 / (1 + duration)`).
+- The default threshold factor range `[2, 10]` is kept. With `irurueta-navigation-inertial` 1.12.1 the threshold factor
+  refers to the variance-norm statistic (roughly the square of the factor used by previous versions).
 
 ### Fixed
 
+- Gyroscope biases are no longer lost when using gyroscope calibrators with known biases.
+- Threshold factor optimizers no longer report success or stale results: results are reset before each run, and
+  `optimize()` throws `IntervalDetectorThresholdFactorOptimizerException` when no threshold factor yields a valid
+  calibration.
 - `getAccelerometerBaseNoiseLevelPsd()` and `getAccelerometerBaseNoiseLevelRootPsd()` of every threshold factor
   optimizer now return the PSD computed by the measurements generator from the standard deviation of the
   initialization period, instead of deriving it from the base noise level. With `irurueta-navigation-inertial` 1.12.0

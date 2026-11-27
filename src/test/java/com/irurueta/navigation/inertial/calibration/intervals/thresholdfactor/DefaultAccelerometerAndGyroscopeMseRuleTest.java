@@ -24,14 +24,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DefaultAccelerometerAndGyroscopeMseRuleTest {
 
     @Test
-    void testEvaluate() {
+    void evaluate_whenAnyGyroscopeMse_returnsAccelerometerMse() {
         final var rule = new DefaultAccelerometerAndGyroscopeMseRule();
 
         final var random = new Random();
         final var accelerometerMse = random.nextDouble();
         final var gyroscopeMse = random.nextDouble();
 
-        assertEquals(accelerometerMse + gyroscopeMse, rule.evaluate(accelerometerMse, gyroscopeMse),
+        assertEquals(accelerometerMse, rule.evaluate(accelerometerMse, gyroscopeMse),
                 0.0);
     }
 }
