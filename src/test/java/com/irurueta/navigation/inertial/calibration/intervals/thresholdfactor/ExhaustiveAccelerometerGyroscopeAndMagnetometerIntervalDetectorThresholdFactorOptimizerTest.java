@@ -59,7 +59,6 @@ import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -279,7 +278,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
         final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -373,7 +372,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
         final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -469,7 +468,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
         final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -582,7 +581,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
         final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -1081,7 +1080,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
 
         // check default value
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
 
@@ -1233,7 +1232,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -1245,14 +1244,19 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
                     optimizer.getGyroscopeBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -1395,7 +1399,6 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
         assertTrue(numValid > 0);
     }
 
-    @Disabled("too slow")
     @Test
     void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
@@ -1507,7 +1510,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -1519,14 +1522,19 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
                     optimizer.getGyroscopeBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -1588,11 +1596,11 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             if (!hardIron.equals(optimalHardIron, LARGE_ABSOLUTE_ERROR_MAGNETOMETER)) {
                 continue;
             }
-            if (!mm.equals(optimalMm, VERY_LARGE_ABSOLUTE_ERROR_MAGNETOMETER)) {
+            if (!softIronEqualsUpToRotation(mm, optimalMm, VERY_LARGE_ABSOLUTE_ERROR_MAGNETOMETER)) {
                 continue;
             }
             assertTrue(hardIron.equals(optimalHardIron, LARGE_ABSOLUTE_ERROR_MAGNETOMETER));
-            assertTrue(mm.equals(optimalMm, VERY_LARGE_ABSOLUTE_ERROR_MAGNETOMETER));
+            assertTrue(softIronEqualsUpToRotation(mm, optimalMm, VERY_LARGE_ABSOLUTE_ERROR_MAGNETOMETER));
 
             // generate measurements for calibrator using the estimated threshold factor
             // on generator that optimizes calibration
@@ -1656,11 +1664,11 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             if (!hardIron.equals(estimatedHardIron, ABSOLUTE_ERROR_MAGNETOMETER)) {
                 continue;
             }
-            if (!mm.equals(estimatedMm, LARGE_ABSOLUTE_ERROR_MAGNETOMETER)) {
+            if (!softIronEqualsUpToRotation(mm, estimatedMm, LARGE_ABSOLUTE_ERROR_MAGNETOMETER)) {
                 continue;
             }
             assertTrue(hardIron.equals(estimatedHardIron, ABSOLUTE_ERROR_MAGNETOMETER));
-            assertTrue(mm.equals(estimatedMm, LARGE_ABSOLUTE_ERROR_MAGNETOMETER));
+            assertTrue(softIronEqualsUpToRotation(mm, estimatedMm, LARGE_ABSOLUTE_ERROR_MAGNETOMETER));
 
             numValid++;
             break;
@@ -1772,7 +1780,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -1784,14 +1792,19 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
                     optimizer.getGyroscopeBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -2033,7 +2046,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -2045,14 +2058,19 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
                     optimizer.getGyroscopeBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -2298,7 +2316,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -2310,14 +2328,19 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
                     optimizer.getGyroscopeBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -2563,7 +2586,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -2575,14 +2598,19 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
                     optimizer.getGyroscopeBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -2826,7 +2854,7 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -2838,14 +2866,19 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
                     optimizer.getGyroscopeBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getGyroscopeBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -3316,12 +3349,14 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
         final var oldEcefFrame = new ECEFFrame(ecefFrame);
         final var newEcefFrame = new ECEFFrame();
 
-        var oldEcefX = ecefX - deltaX;
-        var oldEcefY = ecefY - deltaY;
-        var oldEcefZ = ecefZ - deltaZ;
-        var oldRoll = roll - deltaRoll;
-        var oldPitch = pitch - deltaPitch;
-        var oldYaw = yaw - deltaYaw;
+        // dynamic period starts at the current static position and orientation (no sudden jump), otherwise
+        // sequences that include static samples next to the motion would be inconsistent with the gravity vectors
+        var oldEcefX = ecefX;
+        var oldEcefY = ecefY;
+        var oldEcefZ = ecefZ;
+        var oldRoll = roll;
+        var oldPitch = pitch;
+        var oldYaw = yaw;
 
         final var measuredBeforeGravityKinematics = BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS,
                 trueKinematics, errors, random);
@@ -3424,5 +3459,27 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
         start = 0;
         end = 0;
         progress = 0.0f;
+    }
+
+    /**
+     * Indicates whether two soft-iron matrices are equivalent up to a rotation.
+     * In the general (non common-axis) case, norm-based magnetometer calibrators only determine the soft-iron
+     * matrix up to a rotation: if the true field is rotated (t -> R * t), the estimated matrix becomes
+     * (I + Mm) * R^T. The product (I + Mm) * (I + Mm)^T does not depend on that rotation, so it is compared instead.
+     *
+     * @param expected  expected soft-iron matrix.
+     * @param estimated estimated soft-iron matrix.
+     * @param threshold allowed absolute error.
+     * @return true if both matrices are equivalent up to a rotation, false otherwise.
+     * @throws WrongSizeException never happens.
+     */
+    private static boolean softIronEqualsUpToRotation(final Matrix expected, final Matrix estimated,
+                                                      final double threshold) throws WrongSizeException {
+        final var identity = Matrix.identity(3, 3);
+        final var k1 = identity.addAndReturnNew(expected);
+        final var k2 = identity.addAndReturnNew(estimated);
+        final var g1 = k1.multiplyAndReturnNew(k1.transposeAndReturnNew());
+        final var g2 = k2.multiplyAndReturnNew(k2.transposeAndReturnNew());
+        return g1.equals(g2, threshold);
     }
 }

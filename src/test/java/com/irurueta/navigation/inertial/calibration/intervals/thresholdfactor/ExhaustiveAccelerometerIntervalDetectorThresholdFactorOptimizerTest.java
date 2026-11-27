@@ -201,7 +201,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
         final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -272,7 +272,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
         final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -343,7 +343,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
         final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -421,7 +421,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
         assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
                 optimizer.getBaseNoiseLevelAbsoluteThreshold(), 0.0);
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
         final var acceleration2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -744,7 +744,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
 
         // check default value
         final var acceleration1 = optimizer.getBaseNoiseLevelAbsoluteThresholdAsMeasurement();
-        assertEquals(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD,
+        assertEquals(Math.sqrt(TriadStaticIntervalDetector.DEFAULT_BASE_NOISE_LEVEL_ABSOLUTE_THRESHOLD),
                 acceleration1.getValue().doubleValue(), 0.0);
         assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, acceleration1.getUnit());
 
@@ -845,7 +845,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -853,14 +853,19 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -971,7 +976,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0, 
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -979,14 +984,19 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -1097,7 +1107,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -1105,14 +1115,19 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -1229,7 +1244,7 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
             assertEquals(accelerometerBaseNoiseLevel1.getValue().doubleValue(),
-                    optimizer.getAccelerometerBaseNoiseLevel(), 0.0);
+                    Math.sqrt(optimizer.getAccelerometerBaseNoiseLevel()), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, accelerometerBaseNoiseLevel1.getUnit());
             final var accelerometerBaseNoiseLevel2 = new Acceleration(1.0,
                     AccelerationUnit.FEET_PER_SQUARED_SECOND);
@@ -1237,14 +1252,19 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
             assertEquals(accelerometerBaseNoiseLevel1, accelerometerBaseNoiseLevel2);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelPsd() > 0.0);
             assertEquals(optimizer.getAccelerometerBaseNoiseLevelPsd(),
-                    Math.pow(optimizer.getAccelerometerBaseNoiseLevel(), 2.0) * optimizer.getTimeInterval(),
-                    SMALL_ABSOLUTE_ERROR);
+                    Math.pow(optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 2.0), SMALL_ABSOLUTE_ERROR);
+            // base noise level is variance based, whereas the root PSD is derived from the std norm. For isotropic
+            // noise the variance norm is V = sqrt(3) * sigma^2 and the std norm is S = sqrt(3) * sigma, so S = 3^(1/4) *
+            // sqrt(V)
+            final var expectedRootPsd = Math.sqrt(Math.sqrt(3.0) * optimizer.getAccelerometerBaseNoiseLevel())
+                    * Math.sqrt(optimizer.getTimeInterval());
+            assertEquals(expectedRootPsd, optimizer.getAccelerometerBaseNoiseLevelRootPsd(), 0.25 * expectedRootPsd);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevelRootPsd() > 0.0);
             assertEquals(Math.sqrt(optimizer.getAccelerometerBaseNoiseLevelPsd()),
                     optimizer.getAccelerometerBaseNoiseLevelRootPsd(), SMALL_ABSOLUTE_ERROR);
             assertTrue(optimizer.getThreshold() > 0.0);
             final var threshold1 = optimizer.getThresholdAsMeasurement();
-            assertEquals(optimizer.getThreshold(), threshold1.getValue().doubleValue(), 0.0);
+            assertEquals(Math.sqrt(optimizer.getThreshold()), threshold1.getValue().doubleValue(), 0.0);
             assertEquals(AccelerationUnit.METERS_PER_SQUARED_SECOND, threshold1.getUnit());
             final var threshold2 = new Acceleration(1.0, AccelerationUnit.FEET_PER_SQUARED_SECOND);
             optimizer.getThresholdAsMeasurement(threshold2);
@@ -1533,12 +1553,14 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
         final var oldEcefFrame = new ECEFFrame(ecefFrame);
         final var newEcefFrame = new ECEFFrame();
 
-        var oldEcefX = ecefX - deltaX;
-        var oldEcefY = ecefY - deltaY;
-        var oldEcefZ = ecefZ - deltaZ;
-        var oldRoll = roll - deltaRoll;
-        var oldPitch = pitch - deltaPitch;
-        var oldYaw = yaw - deltaYaw;
+        // dynamic period starts at the current static position and orientation (no sudden jump), otherwise
+        // sequences that include static samples next to the motion would be inconsistent with the gravity vectors
+        var oldEcefX = ecefX;
+        var oldEcefY = ecefY;
+        var oldEcefZ = ecefZ;
+        var oldRoll = roll;
+        var oldPitch = pitch;
+        var oldYaw = yaw;
 
         for (var i = 0; i < numSamples; i++) {
             final var newRoll = oldRoll + deltaRoll;

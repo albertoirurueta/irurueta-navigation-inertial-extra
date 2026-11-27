@@ -110,16 +110,24 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
     /**
      * Accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found expressed in
-     * meters per squared second (m/s^2).
-     * This is equal to the standard deviation of the accelerometer measurements
-     * during the initialization phase.
+     * (m/s^2)^2.
+     * This is the variance-based noise level of the accelerometer measurements
+     * during the initialization phase (the norm of the per-axis variances).
      */
     private double baseNoiseLevel;
 
     /**
+     * Accelerometer base noise level root PSD (Power Spectral Density) expressed
+     * in (m * s^-1.5) of the best solution that has been found.
+     * This is computed from the standard deviation norm of the initialization
+     * period, not from the variance-based base noise level.
+     */
+    private double baseNoiseLevelRootPsd;
+
+    /**
      * Threshold to determine static/dynamic period changes expressed in
-     * meters per squared second (m/s^2) for the best calibration solution that
-     * has been found.
+     * (m/s^2)^2 for the best calibration solution that has been found.
+     * The threshold is variance-based (base noise level times threshold factor).
      */
     private double threshold;
 
@@ -637,9 +645,9 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
     /**
      * Gets accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found expressed in
-     * meters per squared second (m/s^2).
-     * This is equal to the standard deviation of the accelerometer measurements
-     * during the initialization phase.
+     * (m/s^2)^2.
+     * This is the variance-based noise level of the accelerometer measurements
+     * during the initialization phase (the norm of the per-axis variances).
      *
      * @return accelerometer base noise level of the best solution that has been
      * found.
@@ -651,26 +659,26 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
     /**
      * Gets accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found.
-     * This is equal to the standard deviation of the accelerometer measurements
-     * during the initialization phase.
+     * The returned measurement is the square root of the variance-based base
+     * noise level, so that it is expressed in acceleration units.
      *
      * @return accelerometer base noise level of the best solution that has been
      * found.
      */
     public Acceleration getAccelerometerBaseNoiseLevelAsMeasurement() {
-        return createMeasurement(baseNoiseLevel, getDefaultUnit());
+        return createMeasurement(Math.sqrt(baseNoiseLevel), getDefaultUnit());
     }
 
     /**
      * Gets accelerometer base noise level that has been detected during
      * initialization of the best solution that has been found.
-     * This is equal to the standard deviation of the accelerometer measurements
-     * during the initialization phase.
+     * The returned measurement is the square root of the variance-based base
+     * noise level, so that it is expressed in acceleration units.
      *
      * @param result instance where the result will be stored.
      */
     public void getAccelerometerBaseNoiseLevelAsMeasurement(final Acceleration result) {
-        result.setValue(baseNoiseLevel);
+        result.setValue(Math.sqrt(baseNoiseLevel));
         result.setUnit(getDefaultUnit());
     }
 
@@ -702,7 +710,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      * @return accelerometer base noise level PSD.
      */
     public double getAccelerometerBaseNoiseLevelPsd() {
-        return baseNoiseLevel * baseNoiseLevel * getTimeInterval();
+        return baseNoiseLevelRootPsd * baseNoiseLevelRootPsd;
     }
 
     /**
@@ -713,13 +721,13 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      */
     @Override
     public double getAccelerometerBaseNoiseLevelRootPsd() {
-        return baseNoiseLevel * Math.sqrt(getTimeInterval());
+        return baseNoiseLevelRootPsd;
     }
 
     /**
      * Gets the threshold to determine static/dynamic period changes expressed in
-     * meters per squared second (m/s^2) for the best calibration solution that
-     * has been found.
+     * (m/s^2)^2 for the best calibration solution that has been found.
+     * The threshold is variance-based (base noise level times threshold factor).
      *
      * @return threshold to determine static/dynamic period changes for the best
      * solution.
@@ -731,22 +739,26 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
     /**
      * Gets the threshold to determine static/dynamic period changes for the best
      * calibration solution that has been found.
+     * The returned measurement is the square root of the variance-based
+     * threshold, so that it is expressed in acceleration units.
      *
      * @return threshold to determine static/dynamic period changes for the best
      * solution.
      */
     public Acceleration getThresholdAsMeasurement() {
-        return createMeasurement(threshold, getDefaultUnit());
+        return createMeasurement(Math.sqrt(threshold), getDefaultUnit());
     }
 
     /**
      * Get the threshold to determine static/dynamic period changes for the best
      * calibration solution that has been found.
+     * The returned measurement is the square root of the variance-based
+     * threshold, so that it is expressed in acceleration units.
      *
      * @param result instance where the result will be stored.
      */
     public void getThresholdAsMeasurement(final Acceleration result) {
-        result.setValue(threshold);
+        result.setValue(Math.sqrt(threshold));
         result.setUnit(getDefaultUnit());
     }
 
@@ -1008,6 +1020,7 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
 
         angularSpeedNoiseRootPsd = generator.getGyroscopeBaseNoiseLevelRootPsd();
         baseNoiseLevel = generator.getAccelerometerBaseNoiseLevel();
+        baseNoiseLevelRootPsd = generator.getAccelerometerBaseNoiseLevelRootPsd();
         threshold = generator.getThreshold();
 
         if (estimatedCovariance == null) {

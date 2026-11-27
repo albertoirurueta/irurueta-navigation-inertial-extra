@@ -615,12 +615,14 @@ class INSLooselyCoupledKalmanConfigCreatorTest {
         final var oldEcefFrame = new ECEFFrame(ecefFrame);
         final var newEcefFrame = new ECEFFrame();
 
-        var oldEcefX = ecefX - deltaX;
-        var oldEcefY = ecefY - deltaY;
-        var oldEcefZ = ecefZ - deltaZ;
-        var oldRoll = roll - deltaRoll;
-        var oldPitch = pitch - deltaPitch;
-        var oldYaw = yaw - deltaYaw;
+        // dynamic period starts at the current static position and orientation (no sudden jump), otherwise
+        // sequences that include static samples next to the motion would be inconsistent with the gravity vectors
+        var oldEcefX = ecefX;
+        var oldEcefY = ecefY;
+        var oldEcefZ = ecefZ;
+        var oldRoll = roll;
+        var oldPitch = pitch;
+        var oldYaw = yaw;
 
         final var trueSequence = new BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>();
         final var trueTimedKinematicsList = new ArrayList<StandardDeviationTimedBodyKinematics>();

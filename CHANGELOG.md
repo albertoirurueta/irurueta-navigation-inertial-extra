@@ -7,6 +7,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- Updated dependency versions: `irurueta-numerical` to 1.7.1, `irurueta-geometry` to 1.6.2, `irurueta-navigation` to
+  1.8.3, and `irurueta-navigation-inertial` to 1.12.1. Since `irurueta-navigation-inertial` 1.12.0 the static interval
+  detector uses a variance-based statistic, so the base noise level and threshold reported by the threshold factor
+  optimizers (`getAccelerometerBaseNoiseLevel()`, `getThreshold()`) are now expressed in squared sensor units (e.g.
+  (m/s^2)^2), and their measurement-typed getters (`getAccelerometerBaseNoiseLevelAsMeasurement()`,
+  `getThresholdAsMeasurement()`, `getBaseNoiseLevelAbsoluteThresholdAsMeasurement()`) return the square root of that
+  value so they stay in sensor units.
+
+### Fixed
+
+- `getAccelerometerBaseNoiseLevelPsd()` and `getAccelerometerBaseNoiseLevelRootPsd()` of every threshold factor
+  optimizer now return the PSD computed by the measurements generator from the standard deviation of the
+  initialization period, instead of deriving it from the base noise level. With `irurueta-navigation-inertial` 1.12.0
+  or later that base noise level is variance-based, so the derived PSD had wrong units and gave a wrong accelerometer
+  noise PSD to `INSLooselyCoupledKalmanConfigCreator`.
+
 ## [1.8.1] - 2026-11-17
 
 ### Changed
