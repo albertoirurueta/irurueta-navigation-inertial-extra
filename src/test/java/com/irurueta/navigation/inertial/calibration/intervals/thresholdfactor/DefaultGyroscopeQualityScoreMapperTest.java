@@ -106,7 +106,7 @@ class DefaultGyroscopeQualityScoreMapperTest {
     void map_whenValidSequence_returnsScoreInRange() {
         final var mapper = new DefaultGyroscopeQualityScoreMapper();
 
-        for (final var numItems : new int[]{1, SHORT_NUM_ITEMS, LONG_NUM_ITEMS}) {
+        for (final var numItems : new int[]{2, SHORT_NUM_ITEMS, LONG_NUM_ITEMS}) {
             final var score = mapper.map(buildSequence(numItems, TIME_INTERVAL));
             assertTrue(score > 0.0);
             assertTrue(score <= 1.0);
@@ -136,15 +136,15 @@ class DefaultGyroscopeQualityScoreMapperTest {
     }
 
     /**
-     * Checks that when timestamps are not usable the duration falls back to item count times default interval.
+     * Checks that a sequence without a positive duration (equal timestamps or a single item) gives a zero score,
+     * so that it never outranks a sequence that can be integrated.
      */
     @Test
-    void map_whenTimestampsAreEqual_usesItemCountFallback() {
-        final var sequence = buildSequence(SHORT_NUM_ITEMS, 0.0);
-        final var expected = 1.0 / (1.0 + SHORT_NUM_ITEMS * DefaultGyroscopeQualityScoreMapper.DEFAULT_TIME_INTERVAL);
-
+    void map_whenDurationIsNotPositive_returnsZero() {
         final var mapper = new DefaultGyroscopeQualityScoreMapper();
-        assertEquals(expected, mapper.map(sequence), ABSOLUTE_ERROR);
+
+        assertEquals(0.0, mapper.map(buildSequence(SHORT_NUM_ITEMS, 0.0)), 0.0);
+        assertEquals(0.0, mapper.map(buildSequence(1, TIME_INTERVAL)), 0.0);
     }
 
     /**

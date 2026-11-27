@@ -36,6 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 /**
  * End-to-end tests of the threshold factor optimizers using a deterministic (seeded) synthetic IMU stream
@@ -156,6 +158,25 @@ class ThresholdFactorOptimizersEndToEndTest {
         assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, bracketed::optimize);
         assertEquals(0.0, bracketed.getOptimalThresholdFactor(), 0.0);
         assertEquals(0.0, bracketed.getThreshold(), 0.0);
+    }
+
+    @Test
+    void testNonFiniteGyroscopeMseIsNotAValidResult() throws Exception {
+        generateSamples(SEEDS[0]);
+
+        // the default MSE rule only uses the accelerometer MSE, but a gyroscope calibration without a finite
+        // error must never be kept as a valid result
+        final var gyroscopeCalibrator = spy(createGyroscopeCalibrator());
+        doReturn(Double.NaN).when(gyroscopeCalibrator).getEstimatedMse();
+
+        final var optimizer = new ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                dataSource, createAccelerometerCalibrator(), gyroscopeCalibrator);
+        assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+        assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+
+        final var bracketed = new BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                dataSource, createAccelerometerCalibrator(), gyroscopeCalibrator);
+        assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, bracketed::optimize);
     }
 
     @Test

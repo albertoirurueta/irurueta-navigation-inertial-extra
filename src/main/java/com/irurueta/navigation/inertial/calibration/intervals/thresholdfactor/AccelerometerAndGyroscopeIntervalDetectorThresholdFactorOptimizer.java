@@ -43,6 +43,7 @@ import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeNonLinear
 import com.irurueta.navigation.inertial.calibration.gyroscope.KnownBiasGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.OrderedBodyKinematicsSequenceGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.QualityScoredGyroscopeCalibrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.RobustEasyGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.UnknownBiasGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.UnknownBiasNonLinearGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.intervals.TriadStaticIntervalDetector;
@@ -1358,6 +1359,11 @@ public abstract class AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
         final var accelerometerMse = accelerometerCalibrator.getEstimatedMse();
         final var gyroscopeMse = gyroscopeCalibrator.getEstimatedMse();
 
+        if (!Double.isFinite(accelerometerMse) || !Double.isFinite(gyroscopeMse)) {
+            // a calibration without a finite error is not a valid result, whatever the MSE rule is
+            return Double.MAX_VALUE;
+        }
+
         // convert accelerometer and gyroscope mse to global mse
         final var mse = mseRule.evaluate(accelerometerMse, gyroscopeMse);
         if (mse < minMse) {
@@ -1382,6 +1388,8 @@ public abstract class AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
             knownBiasCalibrator.setBias(bias);
         } else if (gyroscopeCalibrator instanceof EasyGyroscopeCalibrator easyCalibrator) {
             easyCalibrator.setInitialBias(bias);
+        } else if (gyroscopeCalibrator instanceof RobustEasyGyroscopeCalibrator robustEasyCalibrator) {
+            robustEasyCalibrator.setInitialBias(bias);
         } else if (gyroscopeCalibrator instanceof UnknownBiasNonLinearGyroscopeCalibrator unknownBiasCalibrator) {
             unknownBiasCalibrator.setInitialBias(bias);
         }

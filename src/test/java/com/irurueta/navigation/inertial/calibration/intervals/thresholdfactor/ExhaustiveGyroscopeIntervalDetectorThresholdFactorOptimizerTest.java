@@ -45,6 +45,8 @@ import com.irurueta.navigation.inertial.calibration.gyroscope.EasyGyroscopeCalib
 import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeNonLinearCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.AccelerometerDependentGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.KnownBiasEasyGyroscopeCalibrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.LMedSRobustEasyGyroscopeCalibrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.RobustEasyGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.KnownFrameGyroscopeNonLinearLeastSquaresCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.PROMedSRobustEasyGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.QuaternionIntegrator;
@@ -1205,6 +1207,13 @@ class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
     }
 
     @Test
+    void testOptimizeRobustUnknownBiasGyroscopeCalibratorUsesInitialStaticBias() throws WrongSizeException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
+            IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
+        optimizeBiasCalibrator(false, true, true);
+    }
+
+    @Test
     void testOptimizeGeneralNoGDependentCrossBiasesWithSmallNoise() throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
             IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
@@ -2316,6 +2325,13 @@ class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
     private void optimizeBiasCalibrator(final boolean knownBias, final boolean initialBiasUsed) throws WrongSizeException,
             InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException,
             IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException, RotationException {
+        optimizeBiasCalibrator(knownBias, false, initialBiasUsed);
+    }
+
+    private void optimizeBiasCalibrator(final boolean knownBias, final boolean robust, final boolean initialBiasUsed)
+            throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException, LockedException,
+            NotReadyException, IntervalDetectorThresholdFactorOptimizerException, InvalidRotationMatrixException,
+            RotationException {
 
         final var ba = generateBa();
         final var bg = generateBg();
@@ -2353,7 +2369,7 @@ class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
             // configure calibrator and data source
             final var initialMg = new Matrix(3, 3);
             final var initialGg = new Matrix(3, 3);
-            final var calibrator = createBiasCalibrator(knownBias, bg.getBuffer(), initialMg, initialGg);
+            final var calibrator = createBiasCalibrator(knownBias, robust, bg.getBuffer(), initialMg, initialGg);
             ((AccelerometerDependentGyroscopeCalibrator) calibrator).setAccelerometerBias(ba);
             ((AccelerometerDependentGyroscopeCalibrator) calibrator).setAccelerometerMa(ma);
 
@@ -2368,13 +2384,27 @@ class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
             assertEquals(0, end);
             assertEquals(0.0f, progress, 0.0f);
 
-            final var thresholdFactor = optimizer.optimize();
+            if (robust) {
+                try {
+                    optimizer.optimize();
+                } catch (final IntervalDetectorThresholdFactorOptimizerException ignore) {
+                    // the robust calibration might not converge with this few sequences. This test only
+                    // checks the bias given to the calibrator before calibrating
+                }
+            } else {
+                optimizer.optimize();
+            }
 
             final var expectedBias = initialBiasUsed
                     ? generator.getInitialAvgAngularSpeedTriad().getValuesAsArray() : bg.getBuffer();
-            final var calibratorBias = knownBias
-                    ? ((KnownBiasEasyGyroscopeCalibrator) calibrator).getBias()
-                    : ((EasyGyroscopeCalibrator) calibrator).getInitialBias();
+            final double[] calibratorBias;
+            if (knownBias) {
+                calibratorBias = ((KnownBiasEasyGyroscopeCalibrator) calibrator).getBias();
+            } else if (robust) {
+                calibratorBias = ((RobustEasyGyroscopeCalibrator) calibrator).getInitialBias();
+            } else {
+                calibratorBias = ((EasyGyroscopeCalibrator) calibrator).getInitialBias();
+            }
             assertArrayEquals(expectedBias, calibratorBias, 0.0);
 
             if (knownBias) {
@@ -2391,9 +2421,17 @@ class ExhaustiveGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
     }
 
     private static GyroscopeNonLinearCalibrator createBiasCalibrator(
-            final boolean knownBias, final double[] bias, final Matrix initialMg, final Matrix initialGg)
-            throws LockedException {
-        if (knownBias) {
+            final boolean knownBias, final boolean robust, final double[] bias, final Matrix initialMg,
+            final Matrix initialGg) throws LockedException {
+        if (robust) {
+            final var calibrator = new LMedSRobustEasyGyroscopeCalibrator();
+            calibrator.setCommonAxisUsed(true);
+            calibrator.setGDependentCrossBiasesEstimated(false);
+            calibrator.setInitialBias(bias);
+            calibrator.setInitialMg(initialMg);
+            calibrator.setInitialGg(initialGg);
+            return calibrator;
+        } else if (knownBias) {
             final var calibrator = new KnownBiasEasyGyroscopeCalibrator();
             calibrator.setCommonAxisUsed(true);
             calibrator.setGDependentCrossBiasesEstimated(false);

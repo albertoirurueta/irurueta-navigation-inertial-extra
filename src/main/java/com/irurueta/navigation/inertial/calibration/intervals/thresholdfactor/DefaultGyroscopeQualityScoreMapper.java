@@ -33,24 +33,18 @@ import com.irurueta.navigation.inertial.calibration.StandardDeviationTimedBodyKi
  * unable to discriminate between short and long sequences.
  * <p>
  * If the timestamps of the sequence are not usable (e.g. a single item or all items sharing the same
- * timestamp), the duration is estimated as the number of items multiplied by
- * {@link #DEFAULT_TIME_INTERVAL}, so more items still produce lower scores.
+ * timestamp), the sequence cannot be integrated and gets a zero score.
  */
 public class DefaultGyroscopeQualityScoreMapper implements
         QualityScoreMapper<BodyKinematicsSequence<StandardDeviationTimedBodyKinematics>> {
-
-    /**
-     * Time interval (in seconds) between consecutive items assumed when timestamps are not usable to
-     * determine the duration of a sequence.
-     */
-    public static final double DEFAULT_TIME_INTERVAL = 0.02;
 
     /**
      * Maps a given value corresponding to a generated measurement, into a given quality score.
      *
      * @param value gyroscope sequence of standard deviation timed body kinematics items whose quality
      *              score must be computed.
-     * @return mapped quality score, in the range (0, 1], or 0.0 if the sequence has no items.
+     * @return mapped quality score, in the range (0, 1), or 0.0 if the sequence has no items or no positive
+     * duration.
      */
     @Override
     public double map(final BodyKinematicsSequence<StandardDeviationTimedBodyKinematics> value) {
@@ -61,7 +55,8 @@ public class DefaultGyroscopeQualityScoreMapper implements
 
         var duration = items.getLast().getTimestampSeconds() - items.getFirst().getTimestampSeconds();
         if (!Double.isFinite(duration) || duration <= 0.0) {
-            duration = items.size() * DEFAULT_TIME_INTERVAL;
+            // a sequence without a positive duration cannot be integrated, so it gets the lowest score
+            return 0.0;
         }
 
         return 1.0 / (1.0 + duration);
