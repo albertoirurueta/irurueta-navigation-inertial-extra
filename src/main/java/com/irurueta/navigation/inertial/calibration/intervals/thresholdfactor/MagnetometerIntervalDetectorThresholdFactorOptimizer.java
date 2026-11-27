@@ -47,6 +47,12 @@ import java.util.List;
  * Only magnetometer calibrators based on unknown orientation are supported, in other terms,
  * calibrators must be {@link MagnetometerNonLinearCalibrator} and must support
  * {@link MagnetometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_MAGNETIC_FLUX_DENSITY}.
+ * The threshold factor multiplies the noise level estimated from the initial static period to obtain
+ * the threshold used by {@link TriadStaticIntervalDetector}. Since irurueta-navigation-inertial 1.12.1 the
+ * statistic compared against that threshold is the variance norm of the window of samples, in the same way
+ * as imu_tk, whose {@code th_mult} is swept between 2 and 10. Threshold factors tuned for earlier versions,
+ * which used the standard deviation norm statistic, correspond roughly to the square {@code k^2} of the
+ * factor {@code k} used with those versions.
  */
 public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer extends
         IntervalDetectorThresholdFactorOptimizer<BodyKinematicsAndMagneticFluxDensity,
@@ -55,11 +61,17 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
 
     /**
      * Default minimum threshold factor.
+     * Like imu_tk {@code th_mult} sweep, it is expressed in terms of the variance norm statistic of
+     * {@link TriadStaticIntervalDetector} (1.12.1). Values for earlier versions (standard deviation norm
+     * statistic) correspond roughly to {@code k^2}.
      */
     public static final double DEFAULT_MIN_THRESHOLD_FACTOR = 2.0;
 
     /**
      * Default maximum threshold factor.
+     * Like imu_tk {@code th_mult} sweep, it is expressed in terms of the variance norm statistic of
+     * {@link TriadStaticIntervalDetector} (1.12.1). Values for earlier versions (standard deviation norm
+     * statistic) correspond roughly to {@code k^2}.
      */
     public static final double DEFAULT_MAX_THRESHOLD_FACTOR = 10.0;
 
@@ -924,6 +936,21 @@ public abstract class MagnetometerIntervalDetectorThresholdFactorOptimizer exten
         };
 
         generator = new MagnetometerMeasurementsGenerator(generatorListener);
+    }
+
+    /**
+     * Resets any result kept by a previous optimization, so that a failed
+     * optimization never exposes stale values.
+     */
+    protected void resetResults() {
+        optimalThresholdFactor = 0.0;
+        minMse = Double.MAX_VALUE;
+        baseNoiseLevel = 0.0;
+        baseNoiseLevelRootPsd = 0.0;
+        threshold = 0.0;
+        estimatedCovariance = null;
+        estimatedMm = null;
+        estimatedHardIron = null;
     }
 
     /**

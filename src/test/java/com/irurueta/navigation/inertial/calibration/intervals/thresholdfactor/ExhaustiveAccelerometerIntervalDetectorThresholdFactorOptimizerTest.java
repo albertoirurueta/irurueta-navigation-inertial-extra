@@ -930,6 +930,109 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
     }
 
     @Test
+    void testOptimizeWhenNoThresholdFactorIsValidThrows() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+            CalibrationException {
+
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematics.clear();
+            generatorMeasurements.clear();
+
+            // generate measurements
+
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+
+            final var ma = generateMaGeneral();
+            final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+            final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            assertTrue(generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements));
+
+            // configure calibrator and data source
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var calibrator = new KnownGravityNormAccelerometerCalibrator(
+                    gravity.getNorm(), false, initialBa, initialMa);
+
+            // create optimizer
+            final var optimizer = new ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
+            optimizer.setListener(this);
+
+            reset();
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
+
+            // too little data makes interval detection fail for every threshold factor
+            bodyKinematics.clear();
+            assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+            assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+            assertEquals(0.0, optimizer.getThreshold(), 0.0);
+            assertFalse(optimizer.isRunning());
+            return;
+        }
+    }
+
+    @Test
+    void testOptimizeAfterSuccessfulRunWithFailingDataThrowsAndResetsResults() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
+            CalibrationException {
+
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematics.clear();
+            generatorMeasurements.clear();
+
+            // generate measurements
+
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+
+            final var ma = generateMaGeneral();
+            final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+            final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            assertTrue(generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements));
+
+            // configure calibrator and data source
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var calibrator = new KnownGravityNormAccelerometerCalibrator(
+                    gravity.getNorm(), false, initialBa, initialMa);
+
+            // create optimizer
+            final var optimizer = new ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
+            optimizer.setListener(this);
+
+            reset();
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
+
+            optimizer.optimize();
+            assertTrue(optimizer.getThreshold() > 0.0);
+
+            // progress listener of this test only supports a single run
+            optimizer.setListener(null);
+
+            // too little data makes interval detection fail for every threshold factor
+            bodyKinematics.clear();
+            assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+            assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+            assertEquals(0.0, optimizer.getThreshold(), 0.0);
+            return;
+        }
+    }
+
+    @Test
     void testOptimizeCommonAxisSmallNoiseOnlyRotation() throws InvalidSourceAndDestinationFrameTypeException,
             WrongSizeException, LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
             CalibrationException {

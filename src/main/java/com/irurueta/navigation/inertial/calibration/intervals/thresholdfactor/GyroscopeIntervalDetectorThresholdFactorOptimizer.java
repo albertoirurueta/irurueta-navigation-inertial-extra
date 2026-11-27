@@ -28,14 +28,17 @@ import com.irurueta.navigation.inertial.calibration.GyroscopeCalibrationSource;
 import com.irurueta.navigation.inertial.calibration.GyroscopeNoiseRootPsdSource;
 import com.irurueta.navigation.inertial.calibration.StandardDeviationTimedBodyKinematics;
 import com.irurueta.navigation.inertial.calibration.TimedBodyKinematics;
-import com.irurueta.navigation.inertial.calibration.accelerometer.KnownBiasAccelerometerCalibrator;
 import com.irurueta.navigation.inertial.calibration.generators.GyroscopeMeasurementsGenerator;
 import com.irurueta.navigation.inertial.calibration.generators.GyroscopeMeasurementsGeneratorListener;
 import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeCalibratorMeasurementOrSequenceType;
+import com.irurueta.navigation.inertial.calibration.gyroscope.EasyGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeNonLinearCalibrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.KnownBiasGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.OrderedBodyKinematicsSequenceGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.QualityScoredGyroscopeCalibrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.RobustEasyGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.gyroscope.UnknownBiasGyroscopeCalibrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.UnknownBiasNonLinearGyroscopeCalibrator;
 import com.irurueta.navigation.inertial.calibration.intervals.TriadStaticIntervalDetector;
 import com.irurueta.units.Acceleration;
 import com.irurueta.units.AccelerationUnit;
@@ -52,6 +55,19 @@ import java.util.List;
  * Only gyroscope calibrators based on unknown orientation are supported (in other terms,
  * calibrators must be {@link GyroscopeNonLinearCalibrator} and must support
  * {@link GyroscopeCalibratorMeasurementOrSequenceType#BODY_KINEMATICS_SEQUENCE}).
+ * By default, and like the reference paper and imu_tk do, the mean angular rate measured during the
+ * initial static period (see {@link #getInitialStaticSamples()}) is taken as the gyroscope bias and is
+ * applied to the gyroscope calibrator before calibration: it is set as the known bias
+ * ({@link KnownBiasGyroscopeCalibrator}) or as the initial bias of the calibrator
+ * ({@link EasyGyroscopeCalibrator} or {@link UnknownBiasNonLinearGyroscopeCalibrator}). Calibrators implementing neither interface are left
+ * untouched. This behaviour can be disabled with {@link #setInitialGyroscopeBiasUsed(boolean)}, in which
+ * case the bias (or initial bias) provided by the caller is kept as is.
+ * The threshold factor multiplies the noise level estimated from the initial static period to obtain
+ * the threshold used by {@link TriadStaticIntervalDetector}. Since irurueta-navigation-inertial 1.12.1 the
+ * statistic compared against that threshold is the variance norm of the window of samples, in the same way
+ * as imu_tk, whose {@code th_mult} is swept between 2 and 10. Threshold factors tuned for earlier versions,
+ * which used the standard deviation norm statistic, correspond roughly to the square {@code k^2} of the
+ * factor {@code k} used with those versions.
  */
 public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
         IntervalDetectorThresholdFactorOptimizer<TimedBodyKinematics,
@@ -61,11 +77,17 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
 
     /**
      * Default minimum threshold factor.
+     * Like imu_tk {@code th_mult} sweep, it is expressed in terms of the variance norm statistic of
+     * {@link TriadStaticIntervalDetector} (1.12.1). Values for earlier versions (standard deviation norm
+     * statistic) correspond roughly to {@code k^2}.
      */
     public static final double DEFAULT_MIN_THRESHOLD_FACTOR = 2.0;
 
     /**
      * Default maximum threshold factor.
+     * Like imu_tk {@code th_mult} sweep, it is expressed in terms of the variance norm statistic of
+     * {@link TriadStaticIntervalDetector} (1.12.1). Values for earlier versions (standard deviation norm
+     * statistic) correspond roughly to {@code k^2}.
      */
     public static final double DEFAULT_MAX_THRESHOLD_FACTOR = 10.0;
 
@@ -78,6 +100,12 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
      * Maximum threshold factor.
      */
     protected double maxThresholdFactor = DEFAULT_MAX_THRESHOLD_FACTOR;
+
+    /**
+     * Indicates whether the average angular speed of the initial static period is applied as the
+     * gyroscope bias of the gyroscope calibrator before calibration.
+     */
+    private boolean initialGyroscopeBiasUsed = true;
 
     /**
      * Gyroscope calibrator.
@@ -277,6 +305,36 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
         }
 
         this.calibrator = calibrator;
+    }
+
+    /**
+     * Indicates whether the average angular speed measured during the initial static period
+     * is used as the gyroscope bias of the gyroscope calibrator (known bias or initial bias),
+     * as the reference paper and imu_tk do.
+     * When true (default), the bias provided to the calibrator by the caller is replaced before
+     * each calibration. When false, it is left untouched.
+     *
+     * @return true if the initial static period gyroscope bias is applied to the calibrator,
+     * false otherwise.
+     */
+    public boolean isInitialGyroscopeBiasUsed() {
+        return initialGyroscopeBiasUsed;
+    }
+
+    /**
+     * Specifies whether the average angular speed measured during the initial static period
+     * is used as the gyroscope bias of the gyroscope calibrator (known bias or initial bias).
+     *
+     * @param initialGyroscopeBiasUsed true to apply the initial static period gyroscope bias to the
+     *                                 calibrator, false to keep the bias provided by the caller.
+     * @throws LockedException if optimizer is already running.
+     */
+    public void setInitialGyroscopeBiasUsed(final boolean initialGyroscopeBiasUsed) throws LockedException {
+        if (running) {
+            throw new LockedException();
+        }
+
+        this.initialGyroscopeBiasUsed = initialGyroscopeBiasUsed;
     }
 
     /**
@@ -937,6 +995,8 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
             cal.setQualityScores(qualityScores);
         }
 
+        applyInitialGyroscopeBias();
+
         calibrator.calibrate();
 
         final var mse = calibrator.getEstimatedMse();
@@ -944,6 +1004,29 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
             keepBestResult(mse, thresholdFactor);
         }
         return mse;
+    }
+
+    /**
+     * Applies the average angular speed measured by the generator during the initial static period
+     * as the bias of the gyroscope calibrator, if enabled and supported by the calibrator.
+     *
+     * @throws LockedException if the calibrator is busy.
+     */
+    private void applyInitialGyroscopeBias() throws LockedException {
+        if (!initialGyroscopeBiasUsed) {
+            return;
+        }
+
+        final var bias = generator.getInitialAvgAngularSpeedTriad().getValuesAsArray();
+        if (calibrator instanceof KnownBiasGyroscopeCalibrator knownBiasCalibrator) {
+            knownBiasCalibrator.setBias(bias);
+        } else if (calibrator instanceof EasyGyroscopeCalibrator easyCalibrator) {
+            easyCalibrator.setInitialBias(bias);
+        } else if (calibrator instanceof RobustEasyGyroscopeCalibrator robustEasyCalibrator) {
+            robustEasyCalibrator.setInitialBias(bias);
+        } else if (calibrator instanceof UnknownBiasNonLinearGyroscopeCalibrator unknownBiasCalibrator) {
+            unknownBiasCalibrator.setInitialBias(bias);
+        }
     }
 
     /**
@@ -1009,6 +1092,23 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
     }
 
     /**
+     * Resets any result kept by a previous optimization, so that a failed
+     * optimization never exposes stale values.
+     */
+    protected void resetResults() {
+        optimalThresholdFactor = 0.0;
+        minMse = Double.MAX_VALUE;
+        angularSpeedNoiseRootPsd = 0.0;
+        baseNoiseLevel = 0.0;
+        baseNoiseLevelRootPsd = 0.0;
+        threshold = 0.0;
+        estimatedCovariance = null;
+        estimatedBiases = null;
+        estimatedMg = null;
+        estimatedGg = null;
+    }
+
+    /**
      * Keeps the best calibration solution found so far.
      *
      * @param mse             Estimated Mean Square Error during calibration.
@@ -1040,8 +1140,8 @@ public abstract class GyroscopeIntervalDetectorThresholdFactorOptimizer extends
         }
         if (calibrator instanceof UnknownBiasGyroscopeCalibrator unknownBiasGyroscopeCalibrator) {
             estimatedBiases = unknownBiasGyroscopeCalibrator.getEstimatedBiases();
-        } else if (calibrator instanceof KnownBiasAccelerometerCalibrator knownBiasAccelerometerCalibrator) {
-            estimatedBiases = knownBiasAccelerometerCalibrator.getBias();
+        } else if (calibrator instanceof KnownBiasGyroscopeCalibrator knownBiasGyroscopeCalibrator) {
+            estimatedBiases = knownBiasGyroscopeCalibrator.getBias();
         }
     }
 

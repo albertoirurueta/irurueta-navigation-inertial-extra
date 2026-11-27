@@ -148,7 +148,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
      * @throws NotReadyException                                 if this optimizer is not ready to start optimization.
      * @throws LockedException                                   if optimizer is already running.
      * @throws IntervalDetectorThresholdFactorOptimizerException if optimization fails for
-     *                                                           some reason.
+     *                                                           some reason, or if no threshold
+     *                                                           factor produced a valid calibration
+     *                                                           result (in which case no result is kept).
      */
     @Override
     public double optimize() throws NotReadyException, LockedException,
@@ -162,7 +164,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
         }
 
         var hasResult = false;
-        minMse = Double.MAX_VALUE;
+        resetResults();
         try {
             running = true;
 
@@ -178,8 +180,9 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
                  thresholdFactor <= maxThresholdFactor;
                  thresholdFactor += thresholdFactorStep) {
                 try {
-                    evaluateForThresholdFactor(thresholdFactor);
-                    hasResult = true;
+                    if (evaluateForThresholdFactor(thresholdFactor) < Double.MAX_VALUE) {
+                        hasResult = true;
+                    }
                 } catch (final Exception ignore) {
                     // when an error occurs, skip to the next iteration
                 }

@@ -18,6 +18,7 @@ package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
 import com.irurueta.navigation.LockedException;
 import com.irurueta.navigation.NavigationException;
 import com.irurueta.navigation.NotReadyException;
+import com.irurueta.navigation.inertial.calibration.CalibrationException;
 import com.irurueta.navigation.inertial.calibration.StandardDeviationBodyKinematics;
 import com.irurueta.navigation.inertial.calibration.accelerometer.AccelerometerCalibratorMeasurementType;
 import com.irurueta.navigation.inertial.calibration.accelerometer.AccelerometerNonLinearCalibrator;
@@ -263,7 +264,9 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
      * @throws NotReadyException                                 if this optimizer is not ready to start optimization.
      * @throws LockedException                                   if optimizer is already running.
      * @throws IntervalDetectorThresholdFactorOptimizerException if optimization fails for
-     *                                                           some reason.
+     *                                                           some reason, or if no threshold
+     *                                                           factor produced a valid calibration
+     *                                                           result (in which case no result is kept).
      */
     @Override
     public double optimize() throws NotReadyException, LockedException,
@@ -285,8 +288,13 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
                 listener.onOptimizeStart(this);
             }
 
-            minMse = Double.MAX_VALUE;
+            resetResults();
             mseOptimizer.minimize();
+
+            if (minMse == Double.MAX_VALUE) {
+                // no threshold factor produced a valid calibration result
+                throw new IntervalDetectorThresholdFactorOptimizerException();
+            }
 
             if (listener != null) {
                 listener.onOptimizeEnd(this);
@@ -307,6 +315,9 @@ public class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer exte
         optimizerListener = point -> {
             try {
                 return evaluateForThresholdFactor(point);
+            } catch (final CalibrationException | IntervalDetectorThresholdFactorOptimizerException ignore) {
+                // detection or calibration failed for this threshold factor, so it is not valid
+                return Double.MAX_VALUE;
             } catch (final NavigationException e) {
                 throw new EvaluationException(e);
             }

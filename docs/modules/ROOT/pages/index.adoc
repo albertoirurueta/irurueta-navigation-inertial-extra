@@ -79,6 +79,22 @@ mean squared error, for accelerometer-only, gyroscope-only, magnetometer-only, a
 two search strategies: an exhaustive grid search (`Exhaustive*Optimizer`) and a bracketed golden-section search
 (`Bracketed*Optimizer`) that converges faster once a rough bracket is known.
 
+=== Behavior of the optimizers
+
+* The default threshold factor search range is `[2, 10]`. With `irurueta-navigation-inertial` 1.12.1 the static
+interval detector uses a variance-norm statistic, so the factor refers to that statistic (a factor `k` here is
+roughly equivalent to a factor `k^2` in the standard-deviation-based detector used by earlier versions).
+* A result is only reported when a valid factor was found: results are reset before each run, and `optimize()`
+throws `IntervalDetectorThresholdFactorOptimizerException` when no threshold factor in the range yields a valid
+calibration.
+* The initial gyroscope bias is applied by default when calibrating gyroscopes. Call
+`setInitialGyroscopeBiasUsed(false)` to opt out; `isInitialGyroscopeBiasUsed()` returns the current setting.
+* The default combined MSE rules (`DefaultAccelerometerAndGyroscopeMseRule` and
+`DefaultAccelerometerGyroscopeAndMagnetometerMseRule`) use the accelerometer MSE only.
+* `DefaultGyroscopeQualityScoreMapper` scores a sequence as `1 / (1 + duration)`, so shorter sequences get a
+higher score.
+* Gyroscope calibrators with known biases keep those biases in the calibration result.
+
 == Background and references
 
 The static/dynamic interval detection that the threshold-factor optimizers tune, and the drift/random-walk
@@ -98,6 +114,19 @@ static intervals and comparing it against the calibrated accelerometer's gravity
 threshold-factor search and drift/random-walk estimation — on top of the static/dynamic interval detectors and
 calibrators already present in
 https://github.com/albertoirurueta/irurueta-navigation-inertial[irurueta-navigation-inertial].
+
+Decisions taken against the paper and `imu_tk`:
+
+* The threshold factor multiplies the variance-norm statistic of the static interval detector of
+`irurueta-navigation-inertial` 1.12.1, as `imu_tk` does, so the default range `[2, 10]` matches the sweep used by
+`imu_tk`.
+* The mean angular rate of the initial static period is used as the gyroscope bias (known bias or initial bias,
+depending on the calibrator), as in the paper. This is enabled by default and can be disabled.
+* In the combined scenarios the default rules select the threshold factor using the accelerometer error only, as
+`imu_tk` does, because the accelerometer, gyroscope and magnetometer errors have different units. A custom
+`AccelerometerAndGyroscopeMseRule` or `AccelerometerGyroscopeAndMagnetometerMseRule` can weight them differently.
+* Deviation: besides the exhaustive sweep, a bracketed search is offered, and robust gyroscope calibrators receive
+quality scores based on sequence duration, which neither the paper nor `imu_tk` define.
 
 == Where to go next
 
