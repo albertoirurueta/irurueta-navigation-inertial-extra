@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.irurueta:irurueta-navigation-inertial-extra</a> &gt; <a href="index.source.html" class="el_package">com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor</a> &gt; <span class="el_source">BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java</span></div><h1>BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2021 Alberto Irurueta Carro (alberto@irurueta.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor;
+
+import com.irurueta.navigation.LockedException;
+import com.irurueta.navigation.NavigationException;
+import com.irurueta.navigation.NotReadyException;
+import com.irurueta.navigation.inertial.calibration.CalibrationException;
+import com.irurueta.navigation.inertial.calibration.BodyKinematicsSequence;
+import com.irurueta.navigation.inertial.calibration.StandardDeviationBodyKinematics;
+import com.irurueta.navigation.inertial.calibration.StandardDeviationTimedBodyKinematics;
+import com.irurueta.navigation.inertial.calibration.accelerometer.AccelerometerCalibratorMeasurementType;
+import com.irurueta.navigation.inertial.calibration.accelerometer.AccelerometerNonLinearCalibrator;
+import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeCalibratorMeasurementOrSequenceType;
+import com.irurueta.navigation.inertial.calibration.gyroscope.GyroscopeNonLinearCalibrator;
+import com.irurueta.numerical.EvaluationException;
+import com.irurueta.numerical.InvalidBracketRangeException;
+import com.irurueta.numerical.NumericalException;
+import com.irurueta.numerical.SingleDimensionFunctionEvaluatorListener;
+import com.irurueta.numerical.optimization.BracketedSingleOptimizer;
+import com.irurueta.numerical.optimization.BrentSingleOptimizer;
+import com.irurueta.numerical.optimization.OnIterationCompletedListener;
+
+/**
+ * Optimizes the threshold factor for interval detection of accelerometer and gyroscope data
+ * based on results of calibration.
+ * Only accelerometer calibrators based on unknown orientation are supported (in other terms,
+ * calibrators must be {@link AccelerometerNonLinearCalibrator} and must support
+ * {@link AccelerometerCalibratorMeasurementType#STANDARD_DEVIATION_BODY_KINEMATICS}).
+ * Only gyroscope calibrators based on unknown orientation are supported (in other terms,
+ * calibrators must be {@link GyroscopeNonLinearCalibrator} and must support
+ * {@link GyroscopeCalibratorMeasurementOrSequenceType#BODY_KINEMATICS_SEQUENCE}).
+ * This implementation uses a {@link BracketedSingleOptimizer} to find the threshold
+ * factor value that minimizes Mean Square Error (MSE) for calibration parameters.
+ * &lt;p&gt;
+ * The search range is the one defined by the minimum and maximum threshold factors
+ * (see {@code setThresholdFactorRange}). The bracket of the underlying optimizer is updated
+ * with that range (using its centre as intermediate point) each time an optimizer is set and
+ * before each optimization, so changes of the range are always honoured.
+ * &lt;p&gt;
+ * Notice that the objective function (MSE as a function of the threshold factor) is piecewise
+ * constant, since the detected static intervals only change at discrete threshold factor
+ * values. Hence, it contains plateaus where gradient-free bracketed methods such as Brent's
+ * cannot make progress, and the returned threshold factor is the best one &lt;i&gt;evaluated&lt;/i&gt; by
+ * the optimizer, which is not necessarily the minimum within the range.
+ * For a reliable result, the {@code Exhaustive*} threshold factor optimizers are recommended
+ * as the default choice.
+ */
+public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer extends
+        AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer {
+
+    /**
+     * Large finite value returned as the objective function value for threshold factors that
+     * are not valid (detection or calibration failed). A finite value is used instead of
+     * {@link Double#MAX_VALUE} to avoid numerical overflow within the bracketed optimizer.
+     */
+    private static final double INVALID_MSE_PENALTY = 1e30;
+
+    /**
+     * A bracketed single optimizer to find the threshold factor value that
+     * minimizes the Mean Square Error (MSE) for calibration parameters.
+     */
+    private BracketedSingleOptimizer mseOptimizer;
+
+    /**
+     * Listener for optimizer.
+     */
+    private SingleDimensionFunctionEvaluatorListener optimizerListener;
+
+    /**
+     * Iteration listener for {@link BracketedSingleOptimizer}.
+     */
+    private OnIterationCompletedListener iterationCompletedListener;
+
+    /**
+     * Constructor.
+     */
+    public BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer() {
+<span class="fc" id="L92">        super();</span>
+<span class="fc" id="L93">        initializeOptimizerListeners();</span>
+        try {
+<span class="fc" id="L95">            setMseOptimizer(new BrentSingleOptimizer());</span>
+<span class="nc" id="L96">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource instance in charge of retrieving data for this optimizer.
+     */
+    public BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource) {
+<span class="fc" id="L108">        super(dataSource);</span>
+<span class="fc" id="L109">        initializeOptimizerListeners();</span>
+        try {
+<span class="fc" id="L111">            setMseOptimizer(new BrentSingleOptimizer());</span>
+<span class="nc" id="L112">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L114">        }</span>
+<span class="fc" id="L115">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param accelerometerCalibrator an accelerometer calibrator to be used to
+     *                                optimize its Mean Square Error (MSE).
+     * @param gyroscopeCalibrator     a gyroscope calibrator to be used to optimize
+     *                                its Mean Square Error (MSE).
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements
+     *                                  or if gyroscope calibrator does not use
+     *                                  {@link BodyKinematicsSequence} sequences of
+     *                                  {@link StandardDeviationTimedBodyKinematics}.
+     */
+    public BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerNonLinearCalibrator accelerometerCalibrator,
+            final GyroscopeNonLinearCalibrator gyroscopeCalibrator) {
+<span class="fc" id="L133">        super(accelerometerCalibrator, gyroscopeCalibrator);</span>
+<span class="fc" id="L134">        initializeOptimizerListeners();</span>
+        try {
+<span class="fc" id="L136">            setMseOptimizer(new BrentSingleOptimizer());</span>
+<span class="nc" id="L137">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource              instance in charge of retrieving data for this
+     *                                optimizer.
+     * @param accelerometerCalibrator an accelerometer calibrator to be used to
+     *                                optimize its Mean Square Error (MSE).
+     * @param gyroscopeCalibrator     a gyroscope calibrator to be used to optimize
+     *                                its Mean Square Error (MSE).
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements
+     *                                  or if gyroscope calibrator does not use
+     *                                  {@link BodyKinematicsSequence} sequences of
+     *                                  {@link StandardDeviationTimedBodyKinematics}.
+     */
+    public BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
+            final AccelerometerNonLinearCalibrator accelerometerCalibrator,
+            final GyroscopeNonLinearCalibrator gyroscopeCalibrator) {
+<span class="fc" id="L161">        super(dataSource, accelerometerCalibrator, gyroscopeCalibrator);</span>
+<span class="fc" id="L162">        initializeOptimizerListeners();</span>
+        try {
+<span class="fc" id="L164">            setMseOptimizer(new BrentSingleOptimizer());</span>
+<span class="nc" id="L165">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L167">        }</span>
+<span class="fc" id="L168">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param mseOptimizer optimizer to find the threshold factor value that
+     *                     minimizes MSE for calibration parameters.
+     */
+    public BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final BracketedSingleOptimizer mseOptimizer) {
+<span class="fc" id="L178">        super();</span>
+<span class="fc" id="L179">        initializeOptimizerListeners();</span>
+        try {
+<span class="fc" id="L181">            setMseOptimizer(mseOptimizer);</span>
+<span class="nc" id="L182">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L184">        }</span>
+<span class="fc" id="L185">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource   instance in charge of retrieving data for this optimizer.
+     * @param mseOptimizer optimizer to find the threshold value that minimizes
+     *                     MSE for calibration parameters.
+     */
+    public BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
+            final BracketedSingleOptimizer mseOptimizer) {
+<span class="fc" id="L197">        super(dataSource);</span>
+<span class="fc" id="L198">        initializeOptimizerListeners();</span>
+        try {
+<span class="fc" id="L200">            setMseOptimizer(mseOptimizer);</span>
+<span class="nc" id="L201">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L203">        }</span>
+<span class="fc" id="L204">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param accelerometerCalibrator an accelerometer calibrator to be used to
+     *                                optimize its Mean Square Error (MSE).
+     * @param gyroscopeCalibrator     a gyroscope calibrator to be used to optimize
+     *                                its Mean Square Error (MSE).
+     * @param mseOptimizer            optimizer to find the threshold value that
+     *                                minimizes MSE for calibration parameters.
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements
+     *                                  or if gyroscope calibrator does not use
+     *                                  {@link BodyKinematicsSequence} sequences of
+     *                                  {@link StandardDeviationTimedBodyKinematics}.
+     */
+    public BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerNonLinearCalibrator accelerometerCalibrator,
+            final GyroscopeNonLinearCalibrator gyroscopeCalibrator,
+            final BracketedSingleOptimizer mseOptimizer) {
+<span class="fc" id="L225">        super(accelerometerCalibrator, gyroscopeCalibrator);</span>
+<span class="fc" id="L226">        initializeOptimizerListeners();</span>
+        try {
+<span class="fc" id="L228">            setMseOptimizer(mseOptimizer);</span>
+<span class="nc" id="L229">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L231">        }</span>
+<span class="fc" id="L232">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param dataSource              instance in charge of retrieving data for this
+     *                                optimizer.
+     * @param accelerometerCalibrator an accelerometer calibrator to be used to
+     *                                optimize its Mean Square Error (MSE).
+     * @param gyroscopeCalibrator     a gyroscope calibrator to be used to optimize
+     *                                its Mean Square Error (MSE).
+     * @param mseOptimizer            optimizer to find the threshold value that
+     *                                minimizes MSE for calibration parameters.
+     * @throws IllegalArgumentException if accelerometer calibrator does not use
+     *                                  {@link StandardDeviationBodyKinematics} measurements
+     *                                  or if gyroscope calibrator does not use
+     *                                  {@link BodyKinematicsSequence} sequences of
+     *                                  {@link StandardDeviationTimedBodyKinematics}.
+     */
+    public BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+            final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource dataSource,
+            final AccelerometerNonLinearCalibrator accelerometerCalibrator,
+            final GyroscopeNonLinearCalibrator gyroscopeCalibrator,
+            final BracketedSingleOptimizer mseOptimizer) {
+<span class="fc" id="L256">        super(dataSource, accelerometerCalibrator, gyroscopeCalibrator);</span>
+<span class="fc" id="L257">        initializeOptimizerListeners();</span>
+        try {
+<span class="fc" id="L259">            setMseOptimizer(mseOptimizer);</span>
+<span class="nc" id="L260">        } catch (final LockedException ignore) {</span>
+            // never happens
+<span class="fc" id="L262">        }</span>
+<span class="fc" id="L263">    }</span>
+
+
+    /**
+     * Gets the bracketed single optimizer used to find the threshold factor value
+     * that minimizes the Mean Square Error (MSE) for calibration parameters.
+     *
+     * @return optimizer to find the threshold factor value that minimizes the
+     * MSE for calibration parameters.
+     */
+    public BracketedSingleOptimizer getMseOptimizer() {
+<span class="fc" id="L274">        return mseOptimizer;</span>
+    }
+
+    /**
+     * Sets the bracketed single optimizer used to find the threshold factor value
+     * that minimizes the Mean Square Error (MSE) for calibration parameters.
+     *
+     * @param optimizer optimizer to find the threshold factor value that minimizes
+     *                  the MSE for calibration parameters.
+     * @throws LockedException if optimizer is already running.
+     */
+    public void setMseOptimizer(final BracketedSingleOptimizer optimizer)
+            throws LockedException {
+<span class="fc bfc" id="L287" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L288">            throw new LockedException();</span>
+        }
+
+        try {
+<span class="fc bfc" id="L292" title="All 2 branches covered.">            if (optimizer != null) {</span>
+<span class="fc" id="L293">                optimizer.setListener(optimizerListener);</span>
+<span class="fc" id="L294">                optimizer.setOnIterationCompletedListener(iterationCompletedListener);</span>
+            }
+<span class="fc" id="L296">            mseOptimizer = optimizer;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">            if (optimizer != null) {</span>
+<span class="fc" id="L298">                updateBracket();</span>
+            }
+<span class="nc" id="L300">        } catch (final com.irurueta.numerical.LockedException e) {</span>
+<span class="nc" id="L301">            throw new LockedException(e);</span>
+<span class="fc" id="L302">        }</span>
+<span class="fc" id="L303">    }</span>
+
+    /**
+     * Indicates whether this optimizer is ready to start optimization.
+     *
+     * @return true if this optimizer is ready, false otherwise.
+     */
+    @Override
+    public boolean isReady() {
+<span class="pc bpc" id="L312" title="1 of 4 branches missed.">        return super.isReady() &amp;&amp; mseOptimizer != null;</span>
+    }
+
+    /**
+     * Optimizes the threshold factor for a static interval detector or measurement
+     * generator to minimize MSE (Mean Square Error) of estimated
+     * calibration parameters.
+     *
+     * @return optimized threshold factor.
+     * @throws NotReadyException                                 if this optimizer is not ready to start optimization.
+     * @throws LockedException                                   if optimizer is already running.
+     * @throws IntervalDetectorThresholdFactorOptimizerException if optimization fails for
+     *                                                           some reason, or if no threshold
+     *                                                           factor produced a valid calibration
+     *                                                           result (in which case no result is kept).
+     */
+    @Override
+    public double optimize() throws NotReadyException, LockedException,
+            IntervalDetectorThresholdFactorOptimizerException {
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        if (running) {</span>
+<span class="fc" id="L332">            throw new LockedException();</span>
+        }
+
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">        if (!isReady()) {</span>
+<span class="nc" id="L336">            throw new NotReadyException();</span>
+        }
+
+        try {
+<span class="fc" id="L340">            running = true;</span>
+
+<span class="fc" id="L342">            initProgress();</span>
+
+<span class="fc bfc" id="L344" title="All 2 branches covered.">            if (listener != null) {</span>
+<span class="fc" id="L345">                listener.onOptimizeStart(this);</span>
+            }
+
+<span class="fc" id="L348">            resetResults();</span>
+<span class="fc" id="L349">            updateBracket();</span>
+<span class="fc" id="L350">            mseOptimizer.minimize();</span>
+
+<span class="fc bfc" id="L352" title="All 2 branches covered.">            if (minMse &gt;= INVALID_MSE_PENALTY) {</span>
+                // no threshold factor produced a valid calibration result
+<span class="fc" id="L354">                throw new IntervalDetectorThresholdFactorOptimizerException();</span>
+            }
+
+<span class="fc bfc" id="L357" title="All 2 branches covered.">            if (listener != null) {</span>
+                // the bracketed optimizer can converge in so few iterations that no progress change is
+                // ever notified, so completion is always notified
+<span class="fc" id="L360">                notifyProgressCompleted();</span>
+<span class="fc" id="L361">                listener.onOptimizeEnd(this);</span>
+            }
+
+<span class="fc" id="L364">            return optimalThresholdFactor;</span>
+<span class="nc" id="L365">        } catch (final com.irurueta.numerical.LockedException e) {</span>
+<span class="nc" id="L366">            throw new LockedException(e);</span>
+<span class="fc" id="L367">        } catch (final NumericalException e) {</span>
+<span class="fc" id="L368">            throw new IntervalDetectorThresholdFactorOptimizerException(e);</span>
+        } finally {
+<span class="fc" id="L370">            running = false;</span>
+        }
+    }
+
+    /**
+     * Updates the bracket of the MSE optimizer so that it spans the current threshold factor
+     * range, using the centre of the range as intermediate point.
+     *
+     * @throws com.irurueta.numerical.LockedException if the MSE optimizer is locked.
+     */
+    private void updateBracket() throws com.irurueta.numerical.LockedException {
+<span class="fc" id="L381">        final var centre = 0.5 * (minThresholdFactor + maxThresholdFactor);</span>
+        try {
+<span class="fc" id="L383">            mseOptimizer.setBracket(minThresholdFactor, centre, maxThresholdFactor);</span>
+<span class="nc" id="L384">        } catch (final InvalidBracketRangeException ignore) {</span>
+            // never happens because the threshold factor range is validated when set
+<span class="fc" id="L386">        }</span>
+<span class="fc" id="L387">    }</span>
+
+    /**
+     * Initializes optimizer listeners.
+     */
+    private void initializeOptimizerListeners() {
+<span class="fc" id="L393">        optimizerListener = point -&gt; {</span>
+            try {
+<span class="fc" id="L395">                final var mse = evaluateForThresholdFactor(point);</span>
+                // invalid evaluations (MAX_VALUE) and non-finite values are mapped to a finite penalty
+<span class="pc bpc" id="L397" title="1 of 4 branches missed.">                return Double.isFinite(mse) &amp;&amp; mse &lt; INVALID_MSE_PENALTY ? mse : INVALID_MSE_PENALTY;</span>
+<span class="fc" id="L398">            } catch (final CalibrationException | IntervalDetectorThresholdFactorOptimizerException ignore) {</span>
+                // detection or calibration failed for this threshold factor, so it is not valid
+<span class="fc" id="L400">                return INVALID_MSE_PENALTY;</span>
+<span class="fc" id="L401">            } catch (final NavigationException e) {</span>
+<span class="fc" id="L402">                throw new EvaluationException(e);</span>
+            }
+        };
+
+<span class="fc" id="L406">        iterationCompletedListener = (optimizer, iteration, maxIterations) -&gt; {</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">            if (maxIterations == null) {</span>
+<span class="nc" id="L408">                return;</span>
+            }
+
+<span class="fc" id="L411">            progress = (float) iteration / (float) maxIterations;</span>
+<span class="fc" id="L412">            checkAndNotifyProgress();</span>
+<span class="fc" id="L413">        };</span>
+<span class="fc" id="L414">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

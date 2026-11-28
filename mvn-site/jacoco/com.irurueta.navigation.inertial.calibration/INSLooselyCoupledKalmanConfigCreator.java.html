@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>INSLooselyCoupledKalmanConfigCreator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.irurueta:irurueta-navigation-inertial-extra</a> &gt; <a href="index.source.html" class="el_package">com.irurueta.navigation.inertial.calibration</a> &gt; <span class="el_source">INSLooselyCoupledKalmanConfigCreator.java</span></div><h1>INSLooselyCoupledKalmanConfigCreator.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2021 Alberto Irurueta Carro (alberto@irurueta.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.irurueta.navigation.inertial.calibration;
+
+import com.irurueta.navigation.NotReadyException;
+import com.irurueta.navigation.inertial.INSLooselyCoupledKalmanConfig;
+import com.irurueta.navigation.inertial.calibration.generators.AccelerometerAndGyroscopeMeasurementsGenerator;
+import com.irurueta.navigation.inertial.calibration.generators.AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator;
+import com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer;
+import com.irurueta.navigation.inertial.calibration.intervals.thresholdfactor.AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer;
+
+/**
+ * Utility class to create {@link INSLooselyCoupledKalmanConfig} by combining
+ * different sources of estimated data.
+ * Sources of data can be any measurement generator, static interval detector or
+ * noise estimator implementing {@link AccelerometerNoiseRootPsdSource}
+ * or {@link GyroscopeNoiseRootPsdSource}.
+ */
+public class INSLooselyCoupledKalmanConfigCreator {
+
+    /**
+     * A source of estimated accelerometer noise root PSD.
+     */
+    private AccelerometerNoiseRootPsdSource accelerometerNoiseRootPsdSource;
+
+    /**
+     * A source of estimated gyroscope noise root PSD.
+     */
+    private GyroscopeNoiseRootPsdSource gyroscopeNoiseRootPsdSource;
+
+    /**
+     * A source of estimated accelerometer bias random walk PSD.
+     */
+    private AccelerometerBiasRandomWalkSource accelerometerBiasRandomWalkSource;
+
+    /**
+     * A source of estimated gyroscope bias random walk PSD.
+     */
+    private GyroscopeBiasRandomWalkSource gyroscopeBiasRandomWalkSource;
+
+    /**
+     * A source of position noise standard deviation.
+     */
+    private PositionNoiseStandardDeviationSource positionNoiseStandardDeviationSource;
+
+    /**
+     * A source of velocity noise standard deviation.
+     */
+    private VelocityNoiseStandardDeviationSource velocityNoiseStandardDeviationSource;
+
+    /**
+     * Constructor.
+     */
+<span class="fc" id="L67">    public INSLooselyCoupledKalmanConfigCreator() {</span>
+<span class="fc" id="L68">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param accelerometerNoiseRootPsdSource      a source of estimated accelerometer noise root PSD.
+     * @param gyroscopeNoiseRootPsdSource          a source of estimated gyroscope noise root PSD.
+     * @param accelerometerBiasRandomWalkSource    a source of estimated accelerometer bias random walk PSD.
+     * @param gyroscopeBiasRandomWalkSource        a source of estimated gyroscope bias random walk PSD.
+     * @param positionNoiseStandardDeviationSource a source of position noise standard deviation.
+     * @param velocityNoiseStandardDeviationSource a source of velocity noise standard deviation.
+     */
+    public INSLooselyCoupledKalmanConfigCreator(
+            final AccelerometerNoiseRootPsdSource accelerometerNoiseRootPsdSource,
+            final GyroscopeNoiseRootPsdSource gyroscopeNoiseRootPsdSource,
+            final AccelerometerBiasRandomWalkSource accelerometerBiasRandomWalkSource,
+            final GyroscopeBiasRandomWalkSource gyroscopeBiasRandomWalkSource,
+            final PositionNoiseStandardDeviationSource positionNoiseStandardDeviationSource,
+<span class="fc" id="L86">            final VelocityNoiseStandardDeviationSource velocityNoiseStandardDeviationSource) {</span>
+<span class="fc" id="L87">        this.accelerometerNoiseRootPsdSource = accelerometerNoiseRootPsdSource;</span>
+<span class="fc" id="L88">        this.gyroscopeNoiseRootPsdSource = gyroscopeNoiseRootPsdSource;</span>
+<span class="fc" id="L89">        this.accelerometerBiasRandomWalkSource = accelerometerBiasRandomWalkSource;</span>
+<span class="fc" id="L90">        this.gyroscopeBiasRandomWalkSource = gyroscopeBiasRandomWalkSource;</span>
+<span class="fc" id="L91">        this.positionNoiseStandardDeviationSource = positionNoiseStandardDeviationSource;</span>
+<span class="fc" id="L92">        this.velocityNoiseStandardDeviationSource = velocityNoiseStandardDeviationSource;</span>
+<span class="fc" id="L93">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param generator           an accelerometer + gyroscope measurement
+     *                            generator.
+     * @param randomWalkEstimator a random walk estimator.
+     */
+    public INSLooselyCoupledKalmanConfigCreator(
+            final AccelerometerAndGyroscopeMeasurementsGenerator generator,
+            final RandomWalkEstimator randomWalkEstimator) {
+<span class="fc" id="L105">        this(generator, generator, randomWalkEstimator, randomWalkEstimator, randomWalkEstimator, randomWalkEstimator);</span>
+<span class="fc" id="L106">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param generator           an accelerometer + gyroscope + magnetometer
+     *                            measurement generator.
+     * @param randomWalkEstimator a random walk estimator.
+     */
+    public INSLooselyCoupledKalmanConfigCreator(
+            final AccelerometerGyroscopeAndMagnetometerMeasurementsGenerator generator,
+            final RandomWalkEstimator randomWalkEstimator) {
+<span class="fc" id="L118">        this(generator, generator, randomWalkEstimator, randomWalkEstimator, randomWalkEstimator, randomWalkEstimator);</span>
+<span class="fc" id="L119">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param optimizer           an accelerometer and gyroscope threshold factor
+     *                            optimizer.
+     * @param randomWalkEstimator a random walk estimator.
+     */
+    public INSLooselyCoupledKalmanConfigCreator(
+            final AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer optimizer,
+            final RandomWalkEstimator randomWalkEstimator) {
+<span class="fc" id="L131">        this(optimizer, optimizer, randomWalkEstimator, randomWalkEstimator, randomWalkEstimator, randomWalkEstimator);</span>
+<span class="fc" id="L132">    }</span>
+
+    /**
+     * Constructor.
+     *
+     * @param optimizer           an accelerometer + gyroscope + magnetometer
+     *                            threshold factor optimizer.
+     * @param randomWalkEstimator a random walk estimator.
+     */
+    public INSLooselyCoupledKalmanConfigCreator(
+            final AccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer optimizer,
+            final RandomWalkEstimator randomWalkEstimator) {
+<span class="fc" id="L144">        this(optimizer, optimizer, randomWalkEstimator, randomWalkEstimator, randomWalkEstimator, randomWalkEstimator);</span>
+<span class="fc" id="L145">    }</span>
+
+    /**
+     * Gets the source of estimated accelerometer noise root PSD.
+     *
+     * @return source of estimated accelerometer noise root PSD.
+     */
+    public AccelerometerNoiseRootPsdSource getAccelerometerNoiseRootPsdSource() {
+<span class="fc" id="L153">        return accelerometerNoiseRootPsdSource;</span>
+    }
+
+    /**
+     * Sets source of estimated accelerometer noise root PSD.
+     *
+     * @param accelerometerNoiseRootPsdSource source of estimated accelerometer
+     *                                        noise root PSD.
+     */
+    public void setAccelerometerNoiseRootPsdSource(
+            final AccelerometerNoiseRootPsdSource accelerometerNoiseRootPsdSource) {
+<span class="fc" id="L164">        this.accelerometerNoiseRootPsdSource = accelerometerNoiseRootPsdSource;</span>
+<span class="fc" id="L165">    }</span>
+
+    /**
+     * Gets the source of estimated gyroscope noise root PSD.
+     *
+     * @return source of estimated gyroscope noise root PSD.
+     */
+    public GyroscopeNoiseRootPsdSource getGyroscopeNoiseRootPsdSource() {
+<span class="fc" id="L173">        return gyroscopeNoiseRootPsdSource;</span>
+    }
+
+    /**
+     * Sets source of estimated gyroscope noise root PSD.
+     *
+     * @param gyroscopeNoiseRootPsdSource source of estimated gyroscope noise
+     *                                    root PSD.
+     */
+    public void sstGyroscopeNoiseRootPsdSource(final GyroscopeNoiseRootPsdSource gyroscopeNoiseRootPsdSource) {
+<span class="fc" id="L183">        this.gyroscopeNoiseRootPsdSource = gyroscopeNoiseRootPsdSource;</span>
+<span class="fc" id="L184">    }</span>
+
+    /**
+     * Gets the source of estimated accelerometer bias random walk PSD.
+     *
+     * @return source of estimated accelerometer bias random walk PSD.
+     */
+    public AccelerometerBiasRandomWalkSource getAccelerometerBiasRandomWalkSource() {
+<span class="fc" id="L192">        return accelerometerBiasRandomWalkSource;</span>
+    }
+
+    /**
+     * Sets source of estimated accelerometer bias random walk PSD.
+     *
+     * @param accelerometerBiasRandomWalkSource source of estimated accelerometer
+     *                                          bias random walk PSD.
+     */
+    public void setAccelerometerBiasRandomWalkSource(
+            final AccelerometerBiasRandomWalkSource accelerometerBiasRandomWalkSource) {
+<span class="fc" id="L203">        this.accelerometerBiasRandomWalkSource = accelerometerBiasRandomWalkSource;</span>
+<span class="fc" id="L204">    }</span>
+
+    /**
+     * Gets the source of estimated gyroscope bias random walk PSD.
+     *
+     * @return source of estimated gyroscope bias random walk PSD.
+     */
+    public GyroscopeBiasRandomWalkSource getGyroscopeBiasRandomWalkSource() {
+<span class="fc" id="L212">        return gyroscopeBiasRandomWalkSource;</span>
+    }
+
+    /**
+     * Sets source of estimated gyroscope bias random walk PSD.
+     *
+     * @param gyroscopeBiasRandomWalkSource source of estimated gyroscope bias
+     *                                      random walk PSD.
+     */
+    public void setGyroscopeBiasRandomWalkSource(final GyroscopeBiasRandomWalkSource gyroscopeBiasRandomWalkSource) {
+<span class="fc" id="L222">        this.gyroscopeBiasRandomWalkSource = gyroscopeBiasRandomWalkSource;</span>
+<span class="fc" id="L223">    }</span>
+
+    /**
+     * Gets the source of position noise standard deviation.
+     *
+     * @return source of position noise standard deviation.
+     */
+    public PositionNoiseStandardDeviationSource getPositionNoiseStandardDeviationSource() {
+<span class="fc" id="L231">        return positionNoiseStandardDeviationSource;</span>
+    }
+
+    /**
+     * Sets source of position noise standard deviation.
+     *
+     * @param positionUncertaintySource source of position noise standard
+     *                                  deviation.
+     */
+    public void setPositionNoiseStandardDeviationSource(
+            final PositionNoiseStandardDeviationSource positionUncertaintySource) {
+<span class="fc" id="L242">        positionNoiseStandardDeviationSource = positionUncertaintySource;</span>
+<span class="fc" id="L243">    }</span>
+
+    /**
+     * Gets the source of velocity noise standard deviation.
+     *
+     * @return source of velocity noise standard deviation.
+     */
+    public VelocityNoiseStandardDeviationSource getVelocityNoiseStandardDeviationSource() {
+<span class="fc" id="L251">        return velocityNoiseStandardDeviationSource;</span>
+    }
+
+    /**
+     * Sets source of velocity noise standard deviation.
+     *
+     * @param velocityUncertaintySource source of velocity noise standard
+     *                                  deviation.
+     */
+    public void setVelocityNoiseStandardDeviationSource(
+            final VelocityNoiseStandardDeviationSource velocityUncertaintySource) {
+<span class="fc" id="L262">        velocityNoiseStandardDeviationSource = velocityUncertaintySource;</span>
+<span class="fc" id="L263">    }</span>
+
+    /**
+     * Indicates whether all sources have been provided to be able to
+     * create a {@link INSLooselyCoupledKalmanConfig} instance.
+     *
+     * @return true if the creator is ready, false otherwise.
+     */
+    public boolean isReady() {
+<span class="pc bpc" id="L272" title="5 of 12 branches missed.">        return accelerometerNoiseRootPsdSource != null</span>
+                &amp;&amp; gyroscopeNoiseRootPsdSource != null
+                &amp;&amp; accelerometerBiasRandomWalkSource != null
+                &amp;&amp; gyroscopeBiasRandomWalkSource != null
+                &amp;&amp; positionNoiseStandardDeviationSource != null
+                &amp;&amp; velocityNoiseStandardDeviationSource != null;
+    }
+
+    /**
+     * Creates a {@link INSLooselyCoupledKalmanConfig} instance containing estimated
+     * parameters during calibration.
+     *
+     * @return instance containing configuration data.
+     * @throws NotReadyException if the creator is not ready.
+     */
+    public INSLooselyCoupledKalmanConfig create() throws NotReadyException {
+<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (!isReady()) {</span>
+<span class="fc" id="L289">            throw new NotReadyException();</span>
+        }
+
+<span class="fc" id="L292">        final var gyroNoisePsd = Math.pow(gyroscopeNoiseRootPsdSource.getGyroscopeBaseNoiseLevelRootPsd(), 2.0);</span>
+<span class="fc" id="L293">        final var accelNoisePsd = Math.pow(accelerometerNoiseRootPsdSource.getAccelerometerBaseNoiseLevelRootPsd(),</span>
+                2.0);
+<span class="fc" id="L295">        final var accelRandomWalkBiasPsd = accelerometerBiasRandomWalkSource.getAccelerometerBiasPSD();</span>
+<span class="fc" id="L296">        final var gyroRandomWalkBiasPsd = gyroscopeBiasRandomWalkSource.getGyroBiasPSD();</span>
+<span class="fc" id="L297">        final var positionNoiseSd = positionNoiseStandardDeviationSource.getPositionNoiseStandardDeviation();</span>
+<span class="fc" id="L298">        final var velocityNoiseSd = velocityNoiseStandardDeviationSource.getVelocityNoiseStandardDeviation();</span>
+<span class="fc" id="L299">        return new INSLooselyCoupledKalmanConfig(gyroNoisePsd, accelNoisePsd, accelRandomWalkBiasPsd,</span>
+                gyroRandomWalkBiasPsd, positionNoiseSd, velocityNoiseSd);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
