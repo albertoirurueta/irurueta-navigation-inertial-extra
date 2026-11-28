@@ -334,6 +334,9 @@ public class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOp
             }
 
             if (listener != null) {
+                // the bracketed optimizer can converge in so few iterations that no progress change is
+                // ever notified, so completion is always notified
+                notifyProgressCompleted();
                 listener.onOptimizeEnd(this);
             }
 

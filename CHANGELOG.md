@@ -28,6 +28,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 
 - Gyroscope biases are no longer lost when using gyroscope calibrators with known biases.
+- `Bracketed*` threshold factor optimizers now always notify a final 100% progress change when optimization
+  succeeds. Previously no progress was notified at all when the optimizer converged in very few iterations.
 - Threshold factor optimizers no longer report success or stale results: results are reset before each run, and
   `optimize()` throws `IntervalDetectorThresholdFactorOptimizerException` when no threshold factor yields a valid
   calibration.
