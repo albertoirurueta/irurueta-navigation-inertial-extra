@@ -4002,7 +4002,9 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
             // internally drift estimator will fix kinematics if needed
             driftEstimator.addBodyKinematics(kinematics);
 
-            if (numberOfSamples % driftPeriodSamples == 0) {
+            // number of samples processed including the current one
+            final var processedSamples = numberOfSamples + 1;
+            if (processedSamples % driftPeriodSamples == 0) {
                 // for each drift period, update mean and variance values
                 // of drift and reset drift estimator
                 final var n = numberOfProcessedDriftPeriods + 1.0;
@@ -4012,21 +4014,24 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
                 final var velocityDrift = driftEstimator.getCurrentVelocityDriftNormMetersPerSecond();
                 final var attitudeDrift = driftEstimator.getCurrentOrientationDriftRadians();
 
+                // differences with respect to previous mean
+                final var diffPrevPositionDrift = positionDrift - avgPositionDrift;
+                final var diffPrevVelocityDrift = velocityDrift - avgVelocityDrift;
+                final var diffPrevAttitudeDrift = attitudeDrift - avgAttitudeDrift;
+
                 avgPositionDrift = avgPositionDrift * tmp + positionDrift / n;
                 avgVelocityDrift = avgVelocityDrift * tmp + velocityDrift / n;
                 avgAttitudeDrift = avgAttitudeDrift * tmp + attitudeDrift / n;
 
-                final var diffPositionDrift = positionDrift - avgPositionDrift;
-                final var diffVelocityDrift = velocityDrift - avgVelocityDrift;
-                final var diffAttitudeDrift = attitudeDrift - avgAttitudeDrift;
+                // differences with respect to updated mean
+                final var diffNewPositionDrift = positionDrift - avgPositionDrift;
+                final var diffNewVelocityDrift = velocityDrift - avgVelocityDrift;
+                final var diffNewAttitudeDrift = attitudeDrift - avgAttitudeDrift;
 
-                final var diffPositionDrift2 = diffPositionDrift * diffPositionDrift;
-                final var diffVelocityDrift2 = diffVelocityDrift * diffVelocityDrift;
-                final var diffAttitudeDrift2 = diffAttitudeDrift * diffAttitudeDrift;
-
-                varPositionDrift = varPositionDrift * tmp + diffPositionDrift2 / n;
-                varVelocityDrift = varVelocityDrift * tmp + diffVelocityDrift2 / n;
-                varAttitudeDrift = varAttitudeDrift * tmp + diffAttitudeDrift2 / n;
+                // recursive population variance
+                varPositionDrift = varPositionDrift * tmp + diffPrevPositionDrift * diffNewPositionDrift / n;
+                varVelocityDrift = varVelocityDrift * tmp + diffPrevVelocityDrift * diffNewVelocityDrift / n;
+                varAttitudeDrift = varAttitudeDrift * tmp + diffPrevAttitudeDrift * diffNewAttitudeDrift / n;
 
                 driftEstimator.reset();
                 numberOfProcessedDriftPeriods++;
@@ -4045,6 +4050,8 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
 
     /**
      * Resets current estimator.
+     * This also resets the internal drift estimator, so that any drift period that
+     * was partially processed is discarded and the next drift period starts clean.
      *
      * @return true if estimator was successfully reset, false if no reset was needed.
      * @throws LockedException if estimator is currently running.
@@ -4058,6 +4065,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
         if (biasEstimator.reset()) {
             accelerometerBiasPSD = 0.0;
             gyroBiasPSD = 0.0;
+            driftEstimator.reset();
             numberOfProcessedDriftPeriods = 0;
             avgPositionDrift = 0.0;
             avgVelocityDrift = 0.0;
@@ -4105,8 +4113,9 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Gets estimated position noise variance expressed in square meters (m^2).
      * This can be used by {@link INSLooselyCoupledKalmanConfig}.
+     * The population variance of drift values is used.
      *
-     * @return position variance.
+     * @return position variance (population variance).
      */
     public double getPositionNoiseVariance() {
         return varPositionDrift;
@@ -4115,8 +4124,9 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Gets estimated velocity noise variance expressed in (m^2/s^2).
      * This can be used by {@link INSLooselyCoupledKalmanConfig}.
+     * The population variance of drift values is used.
      *
-     * @return velocity variance.
+     * @return velocity variance (population variance).
      */
     public double getVelocityNoiseVariance() {
         return varVelocityDrift;
@@ -4124,8 +4134,9 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
 
     /**
      * Gets estimated attitude noise variance expressed in squared radians (rad^2).
+     * The population variance of drift values is used.
      *
-     * @return attitude variance.
+     * @return attitude variance (population variance).
      */
     public double getAttitudeNoiseVariance() {
         return varAttitudeDrift;
@@ -4134,6 +4145,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
     /**
      * Gets standard deviation of position noise expressed in meters (m).
      * This can be used by {@link INSLooselyCoupledKalmanConfig}.
+     * It is the square root of the population variance.
      *
      * @return standard deviation of position noise.
      */
@@ -4167,6 +4179,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
      * Gets standard deviation of velocity noise expressed in meters per second
      * (m/s).
      * This can be used by {@link INSLooselyCoupledKalmanConfig}.
+     * It is the square root of the population variance.
      *
      * @return standard deviation of velocity noise.
      */
@@ -4198,6 +4211,7 @@ public class RandomWalkEstimator implements AccelerometerBiasRandomWalkSource,
 
     /**
      * Gets standard deviation of attitude noise expressed in radians (rad).
+     * It is the square root of the population variance.
      *
      * @return standard deviation of attitude noise.
      */

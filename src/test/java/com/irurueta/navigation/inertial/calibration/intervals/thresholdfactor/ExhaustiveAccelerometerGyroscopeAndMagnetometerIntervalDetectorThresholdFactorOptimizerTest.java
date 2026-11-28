@@ -63,12 +63,18 @@ import com.irurueta.units.AccelerationUnit;
 import com.irurueta.units.Time;
 import com.irurueta.units.TimeUnit;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizerTest implements
         IntervalDetectorThresholdFactorOptimizerListener<TimedBodyKinematicsAndMagneticFluxDensity,
@@ -1414,6 +1420,49 @@ class ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFa
         }
 
         assertTrue(numValid > 0);
+    }
+
+    @Test
+    void optimize_whenRangeIsNotMultipleOfStep_evaluatesMaximumAndReportsFullProgress() throws Exception {
+        final var optimizer = spy(new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer());
+        doReturn(true).when(optimizer).isReady();
+        doReturn(1.0).when(optimizer).evaluateForThresholdFactor(anyDouble());
+
+        optimizer.setThresholdFactorRange(0.0, 0.25);
+        optimizer.setThresholdFactorStep(0.1);
+
+        optimizer.optimize();
+
+        final var captor = ArgumentCaptor.forClass(Double.class);
+        verify(optimizer, times(4)).evaluateForThresholdFactor(captor.capture());
+        final var factors = captor.getAllValues();
+        assertEquals(0.0, factors.get(0), 1e-12);
+        assertEquals(0.1, factors.get(1), 1e-12);
+        assertEquals(0.2, factors.get(2), 1e-12);
+        assertEquals(0.25, factors.get(3), 0.0);
+        assertEquals(1.0f, optimizer.progress, 1e-6f);
+        assertFalse(optimizer.isRunning());
+    }
+
+    @Test
+    void optimize_whenRangeIsMultipleOfStep_evaluatesMaximumAndReportsFullProgress() throws Exception {
+        final var optimizer = spy(new ExhaustiveAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFactorOptimizer());
+        doReturn(true).when(optimizer).isReady();
+        doReturn(1.0).when(optimizer).evaluateForThresholdFactor(anyDouble());
+
+        optimizer.setThresholdFactorRange(0.0, 0.3);
+        optimizer.setThresholdFactorStep(0.1);
+
+        optimizer.optimize();
+
+        final var captor = ArgumentCaptor.forClass(Double.class);
+        verify(optimizer, times(4)).evaluateForThresholdFactor(captor.capture());
+        final var factors = captor.getAllValues();
+        assertEquals(0.0, factors.get(0), 1e-12);
+        assertEquals(0.1, factors.get(1), 1e-12);
+        assertEquals(0.2, factors.get(2), 1e-12);
+        assertEquals(0.3, factors.get(3), 0.0);
+        assertEquals(1.0f, optimizer.progress, 1e-6f);
     }
 
     @Test

@@ -17,7 +17,7 @@ production navigation pipeline.
 GNSS/INS navigation, built on top of https://github.com/albertoirurueta/irurueta-navigation-inertial[irurueta-navigation-inertial].
 Where the base library provides the core navigators, estimators and calibrators, this library adds the
 higher-level tools needed to validate a calibration and to automatically tune it: drift estimation, sensor
-random-walk (Allan-variance-style) estimation, and threshold-factor optimizers for the static/dynamic interval
+random-walk estimation, and threshold-factor optimizers for the static/dynamic interval
 detectors used during calibration data collection.
 
 The library is organized around two packages:
@@ -69,6 +69,17 @@ walk and position/velocity/attitude uncertainty. Those outputs implement source 
 `INSLooselyCoupledKalmanInitializerConfigCreator` consume directly to assemble ready-to-use Kalman filter
 configuration objects, closing the loop between "estimate sensor noise" and "configure the filter that uses it."
 
+=== Behavior of the random walk and drift estimators
+
+* Variances are population variances (divided by `n`), computed with a numerically stable Welford recursion.
+* A drift period closes when `(n + 1) % period == 0`, so every period contains exactly the configured number of
+samples.
+* `reset()` also resets the internal drift estimator, so a reused `RandomWalkEstimator` starts from a clean state.
+* The bias power spectral density is a documented heuristic,
+`(||mean bias|| / elapsed time)^2 * timeInterval`. It is not an Allan-variance estimate.
+* `KalmanDriftEstimator` feeds static position and zero-velocity fixes to the Kalman filter every epoch interval.
+The first sample is integrated over one `timeInterval`.
+
 == Core concept: threshold factor optimization
 
 Static/dynamic interval detection (used to segment raw calibration recordings into static and moving periods)
@@ -94,6 +105,16 @@ calibration.
 * `DefaultGyroscopeQualityScoreMapper` scores a sequence as `1 / (1 + duration)`, so shorter sequences get a
 higher score.
 * Gyroscope calibrators with known biases keep those biases in the calibration result.
+* The bracketed optimizers set their bracket from the current threshold factor range at the start of `optimize()`,
+with the centre of the range as starting point, so a range set by the caller is honoured.
+* The bracketed optimizers use Brent's method, which assumes a smooth objective. The calibration error as a function of
+the threshold factor is piecewise constant, so Brent's method can stop at a local plateau. The exhaustive optimizers
+are recommended when the best factor matters.
+* Invalid threshold factors are penalised with the constant `1e30` instead of `Double.MAX_VALUE`, which keeps the
+objective finite for the search.
+* The exhaustive optimizers iterate by index, so the maximum threshold factor of the range is always evaluated.
+* Issues E1 and E2 reported in #29 are fixed, and E3 is confirmed resolved: the default range `[2, 10]` is correct for
+the variance-norm statistic.
 
 == Background and references
 

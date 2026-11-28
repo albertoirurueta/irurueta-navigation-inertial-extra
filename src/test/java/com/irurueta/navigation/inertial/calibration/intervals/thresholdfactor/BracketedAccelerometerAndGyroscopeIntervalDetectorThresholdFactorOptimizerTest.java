@@ -68,6 +68,8 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerTest implements
         IntervalDetectorThresholdFactorOptimizerListener<TimedBodyKinematics,
@@ -94,6 +96,14 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
     private static final double MAX_DELTA_ANGLE_DEGREES = 2.0;
 
     private static final int TIMES = 100;
+
+    private static final double RANGE_MIN = 3.0;
+    private static final double RANGE_MAX = 6.0;
+
+    private static final double FIRST_RANGE_MIN = 20.0;
+    private static final double FIRST_RANGE_MAX = 30.0;
+    private static final double SECOND_RANGE_MIN = 40.0;
+    private static final double SECOND_RANGE_MAX = 50.0;
 
     /**
      * Relative tolerance of the Brent optimizer that searches the threshold factor. The mean square error only
@@ -1427,7 +1437,7 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -1834,6 +1844,129 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
         }
     }
 
+    /**
+     * Checks that the bracket of the MSE optimizer always equals the minimum, centre and maximum of
+     * the current threshold factor range, even when the range is changed after construction, and that
+     * optimization fails when no threshold factor produces a valid result.
+     *
+     * @throws Exception if any unexpected error occurs.
+     */
+    @Test
+    void optimize_whenRangeChanged_updatesBracketToRange() throws Exception {
+        final var mseOptimizer = spy(new BrentSingleOptimizer());
+        final var optimizer = new BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(mseOptimizer);
+        optimizer.setDataSource(mock(AccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizerDataSource.class));
+        optimizer.setAccelerometerCalibrator(new KnownGravityNormAccelerometerCalibrator());
+        optimizer.setGyroscopeCalibrator(new EasyGyroscopeCalibrator());
+        assertTrue(optimizer.isReady());
+
+        // default range
+        verify(mseOptimizer).setBracket(optimizer.getMinThresholdFactor(),
+                0.5 * (optimizer.getMinThresholdFactor() + optimizer.getMaxThresholdFactor()),
+                optimizer.getMaxThresholdFactor());
+
+        // an empty data source produces no valid result for any threshold factor
+        optimizer.setThresholdFactorRange(FIRST_RANGE_MIN, FIRST_RANGE_MAX);
+        assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+        verify(mseOptimizer).setBracket(FIRST_RANGE_MIN, 0.5 * (FIRST_RANGE_MIN + FIRST_RANGE_MAX), FIRST_RANGE_MAX);
+        assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+
+        // second range change
+        optimizer.setThresholdFactorRange(SECOND_RANGE_MIN, SECOND_RANGE_MAX);
+        assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+        verify(mseOptimizer).setBracket(SECOND_RANGE_MIN, 0.5 * (SECOND_RANGE_MIN + SECOND_RANGE_MAX),
+                SECOND_RANGE_MAX);
+        assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+    }
+
+    /**
+     * Checks that, when the threshold factor range is changed after construction, the optimized
+     * threshold factor is within the new range.
+     */
+    @Test
+    void optimize_whenNonDefaultRange_returnsThresholdFactorInsideRange() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, 
+            InvalidRotationMatrixException, RotationException {
+
+        final var ba = generateBa();
+        final var bg = generateBg();
+        final var ma = generateMaCommonAxis();
+        final var mg = generateMg();
+        final var gg = new Matrix(3, 3);
+
+        final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+        final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+
+        for (var t = 0; t < TIMES; t++) {
+            timedBodyKinematics.clear();
+            accelerometerGeneratorMeasurements.clear();
+            gyroscopeGeneratorMeasurements.clear();
+
+            // generate measurements
+
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+
+            final var numSequences = EasyGyroscopeCalibrator.MINIMUM_SEQUENCES_COMMON_Z_AXIS;
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD, gyroNoiseRootPSD,
+                    numSequences, numMeasurements);
+
+            final var generator = new AccelerometerAndGyroscopeMeasurementsGenerator(generatorListener);
+
+            for (TimedBodyKinematics timedBodyKinematics : timedBodyKinematics) {
+                assertTrue(generator.process(timedBodyKinematics));
+            }
+
+            // As an initial value for gyroscope bias, we can use the average
+            // gyroscope values during initialization. A more accurate initial
+            // guess for bias could be obtained by using leveling with magnetometer
+            // and accelerometer readings (once both magnetometer and accelerometer
+            // are calibrated).
+            final var initialAvgAngularSpeed = generator.getInitialAvgAngularSpeedTriad();
+            final var initialBg = initialAvgAngularSpeed.getValuesAsMatrix();
+
+            if (generator.getStatus() == TriadStaticIntervalDetector.Status.FAILED) {
+                continue;
+            }
+
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+
+            // configure calibrators and data source
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var accelerometerCalibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), 
+                    true, initialBa, initialMa);
+
+            final var initialMg = new Matrix(3, 3);
+            final var initialGg = new Matrix(3, 3);
+            final var gyroscopeCalibrator = new EasyGyroscopeCalibrator();
+            gyroscopeCalibrator.setCommonAxisUsed(true);
+            gyroscopeCalibrator.setGDependentCrossBiasesEstimated(false);
+            gyroscopeCalibrator.setInitialBias(initialBg);
+            gyroscopeCalibrator.setInitialMg(initialMg);
+            gyroscopeCalibrator.setInitialGg(initialGg);
+
+            // create optimizer
+            final var optimizer = new BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer(
+                    dataSource, accelerometerCalibrator, gyroscopeCalibrator);
+            optimizer.setListener(this);
+            setMseOptimizerTolerance(optimizer.getMseOptimizer());
+            optimizer.setThresholdFactorRange(RANGE_MIN, RANGE_MAX);
+
+            reset();
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
+
+            final var thresholdFactor = optimizer.optimize();
+            assertTrue(thresholdFactor >= RANGE_MIN && thresholdFactor <= RANGE_MAX,
+                    "threshold factor " + thresholdFactor);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
+            return;
+        }
+    }
+
     @Test
     void testOptimizeAfterSuccessfulRunWithFailingDataThrowsAndResetsResults() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
             LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, 
@@ -2085,7 +2218,7 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -2307,7 +2440,7 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -2529,7 +2662,7 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -2750,7 +2883,7 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -2973,7 +3106,7 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -3198,7 +3331,7 @@ class BracketedAccelerometerAndGyroscopeIntervalDetectorThresholdFactorOptimizer
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();

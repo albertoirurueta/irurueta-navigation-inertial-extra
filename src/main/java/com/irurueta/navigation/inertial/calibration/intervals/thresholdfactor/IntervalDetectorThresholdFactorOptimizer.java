@@ -19,7 +19,7 @@ import com.irurueta.navigation.LockedException;
 import com.irurueta.navigation.NotReadyException;
 
 /**
- * Optimizes the threshold factor for interval detection of accelerometer data based
+ * Optimizes the threshold factor for interval detection of accelerometer, gyroscope and/or magnetometer data based
  * on results of accelerometers, gyroscopes or magnetometers calibration.
  *
  * @param <T> type of data to be used as input for this optimizer.
@@ -214,7 +214,7 @@ public abstract class IntervalDetectorThresholdFactorOptimizer<T,
 
     /**
      * Optimizes the threshold factor for a static interval detector or measurement
-     * generator to minimize MSE (Minimum Squared Error) of estimated
+     * generator to minimize MSE (Mean Square Error) of estimated
      * calibration parameters.
      *
      * @return optimized threshold factor.

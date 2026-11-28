@@ -38,9 +38,30 @@ import com.irurueta.numerical.optimization.OnIterationCompletedListener;
  * {@link GyroscopeCalibratorMeasurementOrSequenceType#BODY_KINEMATICS_SEQUENCE}).
  * This implementation uses a {@link BracketedSingleOptimizer} to find the threshold
  * factor value that minimizes Mean Square Error (MSE) for calibration parameters.
+ * <p>
+ * The search range is the one defined by the minimum and maximum threshold factors
+ * (see {@code setThresholdFactorRange}). The bracket of the underlying optimizer is updated
+ * with that range (using its centre as intermediate point) each time an optimizer is set and
+ * before each optimization, so changes of the range are always honoured.
+ * <p>
+ * Notice that the objective function (MSE as a function of the threshold factor) is piecewise
+ * constant, since the detected static intervals only change at discrete threshold factor
+ * values. Hence, it contains plateaus where gradient-free bracketed methods such as Brent's
+ * cannot make progress, and the returned threshold factor is the best one <i>evaluated</i> by
+ * the optimizer, which is not necessarily the minimum within the range.
+ * For a reliable result, the {@code Exhaustive*} threshold factor optimizers are recommended
+ * as the default choice.
  */
 public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer extends
         GyroscopeIntervalDetectorThresholdFactorOptimizer {
+
+    /**
+     * Large finite value returned as the objective function value for threshold factors that
+     * are not valid (detection or calibration failed). A finite value is used instead of
+     * {@link Double#MAX_VALUE} to avoid numerical overflow within the bracketed optimizer.
+     */
+    private static final double INVALID_MSE_PENALTY = 1e30;
+
     /**
      * A bracketed single optimizer to find the threshold factor value that
      * minimizes the Mean Square Error (MSE) for calibration parameters.
@@ -231,15 +252,15 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer extends
 
         try {
             if (optimizer != null) {
-                optimizer.setBracket(minThresholdFactor, minThresholdFactor, maxThresholdFactor);
                 optimizer.setListener(optimizerListener);
                 optimizer.setOnIterationCompletedListener(iterationCompletedListener);
             }
             mseOptimizer = optimizer;
+            if (optimizer != null) {
+                updateBracket();
+            }
         } catch (final com.irurueta.numerical.LockedException e) {
             throw new LockedException(e);
-        } catch (final InvalidBracketRangeException ignore) {
-            // never happens
         }
     }
 
@@ -255,7 +276,7 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer extends
 
     /**
      * Optimizes the threshold factor for a static interval detector or measurement
-     * generator to minimize MSE (Minimum Squared Error) of estimated
+     * generator to minimize MSE (Mean Square Error) of estimated
      * calibration parameters.
      *
      * @return optimized threshold factor.
@@ -287,9 +308,10 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer extends
             }
 
             resetResults();
+            updateBracket();
             mseOptimizer.minimize();
 
-            if (minMse == Double.MAX_VALUE) {
+            if (minMse >= INVALID_MSE_PENALTY) {
                 // no threshold factor produced a valid calibration result
                 throw new IntervalDetectorThresholdFactorOptimizerException();
             }
@@ -299,10 +321,27 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer extends
             }
 
             return optimalThresholdFactor;
+        } catch (final com.irurueta.numerical.LockedException e) {
+            throw new LockedException(e);
         } catch (final NumericalException e) {
             throw new IntervalDetectorThresholdFactorOptimizerException(e);
         } finally {
             running = false;
+        }
+    }
+
+    /**
+     * Updates the bracket of the MSE optimizer so that it spans the current threshold factor
+     * range, using the centre of the range as intermediate point.
+     *
+     * @throws com.irurueta.numerical.LockedException if the MSE optimizer is locked.
+     */
+    private void updateBracket() throws com.irurueta.numerical.LockedException {
+        final var centre = 0.5 * (minThresholdFactor + maxThresholdFactor);
+        try {
+            mseOptimizer.setBracket(minThresholdFactor, centre, maxThresholdFactor);
+        } catch (final InvalidBracketRangeException ignore) {
+            // never happens because the threshold factor range is validated when set
         }
     }
 
@@ -312,10 +351,12 @@ public class BracketedGyroscopeIntervalDetectorThresholdFactorOptimizer extends
     private void initializeOptimizerListeners() {
         optimizerListener = point -> {
             try {
-                return evaluateForThresholdFactor(point);
+                final var mse = evaluateForThresholdFactor(point);
+                // invalid evaluations (MAX_VALUE) and non-finite values are mapped to a finite penalty
+                return Double.isFinite(mse) && mse < INVALID_MSE_PENALTY ? mse : INVALID_MSE_PENALTY;
             } catch (final CalibrationException | IntervalDetectorThresholdFactorOptimizerException ignore) {
                 // detection or calibration failed for this threshold factor, so it is not valid
-                return Double.MAX_VALUE;
+                return INVALID_MSE_PENALTY;
             } catch (final NavigationException e) {
                 throw new EvaluationException(e);
             }

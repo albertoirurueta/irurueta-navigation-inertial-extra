@@ -38,9 +38,13 @@ import com.irurueta.statistics.UniformRandomizer;
 import com.irurueta.units.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     private static final double TIME_INTERVAL_SECONDS = 0.02;
@@ -65,6 +69,13 @@ class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
     private static final double ABSOLUTE_ERROR = 1e-8;
     private static final double LARGE_ABSOLUTE_ERROR = 1e-6;
     private static final double VERY_LARGE_ABSOLUTE_ERROR = 1e-3;
+    private static final double RELATIVE_ERROR = 1e-6;
+
+    private static final int DRIFT_PERIOD_SAMPLES = 20;
+    private static final int DRIFT_PERIODS = 8;
+
+    private static final NEDPosition REFERENCE_POSITION = new NEDPosition(0.7, -0.1, 10.0);
+    private static final CoordinateTransformation REFERENCE_ORIENTATION = createReferenceOrientation();
 
     private int start;
     private int bodyKinematicsAdded;
@@ -16331,6 +16342,165 @@ class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         assertEquals(0, estimator.getNumberOfProcessedSamples());
     }
 
+    /**
+     * Checks that drift periods are closed after the expected number of samples, so that the first drift period
+     * is not closed after processing just one sample.
+     */
+    @Test
+    void addBodyKinematics_whenSeveralSamples_countsDriftPeriodsIncludingCurrentSample() throws AlgebraException,
+            LockedException, InvalidSourceAndDestinationFrameTypeException, RandomWalkEstimationException,
+            NotReadyException {
+        final var estimator = createEstimator();
+        estimator.setDriftPeriodSamples(DRIFT_PERIOD_SAMPLES);
+
+        final var samples = generateSamples(DRIFT_PERIOD_SAMPLES * DRIFT_PERIODS + 3);
+        for (var i = 0; i < samples.size(); i++) {
+            estimator.addBodyKinematics(samples.get(i));
+
+            assertEquals((i + 1) / DRIFT_PERIOD_SAMPLES, estimator.getNumberOfProcessedDriftPeriods());
+        }
+    }
+
+    /**
+     * Checks that the first drift period is not closed when drift period is a single sample and only one sample
+     * has been processed, and that it is closed when the configured number of samples has been reached.
+     */
+    @Test
+    void addBodyKinematics_whenFirstSample_doesNotCloseFirstPeriod() throws AlgebraException, LockedException,
+            InvalidSourceAndDestinationFrameTypeException, RandomWalkEstimationException, NotReadyException {
+        final var estimator = createEstimator();
+        estimator.setDriftPeriodSamples(2);
+
+        final var samples = generateSamples(2);
+        estimator.addBodyKinematics(samples.get(0));
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+
+        estimator.addBodyKinematics(samples.get(1));
+        assertEquals(1, estimator.getNumberOfProcessedDriftPeriods());
+    }
+
+    /**
+     * Checks that the variance of a known sequence of drifts (0, 2) is the population variance (1).
+     */
+    @Test
+    void addBodyKinematics_whenKnownDriftSequence_returnsPopulationVariance() throws AlgebraException,
+            LockedException, InvalidSourceAndDestinationFrameTypeException, RandomWalkEstimationException,
+            NotReadyException, ReflectiveOperationException {
+        final var estimator = createEstimator();
+        estimator.setDriftPeriodSamples(1);
+
+        final var driftEstimator = mock(DriftEstimator.class);
+        when(driftEstimator.isReady()).thenReturn(true);
+        when(driftEstimator.getCurrentPositionDriftNormMeters()).thenReturn(0.0, 2.0);
+        when(driftEstimator.getCurrentVelocityDriftNormMetersPerSecond()).thenReturn(0.0, 2.0);
+        when(driftEstimator.getCurrentOrientationDriftRadians()).thenReturn(0.0, 2.0);
+
+        final var field = RandomWalkEstimator.class.getDeclaredField("driftEstimator");
+        field.setAccessible(true);
+        field.set(estimator, driftEstimator);
+
+        final var samples = generateSamples(2);
+        estimator.addBodyKinematics(samples.get(0));
+        assertEquals(0.0, estimator.getPositionNoiseVariance(), 0.0);
+
+        estimator.addBodyKinematics(samples.get(1));
+
+        assertEquals(2, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(1.0, estimator.getPositionNoiseVariance(), ABSOLUTE_ERROR);
+        assertEquals(1.0, estimator.getVelocityNoiseVariance(), ABSOLUTE_ERROR);
+        assertEquals(1.0, estimator.getAttitudeNoiseVariance(), ABSOLUTE_ERROR);
+        assertEquals(1.0, estimator.getPositionUncertainty(), ABSOLUTE_ERROR);
+        assertEquals(1.0, estimator.getVelocityUncertainty(), ABSOLUTE_ERROR);
+        assertEquals(1.0, estimator.getAttitudeUncertainty(), ABSOLUTE_ERROR);
+    }
+
+    /**
+     * Checks that recursive variances match a batch computation of population variance over several drift
+     * periods.
+     */
+    @Test
+    void addBodyKinematics_whenSeveralPeriods_variancesMatchBatchPopulationVariance() throws AlgebraException,
+            LockedException, InvalidSourceAndDestinationFrameTypeException, RandomWalkEstimationException,
+            NotReadyException , DriftEstimationException {
+        final var estimator = createEstimator();
+        estimator.setDriftPeriodSamples(DRIFT_PERIOD_SAMPLES);
+
+        final var reference = new DriftEstimator(createReferenceFrame());
+        reference.setTimeInterval(TIME_INTERVAL_SECONDS);
+
+        final var positionDrifts = new double[DRIFT_PERIODS];
+        final var velocityDrifts = new double[DRIFT_PERIODS];
+        final var attitudeDrifts = new double[DRIFT_PERIODS];
+
+        final var samples = generateSamples(DRIFT_PERIOD_SAMPLES * DRIFT_PERIODS);
+        for (var i = 0; i < samples.size(); i++) {
+            estimator.addBodyKinematics(samples.get(i));
+            reference.addBodyKinematics(samples.get(i));
+
+            if ((i + 1) % DRIFT_PERIOD_SAMPLES == 0) {
+                final var period = i / DRIFT_PERIOD_SAMPLES;
+                positionDrifts[period] = reference.getCurrentPositionDriftNormMeters();
+                velocityDrifts[period] = reference.getCurrentVelocityDriftNormMetersPerSecond();
+                attitudeDrifts[period] = reference.getCurrentOrientationDriftRadians();
+                reference.reset();
+            }
+        }
+
+        assertEquals(DRIFT_PERIODS, estimator.getNumberOfProcessedDriftPeriods());
+
+        final var expectedPositionVariance = populationVariance(positionDrifts);
+        final var expectedVelocityVariance = populationVariance(velocityDrifts);
+        final var expectedAttitudeVariance = populationVariance(attitudeDrifts);
+
+        assertTrue(expectedPositionVariance > 0.0);
+        assertTrue(expectedVelocityVariance > 0.0);
+        assertTrue(expectedAttitudeVariance > 0.0);
+
+        assertEquals(expectedPositionVariance, estimator.getPositionNoiseVariance(),
+                expectedPositionVariance * RELATIVE_ERROR);
+        assertEquals(expectedVelocityVariance, estimator.getVelocityNoiseVariance(),
+                expectedVelocityVariance * RELATIVE_ERROR);
+        assertEquals(expectedAttitudeVariance, estimator.getAttitudeNoiseVariance(),
+                expectedAttitudeVariance * RELATIVE_ERROR);
+    }
+
+    /**
+     * Checks that resetting in the middle of a drift period discards the partial period, so that the next
+     * period starts clean.
+     */
+    @Test
+    void reset_whenInTheMiddleOfDriftPeriod_startsCleanFirstPeriod() throws AlgebraException, LockedException,
+            InvalidSourceAndDestinationFrameTypeException, RandomWalkEstimationException, NotReadyException {
+        final var estimator = createEstimator();
+        estimator.setDriftPeriodSamples(DRIFT_PERIOD_SAMPLES);
+
+        final var fresh = createEstimator();
+        fresh.setDriftPeriodSamples(DRIFT_PERIOD_SAMPLES);
+
+        final var samples = generateSamples(DRIFT_PERIOD_SAMPLES);
+
+        // process half a drift period and reset
+        for (var i = 0; i < DRIFT_PERIOD_SAMPLES / 2; i++) {
+            estimator.addBodyKinematics(samples.get(i));
+        }
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+        assertTrue(estimator.reset());
+        assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+
+        // a full drift period must now be processed and closed at the right sample
+        for (var i = 0; i < DRIFT_PERIOD_SAMPLES; i++) {
+            assertEquals(0, estimator.getNumberOfProcessedDriftPeriods());
+            estimator.addBodyKinematics(samples.get(i));
+            fresh.addBodyKinematics(samples.get(i));
+        }
+
+        assertEquals(1, estimator.getNumberOfProcessedDriftPeriods());
+        assertEquals(1, fresh.getNumberOfProcessedDriftPeriods());
+        assertEquals(fresh.getPositionUncertainty(), estimator.getPositionUncertainty(), ABSOLUTE_ERROR);
+        assertEquals(fresh.getVelocityUncertainty(), estimator.getVelocityUncertainty(), ABSOLUTE_ERROR);
+        assertEquals(fresh.getAttitudeUncertainty(), estimator.getAttitudeUncertainty(), ABSOLUTE_ERROR);
+    }
+
     @Override
     public void onStart(final RandomWalkEstimator estimator) {
         checkLocked(estimator);
@@ -16462,6 +16632,56 @@ class RandomWalkEstimatorTest implements RandomWalkEstimatorListener {
         start = 0;
         bodyKinematicsAdded = 0;
         reset = 0;
+    }
+
+    private static CoordinateTransformation createReferenceOrientation() {
+        return new CoordinateTransformation(0.1, -0.2, 0.3, FrameType.BODY_FRAME, FrameType.LOCAL_NAVIGATION_FRAME);
+    }
+
+    private static ECEFFrame createReferenceFrame() throws InvalidSourceAndDestinationFrameTypeException {
+        return NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(new NEDFrame(REFERENCE_POSITION,
+                REFERENCE_ORIENTATION));
+    }
+
+    private static RandomWalkEstimator createEstimator() throws InvalidSourceAndDestinationFrameTypeException,
+            LockedException {
+        final var estimator = new RandomWalkEstimator();
+        estimator.setNedPositionAndNedOrientation(REFERENCE_POSITION, REFERENCE_ORIENTATION);
+        estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
+        return estimator;
+    }
+
+    private static List<BodyKinematics> generateSamples(final int n) throws AlgebraException,
+            InvalidSourceAndDestinationFrameTypeException {
+        final var errors = new IMUErrors(generateBa(), generateBg(), generateMaCommonAxis(), generateMg(),
+                generateGg(), getAccelNoiseRootPSD(), getGyroNoiseRootPSD(), 0.0, 0.0);
+        final var ecefFrame = createReferenceFrame();
+        final var ecefC = ecefFrame.getCoordinateTransformation();
+        final var trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS, ecefC,
+                ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefFrame.getECEFPosition());
+
+        final var random = new Random();
+        final var result = new ArrayList<BodyKinematics>();
+        for (var i = 0; i < n; i++) {
+            final var kinematics = new BodyKinematics();
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, kinematics);
+            result.add(kinematics);
+        }
+        return result;
+    }
+
+    private static double populationVariance(final double[] values) {
+        var mean = 0.0;
+        for (final var value : values) {
+            mean += value;
+        }
+        mean /= values.length;
+
+        var result = 0.0;
+        for (final var value : values) {
+            result += (value - mean) * (value - mean);
+        }
+        return result / values.length;
     }
 
     private static Matrix generateBa() {

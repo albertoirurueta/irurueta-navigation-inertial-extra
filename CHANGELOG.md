@@ -24,6 +24,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `DefaultGyroscopeQualityScoreMapper` now scores sequences depending on their duration (`1 / (1 + duration)`).
 - The default threshold factor range `[2, 10]` is kept. With `irurueta-navigation-inertial` 1.12.1 the threshold factor
   refers to the variance-norm statistic (roughly the square of the factor used by previous versions).
+- Bracketed threshold factor optimizers now penalise invalid factors with `1e30` instead of `Double.MAX_VALUE`, start
+  from the centre of the configured range, and document the limitation of Brent's method on the piecewise-constant
+  objective (the exhaustive optimizers are recommended).
+- Behaviour changes in `RandomWalkEstimator` and `KalmanDriftEstimator`: the number of drift periods, the reported
+  variance values (now population variances) and the Kalman drift values differ from previous releases.
 
 ### Fixed
 
@@ -36,6 +41,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   initialization period, instead of deriving it from the base noise level. With `irurueta-navigation-inertial` 1.12.0
   or later that base noise level is variance-based, so the derived PSD had wrong units and gave a wrong accelerometer
   noise PSD to `INSLooselyCoupledKalmanConfigCreator`.
+- Bracketed optimizers now set the bracket from the current threshold factor range at the start of `optimize()`, with
+  a centre start, instead of ignoring the configured range.
+- `RandomWalkEstimator` closes a drift period when `(n + 1) % period == 0`, fixing an off-by-one in period counting.
+- `RandomWalkEstimator` computes variances with the Welford recursion (population variance) instead of an
+  unstable formula.
+- `RandomWalkEstimator.reset()` now also resets its internal drift estimator.
+- `KalmanDriftEstimator` feeds static position and zero-velocity fixes every epoch interval, and integrates the first
+  sample over one `timeInterval`.
+- Exhaustive optimizers iterate by index so the maximum threshold factor is always evaluated.
+- Javadoc corrections in the estimators and optimizers.
 
 ## [1.8.1] - 2026-11-17
 

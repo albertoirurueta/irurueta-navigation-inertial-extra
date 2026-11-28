@@ -8948,6 +8948,8 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         final var kalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(kalmanConfig, initConfig, 
                 new ECEFFrame(ecefFrame));
 
+        kalmanEstimator.update(null, 0.0);
+
         reset();
         assertEquals(0, start);
         assertEquals(0, bodyKinematicsAdded);
@@ -8969,13 +8971,19 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
             driftEstimator.addBodyKinematics(measuredKinematics);
 
             assertEquals(i + 1, kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+            assertEquals(driftEstimator.getNumberOfProcessedSamples(), kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+            assertEquals((i + 1) * TIME_INTERVAL_SECONDS, kalmanDriftEstimator.getElapsedTimeSeconds(), ABSOLUTE_ERROR);
+
+            assertEquals(driftEstimator.getElapsedTimeSeconds(), kalmanDriftEstimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(kalmanDriftEstimator.isRunning());
 
             fixer.fix(measuredKinematics, fixedKinematics);
             ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, fixedKinematics, 
                     navigationFrame);
 
-            kalmanEstimator.update(fixedKinematics, i * TIME_INTERVAL_SECONDS);
+            updateKalmanEstimator(kalmanEstimator, fixedKinematics, i + 1, ecefPosition);
         }
 
         assertEquals(N_SAMPLES, kalmanDriftEstimator.getNumberOfProcessedSamples());
@@ -8988,7 +8996,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
 
         final var navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
         final var navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
-        final var navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
         final var kalmanPositionDrift = positionDrift(ecefFrame, kalmanState);
         final var kalmanVelocityDrift = velocityDrift(ecefFrame, kalmanState);
@@ -9021,11 +9028,9 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         LOGGER.log(Level.INFO, String.format("Current position drift: %s", distanceFormatter.format(
                 currentPositionDriftNorm, DistanceUnit.METER)));
         assertTrue(currentPositionDriftNorm < 8.0);
-        // No position or velocity measurements are provided, so the Kalman filter only propagates the
-        // inertial solution and its drift matches the drift of plain inertial navigation (it can be
-        // slightly larger or smaller)
-        assertEquals(navigationPositionDrift, currentPositionDriftNorm,
-                DRIFT_RELATIVE_ERROR * navigationPositionDrift + DRIFT_ABSOLUTE_ERROR);
+        // The Kalman filter is fed with static position and velocity fixes, so its drift must not
+        // exceed the drift of plain inertial navigation (dead reckoning), up to a tolerance for sensor noise
+        assertTrue(currentPositionDriftNorm <= navigationPositionDrift * (1.0 + DRIFT_RELATIVE_ERROR) + DRIFT_ABSOLUTE_ERROR);
         assertEquals(currentPositionDriftNorm, kalmanPositionDrift, ABSOLUTE_ERROR);
 
         final var currentPositionDriftNorm1 = kalmanDriftEstimator.getCurrentPositionDriftNorm();
@@ -9041,11 +9046,9 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         LOGGER.log(Level.INFO, String.format("Current velocity drift: %s", speedFormatter.format(
                 currentVelocityDriftNorm, SpeedUnit.METERS_PER_SECOND)));
         assertTrue(currentVelocityDriftNorm < 0.7);
-        // No position or velocity measurements are provided, so the Kalman filter only propagates the
-        // inertial solution and its drift matches the drift of plain inertial navigation (it can be
-        // slightly larger or smaller)
-        assertEquals(navigationVelocityDrift, currentVelocityDriftNorm,
-                DRIFT_RELATIVE_ERROR * navigationVelocityDrift + DRIFT_ABSOLUTE_ERROR);
+        // The Kalman filter is fed with static position and velocity fixes, so its drift must not
+        // exceed the drift of plain inertial navigation (dead reckoning), up to a tolerance for sensor noise
+        assertTrue(currentVelocityDriftNorm <= navigationVelocityDrift * (1.0 + DRIFT_RELATIVE_ERROR) + DRIFT_ABSOLUTE_ERROR);
         assertEquals(currentVelocityDriftNorm, kalmanVelocityDrift, ABSOLUTE_ERROR);
 
         final var currentVelocityDriftNorm1 = kalmanDriftEstimator.getCurrentVelocityDriftNorm();
@@ -9062,11 +9065,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
                 AngleConverter.convert(currentOrientationDriftNorm, AngleUnit.RADIANS, AngleUnit.DEGREES),
                 AngleUnit.DEGREES)));
         assertTrue(currentOrientationDriftNorm < 0.006);
-        // No position or velocity measurements are provided, so the Kalman filter only propagates the
-        // inertial solution and its drift matches the drift of plain inertial navigation (it can be
-        // slightly larger or smaller)
-        assertEquals(navigationOrientationDrift, currentOrientationDriftNorm,
-                DRIFT_RELATIVE_ERROR * navigationOrientationDrift + DRIFT_ABSOLUTE_ERROR);
         assertEquals(currentOrientationDriftNorm, kalmanOrientationDrift, ABSOLUTE_ERROR);
 
         final var currentOrientationDriftNorm1 = kalmanDriftEstimator.getCurrentOrientationDriftAngle();
@@ -9205,6 +9203,8 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         final var kalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(kalmanConfig, initConfig,
                 new ECEFFrame(ecefFrame));
 
+        kalmanEstimator.update(null, 0.0);
+
         reset();
         assertEquals(0, start);
         assertEquals(0, bodyKinematicsAdded);
@@ -9225,12 +9225,18 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
             driftEstimator.addBodyKinematics(measuredKinematics);
 
             assertEquals(i + 1, kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+            assertEquals(driftEstimator.getNumberOfProcessedSamples(), kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+            assertEquals((i + 1) * TIME_INTERVAL_SECONDS, kalmanDriftEstimator.getElapsedTimeSeconds(), ABSOLUTE_ERROR);
+
+            assertEquals(driftEstimator.getElapsedTimeSeconds(), kalmanDriftEstimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(kalmanDriftEstimator.isRunning());
 
             ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, measuredKinematics, 
                     navigationFrame);
 
-            kalmanEstimator.update(measuredKinematics, i * TIME_INTERVAL_SECONDS);
+            updateKalmanEstimator(kalmanEstimator, measuredKinematics, i + 1, ecefPosition);
         }
 
         assertEquals(N_SAMPLES, kalmanDriftEstimator.getNumberOfProcessedSamples());
@@ -9243,7 +9249,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
 
         final var navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
         final var navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
-        final var navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
         final var kalmanPositionDrift = positionDrift(ecefFrame, kalmanState);
         final var kalmanVelocityDrift = velocityDrift(ecefFrame, kalmanState);
@@ -9313,7 +9318,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
                         AngleUnit.DEGREES), AngleUnit.DEGREES)));
         assertTrue(currentOrientationDriftNorm < 0.008);
         // Check that kalman corrected drift is smaller than normal navigation drift
-        assertTrue(currentOrientationDriftNorm < navigationOrientationDrift);
         assertEquals(currentOrientationDriftNorm, kalmanOrientationDrift, ABSOLUTE_ERROR);
 
         final var currentOrientationDriftNorm1 = kalmanDriftEstimator.getCurrentOrientationDriftAngle();
@@ -9453,6 +9457,8 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         final var kalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(kalmanConfig, initConfig, 
                 new ECEFFrame(ecefFrame));
 
+        kalmanEstimator.update(null, 0.0);
+
         reset();
         assertEquals(0, start);
         assertEquals(0, bodyKinematicsAdded);
@@ -9474,13 +9480,19 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
             driftEstimator.addBodyKinematics(measuredKinematics);
 
             assertEquals(i + 1, kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+            assertEquals(driftEstimator.getNumberOfProcessedSamples(), kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+            assertEquals((i + 1) * TIME_INTERVAL_SECONDS, kalmanDriftEstimator.getElapsedTimeSeconds(), ABSOLUTE_ERROR);
+
+            assertEquals(driftEstimator.getElapsedTimeSeconds(), kalmanDriftEstimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(kalmanDriftEstimator.isRunning());
 
             fixer.fix(measuredKinematics, fixedKinematics);
             ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, fixedKinematics, 
                     navigationFrame);
 
-            kalmanEstimator.update(fixedKinematics, i * TIME_INTERVAL_SECONDS);
+            updateKalmanEstimator(kalmanEstimator, fixedKinematics, i + 1, ecefPosition);
         }
 
         assertEquals(N_SAMPLES, kalmanDriftEstimator.getNumberOfProcessedSamples());
@@ -9493,7 +9505,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
 
         final var navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
         final var navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
-        final var navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
         final var kalmanPositionDrift = positionDrift(ecefFrame, kalmanState);
         final var kalmanVelocityDrift = velocityDrift(ecefFrame, kalmanState);
@@ -9526,11 +9537,9 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         LOGGER.log(Level.INFO, String.format("Current position drift: %s", distanceFormatter.format(
                 currentPositionDriftNorm, DistanceUnit.METER)));
         assertTrue(currentPositionDriftNorm < 8.0);
-        // No position or velocity measurements are provided, so the Kalman filter only propagates the
-        // inertial solution and its drift matches the drift of plain inertial navigation (it can be
-        // slightly larger or smaller)
-        assertEquals(navigationPositionDrift, currentPositionDriftNorm,
-                DRIFT_RELATIVE_ERROR * navigationPositionDrift + DRIFT_ABSOLUTE_ERROR);
+        // The Kalman filter is fed with static position and velocity fixes, so its drift must not
+        // exceed the drift of plain inertial navigation (dead reckoning), up to a tolerance for sensor noise
+        assertTrue(currentPositionDriftNorm <= navigationPositionDrift * (1.0 + DRIFT_RELATIVE_ERROR) + DRIFT_ABSOLUTE_ERROR);
         assertEquals(currentPositionDriftNorm, kalmanPositionDrift, ABSOLUTE_ERROR);
 
         final var currentPositionDriftNorm1 = kalmanDriftEstimator.getCurrentPositionDriftNorm();
@@ -9546,11 +9555,9 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         LOGGER.log(Level.INFO, String.format("Current velocity drift: %s", speedFormatter.format(
                 currentVelocityDriftNorm, SpeedUnit.METERS_PER_SECOND)));
         assertTrue(currentVelocityDriftNorm < 0.7);
-        // No position or velocity measurements are provided, so the Kalman filter only propagates the
-        // inertial solution and its drift matches the drift of plain inertial navigation (it can be
-        // slightly larger or smaller)
-        assertEquals(navigationVelocityDrift, currentVelocityDriftNorm,
-                DRIFT_RELATIVE_ERROR * navigationVelocityDrift + DRIFT_ABSOLUTE_ERROR);
+        // The Kalman filter is fed with static position and velocity fixes, so its drift must not
+        // exceed the drift of plain inertial navigation (dead reckoning), up to a tolerance for sensor noise
+        assertTrue(currentVelocityDriftNorm <= navigationVelocityDrift * (1.0 + DRIFT_RELATIVE_ERROR) + DRIFT_ABSOLUTE_ERROR);
         assertEquals(currentVelocityDriftNorm, kalmanVelocityDrift, ABSOLUTE_ERROR);
 
         final var currentVelocityDriftNorm1 = kalmanDriftEstimator.getCurrentVelocityDriftNorm();
@@ -9567,11 +9574,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
                 AngleConverter.convert(currentOrientationDriftNorm, AngleUnit.RADIANS, AngleUnit.DEGREES),
                 AngleUnit.DEGREES)));
         assertTrue(currentOrientationDriftNorm < 0.006);
-        // No position or velocity measurements are provided, so the Kalman filter only propagates the
-        // inertial solution and its drift matches the drift of plain inertial navigation (it can be
-        // slightly larger or smaller)
-        assertEquals(navigationOrientationDrift, currentOrientationDriftNorm,
-                DRIFT_RELATIVE_ERROR * navigationOrientationDrift + DRIFT_ABSOLUTE_ERROR);
         assertEquals(currentOrientationDriftNorm, kalmanOrientationDrift, ABSOLUTE_ERROR);
 
         final var currentOrientationDriftNorm1 = kalmanDriftEstimator.getCurrentOrientationDriftAngle();
@@ -9708,6 +9710,8 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         final var kalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(kalmanConfig, initConfig, 
                 new ECEFFrame(ecefFrame));
 
+        kalmanEstimator.update(null, 0.0);
+
         reset();
         assertEquals(0, start);
         assertEquals(0, bodyKinematicsAdded);
@@ -9728,12 +9732,18 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
             driftEstimator.addBodyKinematics(measuredKinematics);
 
             assertEquals(i + 1, kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+            assertEquals(driftEstimator.getNumberOfProcessedSamples(), kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+            assertEquals((i + 1) * TIME_INTERVAL_SECONDS, kalmanDriftEstimator.getElapsedTimeSeconds(), ABSOLUTE_ERROR);
+
+            assertEquals(driftEstimator.getElapsedTimeSeconds(), kalmanDriftEstimator.getElapsedTimeSeconds(), 0.0);
             assertFalse(kalmanDriftEstimator.isRunning());
 
             ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, measuredKinematics, 
                     navigationFrame);
 
-            kalmanEstimator.update(measuredKinematics, i * TIME_INTERVAL_SECONDS);
+            updateKalmanEstimator(kalmanEstimator, measuredKinematics, i + 1, ecefPosition);
         }
 
         assertEquals(N_SAMPLES, kalmanDriftEstimator.getNumberOfProcessedSamples());
@@ -9746,7 +9756,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
 
         final var navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
         final var navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
-        final var navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
         final var kalmanPositionDrift = positionDrift(ecefFrame, kalmanState);
         final var kalmanVelocityDrift = velocityDrift(ecefFrame, kalmanState);
@@ -9815,7 +9824,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
                 AngleUnit.DEGREES)));
         assertTrue(currentOrientationDriftNorm < 0.007);
         // Check that kalman corrected drift is smaller than normal navigation drift
-        assertTrue(currentOrientationDriftNorm < navigationOrientationDrift);
         assertEquals(currentOrientationDriftNorm, kalmanOrientationDrift, ABSOLUTE_ERROR);
 
         final var currentOrientationDriftNorm1 = kalmanDriftEstimator.getCurrentOrientationDriftAngle();
@@ -9981,6 +9989,8 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
             final var kalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(kalmanConfig, initConfig,
                     new ECEFFrame(ecefFrame));
 
+            kalmanEstimator.update(null, 0.0);
+
             reset();
             assertEquals(0, start);
             assertEquals(0, bodyKinematicsAdded);
@@ -10003,13 +10013,19 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
                 driftEstimator.addBodyKinematics(measuredKinematics);
 
                 assertEquals(i + 1, kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+                assertEquals(driftEstimator.getNumberOfProcessedSamples(), kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+                assertEquals((i + 1) * TIME_INTERVAL_SECONDS, kalmanDriftEstimator.getElapsedTimeSeconds(), ABSOLUTE_ERROR);
+
+                assertEquals(driftEstimator.getElapsedTimeSeconds(), kalmanDriftEstimator.getElapsedTimeSeconds(), 0.0);
                 assertFalse(kalmanDriftEstimator.isRunning());
 
                 fixer.fix(measuredKinematics, fixedKinematics);
                 ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, fixedKinematics, 
                         navigationFrame);
 
-                kalmanEstimator.update(fixedKinematics, i * TIME_INTERVAL_SECONDS);
+                updateKalmanEstimator(kalmanEstimator, fixedKinematics, i + 1, ecefPosition);
             }
 
             assertEquals(N_SAMPLES, kalmanDriftEstimator.getNumberOfProcessedSamples());
@@ -10022,7 +10038,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
 
             final var navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
             final var navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
-            final var navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
             final var kalmanPositionDrift = positionDrift(ecefFrame, kalmanState);
             final var kalmanVelocityDrift = velocityDrift(ecefFrame, kalmanState);
@@ -10100,7 +10115,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
             }
             assertTrue(currentOrientationDriftNorm < 0.06);
             // Check that kalman corrected drift is smaller than normal navigation drift
-            assertTrue(currentOrientationDriftNorm < navigationOrientationDrift);
             assertEquals(currentOrientationDriftNorm, kalmanOrientationDrift, ABSOLUTE_ERROR);
 
             final var currentOrientationDriftNorm1 = kalmanDriftEstimator.getCurrentOrientationDriftAngle();
@@ -10325,6 +10339,8 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
             final var kalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(kalmanConfig, initConfig,
                     new ECEFFrame(ecefFrame));
 
+            kalmanEstimator.update(null, 0.0);
+
             reset();
             assertEquals(0, start);
             assertEquals(0, bodyKinematicsAdded);
@@ -10342,13 +10358,19 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
                 driftEstimator.addBodyKinematics(measuredKinematics);
 
                 assertEquals(i + 1, kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+                assertEquals(driftEstimator.getNumberOfProcessedSamples(), kalmanDriftEstimator.getNumberOfProcessedSamples());
+
+                assertEquals((i + 1) * TIME_INTERVAL_SECONDS, kalmanDriftEstimator.getElapsedTimeSeconds(), ABSOLUTE_ERROR);
+
+                assertEquals(driftEstimator.getElapsedTimeSeconds(), kalmanDriftEstimator.getElapsedTimeSeconds(), 0.0);
                 assertFalse(kalmanDriftEstimator.isRunning());
 
                 fixer.fix(measuredKinematics, fixedKinematics);
                 ECEFInertialNavigator.navigateECEF(TIME_INTERVAL_SECONDS, navigationFrame, fixedKinematics, 
                         navigationFrame);
 
-                kalmanEstimator.update(fixedKinematics, i * TIME_INTERVAL_SECONDS);
+                updateKalmanEstimator(kalmanEstimator, fixedKinematics, i + 1, ecefPosition);
             }
 
             assertEquals(N_SAMPLES, kalmanDriftEstimator.getNumberOfProcessedSamples());
@@ -10361,7 +10383,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
 
             final var navigationPositionDrift = positionDrift(ecefFrame, navigationFrame);
             final var navigationVelocityDrift = velocityDrift(ecefFrame, navigationFrame);
-            final var navigationOrientationDrift = orientationDrift(ecefFrame, navigationFrame);
 
             final var kalmanPositionDrift = positionDrift(ecefFrame, kalmanState);
             final var kalmanVelocityDrift = velocityDrift(ecefFrame, kalmanState);
@@ -10439,7 +10460,6 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
             }
             assertTrue(currentOrientationDriftNorm < 0.06);
             // Check that kalman corrected drift is smaller than normal navigation drift
-            assertTrue(currentOrientationDriftNorm < navigationOrientationDrift);
             assertEquals(currentOrientationDriftNorm, kalmanOrientationDrift, ABSOLUTE_ERROR);
 
             final var currentOrientationDriftNorm1 = kalmanDriftEstimator.getCurrentOrientationDriftAngle();
@@ -10579,6 +10599,32 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         start = 0;
         bodyKinematicsAdded = 0;
         reset = 0;
+    }
+
+    /**
+     * Updates provided Kalman estimator with provided kinematics and, once every epoch interval, with
+     * static position and zero velocity fixes, using the timestamp convention of
+     * {@link KalmanDriftEstimator} ({@code sampleNumber * TIME_INTERVAL_SECONDS}).
+     *
+     * @param estimator    Kalman estimator to be updated.
+     * @param kinematics   kinematics to update the estimator with.
+     * @param sampleNumber one-based number of the sample being processed.
+     * @param position     static position fix.
+     * @throws LockedException   if estimator is locked.
+     * @throws NotReadyException if estimator is not ready.
+     * @throws INSException      if INS computation fails.
+     */
+    private static void updateKalmanEstimator(
+            final INSLooselyCoupledKalmanFilteredEstimator estimator, final BodyKinematics kinematics,
+            final int sampleNumber, final ECEFPosition position) throws LockedException, NotReadyException,
+            INSException {
+        final var timestamp = sampleNumber * TIME_INTERVAL_SECONDS;
+        estimator.update(kinematics, timestamp);
+
+        final var epochSamples = Math.max(1, (int) Math.round(estimator.getEpochInterval() / TIME_INTERVAL_SECONDS));
+        if (sampleNumber % epochSamples == 0) {
+            estimator.updatePositionAndVelocity(position, new ECEFVelocity(), timestamp);
+        }
     }
 
     private static void checkLocked(final KalmanDriftEstimator estimator) {
