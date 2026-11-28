@@ -49,9 +49,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `RandomWalkEstimator` computes variances with the Welford recursion (population variance) instead of an
   unstable formula.
 - `RandomWalkEstimator.reset()` now also resets its internal drift estimator.
-- `KalmanDriftEstimator` feeds static position and zero-velocity fixes every epoch interval, and integrates the first
-  sample over one `timeInterval`.
-- Exhaustive optimizers iterate by index so the maximum threshold factor is always evaluated.
+- `KalmanDriftEstimator` feeds static fixes (position and velocity of the reference frame, zero velocity for a static
+  body) every epoch interval, rounded up to a whole number of samples so the filter never rejects them, and integrates
+  the first sample over one `timeInterval`.
+- Exhaustive optimizers iterate by index and always evaluate the maximum threshold factor, also when the range is
+  not a multiple of the step. `optimize()` throws `IntervalDetectorThresholdFactorOptimizerException` when the step is
+  too small for the range.
 - Javadoc corrections in the estimators and optimizers.
 
 ## [1.8.1] - 2026-11-17

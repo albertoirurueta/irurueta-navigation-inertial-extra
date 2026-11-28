@@ -77,7 +77,8 @@ samples.
 * `reset()` also resets the internal drift estimator, so a reused `RandomWalkEstimator` starts from a clean state.
 * The bias power spectral density is a documented heuristic,
 `(||mean bias|| / elapsed time)^2 * timeInterval`. It is not an Allan-variance estimate.
-* `KalmanDriftEstimator` feeds static position and zero-velocity fixes to the Kalman filter every epoch interval.
+* `KalmanDriftEstimator` feeds static fixes to the Kalman filter every epoch interval, using the position and velocity
+of the reference frame (zero velocity for a static body).
 The first sample is integrated over one `timeInterval`.
 
 == Core concept: threshold factor optimization
@@ -112,7 +113,8 @@ the threshold factor is piecewise constant, so Brent's method can stop at a loca
 are recommended when the best factor matters.
 * Invalid threshold factors are penalised with the constant `1e30` instead of `Double.MAX_VALUE`, which keeps the
 objective finite for the search.
-* The exhaustive optimizers iterate by index, so the maximum threshold factor of the range is always evaluated.
+* The exhaustive optimizers iterate by index and always evaluate the maximum threshold factor of the range, also when
+the range is not a multiple of the step.
 * Issues E1 and E2 reported in #29 are fixed, and E3 is confirmed resolved: the default range `[2, 10]` is correct for
 the variance-norm statistic.
 

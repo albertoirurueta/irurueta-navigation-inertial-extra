@@ -468,6 +468,36 @@ class ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizerTest implem
     }
 
     @Test
+    void testComputeExhaustiveCount() throws IntervalDetectorThresholdFactorOptimizerException {
+        // range is a multiple of the step: both limits are evaluated once
+        assertEquals(9, IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 10.0, 1.0));
+        assertEquals(4, IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(0.0, 0.3, 0.1));
+        assertEquals(81, IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 10.0, 0.1));
+
+        // range is not a multiple of the step: the maximum is evaluated as an extra value, both
+        // when the remainder is smaller and larger than half a step
+        assertEquals(82, IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 10.04, 0.1));
+        assertEquals(82, IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 10.06, 0.1));
+        assertEquals(4, IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(0.0, 0.25, 0.1));
+
+        // the last evaluated value never exceeds the maximum and reaches it
+        final var count = IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 10.04, 0.1);
+        assertEquals(10.04, Math.min(10.04, 2.0 + (count - 1) * 0.1), 0.0);
+        assertTrue(2.0 + (count - 2) * 0.1 < 10.04);
+
+        // step larger than the range: minimum and maximum
+        assertEquals(2, IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 3.0, 5.0));
+        // empty range
+        assertEquals(1, IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 2.0, 1.0));
+
+        // step too small for the range
+        assertThrows(IntervalDetectorThresholdFactorOptimizerException.class,
+                () -> IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 10.0, 1e-9));
+        assertThrows(IntervalDetectorThresholdFactorOptimizerException.class,
+                () -> IntervalDetectorThresholdFactorOptimizer.computeExhaustiveCount(2.0, 10.0, 0.0));
+    }
+
+    @Test
     void testGetSetThresholdFactorStep() throws LockedException {
         final var optimizer = new ExhaustiveAccelerometerIntervalDetectorThresholdFactorOptimizer();
 

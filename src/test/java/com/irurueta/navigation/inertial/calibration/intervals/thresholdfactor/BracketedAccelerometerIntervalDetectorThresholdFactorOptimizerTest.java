@@ -1172,7 +1172,8 @@ class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest impleme
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress >= 0.0f && progress <= 1.0f);
+            // completion is always notified when optimization succeeds
+            assertEquals(1.0f, progress, 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -1668,7 +1669,8 @@ class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest impleme
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress >= 0.0f && progress <= 1.0f);
+            // completion is always notified when optimization succeeds
+            assertEquals(1.0f, progress, 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -1800,7 +1802,8 @@ class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest impleme
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress >= 0.0f && progress <= 1.0f);
+            // completion is always notified when optimization succeeds
+            assertEquals(1.0f, progress, 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -1938,7 +1941,8 @@ class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest impleme
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress >= 0.0f && progress <= 1.0f);
+            // completion is always notified when optimization succeeds
+            assertEquals(1.0f, progress, 0.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
