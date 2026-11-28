@@ -169,8 +169,7 @@ public class ExhaustiveAccelerometerAndGyroscopeIntervalDetectorThresholdFactorO
             running = true;
 
             initProgress();
-            final var count = Math.max(1,
-                    (int) Math.round((maxThresholdFactor - minThresholdFactor) / thresholdFactorStep) + 1);
+            final var count = computeExhaustiveCount(minThresholdFactor, maxThresholdFactor, thresholdFactorStep);
             final var progressStep = 1.0f / count;
 
             if (listener != null) {

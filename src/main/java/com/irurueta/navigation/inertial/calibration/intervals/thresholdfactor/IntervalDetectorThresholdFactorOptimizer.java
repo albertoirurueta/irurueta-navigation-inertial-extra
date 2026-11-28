@@ -29,6 +29,12 @@ public abstract class IntervalDetectorThresholdFactorOptimizer<T,
         S extends IntervalDetectorThresholdFactorOptimizerDataSource<T>> {
 
     /**
+     * Tolerance, relative to the step, used to decide whether the threshold factor range is a
+     * multiple of the step of an exhaustive search.
+     */
+    private static final double EXHAUSTIVE_STEP_TOLERANCE = 1e-9;
+
+    /**
      * Default amount of progress variation before notifying a change in optimization progress.
      * By default, this is set to 5%.
      */
@@ -249,6 +255,42 @@ public abstract class IntervalDetectorThresholdFactorOptimizer<T,
             previousProgress = 1.0f;
             listener.onOptimizeProgressChange(this, 1.0f);
         }
+    }
+
+    /**
+     * Computes the number of threshold factor values that an exhaustive search evaluates
+     * within the provided range using the provided step.
+     * Evaluated values are {@code min + i * step} for every value not exceeding the maximum,
+     * plus the maximum itself when the range is not a multiple of the step, so that both
+     * limits of the range are always evaluated.
+     * The i-th evaluated value must be computed as {@code Math.min(max, min + i * step)}.
+     *
+     * @param minThresholdFactor  minimum threshold factor.
+     * @param maxThresholdFactor  maximum threshold factor.
+     * @param thresholdFactorStep step between consecutive threshold factors.
+     * @return number of threshold factor values to evaluate (at least 1).
+     * @throws IntervalDetectorThresholdFactorOptimizerException if the step is so small for
+     *                                                           the range that the number of
+     *                                                           values cannot be represented.
+     */
+    protected static int computeExhaustiveCount(
+            final double minThresholdFactor, final double maxThresholdFactor, final double thresholdFactorStep)
+            throws IntervalDetectorThresholdFactorOptimizerException {
+        final var ratio = (maxThresholdFactor - minThresholdFactor) / thresholdFactorStep;
+        if (!(ratio < Integer.MAX_VALUE - 2)) {
+            // too many values (or not a number)
+            throw new IntervalDetectorThresholdFactorOptimizerException();
+        }
+        if (ratio <= 0.0) {
+            return 1;
+        }
+
+        // whole steps fitting within the range (tolerance avoids losing the last step because of
+        // floating-point error when the range is a multiple of the step)
+        final var steps = Math.floor(ratio + EXHAUSTIVE_STEP_TOLERANCE);
+        // when the range is not a multiple of the step, the maximum is evaluated as an extra value
+        final var extra = ratio - steps > EXHAUSTIVE_STEP_TOLERANCE ? 1 : 0;
+        return (int) steps + 1 + extra;
     }
 
     /**

@@ -10621,10 +10621,60 @@ class KalmanDriftEstimatorTest implements DriftEstimatorListener {
         final var timestamp = sampleNumber * TIME_INTERVAL_SECONDS;
         estimator.update(kinematics, timestamp);
 
-        final var epochSamples = Math.max(1, (int) Math.round(estimator.getEpochInterval() / TIME_INTERVAL_SECONDS));
+        final var epochSamples = Math.max(1,
+                (int) Math.ceil(estimator.getEpochInterval() / TIME_INTERVAL_SECONDS - 1e-9));
         if (sampleNumber % epochSamples == 0) {
-            estimator.updatePositionAndVelocity(position, new ECEFVelocity(), timestamp);
+            // the fix must be accepted, so that a Kalman epoch is really run
+            assertTrue(estimator.updatePositionAndVelocity(position, new ECEFVelocity(), timestamp));
         }
+    }
+
+    @Test
+    void testAddBodyKinematicsWithNonZeroReferenceVelocity() throws AlgebraException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, DriftEstimationException,
+            NotReadyException {
+
+        final var kalmanConfig = generateKalmanConfig();
+        final var initConfig = generateInitConfig();
+
+        final var ba = generateBa();
+        final var ma = generateMaCommonAxis();
+        final var bg = generateBg();
+        final var mg = generateMg();
+        final var gg = generateGg();
+
+        final var errors = new IMUErrors(ba, bg, ma, mg, gg, 0.0, 0.0, 0.0, 0.0);
+
+        final var nedFrame = generateFrame();
+        final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+        final var ecefC = ecefFrame.getCoordinateTransformation();
+        final var ecefPosition = ecefFrame.getECEFPosition();
+
+        final var estimator = new KalmanDriftEstimator(nedFrame, ba, ma, bg, mg, gg, kalmanConfig, initConfig);
+        estimator.setTimeInterval(TIME_INTERVAL_SECONDS);
+
+        // velocity drift is measured against the reference velocity, so the velocity fix
+        // provided to the Kalman filter must be the reference velocity (not zero)
+        final var referenceSpeed = 1.0;
+        estimator.setReferenceEcefVelocity(new ECEFVelocity(referenceSpeed, 0.0, 0.0));
+
+        final var trueKinematics = ECEFKinematicsEstimator.estimateKinematicsAndReturnNew(TIME_INTERVAL_SECONDS, ecefC,
+                ecefC, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ecefPosition);
+
+        final var measuredKinematics = new BodyKinematics();
+        final var random = new Random();
+        for (var i = 0; i < N_SAMPLES; i++) {
+            BodyKinematicsGenerator.generate(TIME_INTERVAL_SECONDS, trueKinematics, errors, random, measuredKinematics);
+            estimator.addBodyKinematics(measuredKinematics);
+        }
+
+        final var velocityDrift = estimator.getCurrentVelocityDriftNormMetersPerSecond();
+        assertNotNull(velocityDrift);
+        LOGGER.log(Level.INFO, String.format("Velocity drift with non-zero reference velocity: %f m/s",
+                velocityDrift));
+
+        // a zero velocity fix would make drift approach the reference speed
+        assertTrue(velocityDrift < 0.5 * referenceSpeed);
     }
 
     private static void checkLocked(final KalmanDriftEstimator estimator) {

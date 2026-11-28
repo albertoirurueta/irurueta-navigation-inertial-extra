@@ -36,7 +36,8 @@ import com.irurueta.navigation.inertial.INSLooselyCoupledKalmanState;
  * unit of time using an INS Kalman filtered solution.
  * The internal Kalman filter is fed with every provided (and optionally fixed)
  * body kinematics sample, and additionally with static position and velocity
- * fixes (reference frame position and zero velocity) once every epoch interval of
+ * fixes (position and velocity of the reference frame, the latter being zero for a
+ * static body) once every epoch interval of
  * the Kalman filter, so that the filtered solution is corrected while the body
  * remains static.
  * Timestamps provided to the Kalman filter follow the convention
@@ -75,14 +76,24 @@ public class KalmanDriftEstimator extends DriftEstimator {
     private final ECEFPosition referenceEcefPosition = new ECEFPosition();
 
     /**
-     * Zero velocity used as a static velocity fix of the Kalman filter.
+     * Reference velocity used as a static velocity fix of the Kalman filter.
+     * This is the velocity of the reference frame (zero for a static body), which
+     * is also the velocity that velocity drift is measured against.
      */
-    private final ECEFVelocity zeroEcefVelocity = new ECEFVelocity();
+    private final ECEFVelocity referenceEcefVelocity = new ECEFVelocity();
 
     /**
      * Number of samples between consecutive static position and velocity fixes.
      */
     private int epochSamples = 1;
+
+    /**
+     * Relative tolerance used when converting the Kalman filter epoch interval
+     * into a number of samples, so that an epoch interval that is an exact
+     * multiple of the time interval is not rounded up because of floating-point
+     * error.
+     */
+    private static final double EPOCH_SAMPLES_TOLERANCE = 1e-9;
 
     /**
      * Constructor.
@@ -1033,7 +1044,8 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * Every sample is integrated by the internal Kalman filter using timestamp
      * {@code (numberOfProcessedSamples + 1) * timeInterval}, and once every epoch
      * interval of the Kalman filter, a static position (reference frame position)
-     * and zero velocity fix is provided to it using the same timestamp.
+     * and velocity (reference frame velocity, zero for a static body) fix is provided to
+     * it using the same timestamp.
      *
      * @param kinematics measured body kinematics.
      * @throws LockedException          if estimator is currently running.
@@ -1075,8 +1087,10 @@ public class KalmanDriftEstimator extends DriftEstimator {
             kalmanEstimator.update(fixedKinematics, timestamp);
 
             if (sampleNumber % epochSamples == 0) {
-                // static position and zero velocity fix
-                kalmanEstimator.updatePositionAndVelocity(referenceEcefPosition, zeroEcefVelocity, timestamp);
+                // static fix using position and velocity of reference frame. The number of
+                // samples between fixes is never shorter than the epoch interval, so the
+                // Kalman filter does not reject the epoch
+                kalmanEstimator.updatePositionAndVelocity(referenceEcefPosition, referenceEcefVelocity, timestamp);
             }
 
             if (state == null) {
@@ -1152,7 +1166,7 @@ public class KalmanDriftEstimator extends DriftEstimator {
      * The Kalman filter is initialized at time zero so that the first sample is
      * integrated over one time interval, and the number of samples between static
      * position and velocity fixes is computed from the Kalman filter epoch interval
-     * (at least 1).
+     * (rounded up to a whole number of samples, at least 1).
      *
      * @throws InvalidRotationMatrixException if orientation cannot be determined for
      *                                        numerical reasons.
@@ -1169,6 +1183,7 @@ public class KalmanDriftEstimator extends DriftEstimator {
         frame.copyFrom(referenceFrame);
 
         referenceFrame.getECEFPosition(referenceEcefPosition);
+        referenceFrame.getECEFVelocity(referenceEcefVelocity);
 
         kalmanEstimator = new INSLooselyCoupledKalmanFilteredEstimator(kalmanConfig, initConfig, frame);
 
@@ -1176,7 +1191,12 @@ public class KalmanDriftEstimator extends DriftEstimator {
         kalmanEstimator.update(null, 0.0);
 
         final var epochInterval = kalmanEstimator.getEpochInterval();
-        epochSamples = timeInterval > 0.0 ? Math.max(1, (int) Math.round(epochInterval / timeInterval)) : 1;
+        // round up (with a tolerance for exact multiples) so that fixes are never provided
+        // before a whole epoch interval has elapsed, since the Kalman filter rejects them
+        epochSamples = timeInterval > 0.0
+                ? (int) Math.max(1.0, Math.min(Integer.MAX_VALUE,
+                Math.ceil(epochInterval / timeInterval - EPOCH_SAMPLES_TOLERANCE)))
+                : 1;
     }
 
     /**
