@@ -1467,6 +1467,68 @@ class BracketedAccelerometerIntervalDetectorThresholdFactorOptimizerTest impleme
     }
 
     @Test
+    void testOptimizeAlwaysNotifiesCompletedProgress() throws WrongSizeException,
+            InvalidSourceAndDestinationFrameTypeException, LockedException, NotReadyException {
+
+        var numValid = 0;
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematics.clear();
+            generatorMeasurements.clear();
+
+            // generate measurements
+
+            final var nedFrame = generateFrame();
+            final var ecefFrame = NEDtoECEFFrameConverter.convertNEDtoECEFAndReturnNew(nedFrame);
+
+            final var gravity = ECEFGravityEstimator.estimateGravityAndReturnNew(ecefFrame);
+
+            final var ma = generateMaGeneral();
+            final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+            final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+            final var numMeasurements = KnownGravityNormAccelerometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            assertTrue(generateBodyKinematics(nedFrame, ecefFrame, false, ma, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements));
+
+            // configure calibrator and data source
+            final var initialBa = new Matrix(3, 1);
+            final var initialMa = new Matrix(3, 3);
+            final var calibrator = new KnownGravityNormAccelerometerCalibrator(gravity.getNorm(), false,
+                    initialBa, initialMa);
+
+            // create optimizer
+            final var optimizer = new BracketedAccelerometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
+            optimizer.setListener(this);
+            setMseOptimizerTolerance(optimizer.getMseOptimizer());
+
+            // with the maximum progress delta, the progress of the iterations of the bracketed optimizer is
+            // never notified (the same happens with any delta when the optimizer converges in very few
+            // iterations), so the only notified progress is the completion one
+            optimizer.setProgressDelta(IntervalDetectorThresholdFactorOptimizer.MAX_PROGRESS_DELTA);
+
+            reset();
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
+
+            try {
+                optimizer.optimize();
+            } catch (final IntervalDetectorThresholdFactorOptimizerException e) {
+                continue;
+            }
+
+            assertEquals(1, start);
+            assertEquals(1, end);
+            assertEquals(1.0f, progress, 0.0f);
+
+            numValid++;
+            break;
+        }
+
+        assertTrue(numValid > 0);
+    }
+
+    @Test
     void testOptimizeCommonAxisSmallNoiseOnlyRotation() throws InvalidSourceAndDestinationFrameTypeException,
             WrongSizeException, LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException,
             CalibrationException {

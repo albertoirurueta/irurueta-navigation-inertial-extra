@@ -239,6 +239,19 @@ public abstract class IntervalDetectorThresholdFactorOptimizer<T,
     }
 
     /**
+     * Notifies that optimization progress has reached 100%, unless full progress has already been notified.
+     * This guarantees that listeners receive at least one progress change per successful optimization,
+     * regardless of the configured progress delta or the number of iterations that were needed.
+     */
+    protected void notifyProgressCompleted() {
+        if (listener != null && previousProgress < 1.0f) {
+            progress = 1.0f;
+            previousProgress = 1.0f;
+            listener.onOptimizeProgressChange(this, 1.0f);
+        }
+    }
+
+    /**
      * Initializes progress values.
      */
     protected void initProgress() {
