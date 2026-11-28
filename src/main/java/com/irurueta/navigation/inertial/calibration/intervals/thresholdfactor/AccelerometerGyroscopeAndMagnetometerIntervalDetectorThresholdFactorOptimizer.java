@@ -1616,7 +1616,7 @@ public abstract class AccelerometerGyroscopeAndMagnetometerIntervalDetectorThres
             return Double.MAX_VALUE;
         }
 
-        // convert accelerometer and gyroscope mse to global mse
+        // convert accelerometer, gyroscope and magnetometer MSE to global mse
         final var mse = mseRule.evaluate(accelerometerMse, gyroscopeMse, magnetometerMse);
         if (mse < minMse) {
             keepBestResult(mse, thresholdFactor);

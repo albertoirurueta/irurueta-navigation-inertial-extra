@@ -24,7 +24,7 @@ Additional calibration estimators for GNSS/INS navigation
 `irurueta-navigation-inertial-extra` builds on top of
 [irurueta-navigation-inertial](https://github.com/albertoirurueta/irurueta-navigation-inertial) with the
 higher-level tools needed to validate an IMU calibration and to automatically tune it: drift estimation, sensor
-random-walk (Allan-variance-style) estimation, and threshold-factor optimizers for the static/dynamic interval
+random-walk estimation, and threshold-factor optimizers for the static/dynamic interval
 detectors used during calibration data collection.
 
 > **⚠️ Experimental.** This library implements research-grade calibration-validation and tuning techniques —

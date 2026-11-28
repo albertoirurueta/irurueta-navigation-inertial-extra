@@ -41,7 +41,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
 
     /**
      * Step to make exhaustive search of threshold factor values between
-     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     * {@link #getMinThresholdFactor()} and {@link #getMaxThresholdFactor()}.
      */
     private double thresholdFactorStep = DEFAULT_STEP;
 
@@ -92,7 +92,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
 
     /**
      * Gets the step to make exhaustive search of threshold values between
-     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     * {@link #getMinThresholdFactor()} and {@link #getMaxThresholdFactor()}.
      *
      * @return step to make exhaustive search of threshold values.
      */
@@ -102,7 +102,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
 
     /**
      * Sets step to make exhaustive search of threshold values between
-     * {@link #getMaxThresholdFactor()} and {@link #getMaxThresholdFactor()}.
+     * {@link #getMinThresholdFactor()} and {@link #getMaxThresholdFactor()}.
      *
      * @param thresholdStep step to make exhaustive search of threshold values.
      * @throws LockedException          if optimizer is already running.
@@ -121,7 +121,7 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
 
     /**
      * Optimizes the threshold factor for a static interval detector or measurement
-     * generator to minimize MSE (Minimum Squared Error) of estimated
+     * generator to minimize MSE (Mean Square Error) of estimated
      * calibration parameters.
      *
      * @return optimized threshold factor.
@@ -149,16 +149,17 @@ public class ExhaustiveMagnetometerIntervalDetectorThresholdFactorOptimizer exte
             running = true;
 
             initProgress();
-            final var progressStep = (float) (thresholdFactorStep
-                    / (thresholdFactorStep + maxThresholdFactor - minThresholdFactor));
+            final var count = Math.max(1,
+                    (int) Math.round((maxThresholdFactor - minThresholdFactor) / thresholdFactorStep) + 1);
+            final var progressStep = 1.0f / count;
 
             if (listener != null) {
                 listener.onOptimizeStart(this);
             }
 
-            for (var thresholdFactor = minThresholdFactor;
-                 thresholdFactor <= maxThresholdFactor;
-                 thresholdFactor += thresholdFactorStep) {
+            for (var i = 0; i < count; i++) {
+                final var thresholdFactor = Math.min(maxThresholdFactor,
+                        minThresholdFactor + i * thresholdFactorStep);
                 try {
                     if (evaluateForThresholdFactor(thresholdFactor) < Double.MAX_VALUE) {
                         hasResult = true;

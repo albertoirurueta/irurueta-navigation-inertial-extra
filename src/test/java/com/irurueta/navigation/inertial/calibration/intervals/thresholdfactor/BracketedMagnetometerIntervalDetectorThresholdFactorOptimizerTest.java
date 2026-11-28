@@ -60,6 +60,8 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 class BracketedMagnetometerIntervalDetectorThresholdFactorOptimizerTest implements
         IntervalDetectorThresholdFactorOptimizerListener<BodyKinematicsAndMagneticFluxDensity,
@@ -97,6 +99,14 @@ class BracketedMagnetometerIntervalDetectorThresholdFactorOptimizerTest implemen
     private static final double MAX_DELTA_ANGLE_DEGREES = 2.0;
 
     private static final int TIMES = 100;
+
+    private static final double RANGE_MIN = 3.0;
+    private static final double RANGE_MAX = 6.0;
+
+    private static final double FIRST_RANGE_MIN = 20.0;
+    private static final double FIRST_RANGE_MAX = 30.0;
+    private static final double SECOND_RANGE_MIN = 40.0;
+    private static final double SECOND_RANGE_MAX = 50.0;
 
     /**
      * Relative tolerance of the Brent optimizer that searches the threshold factor. The mean square error only
@@ -1154,7 +1164,7 @@ class BracketedMagnetometerIntervalDetectorThresholdFactorOptimizerTest implemen
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -1399,6 +1409,93 @@ class BracketedMagnetometerIntervalDetectorThresholdFactorOptimizerTest implemen
         }
     }
 
+    /**
+     * Checks that the bracket of the MSE optimizer always equals the minimum, centre and maximum of
+     * the current threshold factor range, even when the range is changed after construction, and that
+     * optimization fails when no threshold factor produces a valid result.
+     *
+     * @throws Exception if any unexpected error occurs.
+     */
+    @Test
+    void optimize_whenRangeChanged_updatesBracketToRange() throws Exception {
+        final var mseOptimizer = spy(new BrentSingleOptimizer());
+        final var optimizer = new BracketedMagnetometerIntervalDetectorThresholdFactorOptimizer(mseOptimizer);
+        optimizer.setDataSource(mock(MagnetometerIntervalDetectorThresholdFactorOptimizerDataSource.class));
+        optimizer.setCalibrator(new KnownPositionAndInstantMagnetometerCalibrator());
+        assertTrue(optimizer.isReady());
+
+        // default range
+        verify(mseOptimizer).setBracket(optimizer.getMinThresholdFactor(),
+                0.5 * (optimizer.getMinThresholdFactor() + optimizer.getMaxThresholdFactor()),
+                optimizer.getMaxThresholdFactor());
+
+        // an empty data source produces no valid result for any threshold factor
+        optimizer.setThresholdFactorRange(FIRST_RANGE_MIN, FIRST_RANGE_MAX);
+        assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+        verify(mseOptimizer).setBracket(FIRST_RANGE_MIN, 0.5 * (FIRST_RANGE_MIN + FIRST_RANGE_MAX), FIRST_RANGE_MAX);
+        assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+
+        // second range change
+        optimizer.setThresholdFactorRange(SECOND_RANGE_MIN, SECOND_RANGE_MAX);
+        assertThrows(IntervalDetectorThresholdFactorOptimizerException.class, optimizer::optimize);
+        verify(mseOptimizer).setBracket(SECOND_RANGE_MIN, 0.5 * (SECOND_RANGE_MIN + SECOND_RANGE_MAX),
+                SECOND_RANGE_MAX);
+        assertEquals(0.0, optimizer.getOptimalThresholdFactor(), 0.0);
+    }
+
+    /**
+     * Checks that, when the threshold factor range is changed after construction, the optimized
+     * threshold factor is within the new range.
+     */
+    @Test
+    void optimize_whenNonDefaultRange_returnsThresholdFactorInsideRange() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
+            LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, CalibrationException,
+            IOException {
+
+        for (var t = 0; t < TIMES; t++) {
+            bodyKinematicsAndMagneticFluxDensities.clear();
+            generatorMeasurements.clear();
+
+            // generate measurements
+            final var randomizer = new UniformRandomizer();
+
+            final var accelNoiseRootPSD = getAccelNoiseRootPSD();
+            final var gyroNoiseRootPSD = getGyroNoiseRootPSD();
+            final var numMeasurements = KnownPositionAndInstantMagnetometerCalibrator.MINIMUM_MEASUREMENTS_GENERAL;
+            final var hardIron = Matrix.newFromArray(generateHardIron(randomizer));
+            final var mm = generateSoftIronGeneral();
+            assertNotNull(mm);
+            final var timestamp = new Date(createTimestamp(randomizer));
+            final var nedPosition = createPosition(randomizer);
+            assertTrue(generateBodyKinematicsAndMagneticFluxDensity(false, hardIron, mm, accelNoiseRootPSD,
+                    gyroNoiseRootPSD, numMeasurements, timestamp, nedPosition, MAGNETOMETER_NOISE_STD));
+
+            // configure calibrator and data source
+            final var calibrator = new KnownPositionAndInstantMagnetometerCalibrator();
+            calibrator.setPosition(nedPosition);
+            calibrator.setCommonAxisUsed(false);
+            calibrator.setTime(timestamp);
+
+            // create optimizer
+            final var optimizer = new BracketedMagnetometerIntervalDetectorThresholdFactorOptimizer(dataSource,
+                    calibrator);
+            optimizer.setListener(this);
+            setMseOptimizerTolerance(optimizer.getMseOptimizer());
+            optimizer.setThresholdFactorRange(RANGE_MIN, RANGE_MAX);
+
+            reset();
+            assertEquals(0, start);
+            assertEquals(0, end);
+            assertEquals(0.0f, progress, 0.0f);
+
+            final var thresholdFactor = optimizer.optimize();
+            assertTrue(thresholdFactor >= RANGE_MIN && thresholdFactor <= RANGE_MAX,
+                    "threshold factor " + thresholdFactor);
+            assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
+            return;
+        }
+    }
+
     @Test
     void testOptimizeAfterSuccessfulRunWithFailingDataThrowsAndResetsResults() throws WrongSizeException, InvalidSourceAndDestinationFrameTypeException,
             LockedException, NotReadyException, IntervalDetectorThresholdFactorOptimizerException, CalibrationException,
@@ -1505,7 +1602,7 @@ class BracketedMagnetometerIntervalDetectorThresholdFactorOptimizerTest implemen
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -1641,7 +1738,7 @@ class BracketedMagnetometerIntervalDetectorThresholdFactorOptimizerTest implemen
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();
@@ -1772,7 +1869,7 @@ class BracketedMagnetometerIntervalDetectorThresholdFactorOptimizerTest implemen
             // check optimization results
             assertEquals(1, start);
             assertEquals(1, end);
-            assertTrue(progress > 0.0f);
+            assertTrue(progress >= 0.0f && progress <= 1.0f);
             assertEquals(thresholdFactor, optimizer.getOptimalThresholdFactor(), 0.0);
             assertTrue(optimizer.getAccelerometerBaseNoiseLevel() > 0.0);
             final var accelerometerBaseNoiseLevel1 = optimizer.getAccelerometerBaseNoiseLevelAsMeasurement();

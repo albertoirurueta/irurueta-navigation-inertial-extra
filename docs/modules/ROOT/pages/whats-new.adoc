@@ -4,6 +4,12 @@
 
 NOTE: This documentation was generated with the assistance of AI. Please report any inaccuracies.
 
+== Unreleased
+
+* 🐛 Fixed bracketed optimizers ignoring the configured range, drift-period counting, variance computation, `reset()` and static fixes in `KalmanDriftEstimator`, and the exhaustive iteration of the range maximum.
+* ♻️ Penalty constant `1e30` for invalid factors; exhaustive optimizers are recommended over the bracketed ones. See xref:index.adoc[Overview] for details.
+* ♻️ Number of drift periods, variance values and Kalman drift values may differ from previous releases.
+
 == 1.8.1 - 2026-11-17
 
 * ♻️ Updated dependency versions: `irurueta-numerical` 1.6.1, `irurueta-geometry` 1.6.1, `irurueta-units` 1.4.1, `irurueta-algebra` 1.4.1, `irurueta-navigation` 1.8.2 and `irurueta-navigation-inertial` 1.10.2.
