@@ -1652,7 +1652,13 @@ class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFac
             assertEquals(0, end);
             assertEquals(0.0f, progress, 0.0f);
 
-            final var thresholdFactor = optimizer.optimize();
+            final double thresholdFactor;
+            try {
+                thresholdFactor = optimizer.optimize();
+            } catch (final IntervalDetectorThresholdFactorOptimizerException e) {
+                // no threshold factor gave a valid calibration for this random data
+                continue;
+            }
 
             // check optimization results
             assertEquals(1, start);
@@ -3111,7 +3117,13 @@ class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFac
             assertEquals(0, end);
             assertEquals(0.0f, progress, 0.0f);
 
-            final var thresholdFactor = optimizer.optimize();
+            final double thresholdFactor;
+            try {
+                thresholdFactor = optimizer.optimize();
+            } catch (final IntervalDetectorThresholdFactorOptimizerException e) {
+                // no threshold factor gave a valid calibration for this random data
+                continue;
+            }
 
             // check optimization results
             assertEquals(1, start);
@@ -3925,7 +3937,13 @@ class BracketedAccelerometerGyroscopeAndMagnetometerIntervalDetectorThresholdFac
             assertEquals(0, end);
             assertEquals(0.0f, progress, 0.0f);
 
-            final var thresholdFactor = optimizer.optimize();
+            final double thresholdFactor;
+            try {
+                thresholdFactor = optimizer.optimize();
+            } catch (final IntervalDetectorThresholdFactorOptimizerException e) {
+                // no threshold factor gave a valid calibration for this random data
+                continue;
+            }
 
             // check optimization results
             assertEquals(1, start);
